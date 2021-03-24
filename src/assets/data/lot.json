@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "codigo_empresa": "1",
+        "codigo_aduanero": "122",
+        "fecha_entrada": "2021-03-16",
+        "cantidad": {
+            "id": 1,
+            "hembras": "500",
+            "machos": "500"
+        },
+        "lote": "121",
+        "published_at": "2021-03-21T15:18:11.000Z",
+        "created_at": "2021-03-20T21:40:20.000Z",
+        "updated_at": "2021-03-23T20:40:05.000Z",
+        "raza": "hy-line w-80",
+        "owner_email": "avelino@gmail.com",
+        "capacidad_instalada": {
+            "id": 1,
+            "direccion": "ceiba de madera san victor moca, espaillat",
+            "ambiente": "normal",
+            "published_at": "2021-03-21T15:21:45.000Z",
+            "created_at": "2021-03-20T22:13:23.000Z",
+            "updated_at": "2021-03-21T15:31:31.000Z",
+            "empresa": 1,
+            "area": {
+                "id": 1,
+                "largo": "1200",
+                "ancho": "1500"
+            },
+            "ubicacion": {
+                "id": 1,
+                "lon": 0,
+                "lat": 0
+            }
+        }
+    },
+    {
+        "id": 2,
+        "codigo_empresa": "2",
+        "codigo_aduanero": "125",
+        "fecha_entrada": "2021-03-17",
+        "cantidad": {
+            "id": 2,
+            "hembras": "720",
+            "machos": "940"
+        },
+        "lote": "123",
+        "published_at": "2021-03-21T15:18:11.000Z",
+        "created_at": "2021-03-20T21:40:20.000Z",
+        "updated_at": "2021-03-21T15:18:11.000Z",
+        "raza": "hy-line w-80",
+        "owner_email": "avelino@gmail.com",
+        "capacidad_instalada": {
+            "id": 1,
+            "direccion": "ceiba de madera san victor moca, espaillat",
+            "ambiente": "controlado",
+            "published_at": "2021-03-21T15:21:45.000Z",
+            "created_at": "2021-03-20T22:13:23.000Z",
+            "updated_at": "2021-03-21T15:31:31.000Z",
+            "empresa": 1,
+            "area": {
+                "id": 1,
+                "largo": "1200",
+                "ancho": "1500"
+            },
+            "ubicacion": {
+                "id": 1,
+                "lon": 0,
+                "lat": 0
+            }
+        }
+    }
+]

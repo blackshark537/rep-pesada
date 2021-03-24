@@ -1,0 +1,62 @@
+<ion-list >
+  <ion-list-header>
+    <ion-label>List {{name? 'of '+ name: ''}}</ion-label>    
+    <ion-button size="large" (click)="newRow()">
+      New
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </ion-list-header>
+
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
+    <ion-item lines="none">
+      <ion-label>Theme:</ion-label>
+      <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange)="tableStyle = $event.target.value" placeholder="theme" [value]="tableStyle">
+        <ion-select-option value="material">Material</ion-select-option>
+        <ion-select-option value="bootstrap">Bootstrap</ion-select-option>
+        <ion-select-option value="dark">Dark</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
+  <ngx-datatable
+    class="{{tableStyle}} "
+    [rows]="rows"
+    
+    [headerHeight]="50"
+    [rowHeight]="50"
+    [footerHeight]="50"
+
+    [limit]="9"
+    [scrollbarH]="true"
+    [columnMode]="force"
+    [selectionType]="single"
+  >
+  <ngx-datatable-column
+  [flexGrow]="1" [maxWidth]="30"
+  name="id" sortable="true">
+  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+    <span>{{row['id']}}</span>
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column
+  *ngFor="let col of columns" name="{{col.prop}}"
+  [flexGrow]="1" minWidth="{{col.prop!==expand?120 : 300}}">
+</ngx-datatable-column>
+
+  <ngx-datatable-column
+  [flexGrow]="1" [minWidth]="120"
+   name="Actions" sortable="false" >
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <ion-button  (click)="openRow(row)" size="small" color="tertiary">
+        <ion-icon name="open"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteRow(row)" size="small" color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ng-template>
+  </ngx-datatable-column>
+
+</ngx-datatable>
+
+</ion-list>

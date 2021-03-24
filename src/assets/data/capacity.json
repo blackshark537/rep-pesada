@@ -1,0 +1,49 @@
+[
+    {
+        "id": 1,
+        "direccion": "ceiba de madera san victor moca, espaillat",
+        "ambiente": "normal",
+        "published_at": "2021-03-21T15:21:45.000Z",
+        "created_at": "2021-03-20T22:13:23.000Z",
+        "updated_at": "2021-03-21T15:31:31.000Z",
+        "empresa": {
+            "id": 1,
+            "monbre_comercial": null,
+            "telefono": "8299833824",
+            "direccion": "ceiba de madera san victor moca, espaillat",
+            "correo": "admin@gmail.com",
+            "RNC": "219082737812",
+            "owner_email": "avelino@gmail.com",
+            "published_at": "2021-03-21T15:21:52.000Z",
+            "created_at": "2021-03-20T21:38:19.000Z",
+            "updated_at": "2021-03-23T00:57:06.000Z",
+            "nombre_comercial": "Huevos Endy",
+            "perfil_usuario": 1
+        },
+        "area": {
+            "id": 1,
+            "largo": "120",
+            "ancho": "150"
+        },
+        "ubicacion": {
+            "id": 1,
+            "lon": 0,
+            "lat": 0
+        },
+        "inventario": [
+            {
+                "id": 1,
+                "equipo": "bebedero",
+                "tipo": "automatico",
+                "descripcion": null,
+                "fecha_compra": "2020-06-08",
+                "vida_util": 8,
+                "capacidad_instalada": 1,
+                "published_at": "2021-03-21T15:27:34.000Z",
+                "created_at": "2021-03-21T15:24:21.000Z",
+                "updated_at": "2021-03-21T15:31:31.000Z",
+                "cantidad": 10
+            }
+        ]
+    }
+]

@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Production Lot: {{LotNumber}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Production Lot: {{LotNumber}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm>
+        <ngx-charts-number-card
+          [view]="viewCard"
+          [scheme]="colorScheme"
+          [results]="res"
+          [cardColor]="cardColor">
+        </ngx-charts-number-card>
+      </ion-col>
+
+      <ion-col size="12" size-sm>
+        <ngx-charts-pie-grid
+        [view]="viewPie"
+        [scheme]="colorScheme"
+        [results]="res2">
+        </ngx-charts-pie-grid>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" size-sm>
+        <ngx-charts-area-chart
+          [view]="viewArea"
+          [scheme]="colorScheme"
+          [legend]="legend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxis]="xAxis"
+          [yAxis]="yAxis"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          [timeline]="timeline"
+          [showGridLines]="true"
+          [results]="resMulti">
+        </ngx-charts-area-chart>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

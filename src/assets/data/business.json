@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "monbre_comercial": null,
+        "telefono": "8299833824",
+        "direccion": "ceiba de madera san victor moca, espaillat",
+        "correo": "admin@gmail.com",
+        "RNC": "219082737812",
+        "owner_email": "avelino@gmail.com",
+        "published_at": "2021-03-21T15:21:52.000Z",
+        "created_at": "2021-03-20T21:38:19.000Z",
+        "updated_at": "2021-03-23T00:57:06.000Z",
+        "nombre_comercial": "Huevos Endy",
+        "perfil_usuario": {
+            "id": 1,
+            "nombres": "avelino",
+            "apellidos": "sarante",
+            "cedula": "03192323432",
+            "telefono": "8299833824",
+            "sexo": "masculino",
+            "direccion": "ceiba de madera san victor moca, espaillat",
+            "published_at": "2021-03-21T15:23:05.000Z",
+            "created_at": "2021-03-20T21:36:30.000Z",
+            "updated_at": "2021-03-23T00:57:06.000Z",
+            "owner_email": "avelino@gmail.com",
+            "empresa": 1
+        },
+        "capacidad_instaladas": [
+            {
+                "id": 1,
+                "direccion": "ceiba de madera san victor moca, espaillat",
+                "ambiente": "normal",
+                "published_at": "2021-03-21T15:21:45.000Z",
+                "created_at": "2021-03-20T22:13:23.000Z",
+                "updated_at": "2021-03-21T15:31:31.000Z",
+                "empresa": 1,
+                "area": {
+                    "id": 1,
+                    "largo": "1200",
+                    "ancho": "1500"
+                },
+                "ubicacion": {
+                    "id": 1,
+                    "lon": 0,
+                    "lat": 0
+                }
+            }
+        ]
+    }
+]

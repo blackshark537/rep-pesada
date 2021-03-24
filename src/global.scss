@@ -24,3 +24,26 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+/*ngx datatable*/
+/* @import "../node_modules/@swimlane/ngx-datatable/themes";
+@import "../node_modules/@swimlane/ngx-datatable/themes/dark.css";
+@import "../node_modules/@swimlane/ngx-datatable/themes/material.css";
+@import "../node_modules/@swimlane/ngx-datatable/themes/bootstrap.css"; */
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+.datatable-header-cell,.datatable-body-cell, .datatable-footer-inner{
+    span, .page-count{
+        font-size: large;
+    }
+}
+
+.datatable-row-group:hover{
+    background-color: rgba($color: #3880ff, $alpha: 0.1) !important;
+    cursor: pointer;
+}
+
