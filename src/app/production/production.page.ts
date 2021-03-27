@@ -11,33 +11,25 @@ export class ProductionPage implements OnInit {
 
   LotNumber = null;
   res = []
-  res2 = [
-    {
-      name: 'Temp Celcius',
-      value: 33
-    },
-    {
-      name: 'Hum %',
-      value: 80
-    },
-    {
-      name: 'Lux Hora',
-      value: 30
-    }
-  ]
+  res2 = []
 
   // options
   showLegend: boolean = true;
   showLabels: boolean = true;
-  viewCard: any[] = [400, 300];
-  viewPie: any[] = [500, 300];
+  viewCard: number[] = [900, 300];
+  viewPie: number[] = [400, 400];
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#99D9F2', '#F2E205', '#F2B705', '#D93D04', '#D98E04', '#aae3f5']
   };
   cardColor: string = '#232837';
 
+  //domain: ['#023859', '#038C8C', '#F2811D', '#F26716', '#BF1515', '#D98E04'],
 
-  viewArea: any[] = [700, 400];
+  activateCard: boolean = false;
+  activateArea: boolean = false;
+  activatePie: boolean = false;
+
+  viewArea: number[] = [600, 400];
   legend: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -50,7 +42,7 @@ export class ProductionPage implements OnInit {
 
   resMulti = [
     {
-      name: 'Lot 121 real',
+      name: 'Lot 121 Real',
       series:[
         {
           name: '21',
@@ -67,15 +59,15 @@ export class ProductionPage implements OnInit {
       ]
     },
     {
-      name: 'Lot 121 projected',
+      name: 'Lot 121 Projected',
       series:[
         {
           name: '21',
-          value: 340
+          value: 290
         },
         {
           name: '22',
-          value: 600
+          value: 400
         },
         {
           name: '23',
@@ -90,11 +82,41 @@ export class ProductionPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const result = this.lotService.lot$.getValue();
-    this.LotNumber = result.lot;
-    this.res.push({name: 'Total Chicks', value: result.total});
-    this.res.push({name: 'Days in farm', value: result.days});
-    this.res.push({name: 'Week', value: result.week});
+    this.lotService.lot$.subscribe(result =>{
+      if(result === null) return;
+      this.LotNumber = result.lot;
+      const mort = 100-1*(5/result.week)
+      const date = result.date.split('-');
+      this.res.push({name: 'Entry chicks', value: result.total.toString() + ' Chicks'});
+      this.res.push({name: 'Acc. Mortality', value: (100-mort).toString() +'%'});
+      this.res.push({name: 'Current chicks', value: (Math.round(result.total - (result.total*((100-mort)*0.01)))).toString() + ' Chicks ±0.5' });
+      this.res.push({name: 'Entry Date', value: `${date[2]}-${date[1]}-${date[0]}`})
+      this.res.push({name: 'Age in Days', value: result.days + ' days'});
+      this.res.push({name: 'Age in Weeks', value: result.week + ' weeks'});
+
+      this.res2.push({name: 'Current Female Chicks', value: result.females-(result.females * ((100-mort)*0.01)) });
+      this.res2.push({name: 'Current Male Chicks', value: result.males-(result.males * ((100-mort)*0.01)) });
+    
+      setTimeout(() => {
+        this.activateCard=true;
+        this.activatePie=true;
+      },100);
+
+    });
+    
+
+    setTimeout(() => {
+      this.activateArea=true;
+    },100);
+
+    /* let i=23;
+    setInterval(() => {
+      this.resMulti[0].series.push({
+        name: i.toString(),
+        value: Math.random()*500
+      })
+      ++i;
+    }, 1000) */
   }
 
 }

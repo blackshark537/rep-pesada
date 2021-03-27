@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TableEvent } from '../shared';
 import Capacities from 'src/assets/data/capacity.json';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-capacity',
@@ -13,7 +14,8 @@ export class CapacityPage implements OnInit {
   cols = [{ prop: 'Enviroment' }, { prop: 'Company' }, { prop: 'Phone' }, { prop: 'Area' }, { prop: 'Address' }];
   capacities = []
   constructor(
-    private platform: Platform
+    private platform: Platform,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class CapacityPage implements OnInit {
   }
 
   selected(evt: TableEvent) {
-    console.log(evt.action)
+    if(evt.action === 'open') this.router.navigate(['/inventory', evt.row.id])
   }
 
 }

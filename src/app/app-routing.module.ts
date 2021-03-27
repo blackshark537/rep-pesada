@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'user',
+    redirectTo: 'lot',
     pathMatch: 'full'
   },
   {
@@ -28,7 +28,7 @@ const routes: Routes = [
     loadChildren: () => import('./capacity/capacity.module').then( m => m.CapacityPageModule)
   },
   {
-    path: 'inventory',
+    path: 'inventory/:capId',
     loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryPageModule)
   },
   {

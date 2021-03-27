@@ -30,19 +30,9 @@ export class LotPage implements OnInit {
   }
 
   selected(evt: TableEvent) {
-    switch(evt.action){
-      case 'new':
-        console.log(evt.action)
-        break;
-      case 'open':
-        this.open(evt.row);
-        break;
-      case 'delete':
-        this.delete(evt.row);
-        break;
-      default:
-        break;
-    }
+      if(evt.action === 'new') return console.log(evt.action)
+      if(evt.action === 'open') return this.open(evt.row);
+      if(evt.action === 'delete') return this.delete(evt.row);
   }
 
   open(row){

@@ -34,15 +34,16 @@ export class LotService {
       return {
         id,
         lot: lote,
+        date: fecha_entrada,
         code: codigo_aduanero,
         race: raza,
         enviroment: ambiente,
         //entry: fecha_entrada,
         week: Math.floor((new Date().getDate() - parseInt(fecha_entrada.split('-')[2]))/8)+1,
         days: new Date().getDate() - parseInt(fecha_entrada.split('-')[2]),
-        females: hembras,
-        males: machos,
-        total: (parseInt(hembras)+parseInt(machos)) + ' Chicks'
+        females: parseInt(hembras),
+        males: parseInt(machos),
+        total: (parseInt(hembras)+parseInt(machos))
       }
     });
   }
@@ -56,14 +57,15 @@ export class LotService {
 }
 
 export interface LotProdInterface{
-  code: string;
-  days: number;
-  enviroment: string;
-  females: string;
   id: number;
+  code: string;
   lot: string;
-  males: string;
+  enviroment: string;
   race: string;
-  total: string;
+  date: string;
+  days: number;
+  females: number;
+  males: number;
+  total: number;
   week: number;
 }
