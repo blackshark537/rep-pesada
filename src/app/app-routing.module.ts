@@ -34,12 +34,16 @@ const routes: Routes = [
   {
     path: 'production',
     loadChildren: () => import('./production/production.module').then( m => m.ProductionPageModule)
+  },
+  {
+    path: 'breeder',
+    loadChildren: () => import('./breeder/breeder.module').then( m => m.BreederPageModule)
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true })
   ],
   exports: [RouterModule]
 })

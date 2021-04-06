@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LotService } from '../services/lot/lot.service';
 import { last } from 'rxjs/operators'
+import { AlertController, ModalController } from '@ionic/angular';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-production',
@@ -9,6 +11,7 @@ import { last } from 'rxjs/operators'
 })
 export class ProductionPage implements OnInit {
 
+  Moratlity=5;
   LotNumber = null;
   res = []
   res2 = []
@@ -78,17 +81,18 @@ export class ProductionPage implements OnInit {
   ]
 
   constructor(
-    public lotService: LotService
+    public lotService: LotService,
+    private modalCrtl: AlertController
   ) { }
 
   ngOnInit() {
     this.lotService.lot$.subscribe(result =>{
       if(result === null) return;
       this.LotNumber = result.lot;
-      const mort = 100-1*(5/result.week)
+      const mort = 100-1*(this.Moratlity/result.week)
       const date = result.date.split('-');
       this.res.push({name: 'Entry chicks', value: result.total.toString() + ' Chicks'});
-      this.res.push({name: 'Acc. Mortality', value: (100-mort).toString() +'%'});
+      this.res.push({name: 'Acc. Mortality', value: (100-mort).toString().slice(0,4) +'%'});
       this.res.push({name: 'Current chicks', value: (Math.round(result.total - (result.total*((100-mort)*0.01)))).toString() + ' Chicks ±0.5' });
       this.res.push({name: 'Entry Date', value: `${date[2]}-${date[1]}-${date[0]}`})
       this.res.push({name: 'Age in Days', value: result.days + ' days'});
@@ -108,15 +112,40 @@ export class ProductionPage implements OnInit {
     setTimeout(() => {
       this.activateArea=true;
     },100);
+  }
 
-    /* let i=23;
-    setInterval(() => {
-      this.resMulti[0].series.push({
-        name: i.toString(),
-        value: Math.random()*500
-      })
-      ++i;
-    }, 1000) */
+  async setMortality(){
+    const modal = await this.modalCrtl.create({
+      header:'Mortality',
+      subHeader:'Set Mortality  %',
+      inputs:[
+        {
+          type:'number',
+          placeholder: 'Mortality',
+          value: this.Moratlity,
+        }
+      ],
+      buttons:[{
+        text: 'Cancel',
+        role: 'cancel'
+      },{
+        text: 'Accept',
+        handler:  async (evt)=>{
+          if(evt){
+            this.Moratlity=parseInt(evt[0]);
+            console.log(this.Moratlity);
+            this.res=[];
+            this.res2=[];
+            this.activateCard=false;
+            this.activatePie=false;
+            this.ngOnInit();
+          }
+        }
+      }]
+    });
+
+    await modal.present();
+    
   }
 
 }

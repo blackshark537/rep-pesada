@@ -40,10 +40,20 @@
     span, .page-count{
         font-size: large;
     }
+    /* border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc; */
 }
+
+/* .datatable-body-cell:hover{
+    border: 1px solid black;
+} */
 
 .datatable-row-group:hover{
     background-color: rgba($color: #3880ff, $alpha: 0.1) !important;
     cursor: pointer;
 }
 
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row.active{
+    background-color: rgba($color: #ffc409, $alpha: 0.7);
+    color: rgb(29, 28, 28);
+}

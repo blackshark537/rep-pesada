@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { LotInterface } from 'src/app/models';
 import Lots from 'src/assets/data/lot.json';
 import { BrowserService } from '../helpers/browser.service';
@@ -10,40 +11,133 @@ import { BrowserService } from '../helpers/browser.service';
 export class LotService {
 
   lot$ = new BehaviorSubject<LotProdInterface>(null);
-
+  recria = [];
+  prod = [];
   //lots$ = new BehaviorSubject<LotInterface[]>(null);
 
-  cols$ = new BehaviorSubject([{ prop: 'Lot' }, 
-  { prop: 'Enviroment' }, 
-  { prop: 'Race' }, 
+  cols$ = new BehaviorSubject([
+  //{ prop: 'Lot' }, 
+  //{ prop: 'Entry'},
+  {prop: 'Business'},
+  { prop: 'Females' },
+  //{ prop: 'Mort'}
+  //{ prop: 'Enviroment' }, 
+  //{ prop: 'Race' }, 
+  
   { prop: 'Days' }, 
   { prop: 'Week'},
-  /* { prop: 'Females' }, 
-  { prop: 'Males' },  */
-  { prop: 'Total' }]);
+  { prop: 'prodStart' }, 
+  //{ prop: 'Total' }
+  ]);
+
+  colsRecria$ = new BehaviorSubject([
+    //{ prop: 'Lot' }, 
+    //{ prop: 'Entry'},
+    { prop: 'Week'},
+    //{prop: 'Business'},
+    { prop: 'Chicks' },
+    { prop: 'Mort'}
+    //{ prop: 'Enviroment' }, 
+    //{ prop: 'Race' }, 
+    
+    //{ prop: 'Days' }, 
+    //{ prop: 'Males' }, 
+    //{ prop: 'Total' }
+    ]);
 
   constructor(
     private helperService: BrowserService
-  ) { }
+  ) { 
+  }
+
+  getRecria(lote){
+    this.recria=[];
+    const total_weeks=18;
+    for (let i = 0; i < total_weeks; i++) {
+
+      const {business, week, lot, mort, mortp, date, females} = lote;
+      
+      const percent = this.recria[i-1]?.mort || 100;
+      const mortality = percent-(mort / total_weeks);
+      const date1 = new Date(date.getTime()+(7*24*60*60*1000))
+      const date2 = new Date(date1.getTime()+((7 * 24 * 60 * 60 * 1000)*i));
+
+      this.recria.push({
+        id:  i,
+        business,
+        week:i+1,
+        weekIndx: week,
+        lot,
+        mort: Math.round(mortality*100)/100,
+        mortp,
+        entry: date2,
+        chicks: Math.round(females - ((100-mortality)*10)),
+      });
+    }
+    return this.recria;
+  }
+
+  getProd(lote){
+    this.prod=[];
+    const total_weeks=67;
+      
+    for (let i = 0; i < total_weeks; i++) {
+
+      const {business, week, lot, entry, chicks, mortp} = lote;
+      
+      const percent = this.prod[i-1]?.mort || 100;
+      const mortality = percent-(mortp / total_weeks);
+
+      const date1 = new Date(entry.getTime()+(7*24*60*60*1000))
+      const date2 = new Date(date1.getTime()+((7 * 24 * 60 * 60 * 1000)*i));
+
+      this.prod.push({
+        id:  i,
+        business,
+        week:lote.week+i+1,
+        weekIndx: week,
+        lot,
+        mort: lote.week+i+1>24? Math.round(mortality*100)/100 : null,
+        entry: date2,
+        chicks: lote.week+i+1>24? Math.round(chicks - ((100-mortality)*10)) : null,
+      });
+    }
+    return this.prod;
+  }
 
   getLots(){
-    return Lots.map(l =>{
-      const {id, lote, codigo_aduanero, raza, fecha_entrada} = l;
-      const { hembras, machos } = l.cantidad;
-      const { ambiente } = l.capacidad_instalada;
+    return Lots.map(Lote =>{
+      const {
+        id, lote, codigo_aduanero, raza,
+        fecha_entrada, 
+        variable_mortalidad_recria,
+        variable_mortalidad_produccion
+      } = Lote;
+      
+      const { hembras, machos } = Lote.cantidad;
+      const { ambiente } = Lote.capacidad_instalada;
+      const { nombre_comercial } = Lote.empresa;
+      
+      //has to  add one day
+      const date1= this.formatDate(fecha_entrada);
+      const date2= new Date(Date.now());
       return {
         id,
+        business: nombre_comercial,
         lot: lote,
-        date: fecha_entrada,
+        date: date1,
         code: codigo_aduanero,
+        mort: variable_mortalidad_recria,
+        mortp: variable_mortalidad_produccion,
         race: raza,
         enviroment: ambiente,
-        //entry: fecha_entrada,
-        week: Math.floor((new Date().getDate() - parseInt(fecha_entrada.split('-')[2]))/8)+1,
-        days: new Date().getDate() - parseInt(fecha_entrada.split('-')[2]),
+        entry: date1,
+        week: this.weeksBetween(date1, date2),
+        days: this.daysBetween(date1,date2),
+        prodStart: this.initProd(date1),
         females: parseInt(hembras),
         males: parseInt(machos),
-        total: (parseInt(hembras)+parseInt(machos))
+        total: parseInt(hembras)+parseInt(machos)
       }
     });
   }
@@ -53,6 +147,24 @@ export class LotService {
       if(resp){
         console.log('delete', lot.id);
       }
+  }
+
+  private formatDate(date: string){
+    //has to add one day
+    return new Date(new Date(date).getTime()  + (24 * 60 * 60 * 1000))
+  }
+
+  private initProd(date: Date){
+    return new Date(date.getTime()+((1000 * 3600 * 24)*175))
+  }
+
+  private weeksBetween(d1, d2) {
+    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000))+1;
+  }
+
+  private daysBetween(d1,d2) {
+    const Difference_In_Time = d2.getTime() - d1.getTime();
+    return Math.floor(Difference_In_Time / (1000 * 3600 * 24));
   }
 }
 
@@ -68,4 +180,9 @@ export interface LotProdInterface{
   males: number;
   total: number;
   week: number;
+  "variable_mortalidad_recria": number;
+  "variable_mortalidad_produccion": number;
+  "variable_produccion_huevos_totales": number;
+  "variable_aprovechamiento_huevos": number;
+  "variable_nacimiento": number;
 }

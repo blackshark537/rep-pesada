@@ -8,7 +8,7 @@
   </ion-list-header>
 
   <ion-toolbar>
-    <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
+    <!-- <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar> -->
     <ion-item lines="none">
       <ion-label>Theme:</ion-label>
       <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange)="tableStyle = $event.target.value" placeholder="theme" [value]="tableStyle">
@@ -26,16 +26,16 @@
     [rowHeight]="50"
     [footerHeight]="50"
 
-    [limit]="9"
+    [limit]="20"
     [scrollbarH]="true"
-    [columnMode]="force"
-    [selectionType]="single"
+    [columnMode]="'force'"
+    [selectionType]="'single'"
   >
   <ngx-datatable-column
-  [flexGrow]="1" [maxWidth]="30"
-  name="id" sortable="true">
+  [flexGrow]="1" [maxWidth]="300"
+  name="Entry" sortable="true">
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-    <span>{{row['id']}}</span>
+    <span>{{row['entry'] | date}}</span>
   </ng-template>
 </ngx-datatable-column>
 

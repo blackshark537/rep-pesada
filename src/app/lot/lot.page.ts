@@ -22,7 +22,6 @@ export class LotPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
   }
 
   get isMaterial() {
@@ -37,7 +36,7 @@ export class LotPage implements OnInit {
 
   open(row){
     this.lotService.lot$.next(row);
-    this.router.navigate(['/production'])
+    this.router.navigate(['/breeder'])
   }
 
   delete(row){

@@ -1,74 +1,106 @@
 [
     {
         "id": 1,
-        "codigo_empresa": "1",
-        "codigo_aduanero": "122",
-        "fecha_entrada": "2021-03-16",
+        "codigo_empresa": "2",
+        "codigo_aduanero": "123",
+        "fecha_entrada": "2021-04-02",
         "cantidad": {
-            "id": 1,
-            "hembras": "500",
-            "machos": "500"
+            "id": 2,
+            "hembras": "1300",
+            "machos": "100"
         },
-        "lote": "121",
-        "published_at": "2021-03-21T15:18:11.000Z",
-        "created_at": "2021-03-20T21:40:20.000Z",
-        "updated_at": "2021-03-23T20:40:05.000Z",
-        "raza": "hy-line w-80",
-        "owner_email": "avelino@gmail.com",
+        "lote": null,
+        "published_at": "2021-04-03T18:26:02.000Z",
+        "created_at": "2021-04-03T18:23:59.000Z",
+        "updated_at": "2021-04-03T19:30:37.000Z",
+        "raza": null,
+        "owner_email": "aprohuevo",
         "capacidad_instalada": {
-            "id": 1,
-            "direccion": "ceiba de madera san victor moca, espaillat",
+            "id": 2,
+            "direccion": "san jose de las matas",
             "ambiente": "normal",
-            "published_at": "2021-03-21T15:21:45.000Z",
-            "created_at": "2021-03-20T22:13:23.000Z",
-            "updated_at": "2021-03-21T15:31:31.000Z",
-            "empresa": 1,
+            "published_at": "2021-04-03T18:25:37.000Z",
+            "created_at": "2021-04-03T18:25:35.000Z",
+            "updated_at": "2021-04-03T18:25:37.000Z",
+            "empresa": 2,
             "area": {
-                "id": 1,
-                "largo": "1200",
-                "ancho": "1500"
+                "id": 2,
+                "largo": "250",
+                "ancho": "40"
             },
-            "ubicacion": {
-                "id": 1,
-                "lon": 0,
-                "lat": 0
-            }
+            "ubicacion": null
+        },
+        "variable_mortalidad_recria": 5,
+        "variable_mortalidad_produccion": 10,
+        "variable_produccion_huevos_totales": 2,
+        "variable_aprovechamiento_huevos": 2,
+        "variable_nacimiento": 5,
+        "empresa": {
+            "id": 2,
+            "monbre_comercial": null,
+            "telefono": "8092425137",
+            "direccion": "ave pedro a rivera km 1/2",
+            "correo": null,
+            "RNC": "219082737812",
+            "owner_email": null,
+            "published_at": "2021-04-03T18:16:30.000Z",
+            "created_at": "2021-04-03T18:15:06.000Z",
+            "updated_at": "2021-04-03T18:16:30.000Z",
+            "nombre_comercial": "AproHuevos",
+            "perfil_usuario": null,
+            "provincia": "La Vega"
         }
     },
     {
         "id": 2,
         "codigo_empresa": "2",
-        "codigo_aduanero": "125",
-        "fecha_entrada": "2021-03-17",
+        "codigo_aduanero": "124",
+        "fecha_entrada": "2018-03-23",
         "cantidad": {
             "id": 2,
-            "hembras": "720",
-            "machos": "940"
+            "hembras": "1000",
+            "machos": "100"
         },
-        "lote": "123",
-        "published_at": "2021-03-21T15:18:11.000Z",
-        "created_at": "2021-03-20T21:40:20.000Z",
-        "updated_at": "2021-03-21T15:18:11.000Z",
-        "raza": "hy-line w-80",
-        "owner_email": "avelino@gmail.com",
+        "lote": null,
+        "published_at": "2021-04-03T18:26:02.000Z",
+        "created_at": "2021-04-03T18:23:59.000Z",
+        "updated_at": "2021-04-03T19:30:37.000Z",
+        "raza": null,
+        "owner_email": "aprohuevo",
         "capacidad_instalada": {
-            "id": 1,
-            "direccion": "ceiba de madera san victor moca, espaillat",
-            "ambiente": "controlado",
-            "published_at": "2021-03-21T15:21:45.000Z",
-            "created_at": "2021-03-20T22:13:23.000Z",
-            "updated_at": "2021-03-21T15:31:31.000Z",
-            "empresa": 1,
+            "id": 2,
+            "direccion": "san jose de las matas",
+            "ambiente": "normal",
+            "published_at": "2021-04-03T18:25:37.000Z",
+            "created_at": "2021-04-03T18:25:35.000Z",
+            "updated_at": "2021-04-03T18:25:37.000Z",
+            "empresa": 2,
             "area": {
-                "id": 1,
-                "largo": "1200",
-                "ancho": "1500"
+                "id": 2,
+                "largo": "250",
+                "ancho": "40"
             },
-            "ubicacion": {
-                "id": 1,
-                "lon": 0,
-                "lat": 0
-            }
+            "ubicacion": null
+        },
+        "variable_mortalidad_recria": 5,
+        "variable_mortalidad_produccion": 13,
+        "variable_produccion_huevos_totales": 2,
+        "variable_aprovechamiento_huevos": 2,
+        "variable_nacimiento": 5,
+        "empresa": {
+            "id": 2,
+            "monbre_comercial": null,
+            "telefono": "8092425137",
+            "direccion": "ave pedro a rivera km 1/2",
+            "correo": null,
+            "RNC": "219082737812",
+            "owner_email": null,
+            "published_at": "2021-04-03T18:16:30.000Z",
+            "created_at": "2021-04-03T18:15:06.000Z",
+            "updated_at": "2021-04-03T18:16:30.000Z",
+            "nombre_comercial": "AproHuevos",
+            "perfil_usuario": null,
+            "provincia": "La Vega"
         }
     }
 ]

@@ -15,7 +15,7 @@ export class TableComponent implements OnInit {
   @Output('selected') selected = new EventEmitter();
 
   public temp = [];
-  public tableStyle = 'material';
+  public tableStyle = 'bootstrap';
   public customPopoverOptions: any = {
     header: 'Themes',
     subHeader: 'Select your theme color',

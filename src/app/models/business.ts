@@ -12,5 +12,5 @@ export interface BusinessInterface {
     "updated_at": string;
     "nombre_comercial": string;
     "perfil_usuario": any;
-    "capacidad_instaladas": CapacityInterface[];
+    "capacidad_instaladas"?: CapacityInterface[];
 }

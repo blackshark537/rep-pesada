@@ -1,4 +1,4 @@
-import { Capacity } from "./capacity";
+import { CapacityInterface } from "./capacity";
 
 export interface Inventory {
     "id": number;
@@ -7,7 +7,7 @@ export interface Inventory {
     "descripcion": string;
     "fecha_compra":  string;
     "vida_util": number;
-    "capacidad_instalada": Capacity;
+    "capacidad_instalada"?: CapacityInterface;
     "published_at": string;
     "created_at": string;
     "updated_at": string;

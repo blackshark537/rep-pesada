@@ -7,9 +7,9 @@ export interface CapacityInterface {
     "published_at": string;
     "created_at": string;
     "updated_at": string;
-    "empresa": BusinessInterface,
-    "area": AreaInterface;
-    "ubicacion": UbicacionInterface;
+    "empresa"?: BusinessInterface,
+    "area"?: AreaInterface;
+    "ubicacion"?: UbicacionInterface;
     "inventario": any[]
 }
 
