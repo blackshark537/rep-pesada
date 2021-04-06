@@ -11,8 +11,7 @@ import { BrowserService } from '../helpers/browser.service';
 export class LotService {
 
   lot$ = new BehaviorSubject<LotProdInterface>(null);
-  recria = [];
-  prod = [];
+  
   //lots$ = new BehaviorSubject<LotInterface[]>(null);
 
   cols$ = new BehaviorSubject([
@@ -51,18 +50,18 @@ export class LotService {
   }
 
   getRecria(lote){
-    this.recria=[];
+    let recria=[];
     const total_weeks=18;
     for (let i = 0; i < total_weeks; i++) {
 
       const {business, week, lot, mort, mortp, date, females} = lote;
       
-      const percent = this.recria[i-1]?.mort || 100;
+      const percent = recria[i-1]?.mort || 100;
       const mortality = percent-(mort / total_weeks);
       const date1 = new Date(date.getTime()+(7*24*60*60*1000))
       const date2 = new Date(date1.getTime()+((7 * 24 * 60 * 60 * 1000)*i));
 
-      this.recria.push({
+      recria.push({
         id:  i,
         business,
         week:i+1,
@@ -74,35 +73,34 @@ export class LotService {
         chicks: Math.round(females - ((100-mortality)*10)),
       });
     }
-    return this.recria;
+    return recria;
   }
 
   getProd(lote){
-    this.prod=[];
+    let prod=[];
     const total_weeks=67;
-      
     for (let i = 0; i < total_weeks; i++) {
 
       const {business, week, lot, entry, chicks, mortp} = lote;
       
-      const percent = this.prod[i-1]?.mort || 100;
+      const percent = prod[i-1]?.mort || 100;
       const mortality = percent-(mortp / total_weeks);
 
-      const date1 = new Date(entry.getTime()+(7*24*60*60*1000))
+      const date1 = new Date(entry.getTime()+(7*8*24*60*60*1000))//add 9+1 weeks
       const date2 = new Date(date1.getTime()+((7 * 24 * 60 * 60 * 1000)*i));
 
-      this.prod.push({
+      prod.push({
         id:  i,
         business,
-        week:lote.week+i+1,
+        week:lote.week+i+8,//add 8+i weeks
         weekIndx: week,
         lot,
-        mort: lote.week+i+1>24? Math.round(mortality*100)/100 : null,
+        mort:  Math.round(mortality*100)/100 ,
         entry: date2,
-        chicks: lote.week+i+1>24? Math.round(chicks - ((100-mortality)*10)) : null,
+        chicks: Math.round(chicks - ((100-mortality)*10)),
       });
     }
-    return this.prod;
+    return prod;
   }
 
   getLots(){
