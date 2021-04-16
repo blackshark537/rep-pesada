@@ -28,3 +28,26 @@ interface CantidadInterface{
     "hembras": string;
     "machos": string;
 }
+
+export interface LotsResponse{
+    id: string;
+    business: string;
+    phone: string;
+    address: string;
+    lot: string;
+    date: Date,
+    code: number;
+    mort: number;
+    mortp: number;
+    std_prod: number;
+    std_aprov: number;
+    race: string;
+    enviroment: string;
+    entry: string;
+    week: number;
+    days: number;
+    endBreeding: Date;
+    females: number;
+    males: number;
+    total: number
+}

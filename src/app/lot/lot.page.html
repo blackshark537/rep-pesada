@@ -14,5 +14,5 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-table name="Lots" [cols]="cols | async" [rows]="lots" (selected)="selected($event)"></app-table>
+  <app-table name="Lots" [cols]="cols | async" [rows]="lot$ | async" (selected)="selected($event)"></app-table>
 </ion-content>

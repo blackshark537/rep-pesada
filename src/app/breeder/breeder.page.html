@@ -11,9 +11,21 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Breeder</ion-title>
+      <ion-title size="large">
+        <ion-icon  name="home" ></ion-icon>
+        Breeder
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-table name="Lot" [cols]="cols$ | async" [rows]="lots" (selected)="selected($event)"></app-table>
+  <ion-item lines="none">
+    <ion-label>
+      <h2><b>Owner:</b> {{state?.owner}}</h2>
+      <h2><b>Phone:</b> {{state?.phone}}</h2>
+      <h2><b>Address:</b> {{state?.address}}</h2>
+      <h2><b>status:</b> {{state?.status}}</h2>
+    </ion-label>
+  </ion-item>
+
+  <app-table name="{{state?.status}}" [cols]="cols$ | async" [rows]="lots" (selected)="selected($event)"></app-table>
 </ion-content>

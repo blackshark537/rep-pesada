@@ -18,6 +18,7 @@
       </ion-select>
     </ion-item>
   </ion-toolbar>
+
   <ngx-datatable
     class="{{tableStyle}} "
     [rows]="rows"
@@ -26,7 +27,7 @@
     [rowHeight]="50"
     [footerHeight]="50"
 
-    [limit]="20"
+    [limit]="10"
     [scrollbarH]="true"
     [columnMode]="'force'"
     [selectionType]="'single'"
@@ -35,7 +36,10 @@
   [flexGrow]="1" [maxWidth]="300"
   name="Entry" sortable="true">
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-    <span>{{row['entry'] | date}}</span>
+    <span *ngIf="row['entry']; else idBlock">{{row['entry'] | date}}</span>
+    <ng-template #idBlock>
+      <span>{{row['id']}}</span>
+    </ng-template>
   </ng-template>
 </ngx-datatable-column>
 

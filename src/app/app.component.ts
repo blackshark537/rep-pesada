@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppModel } from './models/AppModel';
+import { LotsActions } from './actions';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   public appPages = [
     { title: 'Producers', url: '/user', icon: 'person' },
     { title: 'Installed Capacities', url: '/capacity', icon: 'file-tray' },
@@ -14,5 +18,11 @@ export class AppComponent {
     //{ title: 'Production', url: '/folder/production', icon: 'bar-chart' },
   ];
   public labels = ['Automatic', 'Manual', 'Normal', 'Controlado'];
-  constructor() {}
+  constructor(
+    private store: Store<AppModel>
+  ) {}
+
+  ngOnInit(){
+    this.store.dispatch(LotsActions.GET_LOTS());
+  }
 }

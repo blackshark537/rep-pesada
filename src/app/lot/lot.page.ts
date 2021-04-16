@@ -3,7 +3,10 @@ import { Platform } from '@ionic/angular';
 import { TableEvent } from '../shared';
 import { Router } from '@angular/router';
 import { LotService } from '../services/lot/lot.service';
-import { LotInterface } from '../models';
+import { LotInterface, LotsResponse } from '../models';
+import { Store } from '@ngrx/store';
+import { AppModel } from '../models/AppModel';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-lot',
@@ -13,15 +16,17 @@ import { LotInterface } from '../models';
 export class LotPage implements OnInit {
 
   cols = this.lotService.cols$;
-  lots = this.lotService.getLots();
+  lot$: Observable<LotsResponse[]>
 
   constructor(
     private platform: Platform,
     private router: Router,
-    private lotService: LotService
+    private lotService: LotService,
+    private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
+    this.lot$ = this.store.select('lots');
   }
 
   get isMaterial() {
