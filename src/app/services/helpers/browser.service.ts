@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 
@@ -36,14 +37,43 @@ export class BrowserService {
     return accept;
   }
 
-  async showToast(msg: string){
+  async showToast(msg: string, icon?: string, status?: ToastSatusClass){
     const toast = await this.toastCtrl.create({
       animated: true,
-      duration: 2000,
+      duration: 5000,
       message: msg,
-      position: 'bottom'
+      position: 'top',
+      cssClass: status? status: ToastSatusClass.info,
+      buttons:[
+        {
+          icon: icon? icon : 'information-circle',
+          side: 'start',
+        },
+        {
+          icon: 'close',
+          role: 'cancel'
+        }
+      ]
     });
     await toast.present();
   }
 
+  async handlError(error: HttpErrorResponse){
+    console.log(error);
+    if(error.status === 0){
+      this.showToast('ERR_CONNECTION_REFUSED');
+      return;
+    }
+
+    if(error.status === 403){
+      this.showToast('ERR_ACCESS_FORBIDDEN', 'lock-closed', ToastSatusClass.error);
+      return;
+    }
+  }
+
+}
+
+enum ToastSatusClass{
+  error='errorIcon',
+  info=''
 }

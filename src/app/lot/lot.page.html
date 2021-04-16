@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar [color]="isMaterial? 'primary' : '' ">
+  <ion-toolbar ><!-- [color]="isMaterial? 'primary' : '' " -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -14,5 +14,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-table name="Lots" [cols]="cols | async" [rows]="lot$ | async" (selected)="selected($event)"></app-table>
+  <app-table 
+  name="Lots" 
+  [cols]="cols | async" 
+  [rows]="lot$ | async" 
+  [tableActions]="tableActions"
+  (selected)="selected($event)"></app-table>
 </ion-content>

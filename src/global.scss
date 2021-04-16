@@ -57,3 +57,11 @@
     background-color: rgba($color: #ffc409, $alpha: 0.7);
     color: rgb(29, 28, 28);
 }
+
+.errorIcon{
+    /* background-color: red;
+    color: white; */
+    --background: var(--ion-color-light);
+    --color: var(--ion-color-danger);
+    --button-color: var(--ion-color-danger);
+}

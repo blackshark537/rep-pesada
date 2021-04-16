@@ -35,12 +35,11 @@ export class BreederPage implements OnInit {
       };
       
       if(lote.week >20){
-        const re=this.lotSerivce.getRecria(lote);
-        this.lots=this.lotSerivce.getProd(re[re.length-1]);
-        this.state.status = 'production';
+        this.lots=lote.produccion;
+        this.state.status = lote.status;
         return;
       }
-      this.lots=this.lotSerivce.getRecria(lote);
+      this.lots=lote.recria;
     });
   }
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { TableActions } from '..';
 
 @Component({
   selector: 'app-table',
@@ -10,6 +11,11 @@ export class TableComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @Input('name') name;
   @Input('expand') expand='';
+  @Input('tableActions') tableActions: TableActions = {
+    new: false,
+    open: false,
+    delete: false
+  };
   @Input('rows') rows=[];
   @Input('cols') columns = [];
   @Output('selected') selected = new EventEmitter();
@@ -25,6 +31,11 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.temp = [...this.rows];
+  }
+
+  get hasActions(){
+    let actions = Object.values(this.tableActions);
+    return actions.filter(a => a === true).length > 0;
   }
 
   openRow(row) {

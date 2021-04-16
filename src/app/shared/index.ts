@@ -5,3 +5,9 @@ export interface TableEvent{
     action: SelectedActions,
     row: any
 }
+
+export interface TableActions{
+    new: boolean;
+    open: boolean;
+    delete?: boolean;
+}

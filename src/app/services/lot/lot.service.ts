@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { LotInterface } from 'src/app/models';
-import Lots from 'src/assets/data/lot.json';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { LotInterface, LotProdInterface } from 'src/app/models';
 import { BrowserService} from '../helpers';
-import { HttpClient } from '@angular/common/http';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -35,25 +35,15 @@ _Nac = [
 ]
 
   cols$ = new BehaviorSubject([
-  //{ prop: 'Lot' }, 
-  //{ prop: 'Entry'},
   {prop: 'Business'},
   { prop: 'Females' },
-  //{ prop: 'Mort'}
-  //{ prop: 'Enviroment' }, 
-  //{ prop: 'Race' }, 
-  
   { prop: 'Days' }, 
   { prop: 'Week'},
   { prop: 'endBreeding' }, 
-  //{ prop: 'Total' }
   ]);
 
   colsRecria$ = new BehaviorSubject([
-    //{ prop: 'Lot' }, 
-    //{ prop: 'Entry'},
     { prop: 'Week'},
-    //{prop: 'Business'},
     { prop: 'Chicks' },
     { prop: 'Mort'},
     { prop: 'Standar'},
@@ -62,10 +52,7 @@ _Nac = [
     {prop: 'Aprov'},
     {prop: 'AprovReal'},
     { prop: 'Birth' }, 
-    
     { prop: 'BirthTotal' }, 
-    //{ prop: 'Males' }, 
-    //{ prop: 'Total' }
     ]);
 
   constructor(
@@ -75,7 +62,7 @@ _Nac = [
     
   }
 
-  getRecria(lote){
+  private getRecria(lote){
     let recria=[];
     const total_weeks=18;
     for (let i = 0; i < total_weeks; i++) {
@@ -104,7 +91,7 @@ _Nac = [
     return recria;
   }
 
-  getProd(lote){
+  private getProd(lote){
     let prod=[];
     const total_weeks=67;
     const conf_weeks = 5;
@@ -163,8 +150,8 @@ _Nac = [
     return prod;
   }
 
-  getLots(){
-    return this.http.get<LotInterface[]>('/assets/data/lot.json').pipe(
+  getLots(): Observable<any[]>{
+    return this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes`).pipe(
       map(Lots => {
         return Lots.map(Lote =>{
           const {
@@ -176,9 +163,9 @@ _Nac = [
             variable_produccion_huevos_totales
           } = Lote;
           
-          const { hembras, machos } = Lote.cantidad;
-          const { ambiente } = Lote.capacidad_instalada;
-          const { nombre_comercial, telefono, direccion } = Lote.empresa;
+          const { hembras, machos } = Lote?.cantidad;
+          const { ambiente } = Lote?.capacidad_instalada;
+          const { nombre_comercial, telefono, direccion } = Lote?.empresa;
           
           //has to  add one day
           const date1= this.formatDate(fecha_entrada);
@@ -211,10 +198,12 @@ _Nac = [
           return {
             ...data,
             recria,
+            status: data.week>20? 'production' : 'breeding',
             produccion
           }
         });
-      })
+      }),
+      catchError(error => throwError(this.helperService.handlError(error)))
     )
   }
 
@@ -242,26 +231,5 @@ _Nac = [
     const Difference_In_Time = d2.getTime() - d1.getTime();
     return Math.floor(Difference_In_Time / (1000 * 3600 * 24));
   }
-}
 
-export interface LotProdInterface{
-  id: number;
-  code: string;
-  lot: string;
-  enviroment: string;
-  race: string;
-  date: string;
-  days: number;
-  females: number;
-  males: number;
-  total: number;
-  week: number;
-  business?: string;
-  phone?: string;
-  address?: string;
-  "variable_mortalidad_recria": number;
-  "variable_mortalidad_produccion": number;
-  "variable_produccion_huevos_totales": number;
-  "variable_aprovechamiento_huevos": number;
-  "variable_nacimiento": number;
 }

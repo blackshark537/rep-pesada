@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { TableEvent } from '../shared';
+import { TableActions, TableEvent } from '../shared';
 import { Router } from '@angular/router';
 import { LotService } from '../services/lot/lot.service';
 import { LotInterface, LotsResponse } from '../models';
@@ -16,7 +16,12 @@ import { Observable } from 'rxjs';
 export class LotPage implements OnInit {
 
   cols = this.lotService.cols$;
-  lot$: Observable<LotsResponse[]>
+  lot$: Observable<LotsResponse[]>;
+  tableActions: TableActions = {
+    open: true,
+    new: false,
+    delete: false
+  }
 
   constructor(
     private platform: Platform,
