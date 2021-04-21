@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LotService } from '../services/lot/lot.service';
 import { LotInterface, LotsResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models/AppModel';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lot',
@@ -23,15 +24,23 @@ export class LotPage implements OnInit {
     delete: false
   }
 
+  filter="production";
+
   constructor(
     private platform: Platform,
     private router: Router,
+    private activeRoute: ActivatedRoute,
     private lotService: LotService,
     private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
-    this.lot$ = this.store.select('lots');
+    this.activeRoute.paramMap.subscribe(res=>{
+      this.filter = res.get('id');
+      this.lot$ = this.store.select('lots').pipe(
+        map(a =>  a.filter(x => x.status ===  this.filter))
+      );
+    });
   }
 
   get isMaterial() {

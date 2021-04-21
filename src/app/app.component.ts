@@ -13,7 +13,9 @@ export class AppComponent implements OnInit{
     { title: 'Producers', url: '/user', icon: 'person' },
     { title: 'Installed Capacities', url: '/capacity', icon: 'file-tray' },
     { title: 'Inventory', url: '/inventory/1', icon: 'clipboard' },
-    { title: 'Production', url: '/lot', icon: 'cube' },
+    { title: 'Lots Breeding', url: '/lot/breeding', icon: 'cube' },
+    { title: 'Lots Production', url: '/lot/production', icon: 'cube' },
+    { title: 'Production', url: '/production', icon: 'cube' },
     { title: 'Businesses', url: '/business', icon: 'business' },
     //{ title: 'Production', url: '/folder/production', icon: 'bar-chart' },
   ];
@@ -24,5 +26,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.store.dispatch(LotsActions.GET_LOTS());
+    setInterval(()=>{
+      this.store.dispatch(LotsActions.GET_LOTS());
+    }, 10*60*1000);
   }
 }

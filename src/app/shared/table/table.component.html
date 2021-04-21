@@ -27,16 +27,16 @@
     [rowHeight]="50"
     [footerHeight]="50"
 
-    [limit]="10"
+    [limit]="15" 
     [scrollbarH]="true"
     [columnMode]="'force'"
     [selectionType]="'single'"
   >
   <ngx-datatable-column
   [flexGrow]="1" [maxWidth]="300"
-  name="Entry" sortable="true">
+  name="Business" sortable="true">
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-    <span *ngIf="row['entry']; else idBlock">{{row['entry'] | date}}</span>
+    <span *ngIf="row['business']; else idBlock">{{row['business'] | titlecase}}</span>
     <ng-template #idBlock>
       <span>{{row['id']}}</span>
     </ng-template>

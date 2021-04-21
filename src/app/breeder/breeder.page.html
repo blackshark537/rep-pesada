@@ -27,5 +27,9 @@
     </ion-label>
   </ion-item>
 
-  <app-table name="{{state?.status}}" [cols]="cols$ | async" [rows]="lots" (selected)="selected($event)"></app-table>
+  <app-table 
+  name="{{state?.status}}"
+  [cols]="cols$ | async" 
+  [rows]="lots" 
+  (selected)="selected($event)"></app-table>
 </ion-content>

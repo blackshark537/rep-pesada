@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LotService } from '../services/lot/lot.service';
 
@@ -7,24 +8,28 @@ import { LotService } from '../services/lot/lot.service';
   templateUrl: './breeder.page.html',
   styleUrls: ['./breeder.page.scss'],
 })
-export class BreederPage implements OnInit {
+export class BreederPage implements OnInit, OnDestroy {
 
-  maxWeeks: number=67;
+  sub$: Subscription;
+
   cols$ = this.lotSerivce.colsRecria$;
   lots=[];
+
   state={
     owner: null,
     phone: null,
     address: null,
     status: null
   }
+
   constructor(
     public lotSerivce: LotService,
   ) { }
 
   async ngOnInit() {
     
-    this.lotSerivce.lot$.pipe(take(1)).subscribe(lote=>{
+    this.sub$ = this.lotSerivce.lot$.pipe(take(1)).subscribe(lote=>{
+      
       if(lote==null) return;
       
       this.state = {
@@ -33,7 +38,7 @@ export class BreederPage implements OnInit {
         address: lote.address,
         status: 'breeding'
       };
-      
+
       if(lote.week >20){
         this.lots=lote.produccion;
         this.state.status = lote.status;
@@ -43,4 +48,7 @@ export class BreederPage implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    this.sub$.unsubscribe();
+  }
 }

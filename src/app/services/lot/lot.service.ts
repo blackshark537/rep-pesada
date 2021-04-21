@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { LotInterface, LotProdInterface } from 'src/app/models';
 import { BrowserService} from '../helpers';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -35,22 +35,26 @@ _Nac = [
 ]
 
   cols$ = new BehaviorSubject([
-  {prop: 'Business'},
-  { prop: 'Females' },
-  { prop: 'Days' }, 
-  { prop: 'Week'},
-  { prop: 'endBreeding' }, 
+    {prop: 'Entry'},
+    { prop: 'Days' }, 
+    { prop: 'Week'},
+    { prop: 'Recive'},
+    { prop: 'Total' },
+    {prop: 'prodHtotal'},
+    {prop: 'Hincub'},
+    { prop: 'BirthTotal' }, 
+    { prop: 'status' }, 
   ]);
 
   colsRecria$ = new BehaviorSubject([
-    { prop: 'Week'},
+    { prop: 'day'},
     { prop: 'Chicks' },
     { prop: 'Mort'},
     { prop: 'Standar'},
     {prop: 'stdReal'},
-    { prop: 'Production' },
+    { prop: 'ProdHtotal' },
     {prop: 'Aprov'},
-    {prop: 'AprovReal'},
+    {prop: 'Hincub'},
     { prop: 'Birth' }, 
     { prop: 'BirthTotal' }, 
     ]);
@@ -65,19 +69,19 @@ _Nac = [
   private getRecria(lote){
     let recria=[];
     const total_weeks=18;
-    for (let i = 0; i < total_weeks; i++) {
+    for (let i = 0; i < total_weeks*7; i++) {
 
       const {business, week, lot, mort, mortp, date, females, std_prod, std_aprov} = lote;
       
       const percent = recria[i-1]?.mort || 100;
-      const mortality = percent-(mort / total_weeks);
-      const date1 = new Date(date.getTime()+(7*24*60*60*1000))
-      const date2 = new Date(date1.getTime()+((7 * 24 * 60 * 60 * 1000)*i));
+      const mortality = percent-(mort / (total_weeks*7));
+      const date1 = new Date(date.getTime()+(1*24*60*60*1000))
+      const date2 = new Date(date1.getTime()+((1 * 24 * 60 * 60 * 1000)*i));
 
       recria.push({
         id:  i,
         business,
-        week:i+1,
+        day:i+1,
         weekIndx: week,
         lot,
         mort: Math.round(mortality*100)/100,
@@ -94,36 +98,38 @@ _Nac = [
   private getProd(lote){
     let prod=[];
     const total_weeks=67;
-    const conf_weeks = 5;
+    const conf_weeks = 3;
+    let index = 0;
+    for (let i = 0; i < total_weeks*7; i++) {
 
-    for (let i = 0; i < total_weeks; i++) {
+      if(i%7===0) index+=1;
 
-      const {business, week, lot, entry, chicks, mortp, std_prod, std_aprov } = lote;
+      const {business, day, lot, entry, chicks, mortp, std_prod, std_aprov } = lote;
       
       const percent = prod[i-1]?.mort || 100;
-      const mortality =  percent  - ( mortp / total_weeks );
+      const mortality =  percent  - ( mortp / (total_weeks*7) );
 
-      let production_real = ( ( this._STD[i] * std_prod ) - this._STD[i] ) / 100;
-      let std_aprovechamiento = ( ( this._APROV[i] * std_aprov ) - this._APROV[i] ) / 100;
+      let production_real = ( ( this._STD[index] * std_prod ) - this._STD[index] ) / 100;
+      let std_aprovechamiento = ( ( this._APROV[index] * std_aprov ) - this._APROV[index] ) / 100;
 
-      const date1 = new Date(entry.getTime()+( 7 * 24 * 60 * 60 * 1000))//add 9+1 weeks
-      const date2 = new Date(date1.getTime()+(( 7 * 24 * 60 * 60 * 1000) * i));
+      const date1 = new Date(entry.getTime()+( 1 * 24 * 60 * 60 * 1000))//add 9+1 weeks
+      const date2 = new Date(date1.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
 
-      if(i<=conf_weeks){
+      if(i<=(conf_weeks*7)){
         prod.push({
           id:  i,
           business,
-          week:lote.week+i+1,//add 8+1 weeks
-          weekIndx: week,
+          day:lote.day+i+1,//add 1 day
+          dayIndx: day,
           lot,
-          mort:  100,
+          mort:  Math.round(mortality*100)/100,
           entry: date2,
-          standar: this._STD[i] + '%',
-          aprov: this._APROV[i] + '%',
-          chicks: chicks,
+          standar: this._STD[index] + '%',
+          aprov: this._APROV[index] + '%',
+          chicks: Math.round(chicks - ((100-mortality)*10)),
           stdReal: '-',
-          aprovReal: '-',
-          production: '-', //total eggs
+          hincub: '-',
+          prodHtotal: '-', //total eggs
           birth: '-',
           birthTotal: '-'
         });
@@ -131,19 +137,19 @@ _Nac = [
         prod.push({
           id:  i,
           business,
-          week:lote.week+i+1,//add 8+i weeks
-          weekIndx: week,
+          day:lote.day+i+1,//add 1 day
+          dayIndx: day,
           lot,
           mort:  Math.round(mortality*100)/100 ,
           entry: date2,
-          standar: this._STD[i] + '%',
-          aprov: this._APROV[i] + '%',
+          standar: this._STD[index] + '%',
+          aprov: this._APROV[index] + '%',
           chicks: Math.round(chicks - ((100-mortality)*10)),
           stdReal: production_real,
-          aprovReal: ((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento).toFixed(2),
-          production: (Math.round(chicks - ((100-mortality)*10))*production_real).toFixed(2), //total eggs
-          birth: this._Nac[i] + '%',
-          birthTotal: (((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento)*(this._Nac[i]*0.01)).toFixed(2)
+          hincub: ((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento).toFixed(2),
+          prodHtotal: (Math.round(chicks - ((100-mortality)*10))*production_real).toFixed(2), //total eggs
+          birth: this._Nac[index] + '%',
+          birthTotal: (((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento)*(this._Nac[index]*0.01)).toFixed(2)
         });
       }
     }
@@ -152,6 +158,7 @@ _Nac = [
 
   getLots(): Observable<any[]>{
     return this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes`).pipe(
+      shareReplay(1),
       map(Lots => {
         return Lots.map(Lote =>{
           const {
@@ -190,16 +197,21 @@ _Nac = [
             endBreeding: this.initProd(date1),
             females: parseInt(hembras),
             males: parseInt(machos),
-            total: parseInt(hembras)+parseInt(machos),
-          }
+          } as any;
 
           const recria = this.getRecria(data);
-          const produccion = data.week>20? this.getProd(recria[recria.length-1]) : [];
+          const produccion = this.getProd(recria[recria.length-1]);
+
           return {
             ...data,
             recria,
             status: data.week>20? 'production' : 'breeding',
-            produccion
+            produccion,
+            total: data.week>18?  produccion[data.days-(18*7)-1]?.chicks  : recria[data.days-1]?.chicks,
+            recive: data.females,
+            prodHtotal: data.week>18? produccion[data.days-(18*7)-1]?.prodHtotal : 0,
+            hincub: data.week>18? produccion[data.days-(18*7)-1]?.hincub : 0,
+            birthTotal: data.week>18? produccion[data.days-(18*7)-1]?.birthTotal : 0,
           }
         });
       }),
@@ -220,7 +232,7 @@ _Nac = [
   }
 
   private initProd(date: Date){
-    return new Date(date.getTime()+((1000 * 3600 * 24)*175))
+    return new Date(date.getTime()+((1000 * 3600 * 24)*133))
   }
 
   private weeksBetween(d1, d2) {
