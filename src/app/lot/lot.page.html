@@ -16,7 +16,7 @@
 
   <app-table 
   name="Lots" 
-  [cols]="cols | async" 
+  [cols]="col$ | async" 
   [rows]="lot$ | async" 
   [tableActions]="tableActions"
   (selected)="selected($event)"></app-table>

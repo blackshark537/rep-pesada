@@ -1,23 +1,16 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
+  <ion-split-pane contentId="main-content" *ngIf="canActive; else logginPage">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
           
-          <!-- <ion-list-header>
-            <ion-avatar>
-              <img src="assets/chicken.png" alt="">
-            </ion-avatar>
-            <h1>Ind. Avicola</h1>
-          </ion-list-header>
-          <ion-note>reproductora liviana</ion-note> -->
           <ion-item lines="none">
             <ion-avatar size="large" slot="start">
               <img src="assets/chicken.png" alt="logo"  width="100px" height="100px">
             </ion-avatar>
             <ion-label>
-              <h1>Poultry industry</h1>  
-              <p>Light breeder</p>
+              <h1>Industria avícola</h1>  
+              <p>Reproductora liviana</p>
             </ion-label>
           </ion-item>
 
@@ -27,18 +20,26 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
-
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
+          <ion-item (click)="authService.signOut()" button lines="none" detail="false" routerLinkActive="selected">
+            <ion-icon slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
+            <ion-label>Salir</ion-label>
           </ion-item>
         </ion-list>
+
+        <!-- <ion-list id="labels-list">
+          <ion-list-header>Labels</ion-list-header>
+
+          <ion-item *ngFor="let label of labels; index as i" lines="none">
+            <ion-icon slot="start" [color]="colors[i]" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-label>{{ label }}</ion-label>
+          </ion-item>
+        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
+
+  <ng-template #logginPage>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ng-template>
 </ion-app>

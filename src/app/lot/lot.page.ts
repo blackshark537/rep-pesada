@@ -6,7 +6,7 @@ import { LotService } from '../services/lot/lot.service';
 import { LotInterface, LotsResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models/AppModel';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -16,50 +16,49 @@ import { map } from 'rxjs/operators';
 })
 export class LotPage implements OnInit {
 
-  cols = this.lotService.cols$;
-  lot$: Observable<LotsResponse[]>;
-  tableActions: TableActions = {
-    open: true,
-    new: false,
+  lot$:  Observable<LotsResponse[]>;
+  tableActions: TableActions  = {
+    open:   true,
+    new:    false,
     delete: false
   }
-
-  filter="production";
-
+  col$    = this.lotService.cols$;
+  filter  =   "production";
+/////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
-    private platform: Platform,
-    private router: Router,
-    private activeRoute: ActivatedRoute,
-    private lotService: LotService,
-    private store: Store<AppModel>
+    private platform:     Platform,
+    private router:       Router,
+    private activeRoute:  ActivatedRoute,
+    private lotService:   LotService,
+    private store:        Store<AppModel>
   ) { }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.activeRoute.paramMap.subscribe(res=>{
-      this.filter = res.get('id');
-      this.lot$ = this.store.select('lots').pipe(
-        map(a =>  a.filter(x => x.status ===  this.filter))
+      this.filter =   res.get('id');
+      this.lot$   =   this.store.select('lots').pipe(
+        map(a     =>  a.filter(x => x.status ===  this.filter))
       );
     });
   }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
   get isMaterial() {
-    return this.platform.is('ios') ? false : true;
+    return this.platform.is('ios')? false : true;
   }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
   selected(evt: TableEvent) {
-      if(evt.action === 'new') return console.log(evt.action)
-      if(evt.action === 'open') return this.open(evt.row);
+      if(evt.action === 'new')    return console.log("Create a new one : %s", evt.action)
+      if(evt.action === 'open')   return this.open(evt.row);
       if(evt.action === 'delete') return this.delete(evt.row);
   }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
   open(row){
     this.lotService.lot$.next(row);
     this.router.navigate(['/breeder'])
   }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
   delete(row){
     this.lotService.deleteLot(row);
   }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 }

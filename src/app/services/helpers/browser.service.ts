@@ -73,7 +73,7 @@ export class BrowserService {
 
 }
 
-enum ToastSatusClass{
+export enum ToastSatusClass{
   error='errorIcon',
   info=''
 }

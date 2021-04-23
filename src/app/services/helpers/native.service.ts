@@ -5,5 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class NativeService {
 
+
   constructor() { }
+
+  setStorage(key: string,  value: any): void{
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  getFromStorage(key: string): Object{
+    return JSON.parse(localStorage.getItem(key));
+  }
+
+  remStorage(key: string): void{
+    localStorage.removeItem(key);
+  }
+
 }
