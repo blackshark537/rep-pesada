@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import Users from 'src/assets/data/user.json';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { AppModel } from '../models';
 import { TableEvent } from '../shared';
 
 @Component({
@@ -14,22 +16,26 @@ export class UserPage implements OnInit {
   cols = [{ prop: 'Firstname' }, { prop: 'Lastname' }, { prop: 'Phone' }, { prop: 'Company' }, { prop: 'Address' }];
   users = []
   constructor(
-    private platform: Platform
+    private platform: Platform,
+    private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
-    this.users = Users.filter(x => x['empresa'] != null).map(val => {
-      const { id, nombres, apellidos, telefono } = val;
-      const { nombre_comercial, direccion } = val.empresa;
-      return {
-        id,
-        firstname: nombres,
-        lastname: apellidos,
-        phone: telefono,
-        company: nombre_comercial,
-        address: direccion
-      };
-
+    this.store.select('producers').pipe(
+      map(producers => producers.map(val => {
+        const { id, nombres, apellidos, telefono } = val;
+        const { nombre_comercial, direccion } = val.empresa;
+        return {
+          id,
+          firstname: nombres,
+          lastname: apellidos,
+          phone: telefono,
+          company: nombre_comercial,
+          address: direccion
+        };
+      }))
+    ).subscribe(producers => {
+      this.users = producers
     });
 
   }

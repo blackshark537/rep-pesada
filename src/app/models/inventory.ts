@@ -1,6 +1,6 @@
 import { CapacityInterface } from "./capacity";
 
-export interface Inventory {
+export interface InventoryInterface {
     "id": number;
     "equipo":  string;
     "tipo":  string;

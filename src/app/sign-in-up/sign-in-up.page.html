@@ -33,23 +33,23 @@
               <ion-list-header>
                 <ion-note>Email y Contraseña</ion-note>
               </ion-list-header>
-              <form>
+              <form [formGroup]="credentials">
                 <!-- EMAIL -->
                 <ion-item lines="none">
                   <ion-label position="stacked">Email:</ion-label>
-                  <ion-input required class="email" placeholder="Escribe tu @ email" type="email"></ion-input>
+                  <ion-input formControlName="email" required class="email" placeholder="Escribe tu @ email" type="email"></ion-input>
                   <small>Esciba su email aqui.</small>
                 </ion-item>
                 <!-- PASSWORD -->
                 <ion-item lines="none">
                   <ion-label position="stacked">Contraseña:</ion-label>
-                  <ion-input required class="email" placeholder="Escribe tu contraseña" type="password"></ion-input>
+                  <ion-input formControlName="password" required class="email" placeholder="Escribe tu contraseña" type="password"></ion-input>
                   <small>Esciba su contraseña aqui.</small>
                 </ion-item>
 
                 <br>
 
-                <ion-item button class="ion-text-center" lines="none" detail="false" color="primary">
+                <ion-item [disabled]="credentials.invalid" (click)="signIn()" button class="ion-text-center" lines="none" detail="false" color="primary">
                   <ion-label>Entrar</ion-label>
                 </ion-item>
 

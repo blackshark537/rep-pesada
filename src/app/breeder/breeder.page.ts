@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { LotService } from '../services/lot/lot.service';
+import { LotService } from '../services';
 
 @Component({
   selector: 'app-breeder',

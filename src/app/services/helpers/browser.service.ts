@@ -65,6 +65,11 @@ export class BrowserService {
       return;
     }
 
+    if(error.status === 400){
+      this.showToast('ERR_BAD_REQUEST');
+      return;
+    }
+
     if(error.status === 403){
       this.showToast('ERR_ACCESS_FORBIDDEN', 'lock-closed', ToastSatusClass.error);
       return;

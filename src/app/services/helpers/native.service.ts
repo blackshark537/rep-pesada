@@ -20,4 +20,8 @@ export class NativeService {
     localStorage.removeItem(key);
   }
 
+  clearStorage(): void{
+    localStorage.clear();
+  }
+
 }

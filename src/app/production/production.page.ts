@@ -1,8 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LotService } from '../services/lot/lot.service';
-import { filter, last, map } from 'rxjs/operators'
-import { AlertController, ModalController } from '@ionic/angular';
-import { async } from '@angular/core/testing';
+import { map } from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models/AppModel';
 import { Subscription } from 'rxjs';
@@ -27,7 +24,7 @@ export class ProductionPage implements OnInit, OnDestroy {
   };
   cardColor: string = '#232837';
 
-  //domain: ['#023859', '#038C8C', '#F2811D', '#F26716', '#BF1515', '#D98E04'],
+  //domainColors: ['#023859', '#038C8C', '#F2811D', '#F26716', '#BF1515', '#D98E04'],
 
   activateCard: boolean = false;
   activateArea: boolean = false;
@@ -65,8 +62,7 @@ export class ProductionPage implements OnInit, OnDestroy {
       this.res=[];
       this.res2=[];
       this.single=[];
-      console.log(result);
-      if(result === null) return;
+      if(!!result) return;
 
       let recive=0;
       let Week=0;

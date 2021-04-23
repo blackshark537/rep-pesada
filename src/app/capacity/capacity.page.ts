@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TableEvent } from '../shared';
-import Capacities from 'src/assets/data/capacity.json';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppModel } from '../models';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-capacity',
@@ -15,22 +17,28 @@ export class CapacityPage implements OnInit {
   capacities = []
   constructor(
     private platform: Platform,
-    private router: Router
+    private router: Router,
+    private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
-    this.capacities = Capacities.map(c =>{
-      const {id, ambiente, direccion} = c;
-      const { ancho, largo} = c.area;
-      const { nombre_comercial, telefono } = c.empresa
-      return {
-        id,
-        enviroment: ambiente,
-        area: (parseInt(ancho)*parseInt(largo) )+ 'mt',
-        company: nombre_comercial,
-        phone: telefono,
-        address: direccion
-      }
+    this.store.select('capacities').pipe(
+      map(capacities => capacities.map(c =>{
+        const {id, ambiente, direccion} = c;
+        const { ancho, largo} = c.area;
+        const { nombre_comercial, telefono } = c.empresa
+        return {
+          id,
+          enviroment: ambiente,
+          area: (parseInt(ancho)*parseInt(largo) )+ 'mt',
+          company: nombre_comercial,
+          phone: telefono,
+          address: direccion
+        }
+      })
+      )
+    ).subscribe(capacities => {
+      this.capacities = capacities
     });
   }
 

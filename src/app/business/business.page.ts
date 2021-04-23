@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import Businesses from 'src/assets/data/business.json';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { AppModel } from '../models';
 import { TableEvent } from '../shared';
 
 @Component({
@@ -13,22 +15,27 @@ export class BusinessPage implements OnInit {
   cols = [{ prop: 'Company' }, { prop: 'RNC' }, { prop: 'Phone' }, { prop: 'Owner' }, { prop: 'Address' }];
   businesses = []
   constructor(
-    private platform: Platform
+    private platform: Platform,
+    private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
-    this.businesses = Businesses.map(b =>{
-      const {id, nombre_comercial, RNC, telefono, direccion} = b
-      const owner = b.perfil_usuario.nombres + ' ' + b.perfil_usuario.apellidos;
-      return {
-        id, 
-        company: nombre_comercial,
-        rnc: RNC,
-        phone: telefono,
-        address: direccion,
-        owner
-      }
-    })
+    this.store.select('businesses').pipe(
+      map(Businesses => Businesses.map(b =>{
+        const {id, nombre_comercial, RNC, telefono, direccion} = b
+        const owner = b.perfil_usuario.nombres + ' ' + b.perfil_usuario.apellidos;
+        return {
+          id, 
+          company: nombre_comercial,
+          rnc: RNC,
+          phone: telefono,
+          address: direccion,
+          owner
+        }
+      }))
+    ).subscribe(businesses =>{
+      this.businesses = businesses;
+    });
   }
 
   get isMaterial() {

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LotService } from '../services/lot/lot.service';
-import { LotInterface, LotsResponse } from '../models';
+import { LotService } from '../services';
+import { LotsResponse } from '../models';
 import { Store } from '@ngrx/store';
-import { AppModel } from '../models/AppModel';
-import { Observable, Subscription } from 'rxjs';
+import { AppModel } from '../models';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({

@@ -1,6 +1,6 @@
 import { BusinessInterface } from "./business";
 
-export interface User {
+export interface ProducerInterface {
     "id": number;
     "nombres": string;
     "apellidos": string;

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppModel } from './models/AppModel';
-import { LotsActions } from './actions';
+import { capacitiesActions, LotsActions, producersActions } from './actions';
 import { AuthGuard } from './guards';
 import { AuthService } from './services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,34 +13,36 @@ import { AuthService } from './services';
 })
 export class AppComponent implements OnInit{
   public appPages = [
-    { title: 'Productores', url: '/user', icon: 'person' },
-    { title: 'Capacidades Instaladas', url: '/capacity', icon: 'file-tray' },
-    { title: 'Inventarios', url: '/inventory/1', icon: 'clipboard' },
-    { title: 'Lotes en recria', url: '/lot/breeding', icon: 'cube' },
-    { title: 'Lotes en producción', url: '/lot/production', icon: 'cube' },
-    { title: 'Producción', url: '/production', icon: 'cube' },
-    { title: 'Empresas', url: '/business', icon: 'business' },
-    //{ title: 'Production', url: '/folder/production', icon: 'bar-chart' },
+    { title: 'Productores',            url: '/producers',      icon: 'person' },
+    { title: 'Capacidades Instaladas', url: '/capacity',       icon: 'file-tray' },
+    { title: 'Inventarios',            url: '/inventory/1',    icon: 'clipboard' },
+    { title: 'Lotes en recria',        url: '/lot/breeding',   icon: 'cube' },
+    { title: 'Lotes en producción',    url: '/lot/production', icon: 'cube' },
+    { title: 'Producción',             url: '/production',     icon: 'cube' },
+    { title: 'Empresas',               url: '/business',       icon: 'business' }
   ];
   public labels     = ['Automatico', 'Manual', 'Normal', 'Controlado'];
   public colors     = ['warning', 'secondary', 'tertiary', 'success', 'primary', 'danger']
-  public canActive  = false;
+  public canActive  = false; //can navigate throw menu
   constructor(
-    guard: AuthGuard,
     public authService: AuthService,
-    private store: Store<AppModel>
+    private store: Store<AppModel>,
+    private router: Router
   ) {
-    guard.canActivate().subscribe(val =>{
-      this.canActive = val;
+    authService.user$.subscribe(val =>{
+      if(!!val){
+         this.router.navigate(['/producers']);
+         this.store.dispatch(LotsActions.GET_LOTS());
+         this.store.dispatch(producersActions.GET_PRODUCERS());
+         this.store.dispatch(capacitiesActions.GET_CAPACITIES());
+      }
+      this.canActive = !!val;
     });
   }
 
   ngOnInit(){
-    if(false){
-      this.store.dispatch(LotsActions.GET_LOTS());
-      setInterval(()=>{
+      /* setInterval(()=>{
         this.store.dispatch(LotsActions.GET_LOTS());
-      }, 10*60*1000);
-    }
+      }, 10*60*1000); */
   }
 }

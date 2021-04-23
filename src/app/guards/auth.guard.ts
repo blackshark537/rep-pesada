@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { AuthService, BrowserService, ToastSatusClass } from '../services';
@@ -13,16 +13,16 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService,
     private browserService: BrowserService
   ){}
-  canActivate(): Observable<boolean>{
+  canActivate(
+    next,
+    state: RouterStateSnapshot): Observable<boolean>{
     return this.authService.user$.pipe(
       take(1),
       map(user => !!user), //map to Boolean
       tap(loggedIn =>{
         if(!loggedIn){
-          this.browserService.showToast(
-            'Acceso denegado, por favor inicie sesion.', 
-            'lock-closed', ToastSatusClass.error
-          );
+          console.warn('Access Denied');
+          this.browserService.showToast('Acceso denegado', 'lock-closed')
           this.router.navigate(['/signin']);
         }
       })

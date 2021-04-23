@@ -14,17 +14,20 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 //Reducers
-import { lotsReducer } from './reducers'
+import { lotsReducer, producersReducer } from './reducers'
 
 //Effects
-import { LotsEffects } from './effects';
+import { LotsEffects, ProducerEffect } from './effects';
 
 //Firebase Module
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
+import { CapacitiesEffect } from './effects/capacities.effect';
+import { capacitiesReducer } from './reducers/capacities.reducer';
+import { BusinessesEffect } from './effects/businesses.effect';
+import { businessesReducer } from './reducers/businesses.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,10 +40,16 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     NgxDatatableModule,
     HttpClientModule,
     StoreModule.forRoot({
-      lots: lotsReducer
+      lots: lotsReducer,
+      producers: producersReducer,
+      capacities: capacitiesReducer,
+      businesses: businessesReducer
     }),
     EffectsModule.forRoot([
-      LotsEffects
+      LotsEffects,
+      ProducerEffect,
+      CapacitiesEffect,
+      BusinessesEffect
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 15,
