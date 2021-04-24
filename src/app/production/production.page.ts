@@ -62,7 +62,7 @@ export class ProductionPage implements OnInit, OnDestroy {
       this.res=[];
       this.res2=[];
       this.single=[];
-      if(!!result) return;
+      if(result === null) return;
 
       let recive=0;
       let Week=0;
@@ -79,10 +79,10 @@ export class ProductionPage implements OnInit, OnDestroy {
         Days+= el.days;
         mortp+= el.mortp;
         total+= el.total;
-        birthTotal+= parseFloat(el.birthTotal);
-        hincub+= parseFloat(el.hincub);
-        prodHtotal+= parseFloat(el.prodHtotal);
-        this.single.push({name: el.business, value: parseFloat(el.prodHtotal)})
+        birthTotal+= parseFloat(el.nacimientos);
+        hincub+= parseFloat(el.incubables);
+        prodHtotal+= parseFloat(el.productionTotal);
+        this.single.push({name: el.business, value: parseFloat(el.productionTotal)})
       });
 
 

@@ -61,12 +61,17 @@ export class BrowserService {
   async handlError(error: HttpErrorResponse){
     console.log(error);
     if(error.status === 0){
-      this.showToast('ERR_CONNECTION_REFUSED');
+      this.showToast('ERR_CONNECTION_REFUSED', 'info', ToastSatusClass.error);
       return;
     }
 
     if(error.status === 400){
-      this.showToast('ERR_BAD_REQUEST');
+      this.showToast('ERR_BAD_REQUEST', 'info', ToastSatusClass.info);
+      return;
+    }
+
+    if(error.status === 401){
+      this.showToast('ERR_UNAUTHORIZED_ACCESS', 'lock-closed', ToastSatusClass.error);
       return;
     }
 
@@ -80,5 +85,5 @@ export class BrowserService {
 
 export enum ToastSatusClass{
   error='errorIcon',
-  info=''
+  info='primary'
 }

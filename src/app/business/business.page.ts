@@ -12,7 +12,7 @@ import { TableEvent } from '../shared';
 })
 export class BusinessPage implements OnInit {
 
-  cols = [{ prop: 'Company' }, { prop: 'RNC' }, { prop: 'Phone' }, { prop: 'Owner' }, { prop: 'Address' }];
+  cols = [{ prop: 'empresa' }, { prop: 'rnc' }, { prop: 'telefono' }, { prop: 'direccion' }];
   businesses = []
   constructor(
     private platform: Platform,
@@ -23,14 +23,14 @@ export class BusinessPage implements OnInit {
     this.store.select('businesses').pipe(
       map(Businesses => Businesses.map(b =>{
         const {id, nombre_comercial, RNC, telefono, direccion} = b
-        const owner = b.perfil_usuario.nombres + ' ' + b.perfil_usuario.apellidos;
+        //const owner = b.perfil_usuario.nombres + ' ' + b.perfil_usuario.apellidos;
         return {
           id, 
-          company: nombre_comercial,
+          empresa: nombre_comercial,
           rnc: RNC,
-          phone: telefono,
-          address: direccion,
-          owner
+          telefono,
+          direccion,
+          //owner
         }
       }))
     ).subscribe(businesses =>{

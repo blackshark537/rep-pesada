@@ -37,8 +37,10 @@ export class LotPage implements OnInit {
     this.activeRoute.paramMap.subscribe(res=>{
       this.filter =   res.get('id');
       this.lot$   =   this.store.select('lots').pipe(
-        map(a     =>  a.filter(x => x.status ===  this.filter))
-      );
+        map(a     =>  {
+          console.log(a)
+          return a.filter(x => x.status ===  this.filter)})
+      )
     });
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////

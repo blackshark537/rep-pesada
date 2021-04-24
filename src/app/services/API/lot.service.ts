@@ -35,15 +35,16 @@ _Nac = [
 ]
 
   cols$ = new BehaviorSubject([
+    {prop: 'Business'},
     {prop: 'Entry'},
-    { prop: 'Days' }, 
-    { prop: 'Week'},
     { prop: 'Recive'},
     { prop: 'Total' },
-    {prop: 'prodHtotal'},
-    {prop: 'Hincub'},
-    { prop: 'BirthTotal' }, 
-    { prop: 'status' }, 
+    {prop: 'ProductionTotal'},
+    {prop: 'Incubables'},
+    { prop: 'Nacimientos' }, 
+    { prop: 'Days' }, 
+    { prop: 'Week'},
+    { prop: 'Status' }, 
   ]);
 
   colsRecria$ = new BehaviorSubject([
@@ -171,7 +172,7 @@ _Nac = [
           } = Lote;
           
           const { hembras, machos } = Lote?.cantidad;
-          const { ambiente } = Lote?.capacidad_instalada;
+          //const { ambiente } = Lote?.capacidad_instalada;
           const { nombre_comercial, telefono, direccion } = Lote?.empresa;
           
           //has to  add one day
@@ -182,7 +183,7 @@ _Nac = [
             business: nombre_comercial,
             phone: telefono,
             address: direccion,
-            lot: lote,
+            Lot: lote,
             date: date1,
             code: codigo_aduanero,
             mort: variable_mortalidad_recria,
@@ -190,7 +191,7 @@ _Nac = [
             std_prod: variable_produccion_huevos_totales,
             std_aprov: variable_aprovechamiento_huevos,
             race: raza,
-            enviroment: ambiente,
+            //enviroment: ambiente,
             entry: date1.toDateString(),
             week: this.weeksBetween(date1, date2),
             days: this.daysBetween(date1,date2),
@@ -209,9 +210,9 @@ _Nac = [
             produccion,
             total: data.week>18?  produccion[data.days-(18*7)-1]?.chicks  : recria[data.days-1]?.chicks,
             recive: data.females,
-            prodHtotal: data.week>18? produccion[data.days-(18*7)-1]?.prodHtotal : 0,
-            hincub: data.week>18? produccion[data.days-(18*7)-1]?.hincub : 0,
-            birthTotal: data.week>18? produccion[data.days-(18*7)-1]?.birthTotal : 0,
+            productionTotal: data.week>18? produccion[data.days-(18*7)-1]?.prodHtotal : 0,
+            incubables: data.week>18? produccion[data.days-(18*7)-1]?.hincub : 0,
+            nacimientos: data.week>18? produccion[data.days-(18*7)-1]?.birthTotal : 0,
           }
         });
       }),

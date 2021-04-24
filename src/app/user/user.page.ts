@@ -13,7 +13,7 @@ import { TableEvent } from '../shared';
 export class UserPage implements OnInit {
 
 
-  cols = [{ prop: 'Firstname' }, { prop: 'Lastname' }, { prop: 'Phone' }, { prop: 'Company' }, { prop: 'Address' }];
+  cols = [{ prop: 'nombres' }, { prop: 'apellidos' }, { prop: 'telefono' }, { prop: 'empresa' }, { prop: 'direccion' }];
   users = []
   constructor(
     private platform: Platform,
@@ -27,11 +27,11 @@ export class UserPage implements OnInit {
         const { nombre_comercial, direccion } = val.empresa;
         return {
           id,
-          firstname: nombres,
-          lastname: apellidos,
-          phone: telefono,
-          company: nombre_comercial,
-          address: direccion
+          nombres,
+          apellidos,
+          telefono,
+          direccion,
+          empresa: nombre_comercial
         };
       }))
     ).subscribe(producers => {

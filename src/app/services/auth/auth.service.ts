@@ -31,7 +31,6 @@ export class AuthService {
     this.user$ = afAuth.authState.pipe(
       switchMap(user => {
         if(user){
-          native.setStorage('uid',  user.uid);
           return of({
             uid: user.uid,
             email: user.email,
@@ -41,24 +40,22 @@ export class AuthService {
           })//afs.doc<UserModel>(`users/${user.uid}`).valueChanges();
         }
         return of(null);
-      }),
-      catchError(error => tap(e =>{
-        console.log(error);
-      }))
+      })
     )
   }
 
   async signOut(){
-    this.native.clearStorage();
+    this.native.remStorage('uid');
+    this.native.remStorage('token');
     this.afAuth.signOut();
     this.router.navigate(['/signin']);
   }
 
   async googleSignIn(){
+    await this.bService.loadingCtrl.create();
     const provider = new firebase.auth.GoogleAuthProvider();
     let credentials = await this.afAuth.signInWithPopup(provider);
-    this.user$ =  of(credentials.user);
-    this.emailPswdSignin(credentials.user.email, credentials.user.uid).subscribe();
+    this.user$ = of(credentials.user);
   }
 
   async facebookSignIn(){
@@ -72,14 +69,7 @@ export class AuthService {
       identifier: email,
       password
     };
-    this.bService.loadingCtrl.create();
     return this.http.post<StrapiAccess>(`${environment.baseUrl}/auth/local`, credentials).pipe(
-      map(val => {
-        this.bService.loadingCtrl.dismiss();
-        this.native.setStorage('token', val.jwt);
-        this.router.navigate(['/user']);
-        return val
-      }),
       catchError(error => throwError(this.bService.handlError(error)))
     )
   }

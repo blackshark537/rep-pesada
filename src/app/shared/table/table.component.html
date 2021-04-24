@@ -1,8 +1,8 @@
 <ion-list >
   <ion-list-header>
-    <ion-label>List {{name? 'of '+ name: ''}}</ion-label>    
+    <ion-label>Lista {{name? 'de '+ name: ''}}</ion-label>    
     <ion-button *ngIf="tableActions.new" size="large" (click)="newRow()">
-      New
+      Nuevo
       <ion-icon name="add"></ion-icon>
     </ion-button>
   </ion-list-header>
@@ -33,13 +33,10 @@
     [selectionType]="'single'"
   >
   <ngx-datatable-column
-  [flexGrow]="1" [maxWidth]="300"
-  name="Business" sortable="true">
+  [flexGrow]="1" [maxWidth]="100"
+  name="Id" sortable="true">
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-    <span *ngIf="row['business']; else idBlock">{{row['business'] | titlecase}}</span>
-    <ng-template #idBlock>
-      <span>{{row['id']}}</span>
-    </ng-template>
+    <span >{{row['id']}}</span>
   </ng-template>
 </ngx-datatable-column>
 

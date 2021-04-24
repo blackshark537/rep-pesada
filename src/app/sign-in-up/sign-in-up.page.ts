@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services';
+import { AuthService, NativeService } from '../services';
 
 @Component({
   selector: 'app-sign-in-up',
@@ -13,7 +13,8 @@ export class SignInUpPage implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private native: NativeService
   ) { }
 
   ngOnInit() {
@@ -21,11 +22,22 @@ export class SignInUpPage implements OnInit {
       email: ['', Validators.email],
       password: ['', Validators.required]
     })
+    this.authService.user$.subscribe(resp =>{
+        if(!!resp){
+          this.credentials.patchValue({
+            email: resp.email,
+            password: resp.uid
+          });
+          this.signIn();
+        }
+    })
   }
 
   signIn(){
     const { email, password } = this.credentials.value;
-    this.authService.emailPswdSignin(email, password).subscribe();
+    this.authService.emailPswdSignin(email, password).subscribe(response =>{
+      this.native.setStorage('token', response.jwt);
+    });
   }
 
 }

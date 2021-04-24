@@ -20,9 +20,9 @@ export class AuthGuard implements CanActivate {
       take(1),
       map(user => !!user), //map to Boolean
       tap(loggedIn =>{
-        if(!loggedIn){
-          console.warn('Access Denied');
-          this.browserService.showToast('Acceso denegado', 'lock-closed')
+        if(!loggedIn && !!localStorage.getItem('token')){
+          console.warn('Acceso denegado %s');
+          this.browserService.showToast('Acceso denegado', 'lock-closed', ToastSatusClass.error)
           this.router.navigate(['/signin']);
         }
       })
