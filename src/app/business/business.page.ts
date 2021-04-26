@@ -12,7 +12,7 @@ import { TableEvent } from '../shared';
 })
 export class BusinessPage implements OnInit {
 
-  cols = [{ prop: 'empresa' }, { prop: 'rnc' }, { prop: 'telefono' }, { prop: 'direccion' }];
+  cols = [{ prop: 'empresa' }, { prop: 'telefono' }, { prop: 'direccion' }];
   businesses = []
   constructor(
     private platform: Platform,

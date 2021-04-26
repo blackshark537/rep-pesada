@@ -13,13 +13,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit{
   public appPages = [
-    { title: 'Productores',            url: '/producers',      icon: 'person' },
-    { title: 'Capacidades Instaladas', url: '/capacity',       icon: 'file-tray' },
+    { title: 'Empresas',               url: '/business',       icon: 'business' },
+    { title: 'Producción',             url: '/production',     icon: 'cube' },
     //{ title: 'Inventarios',            url: '/inventory/1',    icon: 'clipboard' },
     { title: 'Lotes en recria',        url: '/lot/breeding',   icon: 'cube' },
     { title: 'Lotes en producción',    url: '/lot/production', icon: 'cube' },
-    { title: 'Producción',             url: '/production',     icon: 'cube' },
-    { title: 'Empresas',               url: '/business',       icon: 'business' }
+    //{ title: 'Capacidades Instaladas', url: '/capacity',       icon: 'file-tray' },
+    //{ title: 'Productores',            url: '/producers',      icon: 'person' },
   ];
   public labels     = ['Automatico', 'Manual', 'Normal', 'Controlado'];
   public colors     = ['warning', 'secondary', 'tertiary', 'success', 'primary', 'danger']
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit{
   ) {
     authService.user$.subscribe(val =>{
       if(!!val){
-         this.router.navigate(['/producers']);
+         this.router.navigate(['/business']);
          this.store.dispatch(LotsActions.GET_LOTS());
          this.store.dispatch(producersActions.GET_PRODUCERS());
          this.store.dispatch(capacitiesActions.GET_CAPACITIES());

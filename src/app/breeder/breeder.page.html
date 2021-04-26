@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar [color]="isMaterial? 'primary' : '' ">
+  <ion-toolbar >
     <ion-buttons slot="start">
       <!-- <ion-menu-button></ion-menu-button> -->
       <ion-back-button></ion-back-button>
@@ -31,5 +31,5 @@
   name="{{state?.status}}"
   [cols]="cols$ | async" 
   [rows]="lots" 
-  (selected)="selected($event)"></app-table>
+  ></app-table>
 </ion-content>

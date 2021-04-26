@@ -62,7 +62,7 @@ export class ProductionPage implements OnInit, OnDestroy {
       this.res=[];
       this.res2=[];
       this.single=[];
-      if(result === null) return;
+      if(!!result === false) return;
 
       let recive=0;
       let Week=0;

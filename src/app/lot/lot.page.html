@@ -15,17 +15,10 @@
   </ion-header>
   <ion-toolbar>
     <!-- <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar> -->
-    <ion-item lines="none">
-      <ion-label>Year:</ion-label>
-      <ion-select [interfaceOptions]="customPopoverOptions" interface="popover"  placeholder="theme" >
-        <ion-select-option value="2016">2016</ion-select-option>
-        <ion-select-option value="2017">2017</ion-select-option>
-        <ion-select-option value="2018">2018</ion-select-option>
-        <ion-select-option value="2019">2019</ion-select-option>
-        <ion-select-option value="2010">2020</ion-select-option>
-        <ion-select-option value="2021">2021</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <!-- <ion-item>
+      <ion-label>Año</ion-label>
+      <ion-datetime value="2021" [pickerOptions]="customPickerOptions" placeholder="Custom Options" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
+    </ion-item> -->
   </ion-toolbar>
 
   <app-table 
