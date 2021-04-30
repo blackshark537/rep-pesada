@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService, NativeService } from '../services';
 
 @Component({
@@ -7,14 +9,16 @@ import { AuthService, NativeService } from '../services';
   templateUrl: './sign-in-up.page.html',
   styleUrls: ['./sign-in-up.page.scss'],
 })
-export class SignInUpPage implements OnInit {
+export class SignInUpPage implements OnInit, OnDestroy {
 
   credentials:FormGroup;
+  sub$: Subscription;
 
   constructor(
     public authService: AuthService,
     private fb: FormBuilder,
-    private native: NativeService
+    private native: NativeService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -30,13 +34,20 @@ export class SignInUpPage implements OnInit {
           });
           this.signIn();
         }
-    })
+    }).unsubscribe();
+  }
+
+  ngOnDestroy(){
+
   }
 
   signIn(){
     const { email, password } = this.credentials.value;
-    this.authService.emailPswdSignin(email, password).subscribe(response =>{
-      this.native.setStorage('token', response.jwt);
+    this.sub$ = this.authService.emailPswdSignin(email, password).subscribe(response =>{
+      if(!!response?.jwt){
+        this.native.setStorage('token', response.jwt);
+        location.href = '/';
+      }
     });
   }
 

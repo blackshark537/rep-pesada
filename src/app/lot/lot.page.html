@@ -3,23 +3,30 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Lotes en {{filter}}</ion-title>
+    <ion-title>Lotes en {{filter==='breeding'? 'Recria' : 'Producción'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Lotes en {{filter}}</ion-title>
+      <ion-title size="large">Lotes en {{filter==='breeding'? 'Recria' : 'Producción'}}</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-toolbar>
-    <!-- <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar> -->
-    <!-- <ion-item>
+  <!-- <ion-toolbar>
+    <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
+    <ion-item>
       <ion-label>Año</ion-label>
       <ion-datetime value="2021" [pickerOptions]="customPickerOptions" placeholder="Custom Options" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
-    </ion-item> -->
-  </ion-toolbar>
+    </ion-item>
+  </ion-toolbar> -->
+
+  <ion-item lines="none">
+    <ion-label>
+      <h2><b>Total de Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}:</b> {{status?.total}}</h2>
+      <h2><b>Total de Huevos Producidos:</b> {{status?.eggs}}</h2>
+    </ion-label>
+  </ion-item>
 
   <app-table 
   name="Lotes" 

@@ -19,7 +19,8 @@ export interface LotInterface {
     "variable_produccion_huevos_totales": number;
     "variable_aprovechamiento_huevos": number;
     "variable_nacimiento": number;
-    "empresa": BusinessInterface
+    "empresa": BusinessInterface;
+    "cant_gallinas_asignadas"?: string;
 }
 
 interface CantidadInterface{

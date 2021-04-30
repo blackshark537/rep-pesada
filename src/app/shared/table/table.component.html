@@ -8,7 +8,6 @@
   </ion-list-header>
 
   <ion-toolbar>
-    <!-- <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar> -->
     <ion-item lines="none">
       <ion-label>Theme:</ion-label>
       <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange)="tableStyle = $event.target.value" placeholder="theme" [value]="tableStyle">
@@ -17,6 +16,7 @@
         <ion-select-option value="dark">Dark</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
   </ion-toolbar>
 
   <ngx-datatable
@@ -27,13 +27,16 @@
     [rowHeight]="50"
     [footerHeight]="50"
 
-    [limit]="15" 
+    [limit]="19"
     [scrollbarH]="true"
     [columnMode]="'force'"
     [selectionType]="'single'"
-  >
+    [externalSorting]="true"
+    [loadingIndicator]="loading"
+    (sort)="onSort($event)"
+  ><!-- [limit]="9"  -->
   <ngx-datatable-column
-  [flexGrow]="1" [maxWidth]="100"
+  [flexGrow]="1" [maxWidth]="50"
   name="Id" sortable="true">
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
     <span >{{row['id']}}</span>
@@ -41,8 +44,15 @@
 </ngx-datatable-column>
 
 <ngx-datatable-column
-  *ngFor="let col of columns" name="{{col.prop}}"
-  [flexGrow]="1" minWidth="{{col.prop!==expand?120 : 300}}">
+  *ngFor="let col of columns" name="{{col.header}}"
+  [flexGrow]="1" minWidth="{{col.prop!=='direccion'?  120 : 350}}">
+  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+    <span >{{
+      col.header.includes('Fecha') === false? 
+      row[col.prop.toLowerCase()] : 
+      row[col.prop.toLowerCase()] | date: 'short'
+    }}</span>
+  </ng-template>
 </ngx-datatable-column>
 
   <ngx-datatable-column
@@ -61,4 +71,5 @@
 
 </ngx-datatable>
 
+  <ion-item-divider></ion-item-divider>
 </ion-list>

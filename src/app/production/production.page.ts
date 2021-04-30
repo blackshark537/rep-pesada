@@ -17,8 +17,8 @@ export class ProductionPage implements OnInit, OnDestroy {
   // options
   showLegend: boolean = true;
   showLabels: boolean = true;
-  viewCard: number[] = [900, 300];
-  viewPie: number[] = [400, 400];
+  viewCard: number[] = [900, 400];
+  viewPie: number[] = [1000, 400];
   colorScheme = {
     domain: ['#99D9F2', '#F2E205', '#F2B705', '#D93D04', '#D98E04', '#aae3f5']
   };
@@ -30,7 +30,7 @@ export class ProductionPage implements OnInit, OnDestroy {
   activateArea: boolean = false;
   activatePie: boolean = false;
 
-  viewArea: number[] = [600, 400];
+  viewArea: number[] = [1000, 400];
   legend: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -74,28 +74,28 @@ export class ProductionPage implements OnInit, OnDestroy {
       let prodHtotal=0;
 
       result.forEach(el =>{
-        recive+= el.recive;
+        recive+= el.recibidas;
         Week+= el.week;
         Days+= el.days;
         mortp+= el.mortp;
         total+= el.total;
         birthTotal+= parseFloat(el.nacimientos);
         hincub+= parseFloat(el.incubables);
-        prodHtotal+= parseFloat(el.productionTotal);
-        this.single.push({name: el.business, value: parseFloat(el.productionTotal)})
+        prodHtotal+= parseFloat(el.production);
+        this.single.push({name: el.business, value: parseFloat(el.production)})
       });
 
 
-      this.res.push({name: 'Promedio Entrantes', value: (recive/result.length).toFixed(2) + ' ±0.5 aves' });
+      this.res.push({name: 'Promedio Aves Entrantes', value: (recive/result.length).toFixed(2) + ' ±0.5 aves' });
       this.res.push({name: 'Promedio Mortalidad', value: (mortp/result.length).toFixed(2) + '%'});
-      this.res.push({name: 'Promedio Restantes', value: (total/result.length).toFixed(2) + ' ±0.5 aves' });
+      this.res.push({name: 'Promedio Aves Restantes', value: (total/result.length).toFixed(2) + ' ±0.5 aves' });
       //this.res.push({name: `Promedio Edad`, value: ` ${Math.round((Days/result.length)/7)} sem. \n ${Math.round(Days/result.length)} dias`});
-      this.res.push({name: 'Promedio Nacimientos', value: Math.round(birthTotal/result.length) + ' huevos' });
-      this.res.push({name: 'Promedio Incubables', value: Math.round(hincub/result.length) + ' huevos' });
-      this.res.push({name: 'Promedio Producción', value: Math.round(prodHtotal/result.length) + ' huevos' });
+      this.res.push({name: 'Promedio Huevos Nacidos', value: Math.round(birthTotal/result.length) + ' huevos' });
+      this.res.push({name: 'Promedio Huevos Incubables', value: Math.round(hincub/result.length) + ' huevos' });
+      this.res.push({name: 'Promedio Huevos Totales', value: Math.round(prodHtotal/result.length) + ' huevos' });
 
       this.res2.push({name: 'Prom. Huevos Incubables', value: (hincub/result.length) });
-      this.res2.push({name: 'Prom. Huevos Totales', value: (prodHtotal/result.length) });
+      this.res2.push({name: 'Prom. Huevos Nacidos', value: (birthTotal/result.length) });
     
     });
     

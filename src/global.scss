@@ -48,6 +48,16 @@
     border: 1px solid black;
 } */
 
+datatable-body-cell{
+    border: 1px solid grey  !important;
+    text-align: center  !important;
+}
+
+datatable-header-cell{
+    border: 1px solid grey  !important;
+    text-align: left  !important;
+}
+
 .datatable-row-group:hover{
     background-color: rgba($color: #3880ff, $alpha: 0.1) !important;
     cursor: pointer;
@@ -64,4 +74,8 @@
     --background: var(--ion-color-light);
     --color: var(--ion-color-danger);
     --button-color: var(--ion-color-danger);
+}
+
+ion-menu{
+    max-width: 20em;
 }

@@ -20,6 +20,7 @@ export class TableComponent implements OnInit {
   @Input('cols') columns = [];
   @Output('selected') selected = new EventEmitter();
 
+  loading=false;
   public temp = [];
   public tableStyle = 'bootstrap';
   public customPopoverOptions: any = {
@@ -59,12 +60,31 @@ export class TableComponent implements OnInit {
     }); 
   }
 
+  onSort(event) {
+    this.loading = true;
+    const rows = [...this.rows];
+    const filter = this.columns.filter(x => x.header === event.column.name)[0].prop.toLowerCase();
+    if(!!filter === false ) return; //if theres no filter match return
+    const sort = event.sorts[0];
+    rows.sort((a, b) => {
+      if(typeof(a[filter]) === 'number') {
+        return a[filter] > b[filter]? 1 * (sort.dir === 'desc' ? -1 : 1) : -1 * (sort.dir === 'desc' ? -1 : 1);
+      }
+
+      return a[filter].toString()
+      .localeCompare(b[filter].toString()) * 
+      (sort.dir === 'desc' ? -1 : 1);
+    });
+
+    this.rows = rows;
+    this.loading = false;
+  }
+
   updateFilter(event) {
     const val: string = event.target.value.toLowerCase();
     const temp = this.temp.filter(
       x => (x[this.columns[0].prop.toLowerCase()] as String).toLowerCase().includes(val.toLowerCase()) ||
-      (x[this.columns[1].prop.toLowerCase()] as String).toLowerCase().includes(val.toLowerCase()) ||
-      (x[this.columns[2].prop.toLowerCase()] as String).includes(val.toLowerCase())
+      (x[this.columns[1].prop.toLowerCase()] as String).toLowerCase().includes(val.toLowerCase()) 
     );
     this.rows = temp;
     this.table.offset = 0;

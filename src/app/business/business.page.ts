@@ -12,7 +12,12 @@ import { TableEvent } from '../shared';
 })
 export class BusinessPage implements OnInit {
 
-  cols = [{ prop: 'empresa' }, { prop: 'telefono' }, { prop: 'direccion' }];
+  cols = [
+    { prop: 'empresa' , header: 'Nombre Comercial'}, 
+    { prop: 'telefono', header: 'Teléfono' },
+    {prop: 'cant_gallinas_asignadas', header: 'cant. de gallinas asignadas'},
+    { prop: 'direccion', header: 'Dirección' }
+  ];
   businesses = []
   constructor(
     private platform: Platform,
@@ -22,12 +27,11 @@ export class BusinessPage implements OnInit {
   ngOnInit() {
     this.store.select('businesses').pipe(
       map(Businesses => Businesses.map(b =>{
-        const {id, nombre_comercial, RNC, telefono, direccion} = b
-        //const owner = b.perfil_usuario.nombres + ' ' + b.perfil_usuario.apellidos;
+        const {id, nombre_comercial, RNC, telefono, direccion, cant_gallinas_asignadas} = b
         return {
           id, 
           empresa: nombre_comercial,
-          rnc: RNC,
+          cant_gallinas_asignadas,
           telefono,
           direccion,
           //owner

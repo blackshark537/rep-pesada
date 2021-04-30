@@ -36,7 +36,7 @@
     </ion-row> -->
 
     <ion-row class="container">
-      <ion-col size="12" size-md="6">
+      <ion-col size="12" >
         <!-- <ngx-charts-area-chart
           *ngIf="activateArea"
           [view]="viewArea"
@@ -68,7 +68,7 @@
           ><!-- (select)="onSelect($event)" -->
         </ngx-charts-bar-vertical>
       </ion-col>
-      <ion-col size="12" size-md="6" #advancePieContainer>
+      <ion-col size="12" #advancePieContainer>
         <ngx-charts-advanced-pie-chart
           *ngIf="activatePie"
           [view]="[advancePieContainer.offsetWidth, advancePieContainer.offsetHeight]"

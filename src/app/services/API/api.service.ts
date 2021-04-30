@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { 
   ProducerInterface,
   CapacityInterface,
   BusinessInterface,
-  InventoryInterface
+  InventoryInterface,
+  LotInterface
 } from 'src/app/models';
 import { environment } from 'src/environments/environment';
 import { BrowserService } from '../helpers';
@@ -38,6 +39,16 @@ export class ApiService {
 
   getBusinesses() : Observable<BusinessInterface[]>{ 
     return this.http.get<any[]>(`${environment.baseUrl}/empresas`)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  }
+
+  getLots(year?: number) : Observable<LotInterface[]>{
+    return  this.http.get<any[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  }
+
+  getLotsByYear(year: number) : Observable<LotInterface[]>{
+    return  this.http.get<any[]>(`${environment.baseUrl}/lotes?_q=${year}`)
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 }

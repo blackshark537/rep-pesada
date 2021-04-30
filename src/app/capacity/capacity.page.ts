@@ -13,7 +13,12 @@ import { map } from 'rxjs/operators';
 })
 export class CapacityPage implements OnInit {
 
-  cols = [{ prop: 'Enviroment' }, { prop: 'Company' }, { prop: 'Phone' }, { prop: 'Area' }, { prop: 'Address' }];
+  cols = [
+    { prop: 'Enviroment', header: 'Ambiente'}, 
+    { prop: 'Company', header: 'Nombre Comercial'}, 
+    { prop: 'Phone', header: 'Telefono'}, 
+    { prop: 'Area', header: 'Area Total'}, 
+    { prop: 'Address', header: 'Direccion' }];
   capacities = []
   constructor(
     private platform: Platform,

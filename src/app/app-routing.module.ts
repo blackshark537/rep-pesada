@@ -51,6 +51,18 @@ const routes: Routes = [
   {
     path: 'signin',
     loadChildren: () => import('./sign-in-up/sign-in-up.module').then( m => m.SignInUpPageModule)
+  },
+  {
+    path: 'data-driven',
+    loadChildren: () => import('./data-driven/data-driven.module').then( m => m.DataDrivenPageModule)
+  },
+  {
+    path: 'monthly-data',
+    loadChildren: () => import('./monthly-data/monthly-data.module').then( m => m.MonthlyDataPageModule)
+  },
+  {
+    path: 'daily-projection',
+    loadChildren: () => import('./daily-projection/daily-projection.module').then( m => m.DailyProjectionPageModule)
   }
 ];
 

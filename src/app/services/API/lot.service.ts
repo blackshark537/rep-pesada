@@ -5,6 +5,7 @@ import { BrowserService} from '../helpers';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,34 +39,34 @@ _Nac = [
 ]
 
   cols$ = new BehaviorSubject([
-    {prop: 'Business'},
-    {prop: 'Entry'},
-    { prop: 'Recive'},
-    { prop: 'Total' },
-    {prop: 'ProductionTotal'},
-    {prop: 'Incubables'},
-    { prop: 'Nacimientos' }, 
-    { prop: 'Days' }, 
-    { prop: 'Week'},
-    { prop: 'Status' }, 
+    {prop: 'business', header: 'Empresa'},
+    {prop: 'entry', header: 'Fecha de entrada'},
+    { prop: 'recibidas', header: 'Aves Recibidas'},
+    { prop: 'total', header: 'Aves Existentes' },
+    {prop: 'production', header: 'Producción huevos totales'},
+    {prop: 'incubables', header: 'Huevos Incubables'},
+    { prop: 'nacimientos', header: 'Nacimientos totales' }, 
+    { prop: 'days', header: 'Días' }, 
+    { prop: 'week', header: 'Semanas'},
+    { prop: 'status', header: 'Estado' }, 
   ]);
 
   colsRecria$ = new BehaviorSubject([
-    { prop: 'day'},
-    { prop: 'Chicks' },
-    { prop: 'Mort'},
-    { prop: 'Standar'},
-    {prop: 'stdReal'},
-    { prop: 'ProdHtotal' },
-    {prop: 'Aprov'},
-    {prop: 'Hincub'},
-    { prop: 'Birth' }, 
-    { prop: 'BirthTotal' }, 
+    {prop: 'day', header: 'Día'},
+    {prop: 'chicks', header: 'No. de Aves' },
+    {prop: 'mort', header: 'Mortalidad'},
+    {prop: 'standar', header: 'Estandar'},
+    {prop: 'stdreal', header: 'Estandar Real'},
+    {prop: 'prodhtotal', header: 'Producción huevos totales' },
+    {prop: 'aprov', header: 'Estanadar de Aprovechamiento'},
+    {prop: 'hincub', header: 'Huevos Incubables'},
+    {prop: 'birth', header: 'Estandar Nacimientos' }, 
+    {prop: 'birthtotal', header: 'Nacimientos totales' }, 
     ]);
 
   constructor(
     private helperService: BrowserService,
-    private http: HttpClient
+    private api: ApiService
   ) { 
     
   }
@@ -116,8 +117,8 @@ _Nac = [
       let production_real = ( ( this._STD[index] * std_prod ) - this._STD[index] ) / 100;
       let std_aprovechamiento = ( ( this._APROV[index] * std_aprov ) - this._APROV[index] ) / 100;
 
-      const date1 = new Date(entry.getTime()+( 1 * 24 * 60 * 60 * 1000))//add 9+1 weeks
-      const date2 = new Date(date1.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
+      //const date1 = new Date(entry.getTime()+( 1 * 24 * 60 * 60 * 1000))//add 9+1 weeks
+      const date2 = new Date(entry.getTime()+(( 2 * 24 * 60 * 60 * 1000) * i));
 
       if(i<=(conf_weeks*7)){
         prod.push({
@@ -131,11 +132,11 @@ _Nac = [
           standar: this._STD[index] + '%',
           aprov: this._APROV[index] + '%',
           chicks: Math.round(chicks - ((100-mortality)*10)),
-          stdReal: 0,
+          stdreal: 0,
           hincub: 0,
-          prodHtotal: 0, //total eggs
+          prodhtotal: 0, //total eggs
           birth: 0,
-          birthTotal: 0
+          birthtotal: 0
         });
       } else {
         prod.push({
@@ -149,11 +150,11 @@ _Nac = [
           standar: this._STD[index] + '%',
           aprov: this._APROV[index] + '%',
           chicks: Math.round(chicks - ((100-mortality)*10)),
-          stdReal: production_real,
+          stdreal: production_real,
           hincub: ((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento).toFixed(2),
-          prodHtotal: (Math.round(chicks - ((100-mortality)*10))*production_real).toFixed(2), //total eggs
+          prodhtotal: (Math.round(chicks - ((100-mortality)*10))*production_real).toFixed(2), //total eggs
           birth: this._Nac[index] + '%',
-          birthTotal: (((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento)*(this._Nac[index]*0.01)).toFixed(2)
+          birthtotal: (((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento)*(this._Nac[index]*0.01)).toFixed(2)
         });
       }
     }
@@ -161,7 +162,7 @@ _Nac = [
   }
 
   getLots(): Observable<any[]>{
-    return this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=2020`).pipe(
+    return this.api.getLots(2017).pipe(
       shareReplay(1),
       map(Lots => {
         return Lots.filter(values => this.weeksBetween(new Date(values.fecha_entrada), new Date()) < 85).map(Lote =>{
@@ -175,7 +176,6 @@ _Nac = [
           } = Lote;
           
           const { hembras, machos } = Lote?.cantidad;
-          //const { ambiente } = Lote?.capacidad_instalada;
           const { nombre_comercial, telefono, direccion } = Lote?.empresa;
           
           //has to  add one day
@@ -194,8 +194,7 @@ _Nac = [
             std_prod: variable_produccion_huevos_totales,
             std_aprov: variable_aprovechamiento_huevos,
             race: raza,
-            //enviroment: ambiente,
-            entry: date1.toDateString(),
+            entry: date1,
             week: this.weeksBetween(date1, date2),
             days: this.daysBetween(date1,date2),
             endBreeding: this.initProd(date1),
@@ -209,13 +208,13 @@ _Nac = [
           return {
             ...data,
             recria,
-            status: data.week>20? 'production' : 'breeding',
+            status: data.week>18? 'production' : 'breeding',
             produccion,
             total: data.week>18?  produccion[data.days-(18*7)-1]?.chicks  : recria[data.days-1]?.chicks,
-            recive: data.females,
-            productionTotal: data.week>18? produccion[data.days-(18*7)-1]?.prodHtotal : 0,
+            recibidas: data.females,
+            production: data.week>18? produccion[data.days-(18*7)-1]?.prodhtotal : 0,
             incubables: data.week>18? produccion[data.days-(18*7)-1]?.hincub : 0,
-            nacimientos: data.week>18? produccion[data.days-(18*7)-1]?.birthTotal : 0,
+            nacimientos: data.week>18? produccion[data.days-(18*7)-1]?.birthtotal : 0,
           }
         });
       }),
@@ -240,7 +239,7 @@ _Nac = [
   }
 
   private weeksBetween(d1, d2) {
-    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000))+1;
+    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
   }
 
   private daysBetween(d1,d2) {

@@ -7,9 +7,9 @@ import { StrapiAccess, UserModel } from '../../models'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable, of, throwError} from 'rxjs';
-import {catchError, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import { BrowserService, NativeService } from '../helpers';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -41,13 +41,16 @@ export class AuthService {
         }
         return of(null);
       })
+    ).pipe(
+      map(user => {
+        return user;
+      })
     )
   }
 
   async signOut(){
-    this.native.remStorage('uid');
-    this.native.remStorage('token');
     this.afAuth.signOut();
+    this.native.remStorage('token');
     this.router.navigate(['/signin']);
   }
 

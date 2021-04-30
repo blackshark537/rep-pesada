@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LotService } from '../services';
-import { LotsResponse } from '../models';
+import { LotInterface, LotsResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models';
 import { Observable } from 'rxjs';
@@ -22,6 +22,10 @@ export class LotPage implements OnInit {
     new:    false,
     delete: false
   }
+  status={
+    total:0,
+    eggs:0
+  }
   col$    = this.lotService.cols$;
   filter  =   "production";
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,12 +38,17 @@ export class LotPage implements OnInit {
   ) { }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
-    this.activeRoute.paramMap.subscribe(res=>{
-      this.filter =   res.get('id');
-      this.lot$   =   this.store.select('lots').pipe(
-        map(a => a.filter(x => x.status ===  this.filter))
-      )
-    });
+    this.filter = this.activeRoute.snapshot.paramMap.get('id');
+    this.lot$   =   this.store.select('lots').pipe(
+      map(a => a.filter(x => x.status ===  this.filter)),
+      map(lots => {
+        lots.forEach(lot=>{
+          this.status.total+= lot.females//
+          this.status.eggs+=parseInt(lot.production)
+        });
+        return lots;
+      })
+    )
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   get isMaterial() {

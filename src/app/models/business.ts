@@ -13,4 +13,5 @@ export interface BusinessInterface {
     "nombre_comercial": string;
     "perfil_usuario": any;
     "capacidad_instaladas"?: CapacityInterface[];
+    "cant_gallinas_asignadas": string;
 }

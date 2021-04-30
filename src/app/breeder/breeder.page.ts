@@ -33,6 +33,11 @@ export class BreederPage implements OnInit, OnDestroy {
         console.log("The lot is undefined or null  : %s", lote);
         return;
       }
+
+      const element: any = document.getElementsByClassName("datatable-body-row").item(0);
+      if (element) {
+        element.focus();
+      }
       
       this.state = {
         owner:   lote.business,
@@ -41,7 +46,7 @@ export class BreederPage implements OnInit, OnDestroy {
         status:  'breeding'
       };
 
-      if(lote.week >20){                           // if the lot of chicks is
+      if(lote.week >18){                           // if the lot of chicks is
         this.lots           =   lote.produccion;  // more than 20 weeks old its in production
         this.state.status   =   lote.status;      //asign status
         console.log("Chicks are in : %s", lote.status);
