@@ -5,6 +5,7 @@
 *.sw[mnpcod]
 .tmp
 *.tmp
+*.rar
 *.tmp.*
 *.sublime-project
 *.sublime-workspace
@@ -29,6 +30,6 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-
+.firebase
 ./src/environments/environment.ts
 ./src/environments/environment.prod.ts
