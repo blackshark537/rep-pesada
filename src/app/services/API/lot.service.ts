@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { LotInterface, LotProdInterface } from 'src/app/models';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { LotInterface, LotModel, LotProduction, LotRecria, LotResponse } from 'src/app/models';
 import { BrowserService} from '../helpers';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, shareReplay } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -12,7 +10,7 @@ import { ApiService } from './api.service';
 })
 export class LotService {
 
-  lot$ = new BehaviorSubject<LotProdInterface>(null);
+  lot$ = new BehaviorSubject<LotResponse>(null);
 
 _STD = [
   8,15,29,53,70,81,86,88,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,89,
@@ -76,19 +74,19 @@ _Nac = [
     const total_weeks=18;
     for (let i = 0; i < total_weeks*7; i++) {
 
-      const {business, week, lot, mort, mortp, date, females, std_prod, std_aprov} = lote;
+      const {business, week, mort, mortp, date, females, std_prod, std_aprov} = lote;
       
       const percent = recria[i-1]?.mort || 100;
       const mortality = percent-(mort / (total_weeks*7));
-      const date1 = new Date(date.getTime()+(1*24*60*60*1000))
-      const date2 = new Date(date1.getTime()+((1 * 24 * 60 * 60 * 1000)*i));
+      //const date1 = new Date(date.getTime()+(1*24*60*60*1000))
+      //const date2 = new Date(date1.getTime()+(( 1 * 24 * 60 * 60 * 1000)*i));
+      const date2 = new Date(date.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
 
       recria.push({
         id:  i,
         business,
-        day:i+1,
+        day: this.daysBetween(new Date(Date.UTC(2021, 0, 1)), date2)+i,//day:i+1,
         weekIndx: week,
-        lot,
         mort: Math.round(mortality*100)/100,
         mortp,
         std_prod,
@@ -97,7 +95,7 @@ _Nac = [
         chicks: Math.round(females - ((100-mortality)*10)),
       });
     }
-    return recria;
+    return recria as LotRecria[];
   }
 
   private getProd(lote){
@@ -109,7 +107,7 @@ _Nac = [
 
       if(i%7===0) index+=1;
 
-      const {business, day, lot, entry, chicks, mortp, std_prod, std_aprov } = lote;
+      const {business, day, entry, chicks, mortp, std_prod, std_aprov } = lote;
       
       const percent = prod[i-1]?.mort || 100;
       const mortality =  percent  - ( mortp / (total_weeks*7) );
@@ -118,7 +116,7 @@ _Nac = [
       let std_aprovechamiento = ( ( this._APROV[index] * std_aprov ) - this._APROV[index] ) / 100;
 
       //const date1 = new Date(entry.getTime()+( 1 * 24 * 60 * 60 * 1000))//add 9+1 weeks
-      const date2 = new Date(entry.getTime()+(( 2 * 24 * 60 * 60 * 1000) * i));
+      const date2 = new Date(entry.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
 
       if(i<=(conf_weeks*7)){
         prod.push({
@@ -126,7 +124,6 @@ _Nac = [
           business,
           day:lote.day+i+1,//add 1 day
           dayIndx: day,
-          lot,
           mort:  Math.round(mortality*100)/100,
           entry: date2,
           standar: this._STD[index] + '%',
@@ -144,7 +141,6 @@ _Nac = [
           business,
           day:lote.day+i+1,//add 1 day
           dayIndx: day,
-          lot,
           mort:  Math.round(mortality*100)/100 ,
           entry: date2,
           standar: this._STD[index] + '%',
@@ -158,16 +154,17 @@ _Nac = [
         });
       }
     }
-    return prod;
+    return prod as LotProduction[];
   }
 
-  getLots(): Observable<any[]>{
+  getLots(): Observable<LotResponse[]>{
     return this.api.getLots(2017).pipe(
       shareReplay(1),
       map(Lots => {
-        return Lots.filter(values => this.weeksBetween(new Date(values.fecha_entrada), new Date()) < 85).map(Lote =>{
+        return Lots.filter(values => this.weeksBetween(new Date(values.fecha_entrada), new Date()) < 85)
+        .map(Lote =>{
           const {
-            id, lote, codigo_aduanero, raza,
+            id, codigo_aduanero, raza,
             fecha_entrada, 
             variable_mortalidad_recria,
             variable_mortalidad_produccion,
@@ -180,13 +177,12 @@ _Nac = [
           
           //has to  add one day
           const date1= this.formatDate(fecha_entrada);
-          const date2= new Date(Date.now());
+          const date2= new Date();
           const data = {
             id,
             business: nombre_comercial,
             phone: telefono,
             address: direccion,
-            Lot: lote,
             date: date1,
             code: codigo_aduanero,
             mort: variable_mortalidad_recria,
@@ -200,7 +196,7 @@ _Nac = [
             endBreeding: this.initProd(date1),
             females: parseInt(hembras),
             males: parseInt(machos),
-          } as any;
+          } as LotModel;
 
           const recria = this.getRecria(data);
           const produccion = this.getProd(recria[recria.length-1]);
@@ -215,7 +211,7 @@ _Nac = [
             production: data.week>18? produccion[data.days-(18*7)-1]?.prodhtotal : 0,
             incubables: data.week>18? produccion[data.days-(18*7)-1]?.hincub : 0,
             nacimientos: data.week>18? produccion[data.days-(18*7)-1]?.birthtotal : 0,
-          }
+          } as LotResponse;
         });
       }),
       catchError(error => throwError(this.helperService.handlError(error)))

@@ -81,11 +81,15 @@ export class TableComponent implements OnInit {
   }
 
   updateFilter(event) {
+    
     const val: string = event.target.value.toLowerCase();
-    const temp = this.temp.filter(
-      x => (x[this.columns[0].prop.toLowerCase()] as String).toLowerCase().includes(val.toLowerCase()) ||
-      (x[this.columns[1].prop.toLowerCase()] as String).toLowerCase().includes(val.toLowerCase()) 
-    );
+
+    const temp = this.temp.map(val => {
+      if(typeof(val[this.columns[0].prop]) != 'number') return val;
+    }).filter(x => {
+      if(!!x === false) return []
+      return x[this.columns[0].prop].toLowerCase().includes(val)
+    });
     this.rows = temp;
     this.table.offset = 0;
   }

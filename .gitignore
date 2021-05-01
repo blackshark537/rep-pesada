@@ -18,6 +18,7 @@ $RECYCLE.BIN/
 log.txt
 npm-debug.log*
 
+/.firebase
 /.idea
 /.ionic
 /.sass-cache
@@ -30,6 +31,6 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-.firebase
+
 ./src/environments/environment.ts
 ./src/environments/environment.prod.ts

@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
     { title: 'Producción',                url: '/production',       icon: 'cube' },
     { title: 'Asignación vs Importación', url: '/data-driven',      icon: 'clipboard' },
     { title: 'Calendario de Entrada',     url: '/monthly-data',     icon: 'file-tray' },
-    { title: 'Proyección diaria',         url: '/daily-projection', icon: 'calendar' },
+    { title: 'Proyección diaria de pollitas',         url: '/daily-projection', icon: 'calendar' },
     { title: 'Lotes en recria',           url: '/lot/breeding',     icon: 'cube' },
     { title: 'Lotes en producción',       url: '/lot/production',   icon: 'cube' },
     { title: 'Capacidad Instalada',       url: '/capacity',         icon: 'clipboard' },

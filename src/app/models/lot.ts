@@ -29,51 +29,81 @@ interface CantidadInterface{
     machos: string;
 }
 
-export interface LotsResponse{
-    id: number;
+export interface LotModel {
+    id: number | string;
     business: string;
     phone: string;
     address: string;
-    lot: string;
-    date: Date,
-    code: number;
+    date: Date;
+    code: string;
+    mort: number;
+    mortp: number;
+    std_prod: number;
+    std_aprov: number;
+    race: string
+    entry: Date
+    week: number;
+    days: number;
+    endBreeding: Date
+    females: number
+    males: number
+}
+
+export interface LotResponse {
+    id: number | string;
+    business: string;
+    phone: string;
+    address: string;
+    date: Date;
+    code: string;
     mort: number;
     mortp: number;
     std_prod: number;
     std_aprov: number;
     race: string;
-    enviroment: string;
-    entry: string;
+    entry: Date;
     week: number;
     days: number;
     endBreeding: Date;
     females: number;
     males: number;
+    status: string;
+    recria: LotRecria[];
+    produccion: LotProduction[];
     total: number;
-    status?: string;
+    recibidas: number;
+    production: number;
+    incubables: number;
+    nacimientos: number;
 }
 
-export interface LotProdInterface{
-    id: number;
-    code: string;
-    lot: string;
-    enviroment: string;
-    race: string;
-    date: string;
-    days: number;
-    females: number;
-    males: number;
-    total: number;
-    week: number;
-    business?: string;
-    phone?: string;
-    address?: string;
-    variable_mortalidad_recria: number;
-    variable_mortalidad_produccion: number;
-    variable_produccion_huevos_totales: number;
-    variable_aprovechamiento_huevos: number;
-    variable_nacimiento: number;
-    produccion?:[];
-    recria?:[];
-    status?: string;
-  }
+export interface LotRecria{
+    id: number | string;
+    business: string;
+    day: number;
+    weekIndx: number;
+    mort: number;
+    mortp: number;
+    std_prod: number;
+    std_aprov: number;
+    entry: Date;
+    chicks: number;
+}
+
+export interface LotProduction{
+    id: number | string;
+    business: string;
+    day: number;
+    dayIndx: number;
+    mort:  number;
+    entry: Date;
+    standar: number;
+    aprov: number;
+    chicks: number;
+    stdreal: number;
+    hincub: number;
+    prodhtotal: number;
+    birth: number;
+    birthtotal: number;
+}
+

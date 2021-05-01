@@ -13,7 +13,13 @@
       <ion-title size="large">Proyección diaria año {{year | async}} </ion-title>
     </ion-toolbar>
   </ion-header>
-
+  <ion-toolbar>
+    <ion-item>
+      <ion-label>Año</ion-label>
+      <ion-datetime (ionChange)="setYear($event.target.value)" [pickerOptions]="customPickerOptions" placeholder="{{year | async}}" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
+    </ion-item>
+  </ion-toolbar>
+  
   <app-table 
   *ngIf="table"
   name="Reproductoras livianas {{year | async}}"

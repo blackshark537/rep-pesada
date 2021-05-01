@@ -1,7 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { LotsActions } from '../actions'
+import { LotResponse } from '../models';
 
-const initial_state = [];
+const initial_state: LotResponse[] = [];
 
 const _lotsReducer = createReducer(
     initial_state,

@@ -3,7 +3,7 @@ import { Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LotService } from '../services';
-import { LotInterface, LotsResponse } from '../models';
+import { LotResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models';
 import { Observable } from 'rxjs';
@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
 })
 export class LotPage implements OnInit {
 
-  lot$:  Observable<LotsResponse[]>;
+  lot$:  Observable<LotResponse[]>;
   tableActions: TableActions  = {
     open:   true,
     new:    false,

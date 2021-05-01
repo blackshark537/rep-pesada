@@ -38,17 +38,17 @@ export class ApiService {
   }
 
   getBusinesses() : Observable<BusinessInterface[]>{ 
-    return this.http.get<any[]>(`${environment.baseUrl}/empresas`)
+    return this.http.get<BusinessInterface[]>(`${environment.baseUrl}/empresas`)
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 
   getLots(year?: number) : Observable<LotInterface[]>{
-    return  this.http.get<any[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`)
+    return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`)
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 
   getLotsByYear(year: number) : Observable<LotInterface[]>{
-    return  this.http.get<any[]>(`${environment.baseUrl}/lotes?_q=${year}`)
+    return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_q=${year}`)
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 }
