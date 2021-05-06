@@ -38,21 +38,14 @@ export class BreederPage implements OnInit, OnDestroy {
       if (element) {
         element.focus();
       }
-      
+      console.log(lote)
       this.state = {
         owner:   lote.business,
         phone:   lote.phone,
         address: lote.address,
         status:  'breeding'
       };
-
-      if(lote.week >18){                           // if the lot of chicks is
-        this.lots           =   lote.produccion;  // more than 20 weeks old its in production
-        this.state.status   =   lote.status;      //asign status
-        console.log("Chicks are in : %s", lote.status);
-        return;
-      }
-      this.lots             =   lote.recria;     //read lote.recria instead
+      this.lots = lote.proyeccions;  // more than 20 weeks old its in production
     });
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -3,16 +3,16 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Relación de Empresas</ion-title>
+    <ion-title>Registro de Empresas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Relación de Empresas</ion-title>
+      <ion-title size="large">Registro de Empresas</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-table name="Relaciónes de Empresas" [cols]="cols" [rows]="businesses" (selected)="selected($event)"></app-table>
+  <app-table name="Empresas" [cols]="cols" [rows]="businesses" (selected)="selected($event)"></app-table>
 </ion-content>

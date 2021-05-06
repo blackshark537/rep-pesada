@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { LotInterface, LotModel, LotProduction, LotRecria, LotResponse } from 'src/app/models';
+import { LotInterface, LotModel, LotProjection, LotRecria, LotResponse } from 'src/app/models';
 import { BrowserService} from '../helpers';
 import { catchError, map, shareReplay } from 'rxjs/operators';
 import { ApiService } from './api.service';
@@ -10,7 +10,7 @@ import { ApiService } from './api.service';
 })
 export class LotService {
 
-  lot$ = new BehaviorSubject<LotResponse>(null);
+  lot$ = new BehaviorSubject<LotModel>(null);
 
 _STD = [
   8,15,29,53,70,81,86,88,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,89,
@@ -50,16 +50,16 @@ _Nac = [
   ]);
 
   colsRecria$ = new BehaviorSubject([
-    {prop: 'day', header: 'Día'},
-    {prop: 'chicks', header: 'No. de Aves' },
-    {prop: 'mort', header: 'Mortalidad'},
-    {prop: 'standar', header: 'Estandar'},
-    {prop: 'stdreal', header: 'Estandar Real'},
-    {prop: 'prodhtotal', header: 'Producción huevos totales' },
-    {prop: 'aprov', header: 'Estanadar de Aprovechamiento'},
-    {prop: 'hincub', header: 'Huevos Incubables'},
-    {prop: 'birth', header: 'Estandar Nacimientos' }, 
-    {prop: 'birthtotal', header: 'Nacimientos totales' }, 
+    {prop: 'dia', header: 'Día'},
+    {prop: 'numero_de_aves', header: 'No. de Aves' },
+    {prop: 'mortalidad', header: 'Mortalidad'},
+    {prop: 'mortalidad_estandar', header: 'Mort. Estandar'},
+    {prop: 'estandar_real', header: 'Estandar Real'},
+    {prop: 'prod_huevos_totales', header: 'Producción huevos totales' },
+    {prop: 'aprovechamiento_de_huevos_estandar', header: 'Estanadar de Aprovechamiento'},
+    {prop: 'huevos_incubables', header: 'Huevos Incubables'},
+    {prop: 'estandar_de_nacimientos', header: 'Estandar Nacimientos' }, 
+    {prop: 'nacimientos_totales', header: 'Nacimientos totales' }, 
     ]);
 
   constructor(
@@ -69,107 +69,20 @@ _Nac = [
     
   }
 
-  private getRecria(lote){
-    let recria=[];
-    const total_weeks=18;
-    for (let i = 0; i < total_weeks*7; i++) {
-
-      const {business, week, mort, mortp, date, females, std_prod, std_aprov} = lote;
-      
-      const percent = recria[i-1]?.mort || 100;
-      const mortality = percent-(mort / (total_weeks*7));
-      //const date1 = new Date(date.getTime()+(1*24*60*60*1000))
-      //const date2 = new Date(date1.getTime()+(( 1 * 24 * 60 * 60 * 1000)*i));
-      const date2 = new Date(date.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
-
-      recria.push({
-        id:  i,
-        business,
-        day: this.daysBetween(new Date(Date.UTC(2021, 0, 1)), date2)+i,//day:i+1,
-        weekIndx: week,
-        mort: Math.round(mortality*100)/100,
-        mortp,
-        std_prod,
-        std_aprov,
-        entry: date2,
-        chicks: Math.round(females - ((100-mortality)*10)),
-      });
-    }
-    return recria as LotRecria[];
-  }
-
-  private getProd(lote){
-    let prod=[];
-    const total_weeks=67;
-    const conf_weeks = 3;
-    let index = 0;
-    for (let i = 0; i < total_weeks*7; i++) {
-
-      if(i%7===0) index+=1;
-
-      const {business, day, entry, chicks, mortp, std_prod, std_aprov } = lote;
-      
-      const percent = prod[i-1]?.mort || 100;
-      const mortality =  percent  - ( mortp / (total_weeks*7) );
-
-      let production_real = ( ( this._STD[index] * std_prod ) - this._STD[index] ) / 100;
-      let std_aprovechamiento = ( ( this._APROV[index] * std_aprov ) - this._APROV[index] ) / 100;
-
-      //const date1 = new Date(entry.getTime()+( 1 * 24 * 60 * 60 * 1000))//add 9+1 weeks
-      const date2 = new Date(entry.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
-
-      if(i<=(conf_weeks*7)){
-        prod.push({
-          id:  i,
-          business,
-          day:lote.day+i+1,//add 1 day
-          dayIndx: day,
-          mort:  Math.round(mortality*100)/100,
-          entry: date2,
-          standar: this._STD[index] + '%',
-          aprov: this._APROV[index] + '%',
-          chicks: Math.round(chicks - ((100-mortality)*10)),
-          stdreal: 0,
-          hincub: 0,
-          prodhtotal: 0, //total eggs
-          birth: 0,
-          birthtotal: 0
-        });
-      } else {
-        prod.push({
-          id:  i,
-          business,
-          day:lote.day+i+1,//add 1 day
-          dayIndx: day,
-          mort:  Math.round(mortality*100)/100 ,
-          entry: date2,
-          standar: this._STD[index] + '%',
-          aprov: this._APROV[index] + '%',
-          chicks: Math.round(chicks - ((100-mortality)*10)),
-          stdreal: production_real,
-          hincub: ((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento).toFixed(2),
-          prodhtotal: (Math.round(chicks - ((100-mortality)*10))*production_real).toFixed(2), //total eggs
-          birth: this._Nac[index] + '%',
-          birthtotal: (((Math.round(chicks - ((100-mortality)*10))*production_real)*std_aprovechamiento)*(this._Nac[index]*0.01)).toFixed(2)
-        });
-      }
-    }
-    return prod as LotProduction[];
-  }
-
-  getLots(): Observable<LotResponse[]>{
+  getLots(): Observable<any[]>{
     return this.api.getLots(2017).pipe(
       shareReplay(1),
       map(Lots => {
-        return Lots.filter(values => this.weeksBetween(new Date(values.fecha_entrada), new Date()) < 85)
-        .map(Lote =>{
+        return Lots//.filter(values => this.weeksBetween(new Date(values.fecha_entrada), new Date()) < 85)
+        .map((Lote, i)=>{
           const {
             id, codigo_aduanero, raza,
             fecha_entrada, 
             variable_mortalidad_recria,
             variable_mortalidad_produccion,
             variable_aprovechamiento_huevos,
-            variable_produccion_huevos_totales
+            variable_produccion_huevos_totales,
+            proyeccions
           } = Lote;
           
           const { hembras, machos } = Lote?.cantidad;
@@ -177,9 +90,9 @@ _Nac = [
           
           //has to  add one day
           const date1= this.formatDate(fecha_entrada);
-          const date2= new Date();
+          const date2= new Date(Date.now());
           const data = {
-            id,
+            id: i+1,
             business: nombre_comercial,
             phone: telefono,
             address: direccion,
@@ -196,22 +109,17 @@ _Nac = [
             endBreeding: this.initProd(date1),
             females: parseInt(hembras),
             males: parseInt(machos),
-          } as LotModel;
-
-          const recria = this.getRecria(data);
-          const produccion = this.getProd(recria[recria.length-1]);
-
+          };
           return {
             ...data,
-            recria,
             status: data.week>18? 'production' : 'breeding',
-            produccion,
-            total: data.week>18?  produccion[data.days-(18*7)-1]?.chicks  : recria[data.days-1]?.chicks,
+            total: proyeccions.find(p => p.day === new Date().getDate())?.numero_de_aves,
             recibidas: data.females,
-            production: data.week>18? produccion[data.days-(18*7)-1]?.prodhtotal : 0,
-            incubables: data.week>18? produccion[data.days-(18*7)-1]?.hincub : 0,
-            nacimientos: data.week>18? produccion[data.days-(18*7)-1]?.birthtotal : 0,
-          } as LotResponse;
+            proyeccions,
+            production: proyeccions.find(p => p.day === new Date().getDate())?.prod_huevos_totales,
+            incubables: proyeccions.find(p => p.day === new Date().getDate())?.huevos_incubables,
+            nacimientos: proyeccions.find(p => p.day === new Date().getDate())?.nacimientos_totales
+          };
         });
       }),
       catchError(error => throwError(this.helperService.handlError(error)))

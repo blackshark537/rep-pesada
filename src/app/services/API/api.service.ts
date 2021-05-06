@@ -7,7 +7,9 @@ import {
   CapacityInterface,
   BusinessInterface,
   InventoryInterface,
-  LotInterface
+  LotInterface,
+  LotProjection,
+  LotResponse
 } from 'src/app/models';
 import { environment } from 'src/environments/environment';
 import { BrowserService } from '../helpers';
@@ -42,13 +44,18 @@ export class ApiService {
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 
-  getLots(year?: number) : Observable<LotInterface[]>{
-    return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`)
+  getLots(year?: number) : Observable<LotResponse[]>{
+    return  this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes`)//_where[0][year_gte]=${year}
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 
   getLotsByYear(year: number) : Observable<LotInterface[]>{
     return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_q=${year}`)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  }
+
+  postProyection(proyection) : Observable<LotProjection>{
+    return this.http.post<LotProjection>(`${environment.baseUrl}/proyeccions`, proyection)
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 }

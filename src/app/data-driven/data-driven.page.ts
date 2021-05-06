@@ -32,6 +32,7 @@ export class DataDrivenPage implements OnInit {
             let asignacionTotal = 0
             let importacionTotal = 0
             let row = [];
+
             lots.forEach(lot=>{
               asignacionTotal+=parseInt(lot.empresa?.cant_gallinas_asignadas)
               importacionTotal+=parseInt(lot.cantidad.hembras)

@@ -11,6 +11,14 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit{
+  open=false;
+  openCapacity=false;
+  openBreeding=false;
+  openBreed=false;
+  openGeo=false;
+  openProd=false;
+  openExport=false;
+  
   public appPages = [
     { title: 'Empresas',                  url: '/business',         icon: 'business' },
     { title: 'Producción',                url: '/production',       icon: 'cube' },
@@ -31,7 +39,7 @@ export class AppComponent implements OnInit{
     new BehaviorSubject(localStorage.getItem('token')).subscribe(val =>{
       if(!!val){
          this.store.dispatch(LotsActions.GET_LOTS());
-         this.store.dispatch(producersActions.GET_PRODUCERS());
+         //this.store.dispatch(producersActions.GET_PRODUCERS());
          this.store.dispatch(capacitiesActions.GET_CAPACITIES());
          this.store.dispatch(businessActions.GET_BUSINESSES());
       }

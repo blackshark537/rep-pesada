@@ -11,7 +11,8 @@ import { AppModel, LotResponse } from '../models';
 })
 export class DailyProjectionPage implements OnInit {
   table=true;
-  year= new BehaviorSubject(new Date().getFullYear());
+  year = new BehaviorSubject(2018);
+  actual_year = new BehaviorSubject(new Date().getFullYear());
   rows=[];
   cols=[
     /* {prop: 'empresa', header: 'Nombre Comercial'},
@@ -37,7 +38,7 @@ export class DailyProjectionPage implements OnInit {
   ngOnInit() {
     this.year.pipe(
       switchMap(year => this.store.select('lots').pipe(
-        map(actions => actions.filter(x => x.entry.getFullYear() === year) as LotResponse[])
+        map(actions => actions.filter(x => x.entry.getFullYear() >= year) as LotResponse[])
       ))
     ).subscribe(lots =>{
       let jan = new Array(31).fill(0)
@@ -54,19 +55,19 @@ export class DailyProjectionPage implements OnInit {
       let dec = new Array(31).fill(0)
 
       lots.forEach(lot => {
-        lot.produccion.forEach(prod =>{
-          if(prod.day <=31) jan[prod.day]+= prod.chicks;
-          if(prod.day >= 31 && prod.day <=59) feb[prod.day-31]+= prod.chicks;
-          if(prod.day >= 61 && prod.day <= 92) mar[prod.day-61]+= prod.chicks;
-          if(prod.day >= 92 && prod.day <= 122) apr[prod.day-92]+= prod.chicks;
-          if(prod.day >= 122 && prod.day <= 153) may[prod.day-122]+= prod.chicks;
-          if(prod.day >= 153 && prod.day <= 183) jun[prod.day-153]+= prod.chicks;
-          if(prod.day >= 183 && prod.day <= 214) jul[prod.day-183]+= prod.chicks;
-          if(prod.day >= 214 && prod.day <= 245) ago[prod.day-214]+= prod.chicks;
-          if(prod.day >= 245 && prod.day <= 275) sep[prod.day-245]+= prod.chicks;
-          if(prod.day >= 275 && prod.day <= 306) oct[prod.day-275]+= prod.chicks;
-          if(prod.day >= 306 && prod.day <= 336) nov[prod.day-306]+= prod.chicks;
-          if(prod.day >= 336 && prod.day <= 366) dec[prod.day-336]+= prod.chicks;
+        lot.proyeccions.forEach(prod =>{
+          if(prod.day <=31) jan[prod.day]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 31 && prod.day <=59) feb[prod.day-31]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 61 && prod.day <= 92) mar[prod.day-61]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 92 && prod.day <= 122) apr[prod.day-92]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 122 && prod.day <= 153) may[prod.day-122]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 153 && prod.day <= 183) jun[prod.day-153]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 183 && prod.day <= 214) jul[prod.day-183]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 214 && prod.day <= 245) ago[prod.day-214]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 245 && prod.day <= 275) sep[prod.day-245]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 275 && prod.day <= 306) oct[prod.day-275]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 306 && prod.day <= 336) nov[prod.day-306]+= parseInt(prod.numero_de_aves);
+          if(prod.day >= 336 && prod.day <= 366) dec[prod.day-336]+= parseInt(prod.numero_de_aves);
         });
       });
 

@@ -9,17 +9,185 @@
               <img src="assets/chicken.png" alt="logo"  width="100px" height="100px">
             </ion-avatar>
             <ion-label>
-              <h1>Industria avícola</h1>  
-              <p>Reproductora liviana</p>
+              <h1>Industria Avícola</h1>  
+              <p>Sub Sector Huevos de Mesa</p>
+              <!-- <p>Reproductora liviana</p> -->
             </ion-label>
           </ion-item>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+          <!-- <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
+          
+          <ion-card >
+            <ion-item lines="none" detail="true" button (click)="open=!open">
+              <ion-icon slot="start" name="business-outline"></ion-icon>
+              <ion-label>Empresas</ion-label>
+              <!-- <ion-icon color="medium" [name]="open?'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon> -->
+            </ion-item>
+            <ion-card-content *ngIf="open">
+              <ion-item [routerLink]="['#']" lines="none" detail="false">
+                <ion-label>Historia</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/business']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Registro de las Empresas</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/data-driven']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Asignación vs Importación</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/monthly-data']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Calendario de Entrada</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false">
+                <ion-label>Participación de Mercado</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card >
+            <ion-item lines="none" button (click)="openBreeding=!openBreeding">
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Reproductora Liviana</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openBreeding">
+              <ion-item [routerLink]="['/lot/breeding']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>
+                  <h2>Aves en Recría</h2>
+                  <ul>
+                    <li>Parametros Tecnicos</li>
+                    <li>Población de Pollitas</li>
+                  </ul>
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/lot/production']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>
+                  <h2>Aves en Producción</h2>
+                  <ul>
+                    <li>Parametros Tecnicos</li>
+                    <li>Población de Gallinas</li>
+                    <li>Prod. Huevos Totales</li>
+                    <li>Prod. Huevos Fertiles</li>
+                    <li>Pollitas Nacidas</li>
+                  </ul>
+                </ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card >
+            <ion-item lines="none" button (click)="openBreed=!openBreed">
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Plantas Incubadoras</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openBreed">
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Registro de Plantas Incubadoras</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Control de Incubaciones</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card >
+            <ion-item lines="none" button (click)="openProd=!openProd">
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Producción Huevos de Mesa</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openProd">
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Registro de Productores de Huevos</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Producción de Huevos Totales</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Consumo Percapita</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Participación de Prod.</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-item lines="none" button >
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Historico Precios de Huevos</ion-label>
+            </ion-item>
+          </ion-card>
+
+          <ion-card>
+            <ion-item lines="none" button >
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Precios de Commodities</ion-label>
+            </ion-item>
+          </ion-card>
+
+          <ion-card>
+            <ion-item lines="none" button >
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Costos de Producción</ion-label>
+            </ion-item>
+          </ion-card>
+
+          <ion-card>
+            <ion-item lines="none" button (click)="openExport=!openExport">
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Mercado de Exportación</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openExport">
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Exportación de Pollitas</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Exportación de Huevos</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card >
+            <ion-item lines="none" button (click)="openCapacity=!openCapacity">
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Capacidad Instalada Ind. de Huevos</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openCapacity">
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Capacidad Instalada Rep. Livianas</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Tecnologia y Equipos Rep. Livianas</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Capacidad Instalada Granja Ponedoras</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Tecnologia y Equipos Ponedoras</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card >
+            <ion-item lines="none" button (click)="openGeo=!openGeo">
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Mapa Geolocalización</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openGeo">
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Geolocalización Granjas Rep. Livianas</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Geolocalización Plantas Incubadoras</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Geolocalización Productores de Huevos</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
           <ion-item (click)="authService.signOut()" button lines="none" detail="false" routerLinkActive="selected">
             <ion-icon slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
             <ion-label>Salir</ion-label>

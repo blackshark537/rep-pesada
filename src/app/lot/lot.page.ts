@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { LoadingController, Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LotService } from '../services';
-import { LotResponse } from '../models';
+import { ApiService, LotService } from '../services';
+import { LotInterface, LotProjection, LotResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
 })
 export class LotPage implements OnInit {
 
-  lot$:  Observable<LotResponse[]>;
+  lot$:  Observable<LotResponse[]>=of([]);
   tableActions: TableActions  = {
     open:   true,
     new:    false,
@@ -34,12 +34,14 @@ export class LotPage implements OnInit {
     private router:       Router,
     private activeRoute:  ActivatedRoute,
     private lotService:   LotService,
+    private api: ApiService,
+    private loading: LoadingController,
     private store:        Store<AppModel>
   ) { }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
     this.filter = this.activeRoute.snapshot.paramMap.get('id');
-    this.lot$   =   this.store.select('lots').pipe(
+    this.lot$   = this.store.select('lots').pipe(
       map(a => a.filter(x => x.status ===  this.filter)),
       map(lots => {
         lots.forEach(lot=>{
