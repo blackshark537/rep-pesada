@@ -27,7 +27,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
     { prop: 'nov', header: 'Noviembre' },
     { prop: 'dec', header: 'Diciembre' },
   ];
-  month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  month = [1,2,3,4,5,6,7,8,9,10,11,12];
   sub$: Subscription;
   constructor(
     private apiService: ApiService
@@ -39,26 +39,25 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
     this.month.forEach((m, h) => {
       this.sub$ = this.actual_year.pipe(
         switchMap(val => {
-          console.log(val)
           return this.apiService.getProyectionsByMonth({
             month: m, year: val as number
           })
         })
       ).subscribe(resp => {
         let numero_aves_anual = 0;
-        let month = []
+        let month = [];
         for (let i = 1; i < 32; i++) {
-          let pro = resp.filter(p => p.day === i);
+          let pro = resp.filter(p => p.day === i );//&& p.estado === "produccion");
           let numero_aves = 0;
           pro.forEach(el => {
             numero_aves += parseInt(el.numero_de_aves);
             numero_aves_anual += parseInt(el.numero_de_aves);
           })
-          //console.log(`${headers[h]}: ${i}`, numero_aves)
+          //console.log(`${headers[m-1]}: ${i}`, numero_aves)
           month.push(numero_aves);
         }
-        //console.log(`${headers[h]}: `,numero_aves_anual)
-        anual.push({ month: headers[h], data: month, balance: numero_aves_anual })
+        //console.log(`${headers[m-1]}: `,numero_aves_anual)
+        anual.push({ month: headers[m-1], data: month, balance: numero_aves_anual })
         this.rows = [];
         for (let i = 0; i < 31; i++) {
           let obj = {};

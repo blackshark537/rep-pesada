@@ -41,7 +41,7 @@ export class ApiService {
   }
 
   getBusinesses() : Observable<BusinessInterface[]>{ 
-    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Empresas...', duration: 30000 })).pipe(
+    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Empresas...' })).pipe(
       switchMap(load =>{
         load.present();
         return this.http.get<BusinessInterface[]>(`${environment.baseUrl}/empresas`)
@@ -60,7 +60,7 @@ export class ApiService {
   }
 
   getLots(year?: number): Observable<LotResponse[]> {
-    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Lotes...', duration: 30000 })).pipe(
+    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Lotes...' })).pipe(
       switchMap(load => {
         load.present();
         return this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`)
@@ -87,7 +87,7 @@ export class ApiService {
     return from(this.browserService.loadingCtrl.create({ message: `Cargando proyeccion año ${conf.year}`, duration: 30000 })).pipe(
       switchMap(load =>{
         load.present();
-        return this.http.get<LotProjection[]>(`${environment.baseUrl}/proyeccions?_where[0][month]=${conf.month}&_where[1][year]=${conf?.year}`)
+        return this.http.get<LotProjection[]>(`${environment.baseUrl}/proyeccions?_where[0][month]=${conf.month}&_where[1][year]=${conf.year}&_limit=5000`)
         .pipe(
           map(a => {
             load.dismiss();

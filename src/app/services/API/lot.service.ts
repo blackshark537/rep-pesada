@@ -70,10 +70,10 @@ _Nac = [
   }
 
   getLots(): Observable<any[]>{
-    return this.api.getLots(2017).pipe(
+    return this.api.getLots(2018).pipe(
       shareReplay(1),
       map(Lots => {
-        return Lots//.filter(values => this.weeksBetween(new Date(values.fecha_entrada), new Date()) < 85)
+        return Lots.filter(values => this.daysBetween(new Date(values.fecha_entrada), new Date()) < 596)
         .map((Lote, i)=>{
           const {
             id, codigo_aduanero, raza,
@@ -110,7 +110,7 @@ _Nac = [
             race: raza,
             entry: date1,
             week: this.weeksBetween(date1, date2),
-            days: this.daysBetween(date1,date2)+1,
+            days: this.daysBetween(date1,date2),
             endBreeding: this.initProd(date1),
             females: parseInt(hembras),
             males: parseInt(machos),
