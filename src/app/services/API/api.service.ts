@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders, HttpParamsOptions } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
@@ -19,7 +19,13 @@ import { BrowserService } from '../helpers';
   providedIn: 'root'
 })
 export class ApiService {
-
+  http_options:any = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    reportProgress:true,
+    observe: "events",
+  };
   constructor(
     private http: HttpClient,
     private browserService: BrowserService
@@ -60,14 +66,23 @@ export class ApiService {
   }
 
   getLots(year?: number): Observable<LotResponse[]> {
-    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Lotes...' })).pipe(
+    let progress = 0;
+    let body=[];
+    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Lotes, <br> por favor espere...<span id="progress"></span>' })).pipe(
       switchMap(load => {
         load.present();
-        return this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`)
-          .pipe(
-            tap(async a => {
-              await load.dismiss();
-              return a
+        return this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`, this.http_options)
+        .pipe(
+            map(event=> {
+              if(event.type === HttpEventType.DownloadProgress){
+                progress = event.loaded/event.total*100;
+                document.querySelector('#progress').innerHTML = `${progress.toPrecision(3)}%`;
+              }
+              if(event.type === HttpEventType.Response){
+                load.dismiss();
+                body = [...event.body]
+              }
+              return body
             }),
             catchError(error => {
               load.dismiss();
@@ -79,19 +94,33 @@ export class ApiService {
   }
 
   getLotsByYear(year: number) : Observable<LotInterface[]>{
-    return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_q=${year}`)
-    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+    return from(this.browserService.loadingCtrl.create({ message: `Cargando Lotes, año ${year}` })).pipe(
+      switchMap(load => {
+        load.present();
+        return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_q=${year}`)
+        .pipe(
+          tap(async a => {
+            await load.dismiss();
+            return a
+          }),
+          catchError(error => {
+            load.dismiss();
+            return throwError(this.browserService.handlError(error))
+          })
+        )
+      })
+    )
   }
 
   getProyectionsByMonth(conf:{month: number, year: number}) : Observable<LotProjection[]>{
-    return from(this.browserService.loadingCtrl.create({ message: `Cargando proyeccion año ${conf.year}`, duration: 30000 })).pipe(
+    return from(this.browserService.loadingCtrl.create({ message: `Cargando proyeccion año ${conf.year} <br> por favor espere...<span id="progress1"></span>`, duration: 30000 })).pipe(
       switchMap(load =>{
         load.present();
         return this.http.get<LotProjection[]>(`${environment.baseUrl}/proyeccions?_where[0][month]=${conf.month}&_where[1][year]=${conf.year}&_limit=5000`)
         .pipe(
           map(a => {
             load.dismiss();
-            return a;
+            return a
           }),
           catchError(error => {
             load.dismiss();

@@ -70,7 +70,7 @@ _Nac = [
   }
 
   getLots(): Observable<any[]>{
-    return this.api.getLots(2018).pipe(
+    return this.api.getLots(new Date().getFullYear()-3).pipe(
       shareReplay(1),
       map(Lots => {
         return Lots.filter(values => this.daysBetween(new Date(values.fecha_entrada), new Date()) < 596)
