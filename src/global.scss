@@ -26,27 +26,18 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /*ngx datatable*/
-/* @import "../node_modules/@swimlane/ngx-datatable/themes";
-@import "../node_modules/@swimlane/ngx-datatable/themes/dark.css";
-@import "../node_modules/@swimlane/ngx-datatable/themes/material.css";
-@import "../node_modules/@swimlane/ngx-datatable/themes/bootstrap.css"; */
 @import '~@swimlane/ngx-datatable/index.css';
 @import '~@swimlane/ngx-datatable/themes/material.scss';
 @import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
 @import '~@swimlane/ngx-datatable/themes/dark.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
+
 .datatable-header-cell,.datatable-body-cell, .datatable-footer-inner{
     span, .page-count{
         font-size: large;
     }
-    /* border-left: 1px solid #cccccc;
-    border-right: 1px solid #cccccc; */
 }
-
-/* .datatable-body-cell:hover{
-    border: 1px solid black;
-} */
 
 datatable-body-cell{
     border: 1px solid grey  !important;
@@ -56,6 +47,8 @@ datatable-body-cell{
 datatable-header-cell{
     border: 1px solid grey  !important;
     text-align: left  !important;
+    background-color: #BF3952;
+    color: white;
 }
 
 .datatable-row-group:hover{

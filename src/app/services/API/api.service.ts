@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { from, Observable, throwError } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { 
   ProducerInterface,
   CapacityInterface,
@@ -9,7 +9,8 @@ import {
   InventoryInterface,
   LotInterface,
   LotProjection,
-  LotResponse
+  LotResponse,
+  LotForm
 } from 'src/app/models';
 import { environment } from 'src/environments/environment';
 import { BrowserService } from '../helpers';
@@ -40,13 +41,41 @@ export class ApiService {
   }
 
   getBusinesses() : Observable<BusinessInterface[]>{ 
-    return this.http.get<BusinessInterface[]>(`${environment.baseUrl}/empresas`)
-    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Empresas...', duration: 30000 })).pipe(
+      switchMap(load =>{
+        load.present();
+        return this.http.get<BusinessInterface[]>(`${environment.baseUrl}/empresas`)
+        .pipe(
+          tap(a =>{
+            load.dismiss();
+            return a;
+          }),
+          catchError(error => {
+            load.dismiss();
+            return throwError(this.browserService.handlError(error))
+          })
+        )
+      })
+    )
   }
 
-  getLots(year?: number) : Observable<LotResponse[]>{
-    return  this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes`)//_where[0][year_gte]=${year}
-    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  getLots(year?: number): Observable<LotResponse[]> {
+    return from(this.browserService.loadingCtrl.create({ message: 'Cargando Lotes...', duration: 30000 })).pipe(
+      switchMap(load => {
+        load.present();
+        return this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`)
+          .pipe(
+            tap(async a => {
+              await load.dismiss();
+              return a
+            }),
+            catchError(error => {
+              load.dismiss();
+              return throwError(this.browserService.handlError(error))
+            })
+          )
+      })
+    )
   }
 
   getLotsByYear(year: number) : Observable<LotInterface[]>{
@@ -54,8 +83,34 @@ export class ApiService {
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 
-  postProyection(proyection) : Observable<LotProjection>{
-    return this.http.post<LotProjection>(`${environment.baseUrl}/proyeccions`, proyection)
+  getProyectionsByMonth(conf:{month: number, year: number}) : Observable<LotProjection[]>{
+    return from(this.browserService.loadingCtrl.create({ message: `Cargando proyeccion año ${conf.year}`, duration: 30000 })).pipe(
+      switchMap(load =>{
+        load.present();
+        return this.http.get<LotProjection[]>(`${environment.baseUrl}/proyeccions?_where[0][month]=${conf.month}&_where[1][year]=${conf?.year}`)
+        .pipe(
+          map(a => {
+            load.dismiss();
+            return a;
+          }),
+          catchError(error => {
+            load.dismiss();
+            return throwError(this.browserService.handlError(error))
+          })
+        )//
+      })
+    )
+    
+  }
+
+  postLot(lot: LotForm): Observable<LotResponse>{
+    return this.http.post<LotResponse>(`${environment.baseUrl}/lotes`, lot)
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
+
+  updateLot(id: number, lot: LotForm): Observable<LotResponse>{
+    return this.http.put<LotResponse>(`${environment.baseUrl}/lotes/${id}`, lot)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  }
+
 }

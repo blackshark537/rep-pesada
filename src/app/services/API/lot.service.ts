@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { LotInterface, LotModel, LotProjection, LotRecria, LotResponse } from 'src/app/models';
+import { LotInterface, LotModel } from 'src/app/models';
 import { BrowserService} from '../helpers';
 import { catchError, map, shareReplay } from 'rxjs/operators';
 import { ApiService } from './api.service';
@@ -44,13 +44,13 @@ _Nac = [
     {prop: 'production', header: 'Producción huevos totales'},
     {prop: 'incubables', header: 'Huevos Incubables'},
     { prop: 'nacimientos', header: 'Nacimientos totales' }, 
-    { prop: 'days', header: 'Días' }, 
-    { prop: 'week', header: 'Semanas'},
+    { prop: 'days', header: 'Edad en Días' }, 
+    { prop: 'week', header: 'Edad en Semanas'},
     { prop: 'status', header: 'Estado' }, 
   ]);
 
   colsRecria$ = new BehaviorSubject([
-    {prop: 'dia', header: 'Día'},
+    {prop: 'dia', header: 'Fecha'},
     {prop: 'numero_de_aves', header: 'No. de Aves' },
     {prop: 'mortalidad', header: 'Mortalidad'},
     {prop: 'mortalidad_estandar', header: 'Mort. Estandar'},
@@ -64,7 +64,7 @@ _Nac = [
 
   constructor(
     private helperService: BrowserService,
-    private api: ApiService
+    private api: ApiService,
   ) { 
     
   }
@@ -82,6 +82,8 @@ _Nac = [
             variable_mortalidad_produccion,
             variable_aprovechamiento_huevos,
             variable_produccion_huevos_totales,
+            variable_nacimiento,
+            cant_gallinas_asignadas,
             proyeccions
           } = Lote;
           
@@ -93,6 +95,9 @@ _Nac = [
           const date2= new Date(Date.now());
           const data = {
             id: i+1,
+            lotId: id,
+            variable_nacimiento,
+            cant_gallinas_asignadas,
             business: nombre_comercial,
             phone: telefono,
             address: direccion,
@@ -105,7 +110,7 @@ _Nac = [
             race: raza,
             entry: date1,
             week: this.weeksBetween(date1, date2),
-            days: this.daysBetween(date1,date2),
+            days: this.daysBetween(date1,date2)+1,
             endBreeding: this.initProd(date1),
             females: parseInt(hembras),
             males: parseInt(machos),
@@ -113,12 +118,12 @@ _Nac = [
           return {
             ...data,
             status: data.week>18? 'production' : 'breeding',
-            total: proyeccions.find(p => p.day === new Date().getDate())?.numero_de_aves,
+            total: proyeccions[data.days]?.numero_de_aves,
             recibidas: data.females,
             proyeccions,
-            production: proyeccions.find(p => p.day === new Date().getDate())?.prod_huevos_totales,
-            incubables: proyeccions.find(p => p.day === new Date().getDate())?.huevos_incubables,
-            nacimientos: proyeccions.find(p => p.day === new Date().getDate())?.nacimientos_totales
+            production: proyeccions[data.days]?.prod_huevos_totales,
+            incubables: proyeccions[data.days]?.huevos_incubables,
+            nacimientos: proyeccions[data.days]?.nacimientos_totales
           };
         });
       }),

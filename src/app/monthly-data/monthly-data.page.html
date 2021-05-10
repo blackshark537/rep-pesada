@@ -16,7 +16,7 @@
   <ion-toolbar>
     <ion-item>
       <ion-label>Año</ion-label>
-      <ion-datetime (ionChange)="setYear($event.target.value)" [pickerOptions]="customPickerOptions" placeholder="{{year | async}}" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
+      <ion-datetime (ionChange)="setYear($event.target.value)" placeholder="{{year | async}}" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
     </ion-item>
   </ion-toolbar>
 

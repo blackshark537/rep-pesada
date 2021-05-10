@@ -10,4 +10,5 @@ export interface TableActions{
     new: boolean;
     open: boolean;
     delete?: boolean;
+    edit?: boolean;
 }

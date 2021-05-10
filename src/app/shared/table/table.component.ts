@@ -10,11 +10,13 @@ import { TableActions } from '..';
 export class TableComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @Input('name') name;
+  @Input('isLimited') isLimited = true;
   @Input('expand') expand='';
   @Input('tableActions') tableActions: TableActions = {
     new: false,
     open: false,
-    delete: false
+    delete: false,
+    edit: false,
   };
   @Input('rows') rows=[];
   @Input('cols') columns = [];
@@ -39,9 +41,20 @@ export class TableComponent implements OnInit {
     return actions.filter(a => a === true).length > 0;
   }
 
+  get limit(){
+    return this.isLimited? 19 : 1000;
+  }
+
   openRow(row) {
     this.selected.emit({
       action: SelectedActions.open,
+      row
+    });
+  }
+
+  editRow(row){
+    this.selected.emit({
+      action: SelectedActions.edit,
       row
     });
   }
@@ -97,6 +110,7 @@ export class TableComponent implements OnInit {
 
 export enum SelectedActions{
   open = "open",
+  edit = "edit",
   delete = "delete",
   new = 'new'
 }

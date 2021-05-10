@@ -63,6 +63,8 @@ export class MonthlyDataPage implements OnInit {
     })).subscribe(rows => this.rows = rows);
   }
 
+  selected(event){}
+
   setYear(value){
     this.year.next(new Date(value).getFullYear());
   }

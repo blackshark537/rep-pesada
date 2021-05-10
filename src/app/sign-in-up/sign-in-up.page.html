@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Sing</ion-title>
+    <ion-title>Empezar</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -37,13 +37,13 @@
                 <!-- EMAIL -->
                 <ion-item lines="none">
                   <ion-label position="stacked">Email:</ion-label>
-                  <ion-input formControlName="email" required class="email" placeholder="Escribe tu @ email" type="email"></ion-input>
+                  <ion-input autocomplete="email" formControlName="email" required class="email" placeholder="Escribe tu @ email" type="email"></ion-input>
                   <small>Esciba su email aqui.</small>
                 </ion-item>
                 <!-- PASSWORD -->
                 <ion-item lines="none">
                   <ion-label position="stacked">Contraseña:</ion-label>
-                  <ion-input formControlName="password" required class="email" placeholder="Escribe tu contraseña" type="password"></ion-input>
+                  <ion-input autocomplete="password" formControlName="password" required class="email" placeholder="Escribe tu contraseña" type="password"></ion-input>
                   <small>Esciba su contraseña aqui.</small>
                 </ion-item>
 
@@ -56,7 +56,7 @@
               </form>
               <br>
 
-              <ion-buttons>
+              <!-- <ion-buttons>
                 <p>Iniciar con </p>
                 <ion-button (click)="authService.googleSignIn()" color="danger">
                   <ion-icon color="danger" name="logo-google"></ion-icon>
@@ -67,7 +67,7 @@
                   <ion-icon name="logo-facebook"></ion-icon>
                   acebook
                 </ion-button>
-              </ion-buttons>
+              </ion-buttons> -->
 
             </ion-list>
           </ion-card-content>

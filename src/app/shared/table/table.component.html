@@ -27,7 +27,7 @@
     [rowHeight]="50"
     [footerHeight]="50"
 
-    [limit]="19"
+    [limit]="limit"
     [scrollbarH]="true"
     [columnMode]="'force'"
     [selectionType]="'single'"
@@ -58,10 +58,13 @@
   <ngx-datatable-column
   *ngIf="hasActions"
   [flexGrow]="1" [minWidth]="120"
-   name="Actions" sortable="false" >
+   name="acciones" sortable="false" >
     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
       <ion-button *ngIf="tableActions.open" (click)="openRow(row)" size="small" color="tertiary">
         <ion-icon name="open"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="tableActions.edit" (click)="editRow(row)" size="small" color="primary">
+        <ion-icon name="pencil"></ion-icon>
       </ion-button>
       <ion-button *ngIf="tableActions.delete" (click)="deleteRow(row)" size="small" color="danger">
         <ion-icon name="trash"></ion-icon>

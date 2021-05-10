@@ -24,7 +24,7 @@ export interface LotInterface {
 }
 
 interface CantidadInterface{
-    id: number;
+    id?: number;
     hembras: string;
     machos: string;
 }
@@ -41,13 +41,21 @@ export interface LotModel {
     mortp: number;
     std_prod: number;
     std_aprov: number;
-    race: string
-    entry: Date
+    race: string;
+    entry: Date;
     week: number;
     days: number;
-    endBreeding: Date
-    females: number
-    males: number
+    endBreeding: Date;
+    females: number;
+    males: number;
+    status: string;
+    total: number;
+    recibidas: number;
+    production: number;
+    incubables: number;
+    nacimientos: number;
+    variable_nacimiento: number;
+    cant_gallinas_asignadas: number;
 }
 
 export interface LotResponse {    
@@ -113,5 +121,19 @@ export interface  LotProjection{
     "updated_at": Date;
     "lote": number;
     "day": number;
+}
+
+export interface LotForm{
+    fecha_entrada: Date;
+    variable_mortalidad_recria: number;
+    variable_mortalidad_produccion: number;
+    variable_produccion_huevos_totales: number;
+    variable_aprovechamiento_huevos: number;
+    variable_nacimiento: number;
+    month: number;
+    year: number;
+    cant_gallinas_asignadas: number;
+    empresa: number;
+    cantidad: CantidadInterface;
 }
 

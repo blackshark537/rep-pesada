@@ -25,16 +25,7 @@ export class SignInUpPage implements OnInit, OnDestroy {
     this.credentials = this.fb.group({
       email: ['', Validators.email],
       password: ['', Validators.required]
-    })
-    this.authService.user$.subscribe(resp =>{
-        if(!!resp){
-          this.credentials.patchValue({
-            email: resp.email,
-            password: resp.uid
-          });
-          this.signIn();
-        }
-    }).unsubscribe();
+    });
   }
 
   ngOnDestroy(){

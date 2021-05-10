@@ -20,11 +20,6 @@ import { lotsReducer, producersReducer } from './reducers'
 //Effects
 import { LotsEffects, ProducerEffect } from './effects';
 
-//Firebase Module
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { environment } from 'src/environments/environment';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { CapacitiesEffect } from './effects/capacities.effect';
 import { capacitiesReducer } from './reducers/capacities.reducer';
 import { BusinessesEffect } from './effects/businesses.effect';
@@ -60,10 +55,7 @@ import { businessesReducer } from './reducers/businesses.reducer';
         lock: true,
         persist: true
       }
-    }),
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule.enablePersistence(),
-    AngularFireAuthModule
+    })
   ],
   providers: [{ 
     provide: RouteReuseStrategy, 

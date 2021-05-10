@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit{
-  open=false;
+  open=true;
   openCapacity=false;
   openBreeding=false;
   openBreed=false;
@@ -35,8 +35,11 @@ export class AppComponent implements OnInit{
   constructor(
     public authService: AuthService,
     private store: Store<AppModel>,
-  ) {
-    new BehaviorSubject(localStorage.getItem('token')).subscribe(val =>{
+  ) {}
+
+  async ngOnInit(){
+    document.body.classList.toggle('dark');
+    new BehaviorSubject(localStorage.getItem('token')).subscribe(async val =>{
       if(!!val){
          this.store.dispatch(LotsActions.GET_LOTS());
          //this.store.dispatch(producersActions.GET_PRODUCERS());
@@ -45,11 +48,5 @@ export class AppComponent implements OnInit{
       }
       this.canActive = !!val;
     });
-  }
-
-  ngOnInit(){
-      /* setInterval(()=>{
-        this.store.dispatch(LotsActions.GET_LOTS());
-      }, 10*60*1000); */
   }
 }

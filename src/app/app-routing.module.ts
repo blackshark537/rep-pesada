@@ -63,6 +63,10 @@ const routes: Routes = [
   {
     path: 'daily-projection',
     loadChildren: () => import('./daily-projection/daily-projection.module').then( m => m.DailyProjectionPageModule)
+  },
+  {
+    path: 'lot-form',
+    loadChildren: () => import('./lot-form/lot-form.module').then( m => m.LotFormPageModule)
   }
 ];
 

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://www.data-prod.com',
+  baseUrl: 'http://data-prod.ddns.net',
   firebaseConfig: {
     apiKey: "AIzaSyCro4PpFpSQlyf50LcsnLV5wkdWdIp3glY",
     authDomain: "avicola-1735c.firebaseapp.com",
