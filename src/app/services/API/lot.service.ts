@@ -38,15 +38,15 @@ _Nac = [
 
   cols$ = new BehaviorSubject([
     {prop: 'business', header: 'Empresa'},
-    {prop: 'entry', header: 'Fecha de entrada'},
-    { prop: 'recibidas', header: 'Aves Recibidas'},
-    { prop: 'total', header: 'Aves Existentes' },
-    {prop: 'production', header: 'Producción huevos totales'},
-    {prop: 'incubables', header: 'Huevos Incubables'},
-    { prop: 'nacimientos', header: 'Nacimientos totales' }, 
-    { prop: 'days', header: 'Edad en Días' }, 
-    { prop: 'week', header: 'Edad en Semanas'},
-    { prop: 'status', header: 'Estado' }, 
+    {prop: 'entry', header: 'Fecha de<br>entrada'},
+    { prop: 'recibidas', header: 'Aves<br>Recibidas'},
+    { prop: 'total', header: 'Aves<br>Existentes' },
+    {prop: 'production', header: 'Producción<br>huevos totales'},
+    {prop: 'incubables', header: 'Huevos<br>Incubables'},
+    { prop: 'nacimientos', header: 'Nacimientos<br>totales' }, 
+    { prop: 'days', header: 'Edad en<br>Días' }, 
+    { prop: 'week', header: 'Edad en<br>Semanas'},
+    //{ prop: 'status', header: 'Estado' }, 
   ]);
 
   colsRecria$ = new BehaviorSubject([

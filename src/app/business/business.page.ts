@@ -13,9 +13,9 @@ import { TableEvent } from '../shared';
 export class BusinessPage implements OnInit {
 
   cols = [
-    { prop: 'empresa' , header: 'Nombre Comercial'}, 
-    { prop: 'telefono', header: 'Teléfono' },
-    {prop: 'cant_gallinas_asignadas', header: 'cant. de gallinas asignadas'},
+    { prop: 'empresa' , header: 'Nombre <br>Comercial'}, 
+    { prop: 'telefono', header: 'Número de<br>Teléfono' },
+    {prop: 'cant_gallinas_asignadas', header: 'cantidad de<br>gallinas asignadas'},
     { prop: 'direccion', header: 'Dirección' }
   ];
   businesses = []

@@ -20,16 +20,46 @@
       <ion-datetime value="2021" [pickerOptions]="customPickerOptions" placeholder="Custom Options" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
     </ion-item>
   </ion-toolbar> -->
-
-  <ion-item lines="none">
-    <ion-label>
-      <h2><b>Total de Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}:</b> {{status?.total}}</h2>
-      <h2><b>Total de Huevos Producidos:</b> {{status?.eggs}}</h2>
-      <h2><b>Total de Huevos Incubables:</b> {{status?.incub_eggs}}</h2>
-      <h2><b>Nacimientos Totales:</b> {{status?.born_eggs}}</h2>
-    </ion-label>
-  </ion-item>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12"  size-md="3">
+        <ion-card button>
+          <ion-card-content>
+            <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+            <h1><span style="color: springgreen">{{status?.total}}</span> Aves</h1>
+            <small><b>Total de Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}:</b></small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12"  size-md="3">
+        <ion-card button>
+          <ion-card-content>
+            <ion-icon class="egg" slot="end" name="egg" color="medium" size="large"></ion-icon>
+            <h1><span style="color: tomato;">{{status?.eggs}}</span> Huevos</h1>
+            <small><b>Total de Huevos Producidos</b></small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12"  size-md="3">
+        <ion-card button>
+          <ion-card-content>
+            <ion-icon class="egg" slot="end" name="egg" color="medium" size="large"></ion-icon>
+            <h1><span style="color: darkturquoise;">{{status?.incub_eggs}}</span> Huevos</h1>
+            <small><b>Total de Huevos Incubables</b></small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12"  size-md="3">
+        <ion-card button >
+          <ion-card-content>
+            <ion-icon class="egg" slot="end" name="logo-twitter" color="primary" size="large"></ion-icon>
+            <h1><span style="color: black;">{{status?.born_eggs}}</span> Nacimientos</h1>
+            <small><b>Nacimientos Totales</b></small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <app-table 
   name="Lotes" 
   [cols]="col$ | async" 

@@ -8,14 +8,14 @@
   </ion-list-header>
 
   <ion-toolbar>
-    <ion-item lines="none">
+    <!-- <ion-item lines="none">
       <ion-label>Theme:</ion-label>
       <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange)="tableStyle = $event.target.value" placeholder="theme" [value]="tableStyle">
         <ion-select-option value="material">Material</ion-select-option>
         <ion-select-option value="bootstrap">Bootstrap</ion-select-option>
         <ion-select-option value="dark">Dark</ion-select-option>
       </ion-select>
-    </ion-item>
+    </ion-item> -->
     <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
   </ion-toolbar>
 
@@ -45,12 +45,12 @@
 
 <ngx-datatable-column
   *ngFor="let col of columns" name="{{col.header}}"
-  [flexGrow]="1" minWidth="{{col.prop!=='direccion'?  120 : 350}}">
+  [flexGrow]="1" minWidth="{{col.prop!=='direccion'?  80 : 650}}" maxWidth="{{col.prop!=='direccion'?  190 : 650}}">
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
     <span >{{
       col.header.includes('Fecha') === false? 
       row[col.prop.toLowerCase()] : 
-      row[col.prop.toLowerCase()] | date: 'short'
+      row[col.prop.toLowerCase()] | date: 'shortDate'
     }}</span>
   </ng-template>
 </ngx-datatable-column>
