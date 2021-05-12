@@ -73,13 +73,24 @@ export class TableComponent implements OnInit {
     }); 
   }
 
+  getType(value){
+    return typeof(value) === 'number';
+  }
+
   onSort(event) {
     this.loading = true;
     const rows = [...this.rows];
     const filter = this.columns.filter(x => x.header === event.column.name)[0].prop.toLowerCase();
     if(!!filter === false ) return; //if theres no filter match return
     const sort = event.sorts[0];
+
     rows.sort((a, b) => {
+      if(typeof(a[filter]) === 'object') {
+        let c = a[filter] as Date;
+        let d = b[filter] as Date;
+        return c.getTime() > d.getTime()? 1 * (sort.dir === 'desc' ? -1 : 1) : -1 * (sort.dir === 'desc' ? -1 : 1);
+      }
+
       if(typeof(a[filter]) === 'number') {
         return a[filter] > b[filter]? 1 * (sort.dir === 'desc' ? -1 : 1) : -1 * (sort.dir === 'desc' ? -1 : 1);
       }

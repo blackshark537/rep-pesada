@@ -13,10 +13,10 @@ import { TableEvent } from '../shared';
 export class BusinessPage implements OnInit {
 
   cols = [
-    { prop: 'empresa' , header: 'Nombre <br>Comercial'}, 
-    { prop: 'telefono', header: 'Número de<br>Teléfono' },
-    {prop: 'cant_gallinas_asignadas', header: 'cantidad de<br>gallinas asignadas'},
-    { prop: 'direccion', header: 'Dirección' }
+    { number: false, prop: 'empresa' , header: 'Nombre <br>Comercial'}, 
+    { number: false, prop: 'telefono', header: 'Número de<br>Teléfono' },
+    { number: true, prop: 'cant_gallinas_asignadas', header: 'cantidad de<br>gallinas asignadas'},
+    { number: false, prop: 'direccion', header: 'Dirección' }
   ];
   businesses = []
   constructor(

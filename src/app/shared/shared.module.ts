@@ -4,9 +4,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TableComponent } from './table/table.component';
+import { CommasPipe } from '../pipes/numWithCommas.pipe';
 
 @NgModule({
-  declarations: [TableComponent],
+  declarations: [TableComponent, CommasPipe],
   imports: [
     CommonModule,
     FormsModule,

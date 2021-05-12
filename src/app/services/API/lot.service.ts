@@ -38,12 +38,12 @@ _Nac = [
 
   cols$ = new BehaviorSubject([
     {prop: 'business', header: 'Empresa'},
-    {prop: 'entry', header: 'Fecha de<br>entrada'},
+    {prop: 'entry', header: 'Fecha de<br>Entrada'},
     { prop: 'recibidas', header: 'Aves<br>Recibidas'},
     { prop: 'total', header: 'Aves<br>Existentes' },
-    {prop: 'production', header: 'Producción<br>huevos totales'},
+    {prop: 'production', header: 'Huevos<br>Producidos'},
     {prop: 'incubables', header: 'Huevos<br>Incubables'},
-    { prop: 'nacimientos', header: 'Nacimientos<br>totales' }, 
+    { prop: 'nacimientos', header: 'Nacimientos<br>Totales' }, 
     { prop: 'days', header: 'Edad en<br>Días' }, 
     { prop: 'week', header: 'Edad en<br>Semanas'},
     //{ prop: 'status', header: 'Estado' }, 
@@ -51,15 +51,15 @@ _Nac = [
 
   colsRecria$ = new BehaviorSubject([
     {prop: 'dia', header: 'Fecha'},
-    {prop: 'numero_de_aves', header: 'No. de Aves' },
-    {prop: 'mortalidad', header: 'Mortalidad'},
-    {prop: 'mortalidad_estandar', header: 'Mort. Estandar'},
-    {prop: 'estandar_real', header: 'Estandar Real'},
-    {prop: 'prod_huevos_totales', header: 'Producción huevos totales' },
-    {prop: 'aprovechamiento_de_huevos_estandar', header: 'Estanadar de Aprovechamiento'},
-    {prop: 'huevos_incubables', header: 'Huevos Incubables'},
-    {prop: 'estandar_de_nacimientos', header: 'Estandar Nacimientos' }, 
-    {prop: 'nacimientos_totales', header: 'Nacimientos totales' }, 
+    {prop: 'numero_de_aves', header: 'Aves<br>Existentes' },
+    {prop: 'mortalidad', header: 'Mortalidad<br>Aproximada'},
+    //{prop: 'mortalidad_estandar', header: 'Estandar de<br>Mortalidad'},
+    {prop: 'estandar_real', header: 'Estandar de<br>Producción'},
+    {prop: 'prod_huevos_totales', header: 'Huevos<br>Producidos' },
+    {prop: 'aprovechamiento_de_huevos_estandar', header: 'Estandar de<br>Aprovechamiento'},
+    {prop: 'huevos_incubables', header: 'Huevos<br>Incubables'},
+    {prop: 'estandar_de_nacimientos', header: 'Estandar de<br>Nacimientos' }, 
+    {prop: 'nacimientos_totales', header: 'Nacimientos<br>Totales' }, 
     ]);
 
   constructor(

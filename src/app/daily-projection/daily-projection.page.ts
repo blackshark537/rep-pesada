@@ -44,11 +44,11 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
           })
         })
       ).subscribe(resp => {
-        let numero_aves_anual = 0;
+        let numero_aves_anual = null;
         let month = [];
         for (let i = 1; i < 32; i++) {
           let pro = resp.filter(p => p.day === i );//&& p.estado === "produccion");
-          let numero_aves = 0;
+          let numero_aves = null;
           pro.forEach(el => {
             numero_aves += parseInt(el.numero_de_aves);
             numero_aves_anual += parseInt(el.numero_de_aves);

@@ -45,7 +45,12 @@ export class BreederPage implements OnInit, OnDestroy {
         address: lote.address,
         status:  'breeding'
       };
-      this.lots = lote.proyeccions;  // more than 20 weeks old its in production
+      lote.proyeccions.forEach((p, i)=>{
+        this.lots.push({
+          ...p,
+          id: i+1
+        })
+      })
     });
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
