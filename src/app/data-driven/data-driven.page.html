@@ -4,6 +4,12 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Asignación vs Importación año {{year | async}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-item >
+        <ion-label><h2>Año</h2></ion-label>
+        <ion-datetime (ionChange)="setYear($event.target.value)" value="2021" placeholder="{{year | async}}" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
+      </ion-item>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,15 +19,47 @@
       <ion-title size="large">Asignación vs Importación año {{year | async}} </ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-toolbar>
-    <ion-item>
-      <ion-label>Año</ion-label>
-      <ion-datetime (ionChange)="setYear($event.target.value)" placeholder="{{year | async}}" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
-    </ion-item>
-  </ion-toolbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12"  size-md="4">
+        <ion-card button>
+          <ion-card-content>
+            <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+            <h1><span >8200</span> Rep. Livianas Asignadas</h1>
+            <small><b>Asignación Total de Rep. Livianas</b></small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12"  size-md="4">
+        <ion-card button>
+          <ion-card-content>
+            <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+            <h1><span >1000</span> Rep. Livianas Importadas</h1>
+            <small><b>Importación Total de Rep. Livianas</b></small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12"  size-md="4">
+        <ion-card button>
+          <ion-card-content>
+            <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+            <h1><span >7200</span> Balance</h1>
+            <small><b>Balance Total de Rep. Livianas</b></small>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <!-- <ion-col size="12" size-md="2">
+        <ion-card button>
+          <ion-card-content>
+            
+          </ion-card-content>
+        </ion-card>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
 
   <app-table 
-  name="Reproductoras livianas {{year | async}}"
+  name="Reporte de Importación Reproductoras Livianas Año {{year | async}}"
   [cols]="cols" 
   [rows]="rows"
   (selected)="selected($event)"></app-table>

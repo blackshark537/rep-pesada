@@ -49,6 +49,7 @@ export class LotPage implements OnInit {
       map(a => a.filter(x => x.status ===  this.filter)),
       map(lots => {
         lots.forEach(lot=>{
+          if(lot.id === 42)console.log(lot);
           this.status.total+= parseInt(lot.total)//
           this.status.eggs+=parseInt(lot.production)
           this.status.incub_eggs+=parseInt(lot.incubables)

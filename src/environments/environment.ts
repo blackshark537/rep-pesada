@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://data-prod.ddns.net',//'http://localhost:1337',
+  baseUrl: 'http://localhost:1337',//'http://data-prod.ddns.net',
   firebaseConfig: {
     apiKey: "AIzaSyCro4PpFpSQlyf50LcsnLV5wkdWdIp3glY",
     authDomain: "avicola-1735c.firebaseapp.com",

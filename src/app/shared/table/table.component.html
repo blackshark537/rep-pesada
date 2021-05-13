@@ -1,6 +1,6 @@
 <ion-list >
   <ion-list-header>
-    <ion-label>Lista {{name? 'de '+ name: ''}}</ion-label>    
+    <ion-label><h2>{{name | titlecase}}</h2></ion-label>    
     <ion-button *ngIf="tableActions.new" size="large" (click)="newRow()">
       Nuevo
       <ion-icon name="add"></ion-icon>
@@ -45,7 +45,7 @@
 
 <ngx-datatable-column
   *ngFor="let col of columns" name="{{col.header}}" 
-  [flexGrow]="1" minWidth="{{col.prop!=='direccion'?  80 : 650}}" >
+  [flexGrow]="1" minWidth="{{col.prop!=='direccion'?  80 : 350}}" >
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template ><!-- [class]="col?.number? 'Dil' : 'Dir'" -->
     <span [ngSwitch]="col.prop">
       <span *ngSwitchCase=" 'entry' || 'entrydate' ">

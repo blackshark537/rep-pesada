@@ -12,6 +12,8 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   table = true;
   actual_year = new BehaviorSubject(2021);
   rows = [];
+  estado='recria'
+  typeFilter=TypeFilter.Aves;
   cols = [
     { prop: 'day', header: 'Dia' },
     { prop: 'jan', header: 'Enero' },
@@ -47,11 +49,31 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
         let numero_aves_anual = null;
         let month = [];
         for (let i = 1; i < 32; i++) {
-          let pro = resp.filter(p => p.day === i );//&& p.estado === "produccion");
+          let pro = resp.filter((p)=> p.day === i && p.estado === this.estado );
           let numero_aves = null;
-          pro.forEach(el => {
-            numero_aves += parseInt(el.numero_de_aves);
-            numero_aves_anual += parseInt(el.numero_de_aves);
+          pro.forEach((el, i)=> {
+            if(i < 595){
+              switch (this.typeFilter) {
+                case TypeFilter.Aves:
+                  numero_aves += parseInt(el.numero_de_aves);
+                  numero_aves_anual += parseInt(el.numero_de_aves);
+                  break;
+                case TypeFilter.Hvo_Prod:
+                  numero_aves += parseInt(el.prod_huevos_totales.toFixed(2));
+                  numero_aves_anual += parseInt(el.prod_huevos_totales.toFixed(2));
+                  break;
+                case TypeFilter.Hvo_Incb:
+                  numero_aves += parseInt(el.huevos_incubables.toFixed(2));
+                  numero_aves_anual += parseInt(el.huevos_incubables.toFixed(2));
+                  break;
+                case TypeFilter.Nacimientos:
+                  numero_aves += parseInt(el.nacimientos_totales.toFixed(2));
+                  numero_aves_anual += parseInt(el.nacimientos_totales.toFixed(2));
+                  break;
+                default:
+                  break;
+              }
+            }
           })
           //console.log(`${headers[m-1]}: ${i}`, numero_aves)
           month.push(numero_aves);
@@ -87,8 +109,23 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
 
   selected(event) { }
 
+  filterBy(value){
+    this.estado=value;
+  }
+
+  filterByType(value){
+    this.typeFilter=value;
+  }
+
   setYear(value) {
     this.actual_year.next(new Date(value).getFullYear());
-    this.ngOnInit();
   }
+
+}
+
+enum TypeFilter{
+  Hvo_Prod='huevos_producidos',
+  Hvo_Incb='huevos_incubables',
+  Nacimientos='nacimientos',
+  Aves='aves'
 }

@@ -12,13 +12,13 @@ export class DataDrivenPage implements OnInit {
   year = new BehaviorSubject(new Date().getFullYear());
   rows = [];
   cols  = [
-    {prop: 'empresa', header:'Nombre <br>Comercial'},
+    {prop: 'empresa', header:'Empresa y/o Productor'},
     {prop: 'entrydate', header:'Fecha de<br>Entrada'},
+    {prop: 'asignacion', header:'Rep. Livianas<br>Asignadas'},
+    {prop: 'importadas', header:'Rep. Livianas<br>Importadas'},
     {prop: 'balance', header:'Balance'},
-    {prop: 'asignacion', header:'Gallinas<br>Asignadas'},
-    {prop: 'cuota_asignacion', header:'Part. de<br>Asignación % '},
-    {prop: 'importadas', header:'Gallinas<br>Importadas'},
-    {prop: 'cuota_importacion', header:'Part. de<br>Importación % '},
+    //{prop: 'cuota_asignacion', header:'Part. de<br>Asignación % '},
+    {prop: 'cuota_importacion', header:'% Part. de<br>Importación'},
   ]
   constructor(
     private apiService: ApiService,

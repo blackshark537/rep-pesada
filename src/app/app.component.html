@@ -41,9 +41,7 @@
               <ion-item [routerLink]="['/monthly-data']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Calendario de Entrada</ion-label>
               </ion-item>
-              <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Proyeccion diaria</ion-label>
-              </ion-item>
+
             </ion-card-content>
           </ion-card>
 
@@ -55,7 +53,7 @@
             <ion-card-content *ngIf="openBreeding">
               <ion-item [routerLink]="['/lot/breeding']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  <h2>Aves en Recría</h2>
+                  <h2>Estado Actual Recría</h2>
                   <!-- <ul>
                     <li>Parametros Tecnicos</li>
                     <li>Población de Pollitas</li>
@@ -64,7 +62,7 @@
               </ion-item>
               <ion-item [routerLink]="['/lot/production']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  <h2>Aves en Producción</h2>
+                  <h2>Estado Actual Producción</h2>
                   <!-- <ul>
                     <li>Parametros Tecnicos</li>
                     <li>Población de Gallinas</li>
@@ -73,6 +71,12 @@
                     <li>Pollitas Nacidas</li>
                   </ul> -->
                 </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Proyeccion Diaria  Rep. Liviana</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/daily-population']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Población Diaria Rep. Liviana</ion-label>
               </ion-item>
             </ion-card-content>
           </ion-card>

@@ -148,12 +148,14 @@ _Nac = [
   }
 
   private weeksBetween(d1, d2) {
-    return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
+    const week = Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
+    return week<0? 0 : week;
   }
 
   private daysBetween(d1,d2) {
     const Difference_In_Time = d2.getTime() - d1.getTime();
-    return Math.floor(Difference_In_Time / (1000 * 3600 * 24));
+    const day = Math.floor(Difference_In_Time / (1000 * 3600 * 24));
+    return day<0? 0 : day;
   }
 
 }

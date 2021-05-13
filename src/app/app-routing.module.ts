@@ -67,6 +67,10 @@ const routes: Routes = [
   {
     path: 'lot-form',
     loadChildren: () => import('./lot-form/lot-form.module').then( m => m.LotFormPageModule)
+  },
+  {
+    path: 'daily-population',
+    loadChildren: () => import('./daily-population/daily-population.module').then( m => m.DailyPopulationPageModule)
   }
 ];
 
