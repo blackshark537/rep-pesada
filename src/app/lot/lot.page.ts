@@ -29,7 +29,6 @@ export class LotPage implements OnInit {
     eggs:0,
     incub_eggs:0,
     born_eggs:0
-
   }
   col$    = this.lotService.cols$;
   filter  =   "production";

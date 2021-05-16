@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { ApiService, BrowserService } from '../services';
+import { ApiService } from '../services';
 
 @Component({
   selector: 'app-monthly-data',
@@ -10,10 +10,11 @@ import { ApiService, BrowserService } from '../services';
 })
 export class MonthlyDataPage implements OnInit {
   year= new BehaviorSubject(new Date().getFullYear());
+  actual_year= new Date().getFullYear();
   rows = [];
   cols=[
     {prop: 'empresa', header: 'Nombre <br>Comercial'},
-    {prop: 'entrydate', header:'Fecha de <br>Entrada'},
+    {prop: 'entry', header:'Fecha de <br>Entrada'},
     {prop: 'asignacion',  header: 'Asignación'},
     {prop: 'balance', header: 'Balance'},
     {prop: 'jan', header: 'Enero'},
@@ -39,12 +40,11 @@ export class MonthlyDataPage implements OnInit {
       return this.apiService.getLotsByYear(year).pipe(
         map(lots=>{
           let row = [];
-          console.log(lots)
           lots.forEach( (lot,i) => {  
             row.push(          {
               id: i+1,
               empresa: lot.empresa?.nombre_comercial,
-              entrydate: new Date(lot.fecha_entrada).toLocaleDateString(),
+              entry: new Date(lot.fecha_entrada).toLocaleDateString(),
               jan: lot.fecha_entrada.split('-')[1]==='01'? lot.cantidad.hembras : '',
               feb: lot.fecha_entrada.split('-')[1]==='02'? lot.cantidad.hembras : '',
               mar: lot.fecha_entrada.split('-')[1]==='03'? lot.cantidad.hembras : '',

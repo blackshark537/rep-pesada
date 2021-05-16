@@ -138,7 +138,7 @@ _Nac = [
       }
   }
 
-  private formatDate(date: string){
+  formatDate(date: string){
     //has to add one day
     return new Date(new Date(date).getTime()  + (24 * 60 * 60 * 1000))
   }

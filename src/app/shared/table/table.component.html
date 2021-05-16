@@ -1,23 +1,27 @@
 <ion-list >
   <ion-list-header>
-    <ion-label><h2>{{name | titlecase}}</h2></ion-label>    
-    <ion-button *ngIf="tableActions.new" size="large" (click)="newRow()">
-      Nuevo
-      <ion-icon name="add"></ion-icon>
-    </ion-button>
+    <ion-label><h2>{{name | titlecase}}</h2></ion-label> 
+    
+    
+    
+    <ion-searchbar style="max-width: 25em;" (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
+    <ion-buttons>
+      <ion-button *ngIf="tableActions.new" color="primary" size="large" (click)="newRow()">
+        Nuevo
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-list-header>
-
-  <ion-toolbar>
-    <!-- <ion-item lines="none">
+  <!-- <ion-toolbar>
+    <ion-item lines="none">
       <ion-label>Theme:</ion-label>
       <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange)="tableStyle = $event.target.value" placeholder="theme" [value]="tableStyle">
         <ion-select-option value="material">Material</ion-select-option>
         <ion-select-option value="bootstrap">Bootstrap</ion-select-option>
         <ion-select-option value="dark">Dark</ion-select-option>
       </ion-select>
-    </ion-item> -->
-    <ion-searchbar (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
-  </ion-toolbar>
+    </ion-item>
+  </ion-toolbar> -->
 
   <ngx-datatable
     class="{{tableStyle}} server-scrolling-demo"
@@ -35,13 +39,13 @@
     [loadingIndicator]="loading"
     (sort)="onSort($event)"
   ><!-- [limit]="limit"  -->
-  <ngx-datatable-column
+  <!-- <ngx-datatable-column
   [flexGrow]="1" [maxWidth]="50"
   name="Id" sortable="true">
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
     <span >{{row['id']}}</span>
   </ng-template>
-</ngx-datatable-column>
+</ngx-datatable-column> -->
 
 <ngx-datatable-column
   *ngFor="let col of columns" name="{{col.header}}" 

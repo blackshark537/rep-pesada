@@ -4,19 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DailyPopulationPageRoutingModule } from './daily-population-routing.module';
+import { EggsByWeeksPageRoutingModule } from './eggs-by-weeks-routing.module';
 
-import { DailyPopulationPage } from './daily-population.page';
+import { EggsByWeeksPage } from './eggs-by-weeks.page';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     SharedModule,
-    DailyPopulationPageRoutingModule
+    IonicModule,
+    EggsByWeeksPageRoutingModule
   ],
-  declarations: [DailyPopulationPage]
+  declarations: [EggsByWeeksPage]
 })
-export class DailyPopulationPageModule {}
+export class EggsByWeeksPageModule {}

@@ -7,7 +7,7 @@
     <ion-buttons slot="end">
       <ion-item >
         <ion-label><h2>Año</h2></ion-label>
-        <ion-datetime (ionChange)="setYear($event.target.value)" value="2021" placeholder="{{year | async}}" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
+        <ion-datetime (ionChange)="setYear($event.target.value)" [value]="actual_year" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
       </ion-item>
     </ion-buttons>
   </ion-toolbar>
@@ -22,29 +22,29 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12"  size-md="4">
-        <ion-card button>
+        <ion-card button  style="height: 6em;">
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1><span >8200</span> Rep. Livianas Asignadas</h1>
-            <small><b>Asignación Total de Rep. Livianas</b></small>
+            <h1 style="color: black;">Total Rep. Livianas</h1>
+            <h1><span style="color: black;">Asignadas: {{status?.asignacion}}</span> </h1>
           </ion-card-content>
         </ion-card>
       </ion-col>
       <ion-col size="12"  size-md="4">
-        <ion-card button>
+        <ion-card button  style="height: 6em;">
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1><span >1000</span> Rep. Livianas Importadas</h1>
-            <small><b>Importación Total de Rep. Livianas</b></small>
+            <h1 style="color: black;">Total Rep. Livianas</h1>
+            <h1><span style="color: black;">Importadas: {{status?.importacion}}</span> </h1>
           </ion-card-content>
         </ion-card>
       </ion-col>
       <ion-col size="12"  size-md="4">
-        <ion-card button>
+        <ion-card button  style="height: 6em;">
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1><span >7200</span> Balance</h1>
-            <small><b>Balance Total de Rep. Livianas</b></small>
+            <h1 style="color: black;">Balance Total</h1>
+            <h1><span style="color: black;">{{status?.balance}}</span> </h1>
           </ion-card-content>
         </ion-card>
       </ion-col>

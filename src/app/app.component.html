@@ -46,14 +46,14 @@
           </ion-card>
 
           <ion-card >
-            <ion-item lines="none" button (click)="openBreeding=!openBreeding">
+            <ion-item lines="none" detail="true" button (click)="openBreeding=!openBreeding">
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Reproductora Liviana</ion-label>
             </ion-item>
             <ion-card-content *ngIf="openBreeding">
               <ion-item [routerLink]="['/lot/breeding']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  <h2>Estado Actual Recría</h2>
+                  Estado Actual Recría
                   <!-- <ul>
                     <li>Parametros Tecnicos</li>
                     <li>Población de Pollitas</li>
@@ -62,7 +62,7 @@
               </ion-item>
               <ion-item [routerLink]="['/lot/production']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  <h2>Estado Actual Producción</h2>
+                  Estado Actual Producción
                   <!-- <ul>
                     <li>Parametros Tecnicos</li>
                     <li>Población de Gallinas</li>
@@ -75,8 +75,8 @@
               <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Proyeccion Diaria  Rep. Liviana</ion-label>
               </ion-item>
-              <ion-item [routerLink]="['/daily-population']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Población Diaria Rep. Liviana</ion-label>
+              <ion-item [routerLink]="['/eggs-by-weeks']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Población Semanal Rep. Liviana</ion-label>
               </ion-item>
             </ion-card-content>
           </ion-card>

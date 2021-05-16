@@ -12,6 +12,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   table = true;
   actual_year = new BehaviorSubject(2021);
   rows = [];
+  monthly = [];
   estado='recria'
   typeFilter=TypeFilter.Aves;
   cols = [
@@ -36,8 +37,8 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    let headers = this.cols.filter(x => x.prop != 'day').map(val => val.prop);
-    let anual = [];
+    let headers = this.cols.filter(x => x.prop != 'day').map(val => val.header);
+    let monthly = [];
     this.month.forEach((m, h) => {
       this.sub$ = this.actual_year.pipe(
         switchMap(val => {
@@ -79,26 +80,40 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
           month.push(numero_aves);
         }
         //console.log(`${headers[m-1]}: `,numero_aves_anual)
-        anual.push({ month: headers[m-1], data: month, balance: numero_aves_anual })
+        monthly.push({ month: headers[m-1], data: month, balance: numero_aves_anual })
         this.rows = [];
         for (let i = 0; i < 31; i++) {
           let obj = {};
           obj['id'] = i;
           obj['day'] = i + 1;
-          obj['jan'] = anual.filter(x => x.month == 'jan')[0]?.data[i];
-          obj['feb'] = anual.filter(x => x.month == 'feb')[0]?.data[i];
-          obj['mar'] = anual.filter(x => x.month == 'mar')[0]?.data[i];
-          obj['apr'] = anual.filter(x => x.month == 'apr')[0]?.data[i];
-          obj['may'] = anual.filter(x => x.month == 'may')[0]?.data[i];
-          obj['jun'] = anual.filter(x => x.month == 'jun')[0]?.data[i];
-          obj['jul'] = anual.filter(x => x.month == 'jul')[0]?.data[i];
-          obj['ago'] = anual.filter(x => x.month == 'ago')[0]?.data[i];
-          obj['sep'] = anual.filter(x => x.month == 'sep')[0]?.data[i];
-          obj['oct'] = anual.filter(x => x.month == 'oct')[0]?.data[i];
-          obj['nov'] = anual.filter(x => x.month == 'nov')[0]?.data[i];
-          obj['dec'] = anual.filter(x => x.month == 'dec')[0]?.data[i];
+          obj['jan'] = monthly.filter(x => x.month == 'Enero')[0]?.data[i];
+          obj['feb'] = monthly.filter(x => x.month == 'Febrero')[0]?.data[i];
+          obj['mar'] = monthly.filter(x => x.month == 'Marzo')[0]?.data[i];
+          obj['apr'] = monthly.filter(x => x.month == 'Abril')[0]?.data[i];
+          obj['may'] = monthly.filter(x => x.month == 'Mayo')[0]?.data[i];
+          obj['jun'] = monthly.filter(x => x.month == 'Junio')[0]?.data[i];
+          obj['jul'] = monthly.filter(x => x.month == 'Julio')[0]?.data[i];
+          obj['ago'] = monthly.filter(x => x.month == 'Agosto')[0]?.data[i];
+          obj['sep'] = monthly.filter(x => x.month == 'Septiembre')[0]?.data[i];
+          obj['oct'] = monthly.filter(x => x.month == 'Octubre')[0]?.data[i];
+          obj['nov'] = monthly.filter(x => x.month == 'Noviembre')[0]?.data[i];
+          obj['dec'] = monthly.filter(x => x.month == 'Diciembre')[0]?.data[i];
           this.rows.push(obj);
         }
+        this.monthly = [
+          {month: 'Enero', balance: monthly.filter(x => x.month == 'Enero')[0]?.balance},
+          {month: 'Febrero', balance: monthly.filter(x => x.month == 'Febrero')[0]?.balance},
+          {month: 'Marzo', balance: monthly.filter(x => x.month == 'Marzo')[0]?.balance},
+          {month: 'Abril', balance: monthly.filter(x => x.month == 'Abril')[0]?.balance},
+          {month: 'Mayo', balance: monthly.filter(x => x.month == 'Mayo')[0]?.balance},
+          {month: 'Junio', balance: monthly.filter(x => x.month == 'Junio')[0]?.balance},
+          {month: 'Julio', balance: monthly.filter(x => x.month == 'Julio')[0]?.balance},
+          {month: 'Agosto', balance: monthly.filter(x => x.month == 'Agosto')[0]?.balance},
+          {month: 'Septiembre', balance: monthly.filter(x => x.month == 'Septiembre')[0]?.balance},
+          {month: 'Octubre', balance: monthly.filter(x => x.month == 'Octubre')[0]?.balance},
+          {month: 'Noviembre', balance: monthly.filter(x => x.month == 'Noviembre')[0]?.balance},
+          {month: 'Diciembre', balance: monthly.filter(x => x.month == 'Diciembre')[0]?.balance},
+        ]
       })
     });
   }
@@ -115,6 +130,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
 
   filterByType(value){
     this.typeFilter=value;
+    if(value != TypeFilter.Aves) this.filterBy('produccion')
   }
 
   setYear(value) {

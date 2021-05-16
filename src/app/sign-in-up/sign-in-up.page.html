@@ -43,13 +43,13 @@
                 <!-- PASSWORD -->
                 <ion-item lines="none">
                   <ion-label position="stacked">Contraseña:</ion-label>
-                  <ion-input autocomplete="password" formControlName="password" required class="email" placeholder="Escribe tu contraseña" type="password"></ion-input>
+                  <ion-input autocomplete="password" (keyup.enter)="signIn()" formControlName="password" required class="email" placeholder="Escribe tu contraseña" type="password"></ion-input>
                   <small>Esciba su contraseña aqui.</small>
                 </ion-item>
 
                 <br>
 
-                <ion-item [disabled]="credentials.invalid" (click)="signIn()" button class="ion-text-center" lines="none" detail="false" color="primary">
+                <ion-item #signin [disabled]="credentials.invalid" (click)="signIn()" button class="ion-text-center" lines="none" detail="false" color="primary">
                   <ion-label>Entrar</ion-label>
                 </ion-item>
 

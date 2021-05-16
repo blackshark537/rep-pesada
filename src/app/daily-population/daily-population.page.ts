@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../services';
 
 @Component({
   selector: 'app-daily-population',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DailyPopulationPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private apiService: ApiService
+  ) { }
 
   ngOnInit() {
+
   }
 
 }

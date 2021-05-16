@@ -50,7 +50,7 @@ export class ApiService {
     return from(this.browserService.loadingCtrl.create({ message: 'Cargando Empresas...' })).pipe(
       switchMap(load =>{
         load.present();
-        return this.http.get<BusinessInterface[]>(`${environment.baseUrl}/empresas`)
+        return this.http.get<BusinessInterface[]>(`${environment.baseUrl}/empresas/only`)
         .pipe(
           tap(a =>{
             load.dismiss();
@@ -97,7 +97,7 @@ export class ApiService {
     return from(this.browserService.loadingCtrl.create({ message: `Cargando Lotes, año ${year}` })).pipe(
       switchMap(load => {
         load.present();
-        return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes?_q=${year}`)
+        return  this.http.get<LotInterface[]>(`${environment.baseUrl}/lotes/only?_year=${year}`)
         .pipe(
           tap(async a => {
             await load.dismiss();

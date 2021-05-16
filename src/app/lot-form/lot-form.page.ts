@@ -85,8 +85,10 @@ export class LotFormPage implements OnInit {
   }
 
   setBusiness(value){
+    const empresa = JSON.parse(value) as BusinessInterface
     this.loteForm.patchValue({
-      empresa: value
+      empresa: empresa.id,
+      cant_gallinas_asignadas: empresa.cant_gallinas_asignadas
     });
   }
 
