@@ -24,6 +24,7 @@ import { CapacitiesEffect } from './effects/capacities.effect';
 import { capacitiesReducer } from './reducers/capacities.reducer';
 import { BusinessesEffect } from './effects/businesses.effect';
 import { businessesReducer } from './reducers/businesses.reducer';
+import { projectionsReducer } from './reducers/projections.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +40,8 @@ import { businessesReducer } from './reducers/businesses.reducer';
       lots: lotsReducer,
       producers: producersReducer,
       capacities: capacitiesReducer,
-      businesses: businessesReducer
+      businesses: businessesReducer,
+      projections: projectionsReducer
     }),
     EffectsModule.forRoot([
       LotsEffects,

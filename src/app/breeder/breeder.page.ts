@@ -45,7 +45,7 @@ export class BreederPage implements OnInit, OnDestroy {
         address: lote.address,
         status:  'breeding'
       };
-      lote.proyeccions.forEach((p, i)=>{
+      lote.projections.forEach((p, i)=>{
         this.lots.push({
           ...p,
           id: i+1

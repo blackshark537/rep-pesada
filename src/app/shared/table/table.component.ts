@@ -88,7 +88,8 @@ export class TableComponent implements OnInit {
       if(typeof(a[filter]) === 'object') {
         let c = a[filter] as Date;
         let d = b[filter] as Date;
-        return c.getTime() > d.getTime()? 1 * (sort.dir === 'desc' ? -1 : 1) : -1 * (sort.dir === 'desc' ? -1 : 1);
+        if(!c || !d) return
+        return c?.getTime() > d?.getTime()? 1 * (sort.dir === 'desc' ? -1 : 1) : -1 * (sort.dir === 'desc' ? -1 : 1);
       }
 
       if(typeof(a[filter]) === 'number') {

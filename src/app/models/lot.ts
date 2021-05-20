@@ -34,7 +34,7 @@ export interface LotModel {
     business: string;
     phone: string;
     address: string;
-    proyeccions?: LotProjection[];
+    projections?: LotProjection[];
     date: Date;
     code: string;
     mort: number;
@@ -107,11 +107,11 @@ export interface  LotProjection{
     "mortalidad": number;
     "mortalidad_estandar": number;
     "estandar_real": number;
-    "prod_huevos_totales": number;
+    "prod_huevos_totales": string;
     "aprovechamiento_de_huevos_estandar": number;
-    "huevos_incubables": number;
+    "huevos_incubables": string;
     "estandar_de_nacimientos": number;
-    "nacimientos_totales": number;
+    "nacimientos_totales": string;
     "estado": string;
     "year": number;
     "month": number;

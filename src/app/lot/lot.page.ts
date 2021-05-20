@@ -45,7 +45,7 @@ export class LotPage implements OnInit {
   ngOnInit() {
     this.filter = this.activeRoute.snapshot.paramMap.get('id');
     this.lot$   = this.store.select('lots').pipe(
-      map(a => a.filter(x => x.status ===  this.filter)),
+      map(a => a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 596)),
       map(lots => {
         lots.forEach(lot=>{
           if(lot.id === 42)console.log(lot);

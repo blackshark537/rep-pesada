@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { LotInterface, LotResponse } from '../models';
+import { LotResponse } from '../models';
 
 const GET_LOTS = createAction('Get all lots');
 const GET_LOTS_SUCCEEDED = createAction('Get all lots succeeded', props<{lots: LotResponse[]}>());

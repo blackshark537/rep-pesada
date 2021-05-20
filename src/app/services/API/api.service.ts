@@ -132,6 +132,25 @@ export class ApiService {
     
   }
 
+  getProyectionsAllSince(year: number) : Observable<LotProjection[]>{
+    return from(this.browserService.loadingCtrl.create({ message: `Cargando proyeccion<br> desde el año ${year} <br> por favor espere...<span id="progress1"></span>`, duration: 30000 })).pipe(
+      switchMap(load =>{
+        load.present();
+        return this.http.get<LotProjection[]>(`${environment.baseUrl}/proyeccions?_where[0][year_gt]=${year}&_limit=5000`)
+        .pipe(
+          map(a => {
+            load.dismiss();
+            return a
+          }),
+          catchError(error => {
+            load.dismiss();
+            return throwError(this.browserService.handlError(error))
+          })
+        )//
+      })
+    ) 
+  }
+
   postLot(lot: LotForm): Observable<LotResponse>{
     return this.http.post<LotResponse>(`${environment.baseUrl}/lotes`, lot)
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
