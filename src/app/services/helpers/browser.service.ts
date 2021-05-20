@@ -66,17 +66,17 @@ export class BrowserService {
     }
 
     if(error.status === 400){
-      this.showToast('ERR_BAD_REQUEST', 'info', ToastSatusClass.info);
+      this.showToast(`ERROR: ${error.error?.data[0]?.messages[0]?.message}`, 'info', ToastSatusClass.info);
       return;
     }
 
     if(error.status === 401){
-      this.showToast('ERR_UNAUTHORIZED_ACCESS', 'lock-closed', ToastSatusClass.error);
+      this.showToast('ERROR ACCESO NO AUTORIZADO', 'lock-closed', ToastSatusClass.info);
       return;
     }
 
     if(error.status === 403){
-      this.showToast('ERR_ACCESS_FORBIDDEN', 'lock-closed', ToastSatusClass.error);
+      this.showToast('ERROR ACCESO PROHIBIDO', 'lock-closed', ToastSatusClass.info);
       return;
     }
   }

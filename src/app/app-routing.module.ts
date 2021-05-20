@@ -69,10 +69,6 @@ const routes: Routes = [
     loadChildren: () => import('./lot-form/lot-form.module').then( m => m.LotFormPageModule)
   },
   {
-    path: 'daily-population',
-    loadChildren: () => import('./daily-population/daily-population.module').then( m => m.DailyPopulationPageModule)
-  },
-  {
     path: 'eggs-by-weeks',
     loadChildren: () => import('./eggs-by-weeks/eggs-by-weeks.module').then( m => m.EggsByWeeksPageModule)
   }

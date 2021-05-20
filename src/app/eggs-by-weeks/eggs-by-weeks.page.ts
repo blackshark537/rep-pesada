@@ -38,8 +38,6 @@ export class EggsByWeeksPage implements OnInit {
 
   ngOnInit() {
     let monthly = [];
-    let acc_month = {};
-    //this.month.forEach((m, h) => {
     this.sub$ = this.store.select('projections').pipe(
       map(pro => pro.filter(p => p.year >= this.years[0]))
     ).subscribe(resp => {
@@ -77,22 +75,23 @@ export class EggsByWeeksPage implements OnInit {
 
       let data_l = [];
       let data_v = [];
+      console.table(monthly);
       monthly.forEach(month => {
         let acc_l = null;
         let acc_v = null;
         month?.data.forEach(el => {
-          if (el?.day > 4 || el?.day < 2) {
-            acc_l += el?.numero_nac;
-            if (el.day === 1) data_l.push({ date: `${el.dia}/${el.month}/${month?.year}`, year: el?.year, day: el.day, acc: acc_l })
-          } else {
-            acc_l = null;
-          }
-
           if (el.day > 1 && el.day < 6) {
             if (el.day < 5) acc_v += el?.numero_nac;
             if (el.day === 5) data_v.push({ date: `${el.dia}/${el.month}/${month?.year}`, year: el?.year, day: el.day, acc: acc_v })
           } else {
             acc_v = null;
+          }
+
+          if (el?.day > 4 || el?.day < 2) {
+            acc_l += el?.numero_nac;
+            if (el.day === 1) data_l.push({ date: `${el.dia}/${el.month}/${month?.year}`, year: el?.year, day: el.day, acc: acc_l })
+          } else {
+            acc_l = null;
           }
         });
 
@@ -131,8 +130,8 @@ export class EggsByWeeksPage implements OnInit {
         obj_v[`entry2`] = data_v.filter(x => x.year === this.years[2])[i]?.date;
         obj_v[`year2`] = data_v.filter(x => x.year === this.years[2])[i]?.acc;
 
-        /* if (!!data_v[i]?.acc)   */this.rows.push(obj_v);
-        /* if (!!data_l[i]?.acc)   */this.rows.push(obj_l);
+        this.rows.push(obj_v);
+        this.rows.push(obj_l);
       }
 
       this.rows.forEach((row, i) => {

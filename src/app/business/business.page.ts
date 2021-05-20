@@ -15,8 +15,8 @@ export class BusinessPage implements OnInit {
   cols = [
     { number: false, prop: 'empresa' , header: 'Empresa y/o Productor'}, 
     { number: false, prop: 'direccion', header: 'Dirección' },
-    { number: false, prop: 'telefono', header: 'Número de<br>Teléfono' },
-    { number: true, prop: 'cant_gallinas_asignadas', header: 'cantidad de<br>gallinas asignadas'}
+    { number: false, prop: 'telefono', header: 'Número de Teléfono' },
+    { number: true, prop: 'cant_gallinas_asignadas', header: 'Cantidad de Gallinas Asignadas'}
   ];
   businesses = []
   constructor(

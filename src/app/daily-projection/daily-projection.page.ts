@@ -56,12 +56,12 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
           let numero_aves = null;
           let d: Date = null;
           let daysInMonth: Date = null;
-          pro.forEach((el, i) => {
+          pro.forEach((el, k) => {
             d = new Date(el.dia);
             let mt = d.getMonth() + 1;
             let yr = d.getFullYear();
             daysInMonth = new Date(yr, mt, 0);
-            if (i < 595) {
+            if (k < 595) {
               switch (this.typeFilter) {
                 case TypeFilter.Aves:
                   numero_aves += parseInt(el.numero_de_aves);

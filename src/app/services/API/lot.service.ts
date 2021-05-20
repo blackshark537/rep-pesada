@@ -119,23 +119,18 @@ _Nac = [
 
           const recria = this.getRecria(data);
           const produccion = this.getProd(recria[recria.length - 1]);
-          let lot = {
+          
+          const lot = {
             ...data,
             recria,
-            status: data.week > 18 ? 'production' : 'breeding',
             produccion,
-            total: data.week > 18 ? produccion[data.days - (18 * 7) - 1]?.chicks : recria[data.days - 1]?.chicks,
-            recibidas: data.females,
-            production: data.week > 18 ? produccion[data.days - (18 * 7) - 1]?.prodhtotal : 0,
-            incubables: data.week > 18 ? produccion[data.days - (18 * 7) - 1]?.hincub : 0,
-            nacimientos: data.week > 18 ? produccion[data.days - (18 * 7) - 1]?.birthtotal : 0,
           };
-          
+
           const projections = this.genProjection(lot, Lote);
           this.store.dispatch(projectionsActions.SET_PROJECTIONS({projections: [...projections]}))
           return  {
             ...data,
-            status: data.week>18? 'production' : 'breeding',
+            status: data.week >= 18? 'production' : 'breeding',
             total: projections[data.days]?.numero_de_aves,
             recibidas: data.females,
             projections,
@@ -319,13 +314,13 @@ private initProd(date) {
 }
 
 //weeks count since the entry date
-private weeksBetween(d1, d2) {
-  return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
+private weeksBetween(d1: Date, d2: Date) {
+  return Math.round((d2.getTime() - d1.getTime()) / (7 * 24 * 60 * 60 * 1000));
 }
 
 //days count since the entry date
 daysBetween(d1, d2) {
   const Difference_In_Time = d2.getTime() - d1.getTime();
-  return Math.floor(Difference_In_Time / (1000 * 3600 * 24));
+  return Math.floor(Difference_In_Time / (1000 * 3600 * 24))+1;
 }
 }
