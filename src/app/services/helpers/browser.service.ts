@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 
 @Injectable({
@@ -8,6 +9,7 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 export class BrowserService {
 
   constructor(
+    private router: Router,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController
@@ -72,6 +74,8 @@ export class BrowserService {
 
     if(error.status === 401){
       this.showToast('ERROR ACCESO NO AUTORIZADO', 'lock-closed', ToastSatusClass.info);
+      localStorage.clear();
+      this.router.navigate(['/signin']);
       return;
     }
 

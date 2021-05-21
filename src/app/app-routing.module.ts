@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards';
+import { NotFoundPage } from './not-found/not-found.page';
+import { PathResolveService } from './services/helpers/pathResolve.service';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo: 'business',
     pathMatch: 'full'
+  },
+  {
+    path: 'signin',
+    loadChildren: () => import('./sign-in-up/sign-in-up.module').then( m => m.SignInUpPageModule)
   },
   {
     canActivate:[AuthGuard],
@@ -49,28 +55,40 @@ const routes: Routes = [
     loadChildren: () => import('./breeder/breeder.module').then( m => m.BreederPageModule)
   },
   {
-    path: 'signin',
-    loadChildren: () => import('./sign-in-up/sign-in-up.module').then( m => m.SignInUpPageModule)
-  },
-  {
+    canActivate:[AuthGuard],
     path: 'data-driven',
     loadChildren: () => import('./data-driven/data-driven.module').then( m => m.DataDrivenPageModule)
   },
   {
+    canActivate:[AuthGuard],
     path: 'monthly-data',
     loadChildren: () => import('./monthly-data/monthly-data.module').then( m => m.MonthlyDataPageModule)
   },
   {
+    canActivate:[AuthGuard],
     path: 'daily-projection',
     loadChildren: () => import('./daily-projection/daily-projection.module').then( m => m.DailyProjectionPageModule)
   },
   {
+    canActivate:[AuthGuard],
     path: 'lot-form',
     loadChildren: () => import('./lot-form/lot-form.module').then( m => m.LotFormPageModule)
   },
   {
+    canActivate:[AuthGuard],
     path: 'eggs-by-weeks',
     loadChildren: () => import('./eggs-by-weeks/eggs-by-weeks.module').then( m => m.EggsByWeeksPageModule)
+  },
+  {
+    path: '404',
+    loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
+  },
+  {
+    path: '**',
+    resolve: {
+      path: PathResolveService
+    },
+    component: NotFoundPage
   }
 ];
 

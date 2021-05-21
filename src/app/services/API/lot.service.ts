@@ -73,7 +73,7 @@ _Nac = [
   }
 
   getLots(): Observable<any[]>{
-    return this.api.getLots(new Date().getFullYear()-2).pipe(
+    return this.api.getLots(new Date().getFullYear()-5).pipe(
       shareReplay(1),
       map(Lots => {
         return Lots.map((Lote, i)=>{
@@ -130,7 +130,7 @@ _Nac = [
           this.store.dispatch(projectionsActions.SET_PROJECTIONS({projections: [...projections]}))
           return  {
             ...data,
-            status: data.week >= 18? 'production' : 'breeding',
+            status: data.week > 18? 'production' : 'breeding',
             total: projections[data.days]?.numero_de_aves,
             recibidas: data.females,
             projections,
@@ -202,7 +202,7 @@ private genProjection(lot, entity): LotProjection[] {
 private getRecria(lote) {
   let recria = [];
   let index = 0;
-  const total_weeks = 18;
+  const total_weeks = 19;
   for (let i = 0; i < total_weeks * 7; i++) {
 
       if (i % 7 === 0) index += 1;
@@ -242,7 +242,7 @@ private getRecria(lote) {
  private getProd(lote) {
   let prod = [];
   let index = lote.weekAge;
-  const total_weeks = 67;
+  const total_weeks = 66;
   const conf_weeks = 3;
   for (let i = 0; i < total_weeks * 7; i++) {
 

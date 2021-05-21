@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   async signOut(){
-    this.native.remStorage('token');
+    this.native.clearStorage();
     this.router.navigate(['/signin']);
   }
 

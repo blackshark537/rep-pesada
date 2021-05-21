@@ -68,34 +68,32 @@ export class EggsByWeeksPage implements OnInit {
             if (i >= daysInMonth?.getDate()) continue;
           }
           //console.log(`${headers[m-1]}: `,numero_aves_anual)
-          if (!!m) monthly.push({ year: val, month: m, data: month, balance: numero_nac_anual });
+          if (!!m) monthly.push(...month);
 
         });
       });
 
       let data_l = [];
       let data_v = [];
-      console.table(monthly);
-      monthly.forEach(month => {
-        let acc_l = null;
-        let acc_v = null;
-        month?.data.forEach(el => {
+      let acc_l = null;
+      let acc_v = null;
+      monthly.forEach(el => {
+
           if (el.day > 1 && el.day < 6) {
             if (el.day < 5) acc_v += el?.numero_nac;
-            if (el.day === 5) data_v.push({ date: `${el.dia}/${el.month}/${month?.year}`, year: el?.year, day: el.day, acc: acc_v })
+            if (el.day === 5) data_v.push({ date: `${el.dia}/${el.month}/${el?.year}`, year: el?.year, day: el.day, acc: acc_v })
           } else {
             acc_v = null;
           }
 
           if (el?.day > 4 || el?.day < 2) {
             acc_l += el?.numero_nac;
-            if (el.day === 1) data_l.push({ date: `${el.dia}/${el.month}/${month?.year}`, year: el?.year, day: el.day, acc: acc_l })
+            if (el.day === 1) data_l.push({ date: `${el.dia}/${el.month}/${el?.year}`, year: el?.year, day: el.day, acc: acc_l })
           } else {
             acc_l = null;
           }
-        });
 
-      });
+        });
 
       let index_l = data_l.length;
       let index_v = data_v.length;
@@ -109,7 +107,7 @@ export class EggsByWeeksPage implements OnInit {
         data_v.push({ date: null, year: data_v[index_v - 1]?.year, day: 5, acc: 0 });
       }
 
-      //console.table(data_v)
+      console.table(data_v)
       
       this.rows = [];
       for (let i = 0; i < 52; i++) {
