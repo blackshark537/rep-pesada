@@ -26,7 +26,7 @@
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
             <h1 style="color: black;">Total Rep. Livianas</h1>
-            <h1><span style="color: black;">Asignadas: {{status?.asignacion}}</span> </h1>
+            <h1><span style="color: black;">Asignadas: {{status?.asignacion | addCommas}}</span> </h1>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -35,7 +35,7 @@
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
             <h1 style="color: black;">Total Rep. Livianas</h1>
-            <h1><span style="color: black;">Importadas: {{status?.importacion}}</span> </h1>
+            <h1><span style="color: black;">Importadas: {{status?.importacion | addCommas}}</span> </h1>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -44,7 +44,7 @@
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
             <h1 style="color: black;">Balance Total</h1>
-            <h1><span style="color: black;">{{status?.balance}}</span> </h1>
+            <h1><span style="color: black;">{{status?.balance | addCommas}}</span> </h1>
           </ion-card-content>
         </ion-card>
       </ion-col>

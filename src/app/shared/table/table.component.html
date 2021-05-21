@@ -52,20 +52,23 @@
   [flexGrow]="1" minWidth="{{col.prop!=='direccion'?  80 : 350}}" >
   <ng-template let-row="row" let-value="value" ngx-datatable-cell-template ><!-- [class]="col?.number? 'Dil' : 'Dir'" -->
     <span [ngSwitch]="col.prop">
-      <span *ngSwitchCase=" 'entry' || 'entrydate' ">
+      <span *ngSwitchCase=" 'entry' ">
         {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
       </span>
-      <!-- <span *ngSwitchCase=" 'entry0' || 'entrydate' ">
-        {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+      <span *ngSwitchCase=" 'entrydate' ">
+        {{row[col.prop.toLowerCase()] | date: 'd/M/YY'}}
       </span>
-      <span *ngSwitchCase=" 'entry1' || 'entrydate' ">
-        {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
-      </span>
-      <span *ngSwitchCase=" 'entry2' || 'entrydate' ">
-        {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
-      </span> -->
       <span *ngSwitchCase=" 'dia' ">
         {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+      </span>
+      <span *ngSwitchCase=" 'entry0' ">
+        {{row[col.prop.toLowerCase()] }}
+      </span>
+      <span *ngSwitchCase=" 'entry1' ">
+        {{row[col.prop.toLowerCase()] }}
+      </span>
+      <span *ngSwitchCase=" 'entry2' ">
+        {{row[col.prop.toLowerCase()] }}
       </span>
       <span *ngSwitchCase=" 'mortalidad' ">
         {{row[col.prop.toLowerCase()] + ' %'}}
@@ -79,11 +82,14 @@
       <span *ngSwitchCase=" 'estandar_de_nacimientos' ">
         {{ row[col.prop.toLowerCase()] + ' %'}}
       </span>
+      <span *ngSwitchCase="'telefono' ||  'phone' ">
+        {{  row[col.prop.toLowerCase()] }}
+      </span>
       <span *ngSwitchCase="'balance'" class="{{row[col.prop.toLowerCase()]>1? 'green' : row[col.prop.toLowerCase()]<0? 'red' : ''}}">
-        {{row[col.prop.toLowerCase()]}}
+        {{row[col.prop.toLowerCase()] | addCommas}}
       </span>
       <span *ngSwitchDefault >
-        {{ row[col.prop.toLowerCase()]}}
+        {{  row[col.prop.toLowerCase()] | addCommas }}
       </span>
     </span>
     <!-- {{

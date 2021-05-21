@@ -26,7 +26,7 @@
         <ion-card button>
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1><span style="color: springgreen">{{status?.total}}</span> Aves</h1>
+            <h1><span style="color: springgreen">{{status?.total | addCommas}}</span> Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}</h1>
             <small><b>Total de Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}:</b></small>
           </ion-card-content>
         </ion-card>
@@ -35,7 +35,7 @@
         <ion-card button>
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="egg" color="medium" size="large"></ion-icon>
-            <h1><span style="color: tomato;">{{status?.eggs}}</span> Huevos</h1>
+            <h1><span style="color: tomato;">{{status?.eggs | addCommas}}</span> Huevos Producidos</h1>
             <small><b>Total de Huevos Producidos</b></small>
           </ion-card-content>
         </ion-card>
@@ -44,7 +44,7 @@
         <ion-card button>
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="egg" color="medium" size="large"></ion-icon>
-            <h1><span style="color: darkturquoise;">{{status?.incub_eggs}}</span> Huevos</h1>
+            <h1><span style="color: darkturquoise;">{{status?.incub_eggs | addCommas}}</span> Huevos Incubables</h1>
             <small><b>Total de Huevos Incubables</b></small>
           </ion-card-content>
         </ion-card>
@@ -53,7 +53,7 @@
         <ion-card button >
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="primary" size="large"></ion-icon>
-            <h1><span style="color: black;">{{status?.born_eggs}}</span> Nacimientos</h1>
+            <h1><span style="color: black;">{{status?.born_eggs | addCommas}}</span> Nacimientos Totales</h1>
             <small><b>Nacimientos Totales</b></small>
           </ion-card-content>
         </ion-card>

@@ -4,7 +4,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TableComponent } from './table/table.component';
-import { CommasPipe } from '../pipes/numWithCommas.pipe';
+import { CommasPipe } from './pipes/numWithCommas.pipe';
 
 @NgModule({
   declarations: [TableComponent, CommasPipe],
@@ -14,6 +14,6 @@ import { CommasPipe } from '../pipes/numWithCommas.pipe';
     IonicModule,
     NgxDatatableModule
   ],
-  exports: [TableComponent]
+  exports: [TableComponent, CommasPipe]
 })
 export class SharedModule { }

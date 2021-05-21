@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { projectionsActions } from '../actions';
 import { AppModel } from '../models';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-daily-projection',
@@ -15,6 +16,20 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   actual_year = 2021;
   rows = [];
   monthly = [];
+  slideOpts = {
+    initialSlide: 3,
+    speed: 600,
+    slidesPerView: 9,
+    autoplay: true,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    },
+  }
+  colors=['secundary', 'success', 'danger','warning', 'primary','light', 'tertiary','medium','secundary', 'success', 'danger', 'primary','light']
   estado = 'produccion'
   typeFilter = TypeFilter.Aves;
   cols = [
@@ -35,10 +50,26 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   sub$: Subscription;
   constructor(
-    private store: Store<AppModel>
+    private store: Store<AppModel>,
+    private  platform: Platform
   ) { }
 
   ngOnInit() {
+    if(this.platform.is('android') || this.platform.is('ios')){
+      this.slideOpts={
+        initialSlide: 1,
+        speed: 600,
+        slidesPerView: 2,
+        autoplay: false,
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+      }
+    }
     let headers = this.cols.filter(x => x.prop != 'day').map(val => val.header);
     let monthly = [];
     this.sub$ = this.store.select('projections').pipe(

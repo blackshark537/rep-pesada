@@ -74,7 +74,7 @@ export class TableComponent implements OnInit {
   }
 
   getType(value){
-    return typeof(value) === 'number';
+    return typeof(value) != 'number';
   }
 
   onSort(event) {

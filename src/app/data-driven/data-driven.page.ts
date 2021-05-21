@@ -54,7 +54,6 @@ export class DataDrivenPage implements OnInit {
       
             lots.forEach((lot, i)=>{
               let r = row.filter(r => r.empresa === lot.empresa.nombre_comercial)[0] 
-              console.log('bf', {...r})
               if(!!r){
                 r.importadas+= parseInt(lot.cantidad.hembras);
                 r.balance= parseInt(lot.empresa?.cant_gallinas_asignadas)-parseInt(r.importadas)
