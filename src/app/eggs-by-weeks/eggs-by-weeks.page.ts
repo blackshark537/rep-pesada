@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppModel, LotProjection } from '../models';
-import { ApiService, LotService } from '../services';
 
 @Component({
   selector: 'app-eggs-by-weeks',
@@ -78,36 +77,18 @@ export class EggsByWeeksPage implements OnInit {
       let acc_l = null;
       let acc_v = null;
       monthly.forEach(el => {
+        if (el.day > 1 && el.day < 6) {
+          acc_l = null;
+          if (el.day < 5) acc_v += el?.numero_nac;
+          if (el.day === 5) data_v.push({ date: `${el.dia}/${el.month}/${el?.year}`, year: el?.year, day: el.day, acc: acc_v })
+        } 
 
-          if (el.day > 1 && el.day < 6) {
-            if (el.day < 5) acc_v += el?.numero_nac;
-            if (el.day === 5) data_v.push({ date: `${el.dia}/${el.month}/${el?.year}`, year: el?.year, day: el.day, acc: acc_v })
-          } else {
-            acc_v = null;
-          }
-
-          if (el?.day > 4 || el?.day < 2) {
-            acc_l += el?.numero_nac;
-            if (el.day === 1) data_l.push({ date: `${el.dia}/${el.month}/${el?.year}`, year: el?.year, day: el.day, acc: acc_l })
-          } else {
-            acc_l = null;
-          }
-
-        });
-
-      let index_l = data_l.length;
-      let index_v = data_v.length;
-      let remind_l = 156 - index_l;
-      let remind_v = 156 - index_v;
-
-      for (let j = 0; j < remind_l; j++) {
-        data_l.push({ date: null, year: data_l[index_l - 1]?.year, day: 1, acc: 0 });
-      }
-      for (let k = 0; k < remind_v; k++) {
-        data_v.push({ date: null, year: data_v[index_v - 1]?.year, day: 5, acc: 0 });
-      }
-
-      console.table(data_v)
+        if (el?.day > 4 || el?.day < 2) {
+          acc_v = null;
+          acc_l += el?.numero_nac;
+          if (el.day === 1) data_l.push({ date: `${el.dia}/${el.month}/${el?.year}`, year: el?.year, day: el.day, acc: acc_l })
+        } 
+      });
       
       this.rows = [];
       for (let i = 0; i < 52; i++) {

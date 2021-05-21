@@ -19,7 +19,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   slideOpts = {
     initialSlide: 3,
     speed: 600,
-    slidesPerView: 9,
+    slidesPerView: 7,
     autoplay: true,
     coverflowEffect: {
       rotate: 50,
@@ -29,7 +29,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
       slideShadows: true,
     },
   }
-  colors=['secundary', 'success', 'danger','warning', 'primary','light', 'tertiary','medium','secundary', 'success', 'danger', 'primary','light']
+  colors=['secondary', 'success', 'danger','warning', 'primary','light', 'tertiary','medium','secondary', 'success', 'danger', 'primary','light']
   estado = 'produccion'
   typeFilter = TypeFilter.Aves;
   cols = [

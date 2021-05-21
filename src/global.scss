@@ -40,7 +40,8 @@
 }
 
 datatable-body-cell{
-    border: 1px solid grey  !important;
+    border-left: 1px solid grey  !important;
+    border-bottom: 1px solid grey  !important;
     text-align: center  !important;
     .Dil{
         text-align: left !important;
@@ -51,10 +52,13 @@ datatable-body-cell{
 }
 
 datatable-header-cell{
-    border: 1px solid grey  !important;
+    border-top: 1px solid grey  !important;
+    border-bottom: 1px solid grey  !important;
+    border-left: 1px solid grey  !important;
     text-align: center  !important;
-    background-color: #BF3952;
-    color: white;
+    background-color: #fff;
+    color: black;
+    font-style: oblique;
 }
 
 .datatable-row-group:hover{

@@ -23,6 +23,7 @@ export class TableComponent implements OnInit {
   @Output('selected') selected = new EventEmitter();
 
   loading=false;
+  searched=false;
   public temp = [];
   public tableStyle = 'bootstrap';
   public customPopoverOptions: any = {
@@ -85,6 +86,9 @@ export class TableComponent implements OnInit {
     const sort = event.sorts[0];
 
     rows.sort((a, b) => {
+      
+      if(!a || !b) return;
+
       if(typeof(a[filter]) === 'object') {
         let c = a[filter] as Date;
         let d = b[filter] as Date;
@@ -96,8 +100,8 @@ export class TableComponent implements OnInit {
         return a[filter] > b[filter]? 1 * (sort.dir === 'desc' ? -1 : 1) : -1 * (sort.dir === 'desc' ? -1 : 1);
       }
 
-      return a[filter].toString()
-      .localeCompare(b[filter].toString()) * 
+      return a[filter]?.toString()
+      .localeCompare(b[filter]?.toString()) * 
       (sort.dir === 'desc' ? -1 : 1);
     });
 
@@ -106,14 +110,16 @@ export class TableComponent implements OnInit {
   }
 
   updateFilter(event) {
-    
+    if(!this.searched){
+      this.temp=[...this.rows];
+      this.searched=true;
+    }
     const val: string = event.target.value.toLowerCase();
-
-    const temp = this.temp.map(val => {
-      if(typeof(val[this.columns[0].prop]) != 'number') return val;
-    }).filter(x => {
-      if(!!x === false) return []
-      return x[this.columns[0].prop].toLowerCase().includes(val)
+    const temp = this.temp.filter(x => {
+      if(!x) return;
+      if(typeof(x[this.columns[0].prop]) ===  'string') return x[this.columns[0].prop].toLowerCase().includes(val);
+      if(typeof(x[this.columns[0].prop]) ===  'number') return (x[this.columns[0].prop] as number).toString().includes(val);
+      return;
     });
     this.rows = temp;
     this.table.offset = 0;
