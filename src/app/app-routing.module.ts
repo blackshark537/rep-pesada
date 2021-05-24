@@ -79,6 +79,7 @@ export const routes: Routes = [
     loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
   {
+    canActivate:[AuthGuard],
     path: 'birth-entry',
     loadChildren: () => import('./birth-chiks-entry/birth-chiks-entry.module').then( m => m.BirthChiksEntryPageModule)
   },
