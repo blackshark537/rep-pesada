@@ -15,16 +15,22 @@ import { StoreModule } from '@ngrx/store';
 import { ApiInterceptorService } from './services'
 
 //Reducers
-import { lotsReducer, producersReducer } from './reducers'
+import { 
+  lotsReducer, 
+  producersReducer, 
+  businessesReducer, 
+  capacitiesReducer,
+  projectionsReducer,
+  egglotsReducer
+} from './reducers'
 
 //Effects
-import { LotsEffects, ProducerEffect } from './effects';
-
-import { CapacitiesEffect } from './effects/capacities.effect';
-import { capacitiesReducer } from './reducers/capacities.reducer';
-import { BusinessesEffect } from './effects/businesses.effect';
-import { businessesReducer } from './reducers/businesses.reducer';
-import { projectionsReducer } from './reducers/projections.reducer';
+import { 
+  LotsEffects, 
+  ProducerEffect,
+  CapacitiesEffect,
+  BusinessesEffect
+} from './effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +47,8 @@ import { projectionsReducer } from './reducers/projections.reducer';
       producers: producersReducer,
       capacities: capacitiesReducer,
       businesses: businessesReducer,
-      projections: projectionsReducer
+      projections: projectionsReducer,
+      eggLots: egglotsReducer,
     }),
     EffectsModule.forRoot([
       LotsEffects,

@@ -4,6 +4,12 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Registro de Empresas</ion-title>
+    <ion-buttons slot="end">
+        <ion-title style="margin-right: 1rem;">
+          Asignacion total: 
+        {{balanceTotal | addCommas}}
+        </ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,5 +20,5 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-table name="Empresas" [cols]="cols" [rows]="businesses" (selected)="selected($event)"></app-table>
+  <app-table name="Empresas con Asignación de Pollitas Rep. Livianas" [cols]="cols" [rows]="businesses" (selected)="selected($event)"></app-table>
 </ion-content>

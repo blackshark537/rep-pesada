@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services';
 
@@ -57,8 +57,8 @@ export class MonthlyDataPage implements OnInit {
               oct: lot.fecha_entrada.split('-')[1]==='10'? lot.cantidad.hembras : '',
               nov: lot.fecha_entrada.split('-')[1]==='11'? lot.cantidad.hembras : '',
               dic: lot.fecha_entrada.split('-')[1]==='12'? lot.cantidad.hembras : '',
-              balance: parseInt(lot.empresa?.cant_gallinas_asignadas) - parseInt(lot.cantidad.hembras),
-              asignacion: parseInt(lot.empresa?.cant_gallinas_asignadas)
+              balance: parseInt(lot.cant_gallinas_asignadas) - parseInt(lot.cantidad.hembras),
+              asignacion: parseInt(lot.cant_gallinas_asignadas)
             })
           });
           return row;

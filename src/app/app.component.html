@@ -3,13 +3,13 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          
+
           <ion-item lines="none">
             <ion-avatar size="large" slot="start">
-              <img src="assets/chicken.png" alt="logo"  width="100px" height="100px">
+              <img src="assets/chicken.png" alt="logo" width="100px" height="100px">
             </ion-avatar>
             <ion-label>
-              <h1>Industria Avícola</h1>  
+              <h1>Industria Avícola</h1>
               <p>Sub Sector Huevos de Mesa</p>
               <!-- <p>Reproductora liviana</p> -->
             </ion-label>
@@ -21,8 +21,8 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle> -->
-          
-          <ion-card >
+
+          <ion-card>
             <ion-item lines="none" detail="true" button (click)="open=!open">
               <ion-icon slot="start" name="business-outline"></ion-icon>
               <ion-label>Empresas</ion-label>
@@ -45,7 +45,7 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card >
+          <ion-card>
             <ion-item lines="none" detail="true" button (click)="openBreeding=!openBreeding">
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Reproductora Liviana</ion-label>
@@ -73,16 +73,40 @@
                 </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Proyeccion Diaria  Rep. Liviana</ion-label>
+                <ion-label>Proyeccion Diaria Rep. Liviana</ion-label>
               </ion-item>
               <ion-item [routerLink]="['/eggs-by-weeks']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Población Semanal Rep. Liviana</ion-label>
               </ion-item>
+              <ion-item [routerLink]="['/birth-entry']" lines="none"  detail="false" routerLinkActive="selected">
+                <ion-label>Entrada de Pollitas Ponedoras</ion-label>
+              </ion-item>
             </ion-card-content>
           </ion-card>
 
-          <ion-card >
-            <ion-item lines="none" button (click)="openBreed=!openBreed">
+          <ion-card>
+            <ion-item lines="none" detail="true" button (click)="openProd=!openProd">
+              <ion-icon slot="start" name="cube-outline"></ion-icon>
+              <ion-label>Producción Huevos de Mesa</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openProd">
+              <ion-item [routerLink]="['/#']" lines="none">
+                <ion-label>Registro de Productores de Huevos</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/birth-entry']" lines="none">
+                <ion-label>Producción de Huevos Totales</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Consumo Percapita</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>Participación de Prod.</ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-item lines="none" detail="true" button (click)="openBreed=!openBreed">
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Plantas Incubadoras</ion-label>
             </ion-item>
@@ -96,43 +120,22 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card >
-            <ion-item lines="none" button (click)="openProd=!openProd">
-              <ion-icon slot="start" name="cube-outline"></ion-icon>
-              <ion-label>Producción Huevos de Mesa</ion-label>
-            </ion-item>
-            <ion-card-content *ngIf="openProd">
-              <ion-item [routerLink]="['#']" lines="none">
-                <ion-label>Registro de Productores de Huevos</ion-label>
-              </ion-item>
-              <ion-item [routerLink]="['#']" lines="none">
-                <ion-label>Producción de Huevos Totales</ion-label>
-              </ion-item>
-              <ion-item [routerLink]="['#']" lines="none">
-                <ion-label>Consumo Percapita</ion-label>
-              </ion-item>
-              <ion-item [routerLink]="['#']" lines="none">
-                <ion-label>Participación de Prod.</ion-label>
-              </ion-item>
-            </ion-card-content>
-          </ion-card>
-
           <ion-card>
-            <ion-item lines="none" button >
+            <ion-item lines="none" button>
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Historico Precios de Huevos</ion-label>
             </ion-item>
           </ion-card>
 
           <ion-card>
-            <ion-item lines="none" button >
+            <ion-item lines="none" button>
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Precios de Commodities</ion-label>
             </ion-item>
           </ion-card>
 
           <ion-card>
-            <ion-item lines="none" button >
+            <ion-item lines="none" button>
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Costos de Producción</ion-label>
             </ion-item>
@@ -153,7 +156,7 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card >
+          <ion-card>
             <ion-item lines="none" button (click)="openCapacity=!openCapacity">
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Capacidad Instalada Ind. de Huevos</ion-label>
@@ -174,7 +177,7 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card >
+          <ion-card>
             <ion-item lines="none" button (click)="openGeo=!openGeo">
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Mapa Geolocalización</ion-label>

@@ -3,14 +3,17 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Estado Actual Aves En {{filter==='breeding'? 'Recria' : 'Producción'}}</ion-title>
+    <ion-title>Estado Actual De Aves Existentes {{filter==='breeding'? 'En Recria' : 'y Producción'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-title>{{time | date: 'medium'}}</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Estado Actual Aves En {{filter==='breeding'? 'Recria' : 'Producción'}}</ion-title>
+      <ion-title size="large">Estado Actual De Aves Existentes {{filter==='breeding'? 'En Recria' : 'y Producción'}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <!-- <ion-toolbar>
@@ -26,42 +29,42 @@
         <ion-card button>
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1><span style="color: springgreen">{{status?.total | addCommas}}</span> Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}</h1>
-            <small><b>Total de Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}:</b></small>
+            <h1>Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}: <span style="color: green">{{status?.total | addCommas}}</span> </h1>
+            <!-- <small><b>Total de Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}:</b></small> -->
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12"  size-md="3">
+      <ion-col *ngIf="filter != 'breeding' " size="12"  size-md="3">
         <ion-card button>
           <ion-card-content>
-            <ion-icon class="egg" slot="end" name="egg" color="medium" size="large"></ion-icon>
-            <h1><span style="color: tomato;">{{status?.eggs | addCommas}}</span> Huevos Producidos</h1>
-            <small><b>Total de Huevos Producidos</b></small>
+            <ion-icon class="egg" slot="end" name="egg" color="warning" size="large"></ion-icon>
+            <h1>Huevos Producidos: <span style="color: tomato;">{{status?.eggs | addCommas}}</span></h1>
+            <!-- <small><b>Total de Huevos Producidos</b></small> -->
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12"  size-md="3">
+      <ion-col *ngIf="filter != 'breeding' " size="12"  size-md="3">
         <ion-card button>
           <ion-card-content>
-            <ion-icon class="egg" slot="end" name="egg" color="medium" size="large"></ion-icon>
-            <h1><span style="color: darkturquoise;">{{status?.incub_eggs | addCommas}}</span> Huevos Incubables</h1>
-            <small><b>Total de Huevos Incubables</b></small>
+            <ion-icon class="egg" slot="end" name="egg" color="warning" size="large"></ion-icon>
+            <h1>Huevos Incubables: <span style="color: darkturquoise;">{{status?.incub_eggs | addCommas}}</span></h1>
+            <!-- <small><b>Total de Huevos Incubables</b></small> -->
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12"  size-md="3">
+      <ion-col *ngIf="filter != 'breeding' " size="12"  size-md="3">
         <ion-card button >
           <ion-card-content>
             <ion-icon class="egg" slot="end" name="logo-twitter" color="primary" size="large"></ion-icon>
-            <h1><span style="color: black;">{{status?.born_eggs | addCommas}}</span> Nacimientos Totales</h1>
-            <small><b>Nacimientos Totales</b></small>
+            <h1>Nacimientos Totales: <span style="color: black;">{{status?.born_eggs | addCommas}}</span> </h1>
+            <!-- <small><b>Nacimientos Totales</b></small> -->
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
   <app-table 
-  name="Lotes" 
+  name="Lotes En {{filter==='breeding'? 'Recria' : 'Producción'}}" 
   [cols]="col$ | async" 
   [rows]="lot$ | async" 
   [tableActions]="tableActions"

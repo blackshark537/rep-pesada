@@ -51,6 +51,16 @@ _Nac = [
     //{ prop: 'status', header: 'Estado' }, 
   ]);
 
+  colsBreading$ = new BehaviorSubject([
+    {prop: 'business', header: 'Empresa'},
+    {prop: 'entry', header: 'Fecha de<br>Entrada'},
+    { prop: 'recibidas', header: 'Aves<br>Recibidas'},
+    { prop: 'total', header: 'Aves<br>Existentes' },
+    { prop: 'days', header: 'Edad en<br>Días' }, 
+    { prop: 'week', header: 'Edad en<br>Semanas'},
+    //{ prop: 'status', header: 'Estado' }, 
+  ]);
+
   colsRecria$ = new BehaviorSubject([
     {prop: 'dia', header: 'Fecha'},
     {prop: 'numero_de_aves', header: 'Aves<br>Existentes' },

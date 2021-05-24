@@ -1,10 +1,12 @@
-<ion-list >
+<ion-list>
   <ion-list-header>
-    <ion-label><h2>{{name | titlecase}}</h2></ion-label> 
-    
-    
-    
-    <ion-searchbar style="max-width: 25em;" (ionChange)="updateFilter($event)" debounce="500" animated ></ion-searchbar>
+    <ion-label>
+      <h2>{{name }}</h2>
+    </ion-label>
+
+
+
+    <ion-searchbar style="max-width: 25em;" (ionChange)="updateFilter($event)" debounce="500" animated></ion-searchbar>
     <ion-buttons>
       <ion-button *ngIf="tableActions.new" color="primary" size="large" (click)="newRow()">
         Nuevo
@@ -12,6 +14,7 @@
       </ion-button>
     </ion-buttons>
   </ion-list-header>
+  
   <!-- <ion-toolbar>
     <ion-item lines="none">
       <ion-label>Theme:</ion-label>
@@ -23,101 +26,85 @@
     </ion-item>
   </ion-toolbar> -->
 
-  <ngx-datatable
-    class="{{tableStyle}} server-scrolling-demo"
-    [rows]="rows"
-    
-    [headerHeight]="50"
-    [rowHeight]="50"
-    [footerHeight]="50"
+  <ngx-datatable class="{{tableStyle}} server-scrolling-demo" [rows]="rows" [headerHeight]="50" [rowHeight]="50"
+    [footerHeight]="50" [scrollbarH]="true" [scrollbarV]="true" [columnMode]="'force'" [selectionType]="'single'"
+    [externalSorting]="true" [loadingIndicator]="loading" (sort)="onSort($event)">
 
-    [scrollbarH]="true"
-    [scrollbarV]="true"
-    [columnMode]="'force'"
-    [selectionType]="'single'"
-    [externalSorting]="true"
-    [loadingIndicator]="loading"
-    (sort)="onSort($event)"
-  ><!-- [limit]="limit"  -->
-  <!-- <ngx-datatable-column
-  [flexGrow]="1" [maxWidth]="50"
-  name="Id" sortable="true">
-  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-    <span >{{row['id']}}</span>
-  </ng-template>
-</ngx-datatable-column> -->
+    <ngx-datatable-column [flexGrow]="1" [maxWidth]="50" name="Id" sortable="true">
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{row['id']}}</span>
+      </ng-template>
+    </ngx-datatable-column>
 
-<ngx-datatable-column
-  *ngFor="let col of columns" name="{{col.header}}" 
-  [flexGrow]="1" minWidth="{{col.prop!=='direccion'?  80 : 350}}" >
-  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template ><!-- [class]="col?.number? 'Dil' : 'Dir'" -->
-    <span [ngSwitch]="col.prop">
-      <span *ngSwitchCase=" 'entry' ">
-        {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
-      </span>
-      <span *ngSwitchCase=" 'entrydate' ">
-        {{row[col.prop.toLowerCase()] | date: 'd/M/YY'}}
-      </span>
-      <span *ngSwitchCase=" 'dia' ">
-        {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
-      </span>
-      <span *ngSwitchCase=" 'entry0' ">
-        {{row[col.prop.toLowerCase()] }}
-      </span>
-      <span *ngSwitchCase=" 'entry1' ">
-        {{row[col.prop.toLowerCase()] }}
-      </span>
-      <span *ngSwitchCase=" 'entry2' ">
-        {{row[col.prop.toLowerCase()] }}
-      </span>
-      <span *ngSwitchCase=" 'mortalidad' ">
-        {{row[col.prop.toLowerCase()] + ' %'}}
-      </span>
-      <span *ngSwitchCase=" 'estandar_real' ">
-        {{ (row[col.prop.toLowerCase()]*100) + ' %'}}
-      </span>
-      <span *ngSwitchCase=" 'aprovechamiento_de_huevos_estandar' ">
-        {{ row[col.prop.toLowerCase()] + ' %'}}
-      </span>
-      <span *ngSwitchCase=" 'estandar_de_nacimientos' ">
-        {{ row[col.prop.toLowerCase()] + ' %'}}
-      </span>
-      <span *ngSwitchCase="'telefono' ||  'phone' ">
-        {{  row[col.prop.toLowerCase()] }}
-      </span>
-      <span *ngSwitchCase="'balance'" class="{{row[col.prop.toLowerCase()]>1? 'green' : row[col.prop.toLowerCase()]<0? 'red' : ''}}">
-        {{row[col.prop.toLowerCase()] | addCommas}}
-      </span>
-      <span *ngSwitchDefault >
-        {{  row[col.prop.toLowerCase()] | addCommas }}
-      </span>
-    </span>
-    <!-- {{
-      col.header.includes('Fecha') === false? 
-      row[col.prop.toLowerCase()] : 
-      row[col.prop.toLowerCase()] | date: 'shortDate'
-    }} -->
-  </ng-template>
-</ngx-datatable-column>
+    <ngx-datatable-column *ngFor="let col of columns" name="{{col.header}}" [flexGrow]="1"
+      minWidth="{{col.prop!=='direccion'?  80 : 350}}">
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <div [ngSwitch]="col.prop">
+          <span *ngSwitchCase=" 'empresa' ">
+            {{row[col.prop.toLowerCase()] | titlecase}}
+          </span>
+          <span *ngSwitchCase=" 'direccion' ">
+            {{row[col.prop.toLowerCase()] | titlecase}}
+          </span>
 
-  <ngx-datatable-column
-  *ngIf="hasActions"
-  [flexGrow]="1" [minWidth]="120"
-   name="Acciones" sortable="false" >
-    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-      <ion-button *ngIf="tableActions.open" (click)="openRow(row)" size="small" color="tertiary">
-        <ion-icon name="open"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="tableActions.edit" (click)="editRow(row)" size="small" color="primary">
-        <ion-icon name="pencil"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="tableActions.delete" (click)="deleteRow(row)" size="small" color="danger">
-        <ion-icon name="trash"></ion-icon>
-      </ion-button>
-    </ng-template>
-  </ngx-datatable-column>
+          <p *ngSwitchCase=" 'entry' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
+          <p *ngSwitchCase=" 'entrydate' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/YY'}}
+          </p>
+          <p *ngSwitchCase=" 'dia' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
+          <p *ngSwitchCase=" 'entry0' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
+          <p *ngSwitchCase=" 'entry1' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
+          <p *ngSwitchCase=" 'entry2' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
+          <p *ngSwitchCase=" 'mortalidad' ">
+            {{row[col.prop.toLowerCase()] + ' %'}}
+          </p>
+          <p *ngSwitchCase=" 'estandar_real' ">
+            {{ (row[col.prop.toLowerCase()]*100) + ' %'}}
+          </p>
+          <p *ngSwitchCase=" 'aprovechamiento_de_huevos_estandar' ">
+            {{ row[col.prop.toLowerCase()] + ' %'}}
+          </p>
+          <p *ngSwitchCase=" 'estandar_de_nacimientos' ">
+            {{ row[col.prop.toLowerCase()] + ' %'}}
+          </p>
+          <p *ngSwitchCase="'telefono' ||  'phone' ">
+            {{ row[col.prop.toLowerCase()] }}
+          </p>
+          <p *ngSwitchCase="'balance'"
+            class="{{row[col.prop.toLowerCase()]>1? 'green' : row[col.prop.toLowerCase()]<0? 'red' : ''}}">
+            {{row[col.prop.toLowerCase()] | addCommas}}
+          </p>
+          <p *ngSwitchDefault>
+            {{ row[col.prop.toLowerCase()] | addCommas }}
+          </p>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
 
-</ngx-datatable>
+    <ngx-datatable-column *ngIf="hasActions" [flexGrow]="1" [minWidth]="120" name="Acciones" sortable="false">
+      <ng-template  let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ion-button *ngIf="tableActions.open" (click)="openRow(row)" size="small" color="tertiary">
+          <ion-icon name="open"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="tableActions.edit" (click)="editRow(row)" size="small" color="primary">
+          <ion-icon name="pencil"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="tableActions.delete" (click)="deleteRow(row)" size="small" color="danger">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ng-template>
+    </ngx-datatable-column>
 
-  <ion-item-divider></ion-item-divider>
+  </ngx-datatable>
+
 </ion-list>

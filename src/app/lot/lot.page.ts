@@ -6,7 +6,7 @@ import { LotService } from '../services';
 import { LotResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models';
-import { Observable, of } from 'rxjs';
+import { interval, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LotFormPage } from '../lot-form/lot-form.page';
 
@@ -30,8 +30,9 @@ export class LotPage implements OnInit {
     incub_eggs:0,
     born_eggs:0
   }
-  col$    = this.lotService.cols$;
+  col$;
   filter  =   "production";
+  time = new Date();
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
     private platform:     Platform,
@@ -43,7 +44,9 @@ export class LotPage implements OnInit {
   ) { }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    interval(1000).subscribe(()=> this.time = new Date());
     this.filter = this.activeRoute.snapshot.paramMap.get('id');
+    this.col$ = this.filter === 'breeding'? this.lotService.colsBreading$ : this.lotService.cols$;
     this.lot$   = this.store.select('lots').pipe(
       map(a => a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 596)),
       map(lots => {
