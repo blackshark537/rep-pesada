@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppModel, EggLotInterface } from '../models';
+import { BrowserService } from '../services';
 
 @Component({
   selector: 'app-birth-chiks-entry',
@@ -18,7 +19,8 @@ export class BirthChiksEntryPage implements OnInit {
 
   constructor(
     private store: Store<AppModel>,
-    private loading: LoadingController
+    private loading: LoadingController,
+    private browser: BrowserService
   ) { }
 
   async ngOnInit() {
@@ -33,6 +35,13 @@ export class BirthChiksEntryPage implements OnInit {
       this.forms=[...resp];
       load.dismiss();
     });
+  }
+
+  async confirm(){
+    let resp  = await this.browser.Confirm('¿Está usted seguro que quiere guardar los cambios?', "Guardar");
+    if(resp){
+      console.log('got  it');
+    }
   }
 
 }

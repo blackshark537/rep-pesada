@@ -9,7 +9,17 @@ import { ApiService } from '../services';
   styleUrls: ['./data-driven.page.scss'],
 })
 export class DataDrivenPage implements OnInit {
+
+  slideOpts = {
+    initialSlide: 3,
+    speed: 600,
+    slidesPerView: 3,
+    autoplay: true,
+  };
+  slides=true;
+
   year = new BehaviorSubject(new Date().getFullYear());
+
   actual_year= new Date().getFullYear();
   rows = [];
   status={
@@ -31,6 +41,13 @@ export class DataDrivenPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.configSlides();
+    addEventListener('resize', ev=>{
+      ev.preventDefault();
+      this.configSlides();
+    });
+
     this.year.pipe( 
       switchMap(year =>{
         return this.apiService.getLotsByYear(year).pipe(
@@ -77,6 +94,29 @@ export class DataDrivenPage implements OnInit {
           })
         );
     })).subscribe(rows => this.rows = rows);
+  }
+
+  configSlides(){
+    if(window.innerWidth < 500){
+      this.slideOpts.slidesPerView = 1;
+      this.resetSlides();
+      return;
+    }
+    if(window.innerWidth > 500 && window.innerWidth < 1000){
+      this.slideOpts.slidesPerView = 2;
+      this.resetSlides();
+      return;
+    }
+    if(window.innerWidth > 1000){
+      this.slideOpts.slidesPerView = 3;
+      this.resetSlides();
+      return;
+    }
+  }
+
+  resetSlides(){
+    this.slides=false;
+    setTimeout(()=> this.slides=true, 1);
   }
 
   setYear(value){

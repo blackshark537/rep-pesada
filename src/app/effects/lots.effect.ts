@@ -73,10 +73,10 @@ export class LotsEffects {
             });
             /* console.log(`${val}: `,numero_nac_anual) */
         });
-        this.displayData(monthly);
+        this.generateData(monthly);
     }
 
-    async displayData(monthly: any[]) {
+    async generateData(monthly: any[]) {
         let data_l: EggLotInterface[] = [];
         let data_v: EggLotInterface[] = [];
         let acc_l = null;
@@ -87,7 +87,7 @@ export class LotsEffects {
                 acc_l = null;
                 if (el.day < 5) acc_v += el?.numero_nac;
                 if (el.day === 5) data_v.push({
-                    date: new Date(el.year, el.month, el.date),
+                    date: `${el.date}/${el.month}/${el.year}`,
                     year: el?.year,
                     day: el.day,
                     day_name: 'viernes',
@@ -96,14 +96,14 @@ export class LotsEffects {
                     variable_mortalidad_recria: 5,
                     variable_mortalidad_produccion: 10,
                     variable_produccion_huevos_totales: 2
-                })
+                });
             }
 
             if (el?.day > 4 || el?.day < 2) {
                 acc_v = null;
                 acc_l += el?.numero_nac;
                 if (el.day === 1) data_l.push({
-                    date: new Date(el.year, el.month, el.date),
+                    date: `${el.date}/${el.month}/${el.year}`,
                     year: el?.year,
                     day: el.day,
                     day_name: 'lunes',
@@ -112,7 +112,7 @@ export class LotsEffects {
                     variable_mortalidad_recria: 5,
                     variable_mortalidad_produccion: 10,
                     variable_produccion_huevos_totales: 2
-                })
+                });
             }
         });
 

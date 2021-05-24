@@ -3,7 +3,7 @@ import { LoadingController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppModel, EggLotInterface, LotProjection } from '../models';
+import { AppModel, EggLotInterface } from '../models';
 
 @Component({
   selector: 'app-eggs-by-weeks',
@@ -20,11 +20,11 @@ export class EggsByWeeksPage implements OnInit {
   cols = [
     { prop: 'week_num', header: 'No.<br>Semana' },
     { prop: 'entry0', header: 'Fecha<br>Semana' },
-    { prop: 'year0', header: `Producción<br>Año ${this.years[1]}` },
+    { prop: 'year0', header: `Producción<br>Año ${this.years[0]}` },
     { prop: 'entry1', header: 'Fecha<br>Semana' },
-    { prop: 'year1', header: `Producción<br>Año ${this.years[2]}` },
+    { prop: 'year1', header: `Producción<br>Año ${this.years[1]}` },
     { prop: 'entry2', header: 'Fecha<br>Semana' },
-    { prop: 'year2', header: `Producción<br>Año ${this.years[3]}` }
+    { prop: 'year2', header: `Producción<br>Año ${this.years[2]}` }
   ];
   
   sub$: Subscription;

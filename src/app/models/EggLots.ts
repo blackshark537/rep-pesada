@@ -1,5 +1,5 @@
 export interface  EggLotInterface{
-    date: Date; 
+    date: string; 
     year: number;
     day: number;
     day_name: string;

@@ -19,16 +19,16 @@ export class BrowserService {
     let accept = false;
     const confirm = await this.alertCtrl.create({
       animated: true,
-      header: header? header : 'Alert',
+      header: header? header : 'Alerta',
       message: question,
       buttons:[
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => accept = false
         },
         {
-          text: 'Okay',
+          text: 'Aceptar',
           handler: () => accept = true
         }
       ]

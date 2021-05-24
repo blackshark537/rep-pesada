@@ -16,7 +16,20 @@ import { LotFormPage } from '../lot-form/lot-form.page';
   styleUrls: ['./lot.page.scss'],
 })
 export class LotPage implements OnInit {
-
+  slideOpts = {
+    initialSlide: 3,
+    speed: 600,
+    slidesPerView: 4,
+    autoplay: true,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    },
+  };
+  slides=true;
   lot$:  Observable<LotResponse[]>=of([]);
   tableActions: TableActions  = {
     open:   true,
@@ -44,6 +57,12 @@ export class LotPage implements OnInit {
   ) { }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnInit() {
+    this.configSlides();
+    addEventListener('resize', ev=>{
+      ev.preventDefault();
+      this.configSlides();
+    });
+
     interval(1000).subscribe(()=> this.time = new Date());
     this.filter = this.activeRoute.snapshot.paramMap.get('id');
     this.col$ = this.filter === 'breeding'? this.lotService.colsBreading$ : this.lotService.cols$;
@@ -64,6 +83,29 @@ export class LotPage implements OnInit {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   get isMaterial() {
     return this.platform.is('ios')? false : true;
+  }
+
+  configSlides(){
+    if(window.innerWidth < 500){
+      this.slideOpts.slidesPerView = 1;
+      this.resetSlides();
+      return;
+    }
+    if(window.innerWidth > 500 && window.innerWidth < 1000){
+      this.slideOpts.slidesPerView = 3;
+      this.resetSlides();
+      return;
+    }
+    if(window.innerWidth > 1000){
+      this.slideOpts.slidesPerView = 4;
+      this.resetSlides();
+      return;
+    }
+  }
+
+  resetSlides(){
+    this.slides=false;
+    setTimeout(()=> this.slides=true, 1);
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   selected(evt: TableEvent) {

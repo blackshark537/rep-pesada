@@ -21,32 +21,52 @@
   </ion-header>
   <ion-grid>
     <ion-row>
-      <ion-col size="12"  size-md="4">
-        <ion-card button  style="height: 6em;">
-          <ion-card-content>
-            <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1 style="color: black;">Total Rep. Livianas</h1>
-            <h1><span style="color: black;">Asignadas: {{status?.asignacion | addCommas}}</span> </h1>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="12"  size-md="4">
-        <ion-card button  style="height: 6em;">
-          <ion-card-content>
-            <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1 style="color: black;">Total Rep. Livianas</h1>
-            <h1><span style="color: black;">Importadas: {{status?.importacion | addCommas}}</span> </h1>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="12"  size-md="4">
-        <ion-card button  style="height: 6em;">
-          <ion-card-content>
-            <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-            <h1 style="color: black;">Balance Total</h1>
-            <h1><span style="color: black;">{{status?.balance | addCommas}}</span> </h1>
-          </ion-card-content>
-        </ion-card>
+      <ion-col size="12"  *ngIf="slides">
+        <ion-slides [options]="slideOpts">
+
+          <ion-slide>
+            <ion-card button style="height: 7em; width: 30em;">
+              <ion-card-content>
+                <ion-item lines="none">
+                  <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+                  <ion-label>
+                    <h1 style="color: black;">Total Rep. Livianas</h1>
+                    <h1 style="color: black;">Asignadas: {{status?.asignacion | addCommas}}</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+
+          <ion-slide>
+            <ion-card button style="height: 7em; width: 30em;">
+              <ion-card-content>
+                <ion-item lines="none">
+                  <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+                  <ion-label>
+                    <h1 style="color: black;">Total Rep. Livianas</h1>
+                    <h1 style="color: black;">Importadas: {{status?.importacion | addCommas}}</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+
+          <ion-slide>
+            <ion-card button style="height: 7em; width: 30em;">
+              <ion-card-content>
+                <ion-item lines="none">
+                  <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+                  <ion-label>
+                    <h1 style="color: black;">Balance Total</h1>
+                    <h1 style="color: black;">{{status?.balance | addCommas}}</h1>
+                  </ion-label>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+
+        </ion-slides>
       </ion-col>
     </ion-row>
   </ion-grid>
