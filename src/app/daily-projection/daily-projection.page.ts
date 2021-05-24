@@ -148,7 +148,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
 
   configSlides(){
     if(window.innerWidth < 500){
-      this.slideOpts.slidesPerView = 1;
+      this.slideOpts.slidesPerView = 2;
       this.resetSlides();
       return;
     }
@@ -157,8 +157,13 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
       this.resetSlides();
       return;
     }
-    if(window.innerWidth > 1000){
-      this.slideOpts.slidesPerView = 4;
+    if(window.innerWidth > 1000 && window.innerWidth < 1100){
+      this.slideOpts.slidesPerView = 5;
+      this.resetSlides();
+      return;
+    }
+    if(window.innerWidth > 1100){
+      this.slideOpts.slidesPerView = 7;
       this.resetSlides();
       return;
     }
