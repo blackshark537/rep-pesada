@@ -77,7 +77,7 @@ export const routes: Routes = [
   {
     canActivate:[AuthGuard],
     path: 'eggs-by-weeks',
-    loadChildren: () => import('./eggs-by-weeks/eggs-by-weeks.module').then( m => m.EggsByWeeksPageModule)
+    loadChildren: () => import('./births-by-weeks/births-by-weeks.module').then( m => m.EggsByWeeksPageModule)
   },
   {
     path: '404',

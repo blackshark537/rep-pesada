@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { EggsByWeeksPage } from './eggs-by-weeks.page';
+import { EggsByWeeksPage } from './births-by-weeks.page';
 
 const routes: Routes = [
   {

@@ -60,13 +60,13 @@
             {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
           <p *ngSwitchCase=" 'entry0' ">
-            {{row[col.prop.toLowerCase()] }}
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
           <p *ngSwitchCase=" 'entry1' ">
-            {{row[col.prop.toLowerCase()] }}
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
           <p *ngSwitchCase=" 'entry2' ">
-            {{row[col.prop.toLowerCase()] }}
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
           <p *ngSwitchCase=" 'mortalidad' ">
             {{row[col.prop.toLowerCase()] + ' %'}}

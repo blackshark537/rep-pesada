@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { EggsByWeeksPage } from './eggs-by-weeks.page';
+import { EggsByWeeksPage } from './births-by-weeks.page';
 
 describe('EggsByWeeksPage', () => {
   let component: EggsByWeeksPage;

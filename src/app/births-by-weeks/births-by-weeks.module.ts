@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EggsByWeeksPageRoutingModule } from './eggs-by-weeks-routing.module';
+import { EggsByWeeksPageRoutingModule } from './births-by-weeks-routing.module';
 
-import { EggsByWeeksPage } from './eggs-by-weeks.page';
+import { EggsByWeeksPage } from './births-by-weeks.page';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

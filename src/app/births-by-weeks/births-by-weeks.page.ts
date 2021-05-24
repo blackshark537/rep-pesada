@@ -52,6 +52,7 @@ export class EggsByWeeksPage implements OnInit {
   }
 
   async displayData(monthly: EggLotInterface[]) {
+    console.log(monthly[0]);
     let data_l: EggLotInterface[] = monthly.filter(x => x.day_name==='lunes');
     let data_v: EggLotInterface[] = monthly.filter(x => x.day_name==='viernes');
 

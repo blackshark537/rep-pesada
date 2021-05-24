@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { LotService } from '../services';
 import { LotResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models';
-import { interval, Observable, of } from 'rxjs';
+import { interval, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LotFormPage } from '../lot-form/lot-form.page';
 
@@ -15,7 +15,7 @@ import { LotFormPage } from '../lot-form/lot-form.page';
   templateUrl: './lot.page.html',
   styleUrls: ['./lot.page.scss'],
 })
-export class LotPage implements OnInit {
+export class LotPage implements OnInit, OnDestroy {
   slideOpts = {
     initialSlide: 3,
     speed: 600,
@@ -31,6 +31,7 @@ export class LotPage implements OnInit {
   };
   slides=true;
   lot$:  Observable<LotResponse[]>=of([]);
+  sub$: Subscription;
   tableActions: TableActions  = {
     open:   true,
     new:    true,
@@ -63,7 +64,7 @@ export class LotPage implements OnInit {
       this.configSlides();
     });
 
-    interval(1000).subscribe(()=> this.time = new Date());
+    this.sub$ = interval(1000).subscribe(()=> this.time = new Date());
     this.filter = this.activeRoute.snapshot.paramMap.get('id');
     this.col$ = this.filter === 'breeding'? this.lotService.colsBreading$ : this.lotService.cols$;
     this.lot$   = this.store.select('lots').pipe(
@@ -79,6 +80,10 @@ export class LotPage implements OnInit {
         return lots;
       })
     )
+  }
+
+  ngOnDestroy(){
+    this.sub$.unsubscribe();
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   get isMaterial() {
