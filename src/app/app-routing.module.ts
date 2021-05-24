@@ -75,17 +75,17 @@ export const routes: Routes = [
     loadChildren: () => import('./lot-form/lot-form.module').then( m => m.LotFormPageModule)
   },
   {
-    canActivate:[AuthGuard],
-    path: 'eggs-by-weeks',
-    loadChildren: () => import('./births-by-weeks/births-by-weeks.module').then( m => m.EggsByWeeksPageModule)
-  },
-  {
     path: '404',
     loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
   {
     path: 'birth-entry',
     loadChildren: () => import('./birth-chiks-entry/birth-chiks-entry.module').then( m => m.BirthChiksEntryPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'births-by-weeks',
+    loadChildren: () => import('./births-by-weeks/births-by-weeks.module').then( m => m.BirthsByWeeksPageModule)
   },
   {
     path: '**',

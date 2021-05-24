@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 import { AppModel, EggLotInterface } from '../models';
 
 @Component({
-  selector: 'app-eggs-by-weeks',
-  templateUrl: './eggs-by-weeks.page.html',
-  styleUrls: ['./eggs-by-weeks.page.scss'],
+  selector: 'app-births-by-weeks',
+  templateUrl: './births-by-weeks.page.html',
+  styleUrls: ['./births-by-weeks.page.scss'],
 })
-export class EggsByWeeksPage implements OnInit {
+export class BirthsByWeeksPage implements OnInit {
   table = true;
   date = new Date();
   years = [this.date.getFullYear() - 1, this.date.getFullYear(), this.date.getFullYear() + 1]
