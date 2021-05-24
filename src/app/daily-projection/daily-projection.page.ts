@@ -21,14 +21,9 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
     speed: 600,
     slidesPerView: 7,
     autoplay: true,
-    coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: true,
-    },
-  }
+  };
+  slides=true;
+
   colors=['secondary', 'success', 'danger','warning', 'primary','light', 'tertiary','medium','secondary', 'success', 'danger', 'primary','light']
   estado = 'produccion'
   typeFilter = TypeFilter.Aves;
@@ -50,26 +45,16 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   sub$: Subscription;
   constructor(
-    private store: Store<AppModel>,
-    private  platform: Platform
+    private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
-    if(this.platform.is('android') || this.platform.is('ios')){
-      this.slideOpts={
-        initialSlide: 1,
-        speed: 600,
-        slidesPerView: 2,
-        autoplay: false,
-        coverflowEffect: {
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        },
-      }
-    }
+    this.configSlides();
+    addEventListener('resize', ev=>{
+      ev.preventDefault();
+      this.configSlides();
+    });
+
     let headers = this.cols.filter(x => x.prop != 'day').map(val => val.header);
     let monthly = [];
     this.sub$ = this.store.select('projections').pipe(
@@ -78,7 +63,6 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
         return result;
       })
     ).subscribe(resp => {
-      /* if (resp.length === 0) return; */
       this.month.forEach((m, h) => {
         let numero_aves_anual = null;
         let month = [];
@@ -160,6 +144,29 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub$.unsubscribe();
+  }
+
+  configSlides(){
+    if(window.innerWidth < 500){
+      this.slideOpts.slidesPerView = 1;
+      this.resetSlides();
+      return;
+    }
+    if(window.innerWidth > 500 && window.innerWidth < 1000){
+      this.slideOpts.slidesPerView = 3;
+      this.resetSlides();
+      return;
+    }
+    if(window.innerWidth > 1000){
+      this.slideOpts.slidesPerView = 4;
+      this.resetSlides();
+      return;
+    }
+  }
+
+  resetSlides(){
+    this.slides=false;
+    setTimeout(()=> this.slides=true, 1);
   }
 
   search() {

@@ -58,7 +58,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="12" >
+      <ion-col size="12" *ngIf="slides">
         <ion-slides [options]="slideOpts">
           <ion-slide  *ngFor="let data of monthly; index as i">
             <ion-card button lines="none" [color]="colors[i]" style="width: 400px;">
