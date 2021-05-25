@@ -3,7 +3,7 @@ import { ModalController, Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LotService } from '../services';
-import { LotResponse } from '../models';
+import { LotModel, LotResponse } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models';
 import { interval, Observable, of, Subscription } from 'rxjs';
@@ -30,7 +30,7 @@ export class LotPage implements OnInit, OnDestroy {
     },
   };
   slides=true;
-  lot$:  Observable<LotResponse[]>=of([]);
+  lot$:  Observable<LotModel[]>=of([]);
   sub$: Subscription;
   tableActions: TableActions  = {
     open:   true,
@@ -72,10 +72,10 @@ export class LotPage implements OnInit, OnDestroy {
       map(lots => {
         lots.forEach(lot=>{
           if(lot.id === 42)console.log(lot);
-          this.status.total+= parseInt(lot.total)//
-          this.status.eggs+=parseInt(lot.production)
-          this.status.incub_eggs+=parseInt(lot.incubables)
-          this.status.born_eggs+=parseInt(lot.nacimientos)
+          this.status.total+= lot.total;
+          this.status.eggs+=lot.production;
+          this.status.incub_eggs+=lot.incubables;
+          this.status.born_eggs+=lot.nacimientos;
         });
         return lots;
       })

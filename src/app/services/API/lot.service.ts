@@ -82,7 +82,7 @@ _Nac = [
     
   }
 
-  getLots(): Observable<any[]>{
+  getLots(): Observable<LotModel[]>{
     return this.api.getLots(new Date().getFullYear()-5).pipe(
       shareReplay(1),
       map(Lots => {
@@ -125,7 +125,7 @@ _Nac = [
             endBreeding: this.initProd(date1),
             females: parseInt(hembras),
             males: parseInt(machos),
-          };
+          } as LotModel;
 
           const recria = this.getRecria(data);
           const produccion = this.getProd(recria[recria.length - 1]);
@@ -141,13 +141,13 @@ _Nac = [
           return  {
             ...data,
             status: data.week > 18? 'production' : 'breeding',
-            total: projections[data.days]?.numero_de_aves,
+            total: parseInt(projections[data.days]?.numero_de_aves),
             recibidas: data.females,
             projections,
-            production: projections[data.days]?.prod_huevos_totales,
-            incubables: projections[data.days]?.huevos_incubables,
-            nacimientos: projections[data.days]?.nacimientos_totales
-          }
+            production: parseInt(projections[data.days]?.prod_huevos_totales),
+            incubables: parseInt(projections[data.days]?.huevos_incubables),
+            nacimientos: parseInt(projections[data.days]?.nacimientos_totales)
+          } as LotModel
 
         });
       }),
@@ -313,24 +313,24 @@ private getRecria(lote) {
 //                                  DATE FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//add one day
-formatDate(date) {
-  return new Date(new Date(date).getTime() + (24 * 60 * 60 * 1000))
-}
+  //add one day
+  formatDate(date) {
+    return new Date(new Date(date).getTime() + (24 * 60 * 60 * 1000))
+  }
 
-//when the production start
-private initProd(date) {
-  return new Date(date.getTime() + ((1000 * 3600 * 24) * 133))
-}
+  //when the production start
+  private initProd(date) {
+    return new Date(date.getTime() + ((1000 * 3600 * 24) * 133))
+  }
 
-//weeks count since the entry date
-private weeksBetween(d1: Date, d2: Date) {
-  return Math.round((d2.getTime() - d1.getTime()) / (7 * 24 * 60 * 60 * 1000));
-}
+  //weeks count since the entry date
+  weeksBetween(d1: Date, d2: Date) {
+    return Math.round((d2.getTime() - d1.getTime()) / (7 * 24 * 60 * 60 * 1000));
+  }
 
-//days count since the entry date
-daysBetween(d1, d2) {
-  const Difference_In_Time = d2.getTime() - d1.getTime();
-  return Math.floor(Difference_In_Time / (1000 * 3600 * 24))+1;
-}
+  //days count since the entry date
+  daysBetween(d1, d2) {
+    const Difference_In_Time = d2.getTime() - d1.getTime();
+    return Math.floor(Difference_In_Time / (1000 * 3600 * 24))+1;
+  }
 }

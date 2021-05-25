@@ -75,8 +75,8 @@ export class BirthsByWeeksPage implements OnInit {
       obj_v[`entry2`] = data_v.filter(x => x?.year === this.years[2])[i]?.date;
       obj_v[`year2`] = data_v.filter(x => x?.year === this.years[2])[i]?.cant_gallinas_proyectadas;
 
-      this.rows.push(obj_v);
-      this.rows.push(obj_l);
+      this.rows.push({...obj_v},{...obj_l});
+      //this.rows.push(obj_l);
     }
 
     this.rows.forEach((row, i) => {

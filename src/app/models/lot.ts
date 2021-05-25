@@ -30,32 +30,33 @@ interface CantidadInterface{
 }
 
 export interface LotModel {
-    id: number | string;
+    id: number;
+    lotId: number;
+    variable_nacimiento: number;
+    cant_gallinas_asignadas:string;
     business: string;
     phone: string;
     address: string;
-    projections?: LotProjection[];
     date: Date;
-    code: string;
+    code: number;
     mort: number;
     mortp: number;
     std_prod: number;
     std_aprov: number;
-    race: string;
+    race?: string
     entry: Date;
     week: number;
     days: number;
     endBreeding: Date;
     females: number;
     males: number;
-    status: string;
-    total: number;
-    recibidas: number;
-    production: number;
-    incubables: number;
-    nacimientos: number;
-    variable_nacimiento: number;
-    cant_gallinas_asignadas: number;
+    status?: string;
+    total?: number;
+    recibidas?: number;
+    projections?: LotProjection[],
+    production?: number;
+    incubables?: number;
+    nacimientos?: number;
 }
 
 export interface LotResponse {    

@@ -89,6 +89,11 @@ export const routes: Routes = [
     loadChildren: () => import('./births-by-weeks/births-by-weeks.module').then( m => m.BirthsByWeeksPageModule)
   },
   {
+    canActivate:[AuthGuard],
+    path: 'eggs-production',
+    loadChildren: () => import('./eggs-production/eggs-production.module').then( m => m.EggsProductionPageModule)
+  },
+  {
     path: '**',
     resolve: {
       path: PathResolveService

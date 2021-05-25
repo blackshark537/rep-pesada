@@ -79,10 +79,10 @@ export class ProductionPage implements OnInit, OnDestroy {
         Days+= el.days;
         mortp+= el.mortp;
         total+= el.total;
-        birthTotal+= parseFloat(el.nacimientos);
-        hincub+= parseFloat(el.incubables);
-        prodHtotal+= parseFloat(el.production);
-        this.single.push({name: el.business, value: parseFloat(el.production)})
+        birthTotal+= el.nacimientos;
+        hincub+= el.incubables;
+        prodHtotal+= el.production;
+        this.single.push({name: el.business, value: el.production})
       });
 
 

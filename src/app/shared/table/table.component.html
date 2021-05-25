@@ -53,6 +53,9 @@
           <p *ngSwitchCase=" 'entry' ">
             {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
+          <p *ngSwitchCase=" 'date' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
           <p *ngSwitchCase=" 'entrydate' ">
             {{row[col.prop.toLowerCase()] | date: 'd/M/YY'}}
           </p>

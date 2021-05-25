@@ -54,22 +54,11 @@
               <ion-item [routerLink]="['/lot/breeding']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
                   Estado Actual Recría
-                  <!-- <ul>
-                    <li>Parametros Tecnicos</li>
-                    <li>Población de Pollitas</li>
-                  </ul> -->
                 </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/lot/production']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
                   Estado Actual Producción
-                  <!-- <ul>
-                    <li>Parametros Tecnicos</li>
-                    <li>Población de Gallinas</li>
-                    <li>Prod. Huevos Totales</li>
-                    <li>Prod. Huevos Fertiles</li>
-                    <li>Pollitas Nacidas</li>
-                  </ul> -->
                 </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
@@ -78,9 +67,9 @@
               <ion-item [routerLink]="['/births-by-weeks']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Población Semanal Rep. Liviana</ion-label>
               </ion-item>
-              <ion-item [routerLink]="['/birth-entry']" lines="none"  detail="false" routerLinkActive="selected">
+              <!-- <ion-item [routerLink]="['/birth-entry']" lines="none"  detail="false" routerLinkActive="selected">
                 <ion-label>Entrada de Pollitas Ponedoras</ion-label>
-              </ion-item>
+              </ion-item> -->
             </ion-card-content>
           </ion-card>
 
@@ -90,10 +79,10 @@
               <ion-label>Producción Huevos de Mesa</ion-label>
             </ion-item>
             <ion-card-content *ngIf="openProd">
-              <ion-item [routerLink]="['/#']" lines="none">
+              <!-- <ion-item [routerLink]="['/#']" lines="none">
                 <ion-label>Registro de Productores de Huevos</ion-label>
-              </ion-item>
-              <ion-item [routerLink]="['/birth-entry']" lines="none">
+              </ion-item> -->
+              <ion-item [routerLink]="['/eggs-production']" lines="none">
                 <ion-label>Producción de Huevos Totales</ion-label>
               </ion-item>
               <ion-item [routerLink]="['#']" lines="none">
