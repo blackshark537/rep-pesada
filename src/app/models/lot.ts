@@ -39,10 +39,10 @@ export interface LotModel {
     address: string;
     date: Date;
     code: number;
-    mort: number;
-    mortp: number;
-    std_prod: number;
-    std_aprov: number;
+    variable_mortalidad_recria: number;
+    variable_mortalidad_produccion: number;
+    variable_produccion_huevos_totales: number;
+    variable_aprovechamiento_huevos: number;
     race?: string
     entry: Date;
     week: number;

@@ -4,7 +4,7 @@
       <!-- <ion-menu-button></ion-menu-button> -->
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Proyección a 595 días</ion-title>
+    <ion-title>Proyección a {{  lots.length }} días</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,12 +13,12 @@
     <ion-toolbar>
       <ion-title size="large">
         <ion-icon  name="home" ></ion-icon>
-        Proyección a 595 días
+        Proyección a {{  lots.length }} días
       </ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-item lines="none">
+  <ion-item lines="none"  *ngIf="production === 'false'">
     <ion-label>
       <h2><b>Empresa:</b> {{state?.owner}}</h2>
       <h2><b>Teléfono:</b> {{state?.phone}}</h2>
@@ -28,7 +28,7 @@
   </ion-item>
 
   <app-table 
-  name="{{state?.status}}"
+  name="Proyección"
   [cols]="cols$ | async" 
   [rows]="lots" 
   ></app-table>

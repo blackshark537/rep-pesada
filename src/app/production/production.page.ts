@@ -77,7 +77,7 @@ export class ProductionPage implements OnInit, OnDestroy {
         recive+= el.recibidas;
         Week+= el.week;
         Days+= el.days;
-        mortp+= el.mortp;
+        mortp+= el.variable_mortalidad_produccion;
         total+= el.total;
         birthTotal+= el.nacimientos;
         hincub+= el.incubables;

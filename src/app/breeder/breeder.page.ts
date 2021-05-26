@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LotService } from '../services';
@@ -12,7 +13,7 @@ export class BreederPage implements OnInit, OnDestroy {
 
   sub$: Subscription;
 
-  cols$ = this.lotSerivce.colsRecria$;
+  cols$;
   lots  = [];
   state = {
     owner:   null,
@@ -20,13 +21,16 @@ export class BreederPage implements OnInit, OnDestroy {
     address: null,
     status:  null
   }
+  production;
 
   constructor(
     public lotSerivce: LotService,   //Inject the lot service class
+    private activatedRoute: ActivatedRoute
   ) { }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   async ngOnInit() {
-    
+    this.production = this.activatedRoute.snapshot.paramMap.get('production');
+    this.cols$ = this.production === 'true'? this.lotSerivce.colsProduction$ : this.lotSerivce.colsRecria$;
     this.sub$ = this.lotSerivce.lot$.pipe(take(1)).subscribe(lote=>{
       
       if(lote==null){

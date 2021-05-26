@@ -54,10 +54,10 @@ export class LotFormPage implements OnInit {
     if(this.edit){
       this.loteForm.patchValue({
         fecha_entrada: this.Lot.entry,
-        variable_mortalidad_recria: this.Lot.mort,
-        variable_mortalidad_produccion: this.Lot.mortp,
-        variable_produccion_huevos_totales: this.Lot.std_prod,
-        variable_aprovechamiento_huevos: this.Lot.std_aprov,
+        variable_mortalidad_recria: this.Lot.variable_mortalidad_recria,
+        variable_mortalidad_produccion: this.Lot.variable_mortalidad_produccion,
+        variable_produccion_huevos_totales: this.Lot.variable_produccion_huevos_totales,
+        variable_aprovechamiento_huevos: this.Lot.variable_nacimiento,
         variable_nacimiento: this.Lot.variable_nacimiento,
         month: this.Lot.entry.getMonth()+1,
         year: this.Lot.entry.getFullYear(),

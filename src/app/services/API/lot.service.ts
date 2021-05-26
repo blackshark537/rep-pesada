@@ -15,12 +15,10 @@ export class LotService {
   lot$ = new BehaviorSubject<LotModel>(null);
 
  _PROD = [
-    8, 15, 29, 53, 70, 81, 86, 88, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 89,
+    0, 0, 29, 53, 70, 81, 86, 88, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 89,
     89, 89, 88, 88, 88, 88, 88, 88, 88, 88, 87, 87, 87, 86, 86, 85, 85, 85, 83, 82, 81, 81, 80, 79, 78, 76, 75,
-    74, 73, 72, 72, 71, 70, 69, 68, 67, 8, 15, 29, 53, 70, 81, 86, 88, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90,
-    90, 90, 90, 90, 90, 90, 90, 90, 89, 89, 89, 88, 88, 88, 88, 88, 88, 88, 88, 87, 87, 87, 86, 86, 85, 85, 85,
-    83, 82, 81, 81, 80, 79, 78, 76, 75, 74, 73, 72, 72, 71, 70, 69, 68, 67, 66, 65, 66, 65, 66, 65, 66, 65,
-    70, 69, 68, 67, 66, 65, 66, 65, 66, 65, 66, 65, 70, 69, 68, 67, 66, 65, 66, 65, 66, 65, 66, 65, 70, 69, 68
+    74, 73, 72, 72, 72, 72, 71, 70, 69, 68, 67, 66, 65, 65, 66, 65, 66, 66, 65, 65, 66, 65, 66,66, 65, 65, 66, 65, 66,
+    66, 65, 65, 66, 65, 66,66, 65, 65, 66, 65, 66,66, 65, 65, 66, 65, 66,66, 65, 65, 66, 65, 66,66, 65, 65, 66, 65, 66,
 ];
 
 _APROV = [
@@ -39,7 +37,7 @@ _Nac = [
 ];
 
   cols$ = new BehaviorSubject([
-    {prop: 'business', header: 'Empresa'},
+    {prop: 'business', header: 'Empresa y/o<br>Productor'},
     {prop: 'entry', header: 'Fecha de<br>Entrada'},
     { prop: 'recibidas', header: 'Aves<br>Recibidas'},
     { prop: 'total', header: 'Aves<br>Existentes' },
@@ -52,7 +50,7 @@ _Nac = [
   ]);
 
   colsBreading$ = new BehaviorSubject([
-    {prop: 'business', header: 'Empresa'},
+    {prop: 'business', header: 'Empresa y/o<br>Productor'},
     {prop: 'entry', header: 'Fecha de<br>Entrada'},
     { prop: 'recibidas', header: 'Aves<br>Recibidas'},
     { prop: 'total', header: 'Aves<br>Existentes' },
@@ -72,6 +70,14 @@ _Nac = [
     {prop: 'huevos_incubables', header: 'Huevos<br>Incubables'},
     {prop: 'estandar_de_nacimientos', header: 'Estandar de<br>Nacimientos' }, 
     {prop: 'nacimientos_totales', header: 'Nacimientos<br>Totales' }, 
+    ]);
+    colsProduction$ = new BehaviorSubject([
+      { prop: 'dia', header: 'Fecha' },
+      { prop: 'numero_de_aves', header: 'Aves<br>Existentes' },
+      { prop: 'mortalidad', header: 'Mortalidad<br>Aproximada' },
+      //{prop: 'mortalidad_estandar', header: 'Estandar de<br>Mortalidad'},
+      { prop: 'estandar_real', header: 'Estandar de<br>Producción' },
+      { prop: 'prod_huevos_totales', header: 'Huevos<br>Producidos' },
     ]);
 
   constructor(
@@ -114,10 +120,10 @@ _Nac = [
             address: direccion,
             date: date1,
             code: codigo_aduanero,
-            mort: variable_mortalidad_recria,
-            mortp: variable_mortalidad_produccion,
-            std_prod: variable_produccion_huevos_totales,
-            std_aprov: variable_aprovechamiento_huevos,
+            variable_mortalidad_recria,
+            variable_mortalidad_produccion,
+            variable_produccion_huevos_totales,
+            variable_aprovechamiento_huevos,
             race: raza,
             entry: date1,
             week: this.weeksBetween(date1, date2),
@@ -209,18 +215,23 @@ private genProjection(lot, entity): LotProjection[] {
   return dt;
 }
 
-private getRecria(lote) {
+private getRecria(lote: LotModel) {
   let recria = [];
   let index = 0;
-  const total_weeks = 19;
+  const total_weeks = 18;
   for (let i = 0; i < total_weeks * 7; i++) {
 
       if (i % 7 === 0) index += 1;
 
-      const { business, week, mort, mortp, date, females, std_prod, std_aprov } = lote;
+      const { 
+        business, week, 
+        variable_mortalidad_recria, 
+        variable_mortalidad_produccion, date, females, 
+        variable_produccion_huevos_totales, 
+        variable_aprovechamiento_huevos, variable_nacimiento } = lote;
 
       const percent = recria[i - 1]?.mort || 100;
-      const mortality = percent - (mort / (total_weeks * 7));
+      const mortality = percent - (variable_mortalidad_recria / (total_weeks * 7));
       //const date2 = new Date(date.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
       const date1 = new Date(date.getTime() + (1 * 24 * 60 * 60 * 1000))
       const date2 = new Date(date.getTime() + ((i * 24 * 60 * 60 * 1000)));
@@ -232,7 +243,6 @@ private getRecria(lote) {
           weekIndx: week,
           weekAge: index,
           mort: Math.round(mortality * 100) / 100,
-          mortp,
           standar: 0,
           aprov: 0,
           stdreal: 0,
@@ -240,8 +250,10 @@ private getRecria(lote) {
           prodhtotal: 0, //total eggs
           birth: 0,
           birthtotal: 0,
-          std_prod,
-          std_aprov,
+          variable_produccion_huevos_totales,
+          variable_aprovechamiento_huevos,
+          variable_nacimiento,
+          variable_mortalidad_produccion,
           entry: date2,
           chicks: Math.round(females - ((100 - mortality) * 10)),
       });
@@ -251,20 +263,23 @@ private getRecria(lote) {
 
  private getProd(lote) {
   let prod = [];
-  let index = lote.weekAge;
+  let index = 0;
   const total_weeks = 66;
-  const conf_weeks = 3;
+  const conf_weeks = 2;
   for (let i = 0; i < total_weeks * 7; i++) {
 
       if (i % 7 === 0) index += 1;
 
-      const { business, day, entry, chicks, mortp, std_prod, std_aprov } = lote;
+      const { business, day, entry, chicks, 
+        variable_mortalidad_produccion, 
+        variable_produccion_huevos_totales, 
+        variable_aprovechamiento_huevos } = lote;
 
       const percent = prod[i - 1]?.mort || 100;
-      const mortality = percent - (mortp / (total_weeks * 7));
+      const mortality = percent - (variable_mortalidad_produccion / (total_weeks * 7));
 
-      const production_real = ((this._PROD[index] * std_prod) - this._PROD[index]) / 100;
-      const std_aprovechamiento = ((this._APROV[index] * std_aprov) - this._APROV[index]) / 100;
+      const production_real = ((this._PROD[index] * variable_produccion_huevos_totales) - this._PROD[index]) / 100;
+      const std_aprovechamiento = ((this._APROV[index] * variable_aprovechamiento_huevos) - this._APROV[index]) / 100;
       const date2 = new Date(entry.getTime() + ((1 * 24 * 60 * 60 * 1000) * (i + 1)));
 
       if (i <= (conf_weeks * 7)) {

@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { projectionsActions } from '../actions';
 import { AppModel } from '../models';
-import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-daily-projection',
@@ -28,7 +27,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   estado = 'produccion'
   typeFilter = TypeFilter.Aves;
   cols = [
-    { prop: 'day', header: 'Dia' },
+    { prop: 'day', header: 'Día' },
     { prop: 'jan', header: 'Enero' },
     { prop: 'feb', header: 'Febrero' },
     { prop: 'mar', header: 'Marzo' },

@@ -23,9 +23,9 @@
           </ion-menu-toggle> -->
 
           <ion-card>
-            <ion-item lines="none" detail="true" button (click)="open=!open">
-              <ion-icon slot="start" name="business-outline"></ion-icon>
-              <ion-label>Empresas</ion-label>
+            <ion-item  lines="none" detail="true" button (click)="open=!open">
+              <ion-icon color="success" slot="start" name="business-outline"></ion-icon>
+              <ion-label color="{{open? 'primary' : ''}}">Empresas</ion-label>
               <!-- <ion-icon color="medium" [name]="open?'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon> -->
             </ion-item>
             <ion-card-content *ngIf="open">
@@ -47,8 +47,8 @@
 
           <ion-card>
             <ion-item lines="none" detail="true" button (click)="openBreeding=!openBreeding">
-              <ion-icon slot="start" name="cube-outline"></ion-icon>
-              <ion-label>Reproductora Liviana</ion-label>
+              <ion-icon color="secondary" slot="start" name="cube-outline"></ion-icon>
+              <ion-label color="{{openBreeding? 'primary' : ''}}">Reproductora Liviana</ion-label>
             </ion-item>
             <ion-card-content *ngIf="openBreeding">
               <ion-item [routerLink]="['/lot/breeding']" lines="none" detail="false" routerLinkActive="selected">
@@ -62,7 +62,7 @@
                 </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Proyeccion Diaria Rep. Liviana</ion-label>
+                <ion-label>Proyección Diaria Rep. Liviana</ion-label>
               </ion-item>
               <ion-item [routerLink]="['/births-by-weeks']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Población Semanal Rep. Liviana</ion-label>
@@ -75,18 +75,25 @@
 
           <ion-card>
             <ion-item lines="none" detail="true" button (click)="openProd=!openProd">
-              <ion-icon slot="start" name="cube-outline"></ion-icon>
-              <ion-label>Producción Huevos de Mesa</ion-label>
+              <ion-icon color="warning" slot="start" name="egg"></ion-icon>
+              <ion-label color="{{openProd? 'primary' : ''}}">Producción Huevos de Mesa</ion-label>
             </ion-item>
             <ion-card-content *ngIf="openProd">
               <!-- <ion-item [routerLink]="['/#']" lines="none">
                 <ion-label>Registro de Productores de Huevos</ion-label>
               </ion-item> -->
-              <ion-item [routerLink]="['/eggs-production']" lines="none">
-                <ion-label>Producción de Huevos Totales</ion-label>
+              <ion-item [routerLink]="['/eggs-production/recría']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>
+                  Estado Actual Recría
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/eggs-production/producción']" lines="none" detail="false" routerLinkActive="selected">
+                  <ion-label>
+                    Estado Actual Producción
+                  </ion-label>
               </ion-item>
               <ion-item [routerLink]="['#']" lines="none">
-                <ion-label>Consumo Percapita</ion-label>
+                <ion-label>Consumo Per-capita</ion-label>
               </ion-item>
               <ion-item [routerLink]="['#']" lines="none">
                 <ion-label>Participación de Prod.</ion-label>

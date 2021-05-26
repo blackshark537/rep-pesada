@@ -270,7 +270,7 @@ private getRecria(lote: EggLotInterface) {
     lot.recria.forEach(recria => {
         let projection = {
             dia: recria.entry,
-            estado: 'recria',
+            estado: 'recría',
             mortalidad: recria.mort,
             estandar_produccion: recria.standar,
             estandar_real: recria.stdreal,
@@ -285,7 +285,7 @@ private getRecria(lote: EggLotInterface) {
     lot.produccion.forEach(production => {
         let projection = {
             dia: production.entry,
-            estado: 'produccion',
+            estado: 'producción',
             mortalidad: production.mort,
             estandar_produccion: production.standar,
             estandar_real: production.stdreal,

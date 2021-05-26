@@ -15,10 +15,10 @@ export class CapacityPage implements OnInit {
 
   cols = [
     { prop: 'Enviroment', header: 'Ambiente'}, 
-    { prop: 'Company', header: 'Nombre Comercial'}, 
-    { prop: 'Phone', header: 'Telefono'}, 
+    { prop: 'Company', header: 'Empresa y/o Productor'}, 
+    { prop: 'Phone', header: 'Número de Teléfono'}, 
     { prop: 'Area', header: 'Area Total'}, 
-    { prop: 'Address', header: 'Direccion' }];
+    { prop: 'Address', header: 'Dirección' }];
   capacities = []
   constructor(
     private platform: Platform,

@@ -19,7 +19,17 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="5">
+      <ion-col size="12" size-md="3">
+        <ion-card button>
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+              <h1>Total de Aves en {{estado | titlecase}}: <span style="color: green;">{{total_chicks | addCommas}}</span></h1>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-md="3">
         <ion-card button>
           <ion-card-content>
             <ion-item lines="none">

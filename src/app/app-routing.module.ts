@@ -51,7 +51,7 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'breeder',
+    path: 'breeder/:production',
     loadChildren: () => import('./breeder/breeder.module').then( m => m.BreederPageModule)
   },
   {
@@ -90,7 +90,7 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'eggs-production',
+    path: 'eggs-production/:estado',
     loadChildren: () => import('./eggs-production/eggs-production.module').then( m => m.EggsProductionPageModule)
   },
   {

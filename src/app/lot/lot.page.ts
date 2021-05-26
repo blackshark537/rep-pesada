@@ -68,7 +68,15 @@ export class LotPage implements OnInit, OnDestroy {
     this.filter = this.activeRoute.snapshot.paramMap.get('id');
     this.col$ = this.filter === 'breeding'? this.lotService.colsBreading$ : this.lotService.cols$;
     this.lot$   = this.store.select('lots').pipe(
-      map(a => a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 596)),
+      map(a => {
+        this.status={
+          total:0,
+          eggs:0,
+          incub_eggs:0,
+          born_eggs:0
+        }
+        return a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 596)
+      }),
       map(lots => {
         lots.forEach(lot=>{
           if(lot.id === 42)console.log(lot);
@@ -134,7 +142,7 @@ export class LotPage implements OnInit, OnDestroy {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   open(row){
     this.lotService.lot$.next(row);
-    this.router.navigate(['/breeder'])
+    this.router.navigate(['/breeder', false])
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   delete(row){
