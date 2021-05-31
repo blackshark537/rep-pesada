@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { DailyProdProjectionPageRoutingModule } from './daily-prod-projection-routing.module';
 
-import { HomePage } from './home.page';
+import { DailyProdProjectionPage } from './daily-prod-projection.page';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -15,9 +15,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     SharedModule,
     IonicModule,
-    HomePageRoutingModule,
-    SharedModule
+    DailyProdProjectionPageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [DailyProdProjectionPage]
 })
-export class HomePageModule {}
+export class DailyProdProjectionPageModule {}

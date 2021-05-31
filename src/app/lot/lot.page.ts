@@ -75,7 +75,7 @@ export class LotPage implements OnInit, OnDestroy {
           incub_eggs:0,
           born_eggs:0
         }
-        return a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 596)
+        return a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 595)
       }),
       map(lots => {
         lots.forEach(lot=>{

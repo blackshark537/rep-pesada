@@ -2,7 +2,26 @@
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
+
+.ion-color-incub {
+  --ion-color-base: var(--ion-color-incub);
+  --ion-color-base-rgb: var(--ion-color-incub-rgb);
+  --ion-color-contrast: var(--ion-color-incub-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-incub-contrast-rgb);
+  --ion-color-shade: var(--ion-color-incub-shade);
+  --ion-color-tint: var(--ion-color-incub-tint);
+}
+
 :root {
+
+  /** incub */
+  --ion-color-incub: #F2AD85;
+  --ion-color-incub-rgb: 242,173,133;
+  --ion-color-incub-contrast: #000000;
+  --ion-color-incub-contrast-rgb: 0,0,0;
+  --ion-color-incub-shade: #d59875;
+  --ion-color-incub-tint: #f3b591;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;

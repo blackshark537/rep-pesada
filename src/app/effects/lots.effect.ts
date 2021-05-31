@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { finalize, map, mergeMap, tap } from 'rxjs/operators';
-import { LotsActions, eggLotsActions } from '../actions';
+import { LotsActions, eggLotsActions, projectionsActions } from '../actions';
 import { AppModel, EggLotInterface, EggLotProjectionInterface, LotProjection } from '../models';
 import { LotService } from '../services';
 
@@ -11,7 +11,7 @@ import { LotService } from '../services';
 })
 export class LotsEffects {
 
-    _PROD=[0,0,13.4,38.4,58.4,82.4,90.4,93.4,95.4,96.4,97.4,97.4,97.4,97.4,97.4,98.4,98.4,98.4,97.4,97.4,97.4,97.4,
+    _PROD=[0,8,13.4,38.4,58.4,82.4,90.4,93.4,95.4,96.4,97.4,97.4,97.4,97.4,97.4,98.4,98.4,98.4,97.4,97.4,97.4,97.4,
     97.4,97.4,97.4,97.4,97.4,97.4,97.4,96.4,96.4,96.4,96.4,96.4,96.4,95.4,95.4,95.4,94.4,93.4,92.4,92.4,91.4,
     91.4,91.4,91.4,91.4,91.4,90.4,89.4,88.4,88.4,87.4,87.4,87.4,86.4,86.4,85.4,85.4,84.4,84.4,83.4,83.4,82.4,
     82.4,82.4,81.4,81.4,81.4,81.4,80.4,80.4,80.4,79.4,79.4,78.4,78.4,77.4,77.4,76.4,76.4,75.4,74.4,74.4,73.4,73.4,73.4,
@@ -19,7 +19,7 @@ export class LotsEffects {
 
     public months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     public date = new Date();
-    public years = [this.date.getFullYear() - 1, this.date.getFullYear(), this.date.getFullYear() + 1]
+    public years = [ this.date.getFullYear() - 2,this.date.getFullYear() - 1, this.date.getFullYear(), this.date.getFullYear() + 1]
 
     getLot$ = createEffect(() => this.action$.pipe(
         ofType(LotsActions.GET_LOTS),
@@ -40,7 +40,7 @@ export class LotsEffects {
     getEggsLots() {
         this.store.select('projections').pipe(
             map(pro => {
-                return pro.filter(p => p.year >= this.years[0] - 1)
+                return pro.filter(p => p.year >= this.years[0])
             })
         ).subscribe(resp => {
             if (!!resp) this.formatData(resp);
@@ -49,6 +49,7 @@ export class LotsEffects {
 
     formatData(resp) {
         let monthly = [];
+
         this.years.forEach((val, y) => {
             let numero_nac_anual = 0;
             this.months.forEach(m => {
@@ -72,7 +73,7 @@ export class LotsEffects {
                         }
                     });
                     //console.log(`${m}: ${i}`, numero_aves)
-                    month.push({ year: d?.getFullYear(), month: d?.getMonth() + 1, date: d?.getDate(), day: d?.getDay(), numero_nac });
+                    month.push({ year: d?.getFullYear(), month: d?.getMonth() + 1, date: d?.getDate(), day: d?.getDay(), numero_nac, numero_nac_anual });
                     if (i >= daysInMonth?.getDate()) continue;
                 }
                 if (!!m) monthly.push(...month);
@@ -87,6 +88,8 @@ export class LotsEffects {
         let data_v: EggLotInterface[] = [];
         let acc_l = null;
         let acc_v = null;
+        
+        //console.log(monthly[23]);
 
         monthly.forEach((el, i)=> {
             if (el.day > 1 && el.day < 6) {
@@ -101,16 +104,18 @@ export class LotsEffects {
                         dia: el?.day,
                         day_name: 'viernes',
                         cant_gallinas_proyectadas: acc_v,
-                        variable_mortalidad_recria: 5,
-                        variable_mortalidad_produccion: 10,
-                        variable_produccion_huevos_totales: 2
+                        variable_mortalidad_recria: 6,
+                        variable_mortalidad_produccion: 14,
+                        variable_produccion_huevos_totales: 3
                     }
 
                     let recria = this.getRecria(lot);
                     let production = this.getProd(recria[recria.length-1]);
+                    const id= this.genId();
                     let lote={
+                        id,
                         ...lot,
-                        days: this.lotService.daysBetween(lot.date,new Date()),
+                        days: this.lotService.daysBetween(lot.date,new Date(Date.now())),
                         recria: [...recria],
                         produccion: [...production]
                     }
@@ -118,14 +123,14 @@ export class LotsEffects {
                     let projections = this.genProjection(lote);
 
                     const final={
-                        id:i+1,
+                        id,
                         ...lot,
-                        days_passed: this.lotService.daysBetween(lot.date, new Date(Date.now())),
-                        weeks_passed: this.lotService.weeksBetween(lot.date, new Date(Date.now())),
+                        days_passed: this.lotService.daysBetween(lot.date, new Date()),
+                        weeks_passed: this.lotService.weeksBetween(lot.date, new Date()),
                         projections,
                         production: projections[lote.days]?.prod_huevos_totales,
                         cant_gallinas_existentes: projections[lote.days]?.numero_de_aves,
-                        estado: projections[lote.days]?.estado
+                        estado: lote.days > 126 ? 'produccion' : 'recria',//projections[lote.days]?.estado
                     } as EggLotInterface;
                     data_v.push(final);
                 }
@@ -143,15 +148,17 @@ export class LotsEffects {
                         month:  el?.month,
                         day_name: 'lunes',
                         cant_gallinas_proyectadas: acc_l,
-                        variable_mortalidad_recria: 5,
-                        variable_mortalidad_produccion: 10,
-                        variable_produccion_huevos_totales: 2,
+                        variable_mortalidad_recria: 6,
+                        variable_mortalidad_produccion: 14,
+                        variable_produccion_huevos_totales:3,
                     }
                     let recria = this.getRecria(lot);
                     let production = this.getProd(recria[recria.length-1]);
+                    const id= this.genId();
                     let lote={
+                        id,
                         ...lot,
-                        days: this.lotService.daysBetween(lot.date,new Date()),
+                        days: this.lotService.daysBetween(lot.date,new Date())-1,
                         recria: [...recria],
                         produccion: [...production]
                     }
@@ -159,14 +166,15 @@ export class LotsEffects {
                     let projections = this.genProjection(lote);
 
                     const final={
-                        id:i,
+                        id,
                         ...lot,
                         days_passed: this.lotService.daysBetween(lot.date,new Date()),
                         weeks_passed: this.lotService.weeksBetween(lot.date, new Date()),
                         projections,
                         production: projections[lote.days]?.prod_huevos_totales,
                         cant_gallinas_existentes: projections[lote.days]?.numero_de_aves,
-                        estado: projections[lote.days]?.estado
+                        //estado: projections[lote.days]?.estado
+                        estado: lote.days > 126 ? 'produccion' : 'recria'
                     } as EggLotInterface;
                     data_l.push(final);
                 }
@@ -186,7 +194,7 @@ private getRecria(lote: EggLotInterface) {
         if (i % 7 === 0) index += 1;
   
         const { 
-            variable_mortalidad_recria, 
+            variable_mortalidad_recria,
             variable_mortalidad_produccion, 
             date, cant_gallinas_proyectadas ,
             variable_produccion_huevos_totales,
@@ -203,12 +211,12 @@ private getRecria(lote: EggLotInterface) {
             day: this.lotService.daysBetween(date1, date2) + i,//day:i+1,
             weekAge: index,
             mort: Math.round(mortality * 100) / 100,
-            mortp: variable_mortalidad_produccion,
+            variable_mortalidad_produccion,
             standar: 0,
             stdreal: 0,
             hincub: 0,
             prodhtotal: 0, //total eggs
-            std_prod: variable_produccion_huevos_totales,
+            variable_produccion_huevos_totales,
             entry: date2,
             chicks: Math.round(cant_gallinas_proyectadas - ((100 - mortality) * 10)),
         });
@@ -219,18 +227,18 @@ private getRecria(lote: EggLotInterface) {
    private getProd(lote) {
     let prod = [];
     let index = 0;
-    const total_weeks = 82;
-    const conf_weeks = 1;
+    const total_weeks = 67;
+    const conf_weeks = 0;
     for (let i = 0; i < total_weeks * 7; i++) {
   
         if (i % 7 === 0) index += 1;
   
-        const { day, entry, chicks, mortp, std_prod } = lote;
+        const { day, entry, chicks, variable_mortalidad_produccion, variable_produccion_huevos_totales } = lote;
   
         const percent = prod[i - 1]?.mort || 100;
-        const mortality = percent - (mortp / (total_weeks * 7));
+        const mortality = percent - (variable_mortalidad_produccion / (total_weeks * 7));
 
-        const production_real = ((this._PROD[index] * std_prod) - this._PROD[index]) / 100;
+        const production_real = (this._PROD[index]>0? this._PROD[index]- variable_produccion_huevos_totales : this._PROD[index])  / 100;
         const date2 = new Date(entry?.getTime() + ((1 * 24 * 60 * 60 * 1000) * (i + 1)));
   
         if (i <= (conf_weeks * 7)) {
@@ -257,7 +265,7 @@ private getRecria(lote: EggLotInterface) {
                 standar: this._PROD[index],
                 chicks: Math.round(chicks - ((100 - mortality) * 10)),
                 stdreal: production_real,
-                prodhtotal: parseFloat((Math.round(chicks - ((100 - mortality) * 10)) * production_real).toFixed(2)), //total eggs
+                prodhtotal: parseInt(((Math.round(chicks - ((100 - mortality) * 10)) * production_real)).toFixed(0)), //total eggs
             });
         }
   
@@ -269,8 +277,10 @@ private getRecria(lote: EggLotInterface) {
     let dt:EggLotProjectionInterface[] = [];
     lot.recria.forEach(recria => {
         let projection = {
+            id: lot.id,
+            age: recria.weekAge,
             dia: recria.entry,
-            estado: 'recría',
+            estado: 'recria',
             mortalidad: recria.mort,
             estandar_produccion: recria.standar,
             estandar_real: recria.stdreal,
@@ -284,8 +294,10 @@ private getRecria(lote: EggLotInterface) {
     });
     lot.produccion.forEach(production => {
         let projection = {
+            id: lot.id,
+            age: production.weekAge+18,
             dia: production.entry,
-            estado: 'producción',
+            estado: 'produccion',
             mortalidad: production.mort,
             estandar_produccion: production.standar,
             estandar_real: production.stdreal,
@@ -298,5 +310,15 @@ private getRecria(lote: EggLotInterface) {
         dt.push(projection)
     });
     return dt;
+  }
+
+
+  genId(): string{
+    const qwerty='ABCDEFGHIJKLMNOPQRSTUVYWZ0123456789abcdefghijklmnopqrstuvyz_'
+    let id='';
+    for (let i = 0; i < 10; i++) {
+        id += qwerty[Math.floor(Math.random()*qwerty.length-1)];
+    }
+    return id;
   }
 }

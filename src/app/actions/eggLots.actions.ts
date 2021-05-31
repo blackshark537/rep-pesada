@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { EggLotInterface } from '../models';
+import { EggLotInterface, EggLotProjectionInterface } from '../models';
 
 const GET_EGG_LOTS = createAction('Get all egg lots');
 const SET_EGG_LOTS = createAction('Set all egg lots', props<{eggLots: EggLotInterface[]}>());

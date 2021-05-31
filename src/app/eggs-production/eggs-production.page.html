@@ -4,9 +4,12 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title size="large">Estado Actual de la Producción de Huevos Totales</ion-title>
-    <!-- <ion-buttons slot="end">
+    <ion-buttons slot="end">
       <ion-title>{{time | date: 'medium'}}</ion-title>
-    </ion-buttons> -->
+      <!-- <ion-label>Sem. Max</ion-label>
+      <ion-input type="number" color="light" [(ngModel)]="total_weeks"></ion-input>
+      <ion-button (click)="ajust();">Ajustar</ion-button> -->
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -19,22 +22,22 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="3">
-        <ion-card button>
+      <ion-col size="12" size-md="4">
+        <ion-card button style="max-width: 400pc;">
           <ion-card-content>
             <ion-item lines="none">
               <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-              <h1>Total de Aves en {{estado | titlecase}}: <span style="color: green;">{{total_chicks | addCommas}}</span></h1>
+              <h1>Pollitas Ponedoras en {{estado==='recria'?  'Recría' : 'Producción'}}: <span style="color: green;">{{total_chicks | addCommas}}</span></h1>
             </ion-item>
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12" size-md="3">
-        <ion-card button>
+      <ion-col size="12" size-md="4">
+        <ion-card button style="max-width: 400pc;">
           <ion-card-content>
             <ion-item lines="none">
               <ion-icon slot="end" name="egg" color="warning" size="large"></ion-icon>
-              <h1>Huevos Producidos: <span style="color: tomato;">{{total_production | addCommas}}</span></h1>
+              <h1>Total de Huevos Producidos: <span style="color: tomato;">{{total_production | addCommas}}</span></h1>
             </ion-item>
           </ion-card-content>
         </ion-card>

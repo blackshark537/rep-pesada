@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouteReuseStrategy } from '@angular/router';
@@ -13,6 +13,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ApiInterceptorService } from './services'
+import localeES from '@angular/common/locales/es'
 
 //Reducers
 import { 
@@ -21,7 +22,8 @@ import {
   businessesReducer, 
   capacitiesReducer,
   projectionsReducer,
-  egglotsReducer
+  egglotsReducer,
+  eggProjectionsReducer
 } from './reducers'
 
 //Effects
@@ -31,6 +33,9 @@ import {
   CapacitiesEffect,
   BusinessesEffect
 } from './effects';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeES);
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +54,7 @@ import {
       businesses: businessesReducer,
       projections: projectionsReducer,
       eggLots: egglotsReducer,
+      eggsProjections: eggProjectionsReducer,
     }),
     EffectsModule.forRoot([
       LotsEffects,
@@ -73,6 +79,8 @@ import {
     provide: HTTP_INTERCEPTORS,
     useClass: ApiInterceptorService,
     multi: true
+  },{ 
+    provide: LOCALE_ID, useValue: 'es'
   }],
   bootstrap: [AppComponent],
 })

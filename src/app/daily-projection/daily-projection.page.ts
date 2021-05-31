@@ -12,7 +12,9 @@ import { AppModel } from '../models';
 })
 export class DailyProjectionPage implements OnInit, OnDestroy {
   table = true;
-  actual_year = 2021;
+  title= 'Rep Livianas';
+  promedio=true;
+  actual_year = new Date().getFullYear();
   rows = [];
   monthly = [];
   slideOpts = {
@@ -63,7 +65,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
       })
     ).subscribe(resp => {
       this.month.forEach((m, h) => {
-        let numero_aves_anual = null;
+        let numero_aves_anual = 0;
         let month = [];
         for (let i = 1; i < 32; i++) {
           let pro = resp.filter(p => p.month === m && p.day === i && p.estado === this.estado);
@@ -100,7 +102,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
           });
           //console.log(`${headers[m-1]}: ${i}`, numero_aves)
           month.push(numero_aves);
-          if (i >= daysInMonth?.getDate()) continue;
+          if (i >= daysInMonth?.getDate())  continue;
         }
         //console.log(`${headers[m-1]}: `,numero_aves_anual)
         monthly.push({ month: headers[m - 1], data: month, balance: numero_aves_anual })
@@ -175,6 +177,22 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
 
   search() {
     this.store.dispatch(projectionsActions.GET_PROJECTIONS());
+    if(this.typeFilter === TypeFilter.Aves){
+      this.title= 'Rep Livianas';
+      this.promedio=true;
+    }
+    if(this.typeFilter === TypeFilter.Hvo_Incb){
+      this.title=  'H. Incubables';
+      this.promedio=false;
+    }
+    if(this.typeFilter === TypeFilter.Hvo_Prod){
+      this.title=  'H. Totales';
+      this.promedio=false;
+    }
+    if(this.typeFilter === TypeFilter.Nacimientos){
+      this.title= 'Pollitas Nacidas';
+      this.promedio=false;
+    }
     this.ngOnInit();
   }
 
@@ -191,6 +209,10 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
 
   setYear(value) {
     this.actual_year = new Date(value).getFullYear();
+  }
+
+  getTitle(typeFilter: TypeFilter){ 
+    return this.title;
   }
 
 }

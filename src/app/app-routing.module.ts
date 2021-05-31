@@ -94,6 +94,11 @@ export const routes: Routes = [
     loadChildren: () => import('./eggs-production/eggs-production.module').then( m => m.EggsProductionPageModule)
   },
   {
+    canActivate:[AuthGuard],
+    path: 'daily-prod-projection',
+    loadChildren: () => import('./daily-prod-projection/daily-prod-projection.module').then( m => m.DailyProdProjectionPageModule)
+  },
+  {
     path: '**',
     resolve: {
       path: PathResolveService

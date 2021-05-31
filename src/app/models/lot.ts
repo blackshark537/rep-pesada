@@ -105,6 +105,7 @@ export interface  LotProjection{
     "id": string | number;
     "dia": Date;
     "numero_de_aves": string;
+    "age": number;
     "mortalidad": number;
     "mortalidad_estandar": number;
     "estandar_real": number;

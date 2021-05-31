@@ -1,6 +1,6 @@
 import { BusinessInterface } from "./business";
 import { CapacityInterface } from "./capacity"
-import { EggLotInterface } from "./EggLots";
+import { EggLotInterface, EggLotProjectionInterface } from "./EggLots";
 import { LotModel, LotProjection } from "./lot";
 import { ProducerInterface } from "./producers"
 
@@ -11,4 +11,5 @@ export class AppModel{
     capacities: CapacityInterface[];
     businesses: BusinessInterface[];
     projections: LotProjection[];
+    eggsProjections: EggLotProjectionInterface[];
 }

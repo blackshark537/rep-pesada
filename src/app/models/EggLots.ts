@@ -1,5 +1,5 @@
 export interface  EggLotInterface{
-    id?:number;
+    id?:number  | string;
     date: string | Date; 
     year: number;
     day: number;
@@ -12,13 +12,14 @@ export interface  EggLotInterface{
     variable_mortalidad_produccion: number;
     variable_produccion_huevos_totales: number;
     production?: number;
-    projection?:EggLotProjectionInterface[];
+    projections?:EggLotProjectionInterface[];
     days_passed?: number;
     weeks_passed?: number;
     cant_gallinas_existentes?: number;
 }
 
 export interface  EggLotProjectionInterface{
+    id?: string | number;
     dia: Date;
     estado: string;
     mortalidad: number;

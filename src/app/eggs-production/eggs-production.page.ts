@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, interval, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppModel, EggLotInterface } from '../models';
 import { LotService } from '../services';
@@ -12,8 +12,9 @@ import { TableActions, TableEvent } from '../shared';
   templateUrl: './eggs-production.page.html',
   styleUrls: ['./eggs-production.page.scss'],
 })
-export class EggsProductionPage implements OnInit {
+export class EggsProductionPage implements OnInit, OnDestroy {
 
+  sub$: Subscription;
   lot$:  Observable<EggLotInterface[]>=of([]);
   col$ = new BehaviorSubject([
     //{ prop: 'estado', header: 'Estado' }, 
@@ -34,6 +35,8 @@ export class EggsProductionPage implements OnInit {
   total_production=0;
   total_chicks=0;
   estado='';
+  total_weeks=86;
+  time = new Date();
 
   constructor(
     private store: Store<AppModel>,
@@ -43,20 +46,25 @@ export class EggsProductionPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const date = new Date();
+    
+    this.sub$ = interval(1000).subscribe(_=>  this.time = new Date());
+
     this.estado = this.activatedRoute.snapshot.paramMap.get('estado');
     this.lot$ = this.store.select('eggLots').pipe(
       map(lots => {
         this.total_production = 0;
         this.total_chicks = 0;
-        return lots.filter(x => x.estado === this.estado && x.weeks_passed > 0 && x.weeks_passed < 100 && x.month <= date.getMonth()
-        ).map(val => {
-          this.total_production += parseInt(val.production.toFixed(1));
+        return lots.filter(x => x.estado === this.estado  && x.days_passed  > 0  && x.weeks_passed  < this.total_weeks ).map(val => {
+          this.total_production += val.production;
           this.total_chicks += val.cant_gallinas_existentes;
           return val;
         })
       })
     );
+  }
+
+  ngOnDestroy(){
+    this.sub$.unsubscribe();
   }
 
   selected(evt: TableEvent) {
@@ -69,5 +77,10 @@ export class EggsProductionPage implements OnInit {
   open(row){
     this.lotService.lot$.next(row);
     this.router.navigate(['/breeder', true])
+  }
+
+  ajust(){
+    this.ngOnInit();
+    setTimeout(()=> this.ngOnInit(), 500);
   }
 }

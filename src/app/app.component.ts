@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
       if (!!val) {
         this.store.dispatch(LotsActions.GET_LOTS());
         //this.store.dispatch(producersActions.GET_PRODUCERS());
-        this.store.dispatch(capacitiesActions.GET_CAPACITIES());
+        //this.store.dispatch(capacitiesActions.GET_CAPACITIES());
         this.store.dispatch(businessActions.GET_BUSINESSES());
       }
       this.canActive = !!val;
