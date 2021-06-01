@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { projectionsActions } from '../actions';
 import { AppModel, EggLotProjectionInterface } from '../models';
 
@@ -13,7 +12,7 @@ import { AppModel, EggLotProjectionInterface } from '../models';
 })
 export class DailyProdProjectionPage implements OnInit {
   table = true;
-  title= 'Pollitas Ponedoras';
+  title= 'Inventario De Gallinas Ponedoras En Producción';
   promedio=true;
   actual_year = new Date().getFullYear();
   rows = [];
@@ -190,7 +189,7 @@ export class DailyProdProjectionPage implements OnInit {
   search() {
     this.store.dispatch(projectionsActions.GET_PROJECTIONS());
     if(this.typeFilter === TypeFilter.Aves){
-      this.title= 'Pollitas Ponedoras';
+      this.title= 'Inventario De Gallinas Ponedoras En Producción';
       this.promedio=true;
     }
     if(this.typeFilter === TypeFilter.Hvo_Incb){
@@ -198,7 +197,7 @@ export class DailyProdProjectionPage implements OnInit {
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Hvo_Prod){
-      this.title=  'H. Totales';
+      this.title=  'Producción Nacional De Huevos';
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Nacimientos){

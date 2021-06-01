@@ -17,21 +17,114 @@
 
   <ion-list>
     <ion-list-header>
-      <ion-title>Resumen Productivo Reproductoras Livianas</ion-title>
+      <ion-title  style="position: absolute; right: 1em;">
+        <h1>{{time | date:'medium'}}</h1>
+      </ion-title>
     </ion-list-header>
 
-    <ion-item *ngFor="let row of  rows" >
-      <ion-icon name="cube" color="tertiary" slot="start"></ion-icon>
-      <ion-label >
-        <h1>{{row['business']}}</h1>
-      </ion-label>
-      <!-- <ion-label>
-        <div style='background-image: url("https://bin.bnbstatic.com/kline/ETHBUSD.svg"); background-repeat: no-repeat; background-size: 100%; background-position: center center;'></div>
-      </ion-label> -->
-      <ion-label *ngFor="let col of  cols" style="position: absolute; right: 1em;">
-        <h1>{{row[col.prop] | addCommas}}</h1>
-      </ion-label>
-    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8" size-md="9">
+          <ion-item>
+            <ion-label>
+              <h1>Cierre Productivo Reproductoras Livianas</h1>      
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4" size-md="3">
+          <ion-item>
+            <ion-label>
+              <h1>Dia</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <!-- <ion-col size="3">
+          <ion-item>
+            <ion-label>
+              <h1>Mes</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col> -->
+      </ion-row>
+
+      <ion-row  *ngFor="let row of  rows1">
+        <ion-col size="8" size-md="9">
+          <ion-item>
+            <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
+            <ion-label >
+              <h1>{{row['business']}}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="4"  size-md="3">
+          <ion-item button [color]="row['color']" style="border-radius: 20px;">
+            <ion-label *ngFor="let col of  cols1" style="position: absolute; right: 1em;">
+              <h1>{{row[col.prop] | addCommas}}</h1>
+            </ion-label>
+          </ion-item> 
+        </ion-col>
+        <!-- <ion-col  size="3">
+          <ion-item>
+            
+          </ion-item>
+        </ion-col> -->
+      </ion-row>
+
+    </ion-grid>
+
+    <ion-item-divider></ion-item-divider>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8" size-md="9">
+          <ion-item>
+            <ion-label>
+              <h1>Cierre Productivo Industria de Huevos</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4" size-md="3">
+          <ion-item>
+            <ion-label>
+              <h1>Dia</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <!-- <ion-col size="3">
+          <ion-item>
+            <ion-label>
+              <h1>Mes</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col> -->
+      </ion-row>
+      
+      <ion-row  *ngFor="let row of  rows2">
+        <ion-col size="8" size-md="9">
+          <ion-item>
+            <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
+            <ion-label >
+              <h1>{{row['business']}}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="4"  size-md="3">
+          <ion-item button [color]="row['color']" style="border-radius: 20px;">
+            <ion-label *ngFor="let col of cols2" style="position: absolute; right: 1em;">
+              <h1>{{row[col.prop] | addCommas}}</h1>
+            </ion-label>
+          </ion-item> 
+        </ion-col>
+        <!-- <ion-col  size="3">
+          <ion-item>
+            
+          </ion-item>
+        </ion-col> -->
+      </ion-row>
+
+    </ion-grid>
+
+    
   </ion-list>
 </ion-content>
 

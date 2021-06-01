@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title size="large">Producción Diaria De {{getTitle()}} Año {{actual_year }} </ion-title>
+    <ion-title size="large">{{getTitle()}} Año {{actual_year }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,7 +26,7 @@
           <ion-item>
             <ion-label>Filtro</ion-label>
             <ion-select (ionChange)="filterByType($event.target.value)" value="aves" placeholder="Elige uno">
-              <ion-select-option value="aves">Pollitas Ponedoras</ion-select-option>
+              <ion-select-option value="aves">Gallinas Ponedoras</ion-select-option>
               <ion-select-option value="huevos_producidos">Huevos Totales</ion-select-option>
             </ion-select>
           </ion-item>
@@ -52,7 +52,7 @@
   <ion-grid >
     <ion-row>
       <ion-col size="12">
-        <ion-label><h2>Promedios Mensuales:</h2></ion-label>
+        <ion-label><h2>Promedio de Producción Mensual:</h2></ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -75,7 +75,7 @@
   
   <app-table 
   *ngIf="table"
-  name="Proyección diaria de {{getTitle()}} año {{actual_year}}"
+  name="Producción Nacional diaria de {{getTitle()}} año {{actual_year}}"
   [cols]="cols" 
   [rows]="rows"
   [isLimited]="false"

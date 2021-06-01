@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppModel } from '../models';
 
@@ -28,8 +28,6 @@ export class HomePage implements OnInit, OnDestroy{
     { prop: 'nov', header: 'Noviembre' },
     { prop: 'dec', header: 'Diciembre' },
   ];
-  cols = [];
-  rows = [];
 
   cols1 = [
     //{prop: 'business',  header:'REPRODUCTORAS LIVIANAS'},
@@ -40,28 +38,31 @@ export class HomePage implements OnInit, OnDestroy{
   ];
 
   cols2 = [
-    { prop: 'prod', header: ' PRODUCCION DE HUEVOS' },
-    { prop: 'elements', header: 'ELEMENTOS' },
+    { prop: 'init', header: ' PRODUCCION DE HUEVOS' },
   ];
 
   rows1 = [
     //{ key:'FECHA CON CONTADOR DE TIEMPO' },
-    { business: `No. DE EMPRESAS DEDICADAS A LA CRIA DE REPROD. L`, init: null},
-    //{ business: `REPRODUCTORAS ASIGNADAS AÑO ${this.current_year}`, init: null},
-    { business: 'TOTAL DE AVES EN RECRIA 0-18 SEMANAS', init: null},
-    { business: 'TOTAL DE AVES EN PRODUCCION 19-85 SEM.', init: null },
-    { business: 'POBLACION  DE REPRODUCTORAS', init: null },
-    { business: 'MORTALIDAD EN PROCESO', init: null },
-    { business: 'PRODUCCION DE HUEVOS TOTALES EN PROCESO', init: null },
-    { business: 'HUEVOS INCUBABLES EN PROCESO PROD.DIA', init: null },
+    { business: `EMPRESAS CON REPRODUCTORAS LIVINAS`, init: null, icon:'business', color:'primary'},
+    { business: `REPRODUCTORAS ASIGNADAS AÑO ${this.current_year}`, init: null, icon:'cube', color:'success'},
+    { business: 'TOTAL DE AVES EN RECRIA 0-18 SEMANAS', init: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'TOTAL DE AVES EN PRODUCCION 19-85 SEM.', init: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'POBLACION DE REPRODUCTORAS EN RECRIA Y PRODUCCION', init: null, icon:'logo-twitter', color:'tertiary'},
+    //{ business: 'MORTALIDAD EN PROCESO', init: null },
+    { business: 'PRODUCCION HUEVOS TOTALES', init: null, icon:'egg', color:'warning'},
+    { business: 'PRODUCCION HUEVOS INCUBABLES', init: null, icon:'egg', color:'incub'},
     //{ business: 'HUEVOS INCUBABLES ACUMULADOS DEL MES', init: null },
     //{ business: `INCUBACION DE HUEVOS ASIGNADOS PARA ${this.months[this.current_month].header}`, init: null },
-    //{ business: `TOTAL DE POLLITAS PROYECTADAS A NACER ${this.months[this.current_month].header}`, init: null },
+    { business: `TOTAL DE GALLINAS A NACER`, init: null, icon:'logo-twitter', color:'tertiary'},
     //{ business: 'TOTAL DE PRODUCTORES PROGRAMADOS ', init: null },
   ];
 
   rows2 = [
-    { prod: 'NUMERO DE PRODUCTORES DEDICADOS A LA PRODUCCION', elements: 290 }
+    { business: 'NUMERO DE PRODUCTORES DEDICADOS A LA PRODUCCION', init: 290, icon:'business', color:'primary'},
+    { business: 'TOTAL DE GALLINAS EN RECRIA 0-18 SEMANAS', init: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'TOTAL DE GALLINAS EN PRODUCCION 19-85 SEM.', init: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'POBLACION DE GALLINAS EN RECRIA Y PRODUCCION', init: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'PRODUCCION DE HUEVOS TOTALES', init: null, icon:'egg', color:'incub'},
   ];
 
   statusRecria={
@@ -81,19 +82,35 @@ export class HomePage implements OnInit, OnDestroy{
     final:0
   }
 
+  time=new Date();
+
   sub$1: Subscription;
   sub$2: Subscription;
+  sub$3: Subscription;
+  sub$4: Subscription;
   constructor(
     private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
-    this.cols = [...this.cols1];
-    this.sub$1 = this.store.select('businesses').subscribe(resp=>{
-      this.rows1[0].init  = resp.length;
+    const time2=new Date(this.time.getTime() - (this.time.getHours()*60*60*1000));
+    this.sub$1 = interval(1000).subscribe(_=>{ 
+      this.time=new Date();
+      let time3 = (this.time.getTime() - time2.getTime())*0.01
+      let disc = this.statusProd.final*time3;
+      this.rows1[3].init = Math.floor(this.statusProd.total - disc);
     });
 
-    this.sub$2 = this.store.select('lots').pipe(
+    this.sub$2 = this.store.select('businesses').subscribe(resp=>{
+      let gallinas_asignadas=0;
+      resp.forEach(rep=>{
+        gallinas_asignadas  +=  parseInt(rep.cant_gallinas_asignadas);
+      })
+      this.rows1[0].init  = resp.length;
+      this.rows1[1].init  = gallinas_asignadas;
+    });
+
+    this.sub$3 = this.store.select('lots').pipe(
       map(a => {
         this.statusRecria={
           total:0,
@@ -132,19 +149,37 @@ export class HomePage implements OnInit, OnDestroy{
         return lots;
       })
     ).subscribe(resp=>{
-      this.rows1[1].init = this.statusRecria.total
-      this.rows1[2].init = this.statusProd.total
-      this.rows1[3].init = this.statusProd.total+this.statusRecria.total
-      this.rows1[4].init = (this.statusProd.mort+this.statusRecria.mort).toString()+' %'
-      this.rows1[5].init = this.statusProd.eggs
-      this.rows1[6].init = this.statusProd.incub_eggs
-    })
+      const disc = (this.statusProd.total+this.statusRecria.total ) * ((this.statusProd.mort+this.statusRecria.mort)/100);
+      this.statusProd.final = ((this.statusProd.total+this.statusRecria.total ) - disc) / (24 * 60*60*1000);
 
-    this.rows = [...this.rows1];
+      this.rows1[2].init = this.statusRecria.total;
+      this.rows1[3].init = this.statusProd.total;
+      this.rows1[4].init = this.statusProd.total+this.statusRecria.total;
+      //this.rows1[4].init = (this.statusProd.mort+this.statusRecria.mort).toString()+' %'
+      this.rows1[5].init = this.statusProd.eggs;
+      this.rows1[6].init = this.statusProd.incub_eggs;
+      this.rows1[7].init = this.statusProd.born_eggs;
+    });
+
+    this.sub$4 = this.store.select('eggLots').subscribe(lots=>{
+      this.rows2[1].init = 0;
+      this.rows2[2].init = 0;
+      this.rows2[3].init = 0;
+      this.rows2[4].init = 0;
+      lots.filter(lot => lot.weeks_passed > 0 && lot.weeks_passed < 19).forEach(lot => {
+        this.rows2[1].init += lot.cant_gallinas_existentes;
+      });
+      lots.filter(lot => lot.weeks_passed > 18 && lot.weeks_passed < 85).forEach(lot => {
+        this.rows2[2].init += lot.cant_gallinas_existentes;
+        this.rows2[4].init += lot.production;
+      });
+      this.rows2[3].init = this.rows2[1].init + this.rows2[2].init;
+    });
   }
 
   ngOnDestroy(){
     this.sub$1.unsubscribe();
     this.sub$2.unsubscribe();
+    this.sub$3.unsubscribe();
   }
 }
