@@ -52,7 +52,7 @@
   <ion-grid >
     <ion-row>
       <ion-col size="12">
-        <ion-label><h2>Balances Mensuales:</h2></ion-label>
+        <ion-label><h2>Promedios Mensuales:</h2></ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -75,7 +75,7 @@
   
   <app-table 
   *ngIf="table"
-  name="Proyección diaria reproductoras livianas {{actual_year}}"
+  name="Proyección diaria de {{getTitle()}} año {{actual_year}}"
   [cols]="cols" 
   [rows]="rows"
   [isLimited]="false"

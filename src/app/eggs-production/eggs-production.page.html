@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title size="large">Estado Actual de la Producción de Huevos Totales</ion-title>
+    <ion-title size="large">Aves Existentes En {{estado==='recria'? 'Recría'  : 'Producción'}}</ion-title>
     <ion-buttons slot="end">
       <ion-title>{{time | date: 'medium'}}</ion-title>
       <!-- <ion-label>Sem. Max</ion-label>

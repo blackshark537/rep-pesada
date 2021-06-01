@@ -158,7 +158,7 @@ export class LotsEffects {
                     let lote={
                         id,
                         ...lot,
-                        days: this.lotService.daysBetween(lot.date,new Date())-1,
+                        days: this.lotService.daysBetween(lot.date,new Date()),
                         recria: [...recria],
                         produccion: [...production]
                     }
@@ -173,7 +173,6 @@ export class LotsEffects {
                         projections,
                         production: projections[lote.days]?.prod_huevos_totales,
                         cant_gallinas_existentes: projections[lote.days]?.numero_de_aves,
-                        //estado: projections[lote.days]?.estado
                         estado: lote.days > 126 ? 'produccion' : 'recria'
                     } as EggLotInterface;
                     data_l.push(final);

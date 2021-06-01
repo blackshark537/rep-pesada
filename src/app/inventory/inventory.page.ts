@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TableEvent } from '../shared';
-import Inventory from 'src/assets/data/inventory.json';
 
 @Component({
   selector: 'app-inventory',
@@ -17,20 +16,7 @@ export class InventoryPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.inventory = Inventory.map(I=>{
-      const {id, equipo, tipo, cantidad, fecha_compra, vida_util} = I;
-      const { direccion } = I.capacidad_instalada
-      return {
-        id,
-        item: equipo,
-        quantity: cantidad + ' und',
-        type: tipo,
-        adquired: new Date(fecha_compra).toLocaleDateString(),
-        timeExpected: vida_util + ' years',
-      }
-    });
   }
-
   get isMaterial() {
     return this.platform.is('ios') ? false : true;
   }

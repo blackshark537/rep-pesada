@@ -15,6 +15,23 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-list>
+    <ion-list-header>
+      <ion-title>Resumen Productivo Reproductoras Livianas</ion-title>
+    </ion-list-header>
 
+    <ion-item *ngFor="let row of  rows" >
+      <ion-icon name="cube" color="tertiary" slot="start"></ion-icon>
+      <ion-label >
+        <h1>{{row['business']}}</h1>
+      </ion-label>
+      <!-- <ion-label>
+        <div style='background-image: url("https://bin.bnbstatic.com/kline/ETHBUSD.svg"); background-repeat: no-repeat; background-size: 100%; background-position: center center;'></div>
+      </ion-label> -->
+      <ion-label *ngFor="let col of  cols" style="position: absolute; right: 1em;">
+        <h1>{{row[col.prop] | addCommas}}</h1>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
 

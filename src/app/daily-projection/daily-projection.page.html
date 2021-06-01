@@ -54,7 +54,7 @@
   <ion-grid >
     <ion-row>
       <ion-col size="12">
-        <ion-label><h2>Balances Mensuales:</h2></ion-label>
+        <ion-label><h2>{{promedio? 'Promedios' : 'Balances'}} Mensuales:</h2></ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -65,7 +65,7 @@
               <ion-card-content>
                 <ion-label>
                   <h1 >{{data?.month + ': '}}</h1>
-                  <h1 *ngIf="promedio">{{(data?.balance/31).toFixed(0)  | addCommas}}</h1>
+                  <h1 *ngIf="promedio">{{ data?.balance  | addCommas}}</h1>
                   <h1 *ngIf="!promedio">{{ data?.balance | addCommas}}</h1>
                 </ion-label>
               </ion-card-content>

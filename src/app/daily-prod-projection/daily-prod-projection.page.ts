@@ -122,7 +122,7 @@ export class DailyProdProjectionPage implements OnInit {
         if (i >= daysInMonth?.getDate())  continue;
       }
       //console.log(`${headers[m-1]}: `,numero_aves_anual)
-      monthly.push({ month: headers[m - 1], data: month, balance: numero_aves_anual })
+      monthly.push({ month: headers[m - 1], data: month, balance: Math.floor(numero_aves_anual/31) })
       this.rows = [];
       for (let i = 0; i < 31; i++) {
         let obj = {};

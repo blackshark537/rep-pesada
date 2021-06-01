@@ -53,17 +53,17 @@
             <ion-card-content *ngIf="openBreeding">
               <ion-item [routerLink]="['/lot/breeding']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  Estado Actual Aves en Recría
+                  Aves en Recría
                 </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/lot/production']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  Estado Actual Aves en Producción
+                  Aves en Producción
                 </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  Proyección Diaria Rep. Liviana
+                  Resporte de Producción
                 </ion-label>
               </ion-item>
               <!-- <ion-item [routerLink]="['/birth-entry']" lines="none"  detail="false" routerLinkActive="selected">
@@ -107,16 +107,26 @@
               </ion-item> -->
               <ion-item [routerLink]="['/eggs-production/recria']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  Estado Actual Recría
+                  Aves en Recría
                 </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/eggs-production/produccion']" lines="none" detail="false" routerLinkActive="selected">
                   <ion-label>
-                    Estado Actual Producción
+                    Aves en Producción
                   </ion-label>
               </ion-item>
               <ion-item [routerLink]="['/daily-prod-projection']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Proyección Diaria P. Ponedoras</ion-label>
+                <ion-label>Producción H. de Mesa</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/home']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>
+                  Resumen de Producción
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['#']" lines="none">
+                <ion-label>
+                  Registro de Productores
+                </ion-label>
               </ion-item>
               <!-- <ion-item [routerLink]="['#']" lines="none">
                 <ion-label>Consumo Per-capita</ion-label>
