@@ -93,12 +93,12 @@ export class HomePage implements OnInit, OnDestroy{
   ) { }
 
   ngOnInit() {
-    const time2=new Date(this.time.getTime() - (this.time.getHours()*60*60*1000));
+    //const time2=new Date(this.time.getTime() - (this.time.getHours()*60*60*1000));
     this.sub$1 = interval(1000).subscribe(_=>{ 
       this.time=new Date();
-      let time3 = (this.time.getTime() - time2.getTime())*0.01
-      let disc = this.statusProd.final*time3;
-      this.rows1[3].init = Math.floor(this.statusProd.total - disc);
+      //let time3 = (this.time.getTime() - time2.getTime())*0.01
+      //let disc = this.statusProd.final*time3;
+      //this.rows1[3].init = Math.floor(this.statusProd.total - disc);
     });
 
     this.sub$2 = this.store.select('businesses').subscribe(resp=>{
@@ -106,8 +106,8 @@ export class HomePage implements OnInit, OnDestroy{
       resp.forEach(rep=>{
         gallinas_asignadas  +=  parseInt(rep.cant_gallinas_asignadas);
       })
-      this.rows1[0].init  = resp.length;
-      this.rows1[1].init  = gallinas_asignadas;
+      this.rows1[0].init = resp.length;
+      this.rows1[1].init = gallinas_asignadas;
     });
 
     this.sub$3 = this.store.select('lots').pipe(
