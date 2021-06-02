@@ -32,7 +32,7 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12" size-md="4">
+      <ion-col *ngIf="estado != 'recria' " size="12" size-md="4">
         <ion-card button style="max-width: 400pc;">
           <ion-card-content>
             <ion-item lines="none">
@@ -46,7 +46,7 @@
   </ion-grid>
   
   <app-table 
-  name="Producción" 
+  name="Aves en {{estado==='recria'?  'Recría' : 'Producción'}}" 
   [cols]="col$ | async" 
   [rows]="lot$ | async" 
   [tableActions]="tableActions"

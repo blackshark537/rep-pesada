@@ -25,9 +25,9 @@
         <ion-slides [options]="slideOpts">
 
           <ion-slide>
-            <ion-card button style="height: 7em; width: 30em;">
+            <ion-card color="warning" button style="height: 7em; width: 30em;">
               <ion-card-content>
-                <ion-item lines="none">
+                <ion-item lines="none" color="warning">
                   <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
                   <ion-label>
                     <h1 style="color: black;">Total Rep. Livianas</h1>
@@ -39,9 +39,9 @@
           </ion-slide>
 
           <ion-slide>
-            <ion-card button style="height: 7em; width: 30em;">
+            <ion-card color="success" button style="height: 7em; width: 30em;">
               <ion-card-content>
-                <ion-item lines="none">
+                <ion-item lines="none" color="success">
                   <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
                   <ion-label>
                     <h1 style="color: black;">Total Rep. Livianas</h1>
@@ -53,12 +53,12 @@
           </ion-slide>
 
           <ion-slide>
-            <ion-card button style="height: 7em; width: 30em;">
-              <ion-card-content>
-                <ion-item lines="none">
-                  <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+            <ion-card color="incub" button style="height: 7em; width: 30em;">
+              <ion-card-content >
+                <ion-item lines="none" color="incub">
+                  <ion-icon class="egg" slot="end" name="alarm" color="light" size="large"></ion-icon>
                   <ion-label>
-                    <h1 style="color: black;">Balance Total</h1>
+                    <h1 style="color: black;">Balance</h1>
                     <h1 style="color: black;">{{status?.balance | addCommas}}</h1>
                   </ion-label>
                 </ion-item>

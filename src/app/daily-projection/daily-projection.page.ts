@@ -12,7 +12,8 @@ import { AppModel } from '../models';
 })
 export class DailyProjectionPage implements OnInit, OnDestroy {
   table = true;
-  title= 'Rep Livianas';
+  title= 'Inventario De Aves En Producción';
+  subtitle= 'Aves En Producción';
   promedio=true;
   actual_year = new Date().getFullYear();
   rows = [];
@@ -105,7 +106,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
           if (i >= daysInMonth?.getDate())  continue;
         }
         //console.log(`${headers[m-1]}: `,numero_aves_anual)
-        monthly.push({ month: headers[m - 1], data: month, balance: Math.floor(numero_aves_anual/31) })
+        monthly.push({ month: headers[m - 1], data: month, balance: numero_aves_anual })
         this.rows = [];
         for (let i = 0; i < 31; i++) {
           let obj = {};
@@ -147,6 +148,10 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
     this.sub$.unsubscribe();
   }
 
+  getPromedio(value){
+    return Math.floor(value/31);
+  }
+
   configSlides(){
     if(window.innerWidth < 500){
       this.slideOpts.slidesPerView = 2;
@@ -178,19 +183,23 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   search() {
     this.store.dispatch(projectionsActions.GET_PROJECTIONS());
     if(this.typeFilter === TypeFilter.Aves){
-      this.title= 'Rep Livianas';
+      this.title= `Inventario De Aves En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.subtitle= `Aves En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=true;
     }
     if(this.typeFilter === TypeFilter.Hvo_Incb){
-      this.title=  'H. Incubables';
+      this.title=  `H. Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.subtitle= `H. Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Hvo_Prod){
-      this.title=  'H. Totales';
+      this.title=  `H. Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.subtitle= `H. Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Nacimientos){
       this.title= 'Pollitas Nacidas';
+      this.subtitle= `Pollitas Nacidas`;
       this.promedio=false;
     }
     this.ngOnInit();
@@ -204,7 +213,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
 
   filterByType(value) {
     this.typeFilter = value;
-    if (value != TypeFilter.Aves) this.filterBy('produccion')
+    this.filterBy('produccion')
   }
 
   setYear(value) {

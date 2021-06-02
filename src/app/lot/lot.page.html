@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Aves Existentes En {{filter==='breeding'? 'Recría' : 'Producción'}}</ion-title>
+    <ion-title>Aves Existentes En {{filter==='breeding'? 'Recría' : 'y Producción De Huevos'}}</ion-title>
     <ion-buttons slot="end">
       <ion-title>{{time | date: 'medium'}}</ion-title>
     </ion-buttons>
@@ -26,7 +26,7 @@
               <ion-card-content>
                 <ion-item lines="none">
                   <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-                  <h1>Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}: <span style="color: green">{{status?.total | addCommas}}</span> </h1>
+                  <h1>Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}: <br><span style="color: green">{{status?.total | addCommas}}</span> </h1>
                 </ion-item>
               </ion-card-content>
             </ion-card>
@@ -37,7 +37,7 @@
               <ion-card-content>
                 <ion-item lines="none">
                   <ion-icon slot="end" name="egg" color="warning" size="large"></ion-icon>
-                  <h1>Huevos Producidos: <span style="color: tomato;">{{status?.eggs | addCommas}}</span></h1>
+                  <h1>Huevos Totales: <br><span style="color: tomato;">{{status?.eggs | addCommas}}</span></h1>
                 </ion-item>
               </ion-card-content>
             </ion-card>
@@ -48,7 +48,7 @@
               <ion-card-content>
                 <ion-item lines="none">
                   <ion-icon slot="end" name="egg" color="warning" size="large"></ion-icon>
-                  <h1>Huevos Incubables: <span style="color: darkturquoise;">{{status?.incub_eggs | addCommas}}</span></h1>
+                  <h1>Huevos Incubables: <br><span style="color: darkturquoise;">{{status?.incub_eggs | addCommas}}</span></h1>
                 </ion-item>
               </ion-card-content>
             </ion-card>
@@ -59,7 +59,7 @@
               <ion-card-content>
                 <ion-item lines="none">
                   <ion-icon slot="end" name="logo-twitter" color="primary" size="large"></ion-icon>
-                  <h1>Nacimientos Totales: <span style="color: black;">{{status?.born_eggs | addCommas}}</span> </h1>
+                  <h1>Pollitas Nacidas: <br><span style="color: black;">{{status?.born_eggs | addCommas}}</span> </h1>
                 </ion-item>
               </ion-card-content>
             </ion-card>
@@ -73,7 +73,7 @@
   </ion-grid>
 
   <app-table 
-  name="Lotes En {{filter==='breeding'? 'Recría' : 'Producción'}}" 
+  name="Aves En {{filter==='breeding'? 'Recría' : 'Producción'}}" 
   [cols]="col$ | async" 
   [rows]="lot$ | async" 
   [tableActions]="tableActions"

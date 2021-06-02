@@ -82,7 +82,7 @@ export class DailyProdProjectionPage implements OnInit {
   }
 
   ngOnDestroy() {
-    this.sub1$.unsubscribe();
+    //this.sub1$.unsubscribe();
     this.sub$.unsubscribe();
   }
 

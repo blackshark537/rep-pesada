@@ -1,0 +1,28 @@
+
+  .marquee {
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    width: 60%;
+  }
+
+.marquee h1 {
+    display: inline-block;
+    padding-left: 100%;
+    /* font-size: 1.1em; */
+    animation: marquee 5s linear infinite;
+  }
+  
+  .marquee2 h1 {
+    animation-delay: 2.5s;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translate(100, 0);
+    }
+    100% {
+      transform: translate(-100%, 0);
+    }
+  }
