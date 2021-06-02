@@ -12,8 +12,9 @@ import { AppModel, EggLotProjectionInterface } from '../models';
 })
 export class DailyProdProjectionPage implements OnInit {
   table = true;
-  title= 'Inventario De Gallinas Ponedoras En Producción';
-  subtitle= 'Producción Nacional Diaria De Gallinas Ponedoras';
+  title= 'Inventario De Aves En Producción';
+  subtitle2= 'Proyección Diaria De Aves En Producción';
+  subtitle= 'Aves En Producción';
   promedio=true;
   actual_year = new Date().getFullYear();
   rows = [];
@@ -190,23 +191,19 @@ export class DailyProdProjectionPage implements OnInit {
   search() {
     this.store.dispatch(projectionsActions.GET_PROJECTIONS());
     if(this.typeFilter === TypeFilter.Aves){
-      this.title = 'Inventario De Gallinas Ponedoras En Producción';
-      this.subtitle = 'Producción Nacional Diaria De Gallinas Ponedoras';
+      this.title = `Inventario De Aves En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
+      this.subtitle = `Aves En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
+      this.subtitle2= `Proyección Diaria En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
       this.promedio = true;
     }
-    if(this.typeFilter === TypeFilter.Hvo_Incb){
-      this.title = 'H. Incubables';
-      this.promedio = false;
-    }
+    
     if(this.typeFilter === TypeFilter.Hvo_Prod){
       this.title = 'Producción Nacional De Huevos';
-      this.subtitle = 'Producción Nacional Diaria De Huevos';
+      this.subtitle = 'Producción De Huevos';
+      this.subtitle2= `Proyección Diaria Producción Nacional De Huevos`;
       this.promedio = false;
     }
-    if(this.typeFilter === TypeFilter.Nacimientos){
-      this.title = 'Pollitas Nacidas';
-      this.promedio = false;
-    }
+    
     this.ngOnInit();
   }
 

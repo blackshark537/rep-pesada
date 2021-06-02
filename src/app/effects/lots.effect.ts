@@ -179,8 +179,11 @@ export class LotsEffects {
                 }
             }
         });
-
-        this.store.dispatch(eggLotsActions.SET_EGG_LOTS({ eggLots: [...data_v, ...data_l] }));
+        let rows = [...data_v, ...data_l]
+        rows.forEach((row, i) => {
+            row.id = i + 1;
+        });
+        this.store.dispatch(eggLotsActions.SET_EGG_LOTS({ eggLots: [...rows] }));
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

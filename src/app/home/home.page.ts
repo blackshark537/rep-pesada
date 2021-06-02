@@ -53,7 +53,7 @@ export class HomePage implements OnInit, OnDestroy{
     { business: 'PRODUCCION HUEVOS INCUBABLES', init: null, icon:'egg', color:'incub'},
     //{ business: 'HUEVOS INCUBABLES ACUMULADOS DEL MES', init: null },
     //{ business: `INCUBACION DE HUEVOS ASIGNADOS PARA ${this.months[this.current_month].header}`, init: null },
-    { business: `TOTAL DE GALLINAS A NACER`, init: null, icon:'logo-twitter', color:'tertiary'},
+    { business: `TOTAL DE POLLITAS PONEDORAS NACIDAS`, init: null, icon:'logo-twitter', color:'tertiary'},
     //{ business: 'TOTAL DE PRODUCTORES PROGRAMADOS ', init: null },
   ];
 
@@ -62,7 +62,7 @@ export class HomePage implements OnInit, OnDestroy{
     { business: 'TOTAL DE GALLINAS EN RECRIA 0-18 SEMANAS', init: null, icon:'logo-twitter', color:'tertiary'},
     { business: 'TOTAL DE GALLINAS EN PRODUCCION 19-85 SEM.', init: null, icon:'logo-twitter', color:'tertiary'},
     { business: 'POBLACION DE GALLINAS EN RECRIA Y PRODUCCION', init: null, icon:'logo-twitter', color:'tertiary'},
-    { business: 'PRODUCCION DE HUEVOS TOTALES', init: null, icon:'egg', color:'incub'},
+    { business: 'PRODUCCION NACIONAL DE HUEVOS TOTALES', init: null, icon:'egg', color:'incub'},
   ];
 
   statusRecria={
