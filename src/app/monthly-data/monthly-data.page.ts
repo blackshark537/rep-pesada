@@ -63,7 +63,7 @@ export class MonthlyDataPage implements OnInit {
           });
           return row;
       }))
-    })).subscribe(rows => this.rows = rows);
+    })).subscribe(rows => this.rows = [...rows]);
   }
 
   selected(event){}

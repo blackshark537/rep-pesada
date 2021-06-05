@@ -102,7 +102,7 @@ export class DataDrivenPage implements OnInit {
               return row;
             })
           );
-        })).subscribe(rows => this.rows = rows);
+        })).subscribe(rows => this.rows = [...rows]);
 
     })
   }
