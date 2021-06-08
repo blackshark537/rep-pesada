@@ -74,6 +74,8 @@ export class HomePage implements OnInit, OnDestroy{
 
   time=new Date();
 
+  month = [this.current_month];
+
   sub$1: Subscription;
   sub$2: Subscription;
   sub$3: Subscription;
@@ -251,62 +253,61 @@ export class HomePage implements OnInit, OnDestroy{
   }
 
   getMonthlyDataProd(){
-    this.store.select('eggLots').pipe(
-      map(a=>{
-        let result = a.filter(x=> x.year === this.current_year);
-        return result;
-      })
-    ).subscribe(lots=>{
-      if(!lots.length) return;
-      let resp=[];
-      let state = ['recria', 'produccion'];
-      state.forEach(estado=>{
-        lots.forEach(lote=>{
+    this.store.select('eggLots').subscribe(response => {
+      let estados=['recria', 'produccion'];
+      estados.forEach(estado=>{
+        let resp=[];
+        response.forEach(lote=>{
           resp.push(...lote.projections.filter(p=>p.estado === estado && p.year === this.current_year ));
         });
-        this.processMonthlyDataProd(resp, estado);
+        
+        if(resp.length)this.processMonthlyDataProd(resp, estado);
       })
     });
   }
 
   processMonthlyDataProd(projections: EggLotProjectionInterface[], estado: string){
-    let numero_aves_anual = 0;
-    let numero_H_anual = 0;
     let month = [];
-    for (let i = 1; i < 32; i++) {
-      let pro = projections.filter(p => p.month === this.current_month && p.day === i );
-      let numero_aves = null;
-      let numero_huevos = null;
-      let d: Date = null;
-      let daysInMonth: Date = null;
-      pro.forEach((el, k) => {
-        d = new Date(el.dia);
-        let mt = d.getMonth() + 1;
-        let yr = d.getFullYear();
-        daysInMonth = new Date(yr, mt, 0);
-        if (k < 595) {
-          numero_aves += el.numero_de_aves;
-          numero_aves_anual += el.numero_de_aves;
+    this.month.forEach((m, h) => {
+      let numero_aves_anual = 0;
+      let numero_huevos_anual = 0;
+      for (let i = 1; i < 32; i++) {
+        let pro = projections.filter(p => p.month === m && p.day === i );
+        let numero_aves = null;
+        let numero_huevos = null;
+        let d: Date = null;
+        let daysInMonth: Date = null;
+        pro.forEach((el, k) => {
+          d = new Date(el.dia);
+          let mt = d.getMonth() + 1;
+          let yr = d.getFullYear();
+          daysInMonth = new Date(yr, mt, 0);
+          if (k < 595) {
+            numero_aves += el.numero_de_aves;
+            numero_aves_anual += el.numero_de_aves;
 
-          numero_huevos += el.prod_huevos_totales;
-          numero_H_anual += el.prod_huevos_totales;
-        }
-      });
-      month.push({numero_aves, numero_huevos, estado});
-      if (i >= daysInMonth?.getDate())  continue;
-    }
-
-    month.forEach(m=>{
-      if(m.estado === 'recria'){
-        this.rows2[1].month += m.numero_aves;
-      }else{
-        this.rows2[2].month += m.numero_aves;
-        this.rows2[4].month += m.numero_huevos;
+            numero_huevos += el.prod_huevos_totales;
+            numero_huevos_anual += el.prod_huevos_totales;
+          }
+        });
+        //console.log(`${headers[m-1]}: ${i}`, numero_aves)
+        month.push({numero_aves, numero_huevos, estado});
+        if (i >= daysInMonth?.getDate())  continue;
       }
+    });
+
+
+    month.filter(m=>m?.estado === 'recria').forEach(m=>{
+        this.rows2[1].month += m.numero_aves;
     })
 
-    this.rows2[1].month = Math.floor(this.rows2[1].month/this.current_month+1);
-    this.rows2[2].month = Math.floor(this.rows2[2].month/this.current_month+1);
+    month.filter(m=>m?.estado === 'produccion').forEach(m=>{
+      this.rows2[2].month += m.numero_aves;
+      this.rows2[4].month += m.numero_huevos;
+    })
+
+    if(estado==='recria') this.rows2[1].month = Math.floor(this.rows2[1].month/month.length-1);
+    if(estado==='produccion') this.rows2[2].month = Math.floor(this.rows2[2].month/month.length-1);
     this.rows2[3].month = this.rows2[1].month + this.rows2[2].month   
   }
 

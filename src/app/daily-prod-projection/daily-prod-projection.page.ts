@@ -13,8 +13,8 @@ import { AppModel, EggLotProjectionInterface } from '../models';
 export class DailyProdProjectionPage implements OnInit {
   table = true;
   title= 'Inventario De Aves En Producción';
-  subtitle2= 'Proyección Diaria De Aves En Producción';
-  subtitle= 'Aves En Producción';
+  subtitle= 'Promedio Mensual De Aves En Producción';
+  subtitle2= 'Existencia Diaria De Aves En Producción';
   promedio=true;
   actual_year = new Date().getFullYear();
   rows = [];
@@ -123,7 +123,7 @@ export class DailyProdProjectionPage implements OnInit {
         if (i >= daysInMonth?.getDate())  continue;
       }
       //console.log(`${headers[m-1]}: `,numero_aves_anual)
-      monthly.push({ month: headers[m - 1], data: month, balance: Math.floor(numero_aves_anual/31) })
+      monthly.push({ month: headers[m - 1], data: month, balance: this.typeFilter === TypeFilter.Aves? Math.floor(numero_aves_anual/month.length-1) : numero_aves_anual})
       this.rows = [];
       for (let i = 0; i < 31; i++) {
         let obj = {};
@@ -157,7 +157,13 @@ export class DailyProdProjectionPage implements OnInit {
         { month: 'Noviembre', balance: monthly.filter(x => x.month == 'Noviembre')[0]?.balance },
         { month: 'Diciembre', balance: monthly.filter(x => x.month == 'Diciembre')[0]?.balance },
       ]
+
     })
+    let balanceAnual=0;
+    this.monthly.forEach(el=>{
+      balanceAnual += el.balance
+    });
+    this.monthly.push({ month: 'Total Del Año', balance: balanceAnual});
   }
 
   configSlides(){
@@ -192,15 +198,15 @@ export class DailyProdProjectionPage implements OnInit {
     this.store.dispatch(projectionsActions.GET_PROJECTIONS());
     if(this.typeFilter === TypeFilter.Aves){
       this.title = `Inventario De Aves En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
-      this.subtitle = `Aves En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
-      this.subtitle2= `Proyección Diaria En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
+      this.subtitle = `Promedio Mensual De Aves En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
+      this.subtitle2= `Existencia Diaria De Aves En ${this.estado==='produccion'?'Producción' : 'Recria'}`;
       this.promedio = true;
     }
     
     if(this.typeFilter === TypeFilter.Hvo_Prod){
       this.title = 'Producción Nacional De Huevos';
-      this.subtitle = 'Producción De Huevos';
-      this.subtitle2= `Proyección Diaria Producción Nacional De Huevos`;
+      this.subtitle = 'Producción Mensual De Huevos De Mesa';
+      this.subtitle2= `Producción Nacional Diaria De Huevos De Mesa`;
       this.promedio = false;
     }
     

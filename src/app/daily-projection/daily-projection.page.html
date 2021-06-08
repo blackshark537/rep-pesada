@@ -65,8 +65,7 @@
               <ion-card-content>
                 <ion-label>
                   <h1 >{{data?.month + ': '}}</h1>
-                  <h1 *ngIf="promedio">{{ getPromedio(data?.balance)  | addCommas}}</h1>
-                  <h1 *ngIf="!promedio">{{ data?.balance | addCommas}}</h1>
+                  <h1 >{{ data?.balance  | addCommas}}</h1>
                 </ion-label>
               </ion-card-content>
             </ion-card>
@@ -78,7 +77,7 @@
   
   <app-table 
   *ngIf="table"
-  name="Proyección Diaria De {{subtitle}} Año {{actual_year}}"
+  name="Existencia Diaria De {{subtitle}} Año {{actual_year}}"
   [cols]="cols" 
   [rows]="rows"
   [isLimited]="false"

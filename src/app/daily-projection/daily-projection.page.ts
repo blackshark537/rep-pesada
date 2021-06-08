@@ -106,7 +106,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
           if (i >= daysInMonth?.getDate())  continue;
         }
         //console.log(`${headers[m-1]}: `,numero_aves_anual)
-        monthly.push({ month: headers[m - 1], data: month, balance: numero_aves_anual })
+        monthly.push({ month: headers[m - 1], data: month, balance: this.typeFilter === TypeFilter.Aves || this.typeFilter === TypeFilter.Nacimientos? Math.floor(numero_aves_anual/31) : numero_aves_anual })
         this.rows = [];
         for (let i = 0; i < 31; i++) {
           let obj = {};
@@ -141,6 +141,12 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
           { month: 'Diciembre', balance: monthly.filter(x => x.month == 'Diciembre')[0]?.balance },
         ]
       })
+
+      let balanceAnual=0;
+        this.monthly.forEach(el=>{
+          balanceAnual += el.balance
+        });
+        this.monthly.push({ month: 'Total Del Año', balance: balanceAnual});
     });
   }
 
