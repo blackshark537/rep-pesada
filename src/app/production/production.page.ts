@@ -3,6 +3,9 @@ import { map } from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models/AppModel';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { EggLotProjectionInterface } from '../models';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-production',
@@ -10,7 +13,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./production.page.scss'],
 })
 export class ProductionPage implements OnInit, OnDestroy {
-
+  date  = new Date();
+  current_year =  this.date.getFullYear();
   res = []
   res2 = []
 
@@ -30,86 +34,190 @@ export class ProductionPage implements OnInit, OnDestroy {
   activateArea: boolean = false;
   activatePie: boolean = false;
 
-  viewArea: number[] = [1000, 400];
+  viewArea: number[] = [window.innerWidth, window.innerHeight-50];
   legend: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Empresas';
+  xAxisLabel: string = 'Mes';
   yAxisLabel: string = 'Producción';
   timeline: boolean = true;
 
-  single=[];
+  resMulti = [{
+    "name": "Aves En Produccion",
+    "series": [
+      
+    ]
+  },
+  {
+    "name": "Huevos Totales",
+    "series": [
+      
+    ]
+  },
+  {
+    "name": "Huevos Incuvables",
+    "series": [
+      
+    ]
+  },
+  {
+    "name": "Pollitas Nacidas",
+    "series": [
+      
+    ]
+  }
+  ];
 
   showXAxis = true;
   showYAxis = true;
   gradient = false;
+  month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   
   sub$: Subscription;
 
   constructor(
-    public store: Store<AppModel>
+    public store: Store<AppModel>,
+    private activatedRoute: ActivatedRoute,
+    private loadCtrl: LoadingController
   ) { }
 
   ngOnInit() {
-   this.sub$ = this.store.select('lots').pipe(
-      map(_lots =>{
-        return _lots.filter(lot => lot.status === 'production')
+    this.activateArea=false;
+    this.activateCard=false;
+    this.activatePie=false;
+
+    const industry =  this.activatedRoute.snapshot.paramMap.get('industry');
+    if( industry === Industry.lightBreeder)  this.lightBreederGraph();
+    if( industry === Industry.eggsIndustry)  this.eggsIndustryGraph();
+    
+  }
+
+  lightBreederGraph(){
+    this.sub$ = this.store.select('projections').pipe(
+      map(pro => {
+        let result = pro.filter(p => p.year === this.current_year)
+        return result;
       })
-    ).subscribe(result =>{
-      this.res=[];
-      this.res2=[];
-      this.single=[];
-      if(!!result === false) return;
+    ).subscribe(resp => {
+      this.month.forEach((m, h) => {
+        for (let i = 1; i < 32; i++) {
+          let pro = resp.filter(p => p.month === m && p.day === i && p.estado === 'produccion');
+          let numero_aves = 0;
+          let numero_Ht = 0;
+          let numero_Hi = 0;
+          let numero_Na = 0;
+          let d: Date = null;
+          let daysInMonth: Date = null;
+          pro.forEach((el, k) => {
+            d = new Date(el.dia);
+            let mt = d.getMonth() + 1;
+            let yr = d.getFullYear();
+            daysInMonth = new Date(yr, mt, 0);
+            if (k < 595) {              
+              numero_aves += parseInt(el.numero_de_aves);
+              numero_Ht += parseInt(el.prod_huevos_totales);
+              numero_Hi += parseInt(el.huevos_incubables);
+              numero_Na += parseInt(el?.nacimientos_totales);
+            }
+          });
+          
+          this.resMulti[0].name="Aves En Produccion",
+          this.resMulti[0].series.push({
+            "value": numero_aves,
+            "name":  `${d}`
+          })
+          this.resMulti[1].name="Huevos Totales",
+          this.resMulti[1].series.push({
+            "value": numero_Ht,
+            "name":  `${d}`
+          })
+          this.resMulti[2].name="Huevos Incuvables",
+          this.resMulti[2].series.push({
+            "value": numero_Hi,
+            "name":  `${d}`
+          })
+          this.resMulti[3].name="Pollitas Nacidas",
+          this.resMulti[3].series.push({
+            "value": numero_Na,
+            "name":  `${d}`
+          })
+          if (i >= daysInMonth?.getDate())  continue;
+        }
+        
+        this.activateArea=true;
+      });
+    });
+  }
 
-      let recive=0;
-      let Week=0;
-      let Days=0;
-      let mortp=0;
-      let total=0;
-      let birthTotal=0;
-      let hincub=0;
-      let prodHtotal=0;
-
-      result.forEach(el =>{
-        recive+= el.recibidas;
-        Week+= el.week;
-        Days+= el.days;
-        mortp+= el.variable_mortalidad_produccion;
-        total+= el.total;
-        birthTotal+= el.nacimientos;
-        hincub+= el.incubables;
-        prodHtotal+= el.production;
-        this.single.push({name: el.business, value: el.production})
+  async eggsIndustryGraph(){
+    const load = await this.loadCtrl.create();
+    await load.present();
+    this.store.select('eggLots').subscribe(response => {
+      let resp=[];
+      response.forEach(lote=>{
+        resp.push(...lote.projections.filter(p=>p.estado === 'produccion' && p.year === this.current_year ));
       });
 
-
-      this.res.push({name: 'Promedio Aves Entrantes', value: (recive/result.length).toFixed(2) + ' ±0.5 aves' });
-      this.res.push({name: 'Promedio Mortalidad', value: (mortp/result.length).toFixed(2) + '%'});
-      this.res.push({name: 'Promedio Aves Restantes', value: (total/result.length).toFixed(2) + ' ±0.5 aves' });
-      //this.res.push({name: `Promedio Edad`, value: ` ${Math.round((Days/result.length)/7)} sem. \n ${Math.round(Days/result.length)} dias`});
-      this.res.push({name: 'Promedio Huevos Nacidos', value: Math.round(birthTotal/result.length) + ' huevos' });
-      this.res.push({name: 'Promedio Huevos Incubables', value: Math.round(hincub/result.length) + ' huevos' });
-      this.res.push({name: 'Promedio Huevos Totales', value: Math.round(prodHtotal/result.length) + ' huevos' });
-
-      this.res2.push({name: 'Prom. Huevos Incubables', value: (hincub/result.length) });
-      this.res2.push({name: 'Prom. Huevos Nacidos', value: (birthTotal/result.length) });
-    
+      setTimeout(()=>{
+        this.processData(resp);
+        load.dismiss();
+      }, 1000);
     });
-    
-    setTimeout(() => {
-      this.activateCard=true;
-      this.activatePie=true;
-    },100);
+  }
 
-    setTimeout(() => {
+  processData(projections: EggLotProjectionInterface[]){
+    this.month.forEach((m, h) => {
+      for (let i = 1; i < 32; i++) {
+        let pro = projections.filter(p => p.month === m && p.day === i );
+        let numero_aves = 0;
+        let numero_Ht = 0;
+        let d: Date = null;
+        let daysInMonth: Date = null;
+        pro.forEach((el, k) => {
+          d = new Date(el.dia);
+          let mt = d.getMonth() + 1;
+          let yr = d.getFullYear();
+          daysInMonth = new Date(yr, mt, 0);
+          if (k < 595) {
+            numero_aves += el.numero_de_aves;
+            numero_Ht += el.prod_huevos_totales;
+          }
+        });
+
+        this.resMulti[0].name="Aves Ponedoras";
+        this.resMulti[0].series.push({
+          "value": numero_aves,
+          "name":  `${d}`
+        });
+
+        this.resMulti[1].name="Huevos Totales";
+        this.resMulti[1].series.push({
+          "value": numero_Ht,
+          "name":  `${d}`
+        });
+
+        this.resMulti[2].name="";
+        this.resMulti[2].series=null;
+        this.resMulti[3].name="";
+        this.resMulti[3].series=null;
+        if (i >= daysInMonth?.getDate())  continue;
+      }
+
       this.activateArea=true;
-    },100);
+    })
+    
   }
 
   ngOnDestroy(){
     this.sub$.unsubscribe();
   }
+}
+
+
+enum Industry{
+  lightBreeder='light-breeder',
+  eggsIndustry='eggs-industry'
 }

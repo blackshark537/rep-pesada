@@ -46,7 +46,7 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'production',
+    path: 'production/:industry',
     loadChildren: () => import('./production/production.module').then( m => m.ProductionPageModule)
   },
   {
