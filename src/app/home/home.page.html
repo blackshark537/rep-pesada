@@ -5,6 +5,11 @@
       <ion-menu-button ></ion-menu-button>
     </ion-buttons>
     <ion-title>Resumen Productivo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="speaking" fill="solid" color="success" (click)="speach()">
+        Asistente Virtual D-P
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

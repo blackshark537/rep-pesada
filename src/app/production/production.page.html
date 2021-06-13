@@ -3,26 +3,29 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Graficas Reproductora Liviana</ion-title>
+    <ion-title>{{title | titlecase}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Graficas Reproductora Liviana</ion-title>
+      <ion-title size="large">{{title | titlecase}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-grid>
     <ion-row>
       <ion-col size="12" *ngIf="activateCard" class="container">
-        <ngx-charts-number-card
+        <ion-item>
+
+        </ion-item>
+      <!--   <ngx-charts-number-card
           [view]="viewCard"
           [scheme]="colorScheme"
           [results]="res"
           [cardColor]="cardColor">
-        </ngx-charts-number-card>
+        </ngx-charts-number-card> -->
       </ion-col>
     </ion-row>
 
@@ -37,10 +40,11 @@
 
     <ion-row class="container">
       <ion-col size="12" >
-        <!-- <ngx-charts-line-chart
+        <ngx-charts-line-chart
           *ngIf="activateArea"
           [view]="viewArea"
           [scheme]="colorScheme"
+          [schemeType]=" 'linear' "
           [legend]="legend"
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
@@ -50,10 +54,10 @@
           [yAxisLabel]="yAxisLabel"
           [timeline]="timeline"
           [showGridLines]="true"
-          [results]="resMulti">
+          [results]="getResult()">
         >
-        </ngx-charts-line-chart> -->
-        <ngx-charts-area-chart
+        </ngx-charts-line-chart>
+        <!-- <ngx-charts-area-chart
           *ngIf="activateArea"
           [view]="viewArea"
           [scheme]="colorScheme"
@@ -67,7 +71,7 @@
           [timeline]="timeline"
           [showGridLines]="true"
           [results]="resMulti">
-        </ngx-charts-area-chart>
+        </ngx-charts-area-chart> -->
         <!-- <ngx-charts-bar-vertical
           *ngIf="activateArea"
           [view]="viewArea"

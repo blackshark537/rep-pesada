@@ -66,11 +66,6 @@
                   Resporte de Producción
                 </ion-label>
               </ion-item>
-              <ion-item [routerLink]="['/production', 'light-breeder']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>
-                  Graficos de Producción
-                </ion-label>
-              </ion-item>
               <!-- <ion-item [routerLink]="['/birth-entry']" lines="none"  detail="false" routerLinkActive="selected">
                 <ion-label>Entrada de Pollitas Ponedoras</ion-label>
               </ion-item> -->
@@ -129,11 +124,7 @@
               <ion-item [routerLink]="['/daily-prod-projection']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Producción H. de Mesa</ion-label>
               </ion-item>
-              <ion-item [routerLink]="['/production', 'eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>
-                  Graficos Prod. H. de Mesa
-                </ion-label>
-              </ion-item>
+
               <ion-item [routerLink]="['/home']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
                   Resumen de Producción
@@ -146,6 +137,57 @@
               <ion-item [routerLink]="['#']" lines="none">
                 <ion-label>Participación de Prod.</ion-label>
               </ion-item> -->
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-item lines="none" detail="true" button (click)="openGraphicalResume=!openGraphicalResume">
+              <ion-icon color="success" slot="start" name="bar-chart"></ion-icon>
+              <ion-label color="{{openGraphicalResume? 'primary' : ''}}">Resumen Gráfico</ion-label>
+            </ion-item>
+            <ion-card-content *ngIf="openGraphicalResume">
+
+              <ion-item [routerLink]="['/production', 'pie-light-breeder']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Part. Mercado/Empresa</ion-label>
+              </ion-item>
+
+              <ion-item [routerLink]="['/production', 'bar-month-lot-breeder']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Entrada Rep. L. Mensual</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/production', 'bar-year-lot-breeder']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Entrada Rep. L. Anual</ion-label>
+              </ion-item>
+
+              <ion-item [routerLink]="['/production', 'chicks-light-breeder']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Inv. Aves Recria/Prod.</ion-label>
+              </ion-item>
+
+              <ion-item [routerLink]="['/production', 'light-breeder']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>P. H. Inc/Pollitas Diario</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/production', 'bar-month-light-breeder']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>P. H. Inc/Pollitas Mensual</ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['/production', 'bar-year-light-breeder']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>P. H. Inc/Pollitas Anual</ion-label>
+              </ion-item>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+              <ion-item [routerLink]="['/production', 'chicks-line-eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Inv. Gallinas Recria/Prod.</ion-label>
+              </ion-item>
+              
+              <ion-item [routerLink]="['/production', 'day-line-eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Prod/Huevos Diarios</ion-label>
+              </ion-item>
+
+              <ion-item [routerLink]="['/production', 'month-bar-eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Prod/Huevos Mensual</ion-label>
+              </ion-item>
+
+              <ion-item [routerLink]="['/production', 'year-bar-eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
+                <ion-label>Prod/Huevos Anual</ion-label>
+              </ion-item>
+
             </ion-card-content>
           </ion-card>
 

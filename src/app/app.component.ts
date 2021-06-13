@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   openGeo = false;
   openProd = false;
   openExport = false;
+  openGraphicalResume = false;
 
   public appPages = [
     { title: 'Empresas', url: '/business', icon: 'business' },

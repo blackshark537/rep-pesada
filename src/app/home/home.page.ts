@@ -3,7 +3,8 @@ import { Store } from '@ngrx/store';
 import { interval, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppModel, EggLotProjectionInterface } from '../models';
-
+import Speech from 'speak-tts';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -30,29 +31,30 @@ export class HomePage implements OnInit, OnDestroy{
     { prop: 'dec', header: 'Diciembre' },
   ];
 
-
+  speak = null;
+  speaking=false;
   rows1 = [
     //{ key:'FECHA CON CONTADOR DE TIEMPO' },
-    { business: `EMPRESAS CON REPRODUCTORAS LIVINAS`, init: null, month: null, icon:'business', color:'primary'},
-    { business: `REPRODUCTORAS ASIGNADAS AÑO ${this.current_year}`, init: null, month: null, icon:'cube', color:'success'},
-    { business: 'TOTAL DE AVES EN RECRIA 0-18 SEMANAS', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
-    { business: 'TOTAL DE AVES EN PRODUCCION 19-85 SEM.', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
-    { business: 'POBLACION DE REPRODUCTORAS EN RECRIA Y PRODUCCION', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
+    { business: `Empresas Con Reproductoras Livianas`, init: null, month: null, icon:'business', color:'primary'},
+    { business: `Reproductoras Asignadas Año ${this.transform(this.current_year)}`, init: null, month: null, icon:'cube', color:'success'},
+    { business: 'Total De Aves En Recría 0 a 18 SEMANAS', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'Total De Aves En Producción 19 a 85 SEMANAS', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'Población De Reproductoras En Recría Y Producción', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
     //{ business: 'MORTALIDAD EN PROCESO', init: null },
-    { business: 'PRODUCCION HUEVOS TOTALES', init: null, month: null, icon:'egg', color:'warning'},
-    { business: 'PRODUCCION HUEVOS INCUBABLES', init: null, month: null, icon:'egg', color:'incub'},
+    { business: 'Producción Huevos Totales', init: null, month: null, icon:'egg', color:'warning'},
+    { business: 'Producción Huevos Incubables', init: null, month: null, icon:'egg', color:'incub'},
     //{ business: 'HUEVOS INCUBABLES ACUMULADOS DEL MES', init: null },
     //{ business: `INCUBACION DE HUEVOS ASIGNADOS PARA ${this.months[this.current_month].header}`, init: null },
-    { business: `TOTAL DE POLLITAS PONEDORAS NACIDAS`, init: null, month: null, icon:'logo-twitter', color:'tertiary'},
+    { business: `Total De Pollitas Ponedoras Nacidas`, init: null, month: null, icon:'logo-twitter', color:'tertiary'},
     //{ business: 'TOTAL DE PRODUCTORES PROGRAMADOS ', init: null },
   ];
 
   rows2 = [
-    { business: 'NUMERO DE PRODUCTORES DEDICADOS A LA PRODUCCION', init: 290, month: 290, icon:'business', color:'primary'},
-    { business: 'TOTAL DE GALLINAS EN RECRIA 0-18 SEMANAS', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
-    { business: 'TOTAL DE GALLINAS EN PRODUCCION 19-85 SEM.', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
-    { business: 'POBLACION DE GALLINAS EN RECRIA Y PRODUCCION', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
-    { business: 'PRODUCCION NACIONAL DE HUEVOS TOTALES', init: null, month: null, icon:'egg', color:'incub'},
+    { business: 'Número De Productores Dedicados a La Producción', init: 290, month: 290, icon:'business', color:'primary'},
+    { business: 'Total De Gallinas En Recría 0 a 18 Semanas', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'Total De Gallinas En Producción 19 a 85 Semanas.', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'Población De Gallinas En Recría y Producción', init: null, month: null, icon:'logo-twitter', color:'tertiary'},
+    { business: 'Producción Nacional De Huevos Totales', init: null, month: null, icon:'egg', color:'incub'},
   ];
 
   statusRecria={
@@ -81,7 +83,8 @@ export class HomePage implements OnInit, OnDestroy{
   sub$3: Subscription;
   sub$4: Subscription;
   constructor(
-    private store: Store<AppModel>
+    private store: Store<AppModel>,
+    private loadCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -179,6 +182,10 @@ export class HomePage implements OnInit, OnDestroy{
     this.sub$1.unsubscribe();
     this.sub$2.unsubscribe();
     this.sub$3.unsubscribe();
+  }
+
+  transform(value: string | number): string {
+    return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   getMonthlyData(){
@@ -313,5 +320,47 @@ export class HomePage implements OnInit, OnDestroy{
 
   segmentSelect(value){
     this.selected=value;
+  }
+
+  async speach() {
+    const speech = new Speech();
+    const load = await this.loadCtrl.create({message:'Procesando....'});
+    await load.present();
+    console.log('has browser support',speech.hasBrowserSupport())
+    if(!speech.hasBrowserSupport()){
+      load.dismiss();
+      return;
+    }
+    
+    await speech.init();
+    await speech.setLanguage('es-US');
+    await speech.setVolume(1);
+    load.dismiss();
+    let texts = [{
+      business:  `Resumen del ${this.selected === 'day'? 'Día' : 'Mes'}, Mercado Productivo Reproductoras Livianas`, init: '', month: ''
+    },  ...this.rows1,  {
+      business:  `Resumen del ${this.selected === 'day'? 'Día' : 'Mes'}, Mercado Productivo De La Industria De Huevos De Mesa`, init: '', month: ''
+      
+    }, ...this.rows2 ]
+    texts.forEach(async el=>{
+      await speech.speak({
+        text: `${el.business}   ${this.selected === 'day'? el.init : el.month}`,
+        listeners: {
+          onstart: () => {
+            this.speaking = true;
+          },
+          onend: () => {
+            this.speaking = false;
+          },
+          onresume: () => {
+              console.log("Resume utterance")
+          },
+          onboundary: (event) => {
+              console.log(event.name + ' boundary reached after ' + event.elapsedTime + ' milliseconds.')
+          }
+        }
+      })
+    });
+    
   }
 }
