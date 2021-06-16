@@ -13,9 +13,12 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./production.page.scss'],
 })
 export class ProductionPage implements OnInit, OnDestroy {
+  pieGraph=false;
+  lightBreederMonth=false;
+  BarMonthlylightBreeder=false;
   date  = new Date();
   current_year =  this.date.getFullYear();
-  years = [this.current_year-1,this.current_year,this.current_year+1];
+  years = [this.current_year,this.current_year+1];
   title='';
   res = []
   res2 = []
@@ -106,8 +109,24 @@ export class ProductionPage implements OnInit, OnDestroy {
     this.activateCard=false;
     this.activatePie=false;
     this.chicksLightBreeder=false;
+    this.lightBreederMonth=false;
+    this.pieGraph = false;
 
     this.industry =  this.activatedRoute.snapshot.paramMap.get('industry');
+
+    if(this.industry === Industry.monthLightBreeder){
+      this.lightBreederMonth=true;
+    }
+
+    if(this.industry === Industry.BarMonthlylightBreeder){
+      this.BarMonthlylightBreeder=true;
+    }
+
+    if(this.industry === Industry.businessGraph){
+      this.title='Participación Mercado - Empresa';
+      this.pieGraph = true;
+    }
+
     if( this.industry === Industry.lightBreeder){
       this.title='Producción Diaria Huevos Incubables/pollitas - Reproductora Liviana';
       this.lightBreederGraph();
@@ -221,7 +240,7 @@ export class ProductionPage implements OnInit, OnDestroy {
       let resp=[];
       
       response.forEach(lote=>{
-        resp.push(...lote.projections.filter(p=> p.year >= this.current_year-1 ));
+        resp.push(...lote.projections.filter(p=> p.year === this.current_year ));
       });
 
       setTimeout(()=>{
@@ -306,6 +325,9 @@ export class ProductionPage implements OnInit, OnDestroy {
 
 enum Industry{
   lightBreeder='light-breeder',
+  BarMonthlylightBreeder='bar-month-light-breeder',
+  monthLightBreeder='bar-month-lot-breeder',
+  businessGraph='pie-light-breeder',
   chicksLightBreeder='chicks-light-breeder',
   eggsIndustry='day-line-eggs-industry',
   chicksEggsIndustry='chicks-line-eggs-industry'

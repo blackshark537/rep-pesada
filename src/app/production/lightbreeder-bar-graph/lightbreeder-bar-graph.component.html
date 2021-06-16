@@ -1,0 +1,26 @@
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-item>
+      <ion-label>Año</ion-label>
+      <ion-datetime (ionChange)="setYear($event.target.value)" [value]="actual_year" displayFormat="YYYY" min="2015" max="2100"></ion-datetime>
+    </ion-item>
+  </ion-buttons>
+</ion-toolbar>
+
+  <ngx-charts-bar-vertical
+  *ngIf="show"
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="multi[0]?.series"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [legendPosition]="'Below'"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  >
+</ngx-charts-bar-vertical>
+

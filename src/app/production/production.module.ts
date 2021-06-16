@@ -7,6 +7,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ProductionPageRoutingModule } from './production-routing.module';
 
 import { ProductionPage } from './production.page';
+import { BusinessPieGraphComponent } from './business-pie-graph/business-pie-graph.component';
+import { LightbreederBarGraphComponent } from './lightbreeder-bar-graph/lightbreeder-bar-graph.component';
+import { BarMonthlyLightbreederComponent } from './bar-monthly-lightbreeder/bar-monthly-lightbreeder.component';
 
 @NgModule({
   imports: [
@@ -16,6 +19,11 @@ import { ProductionPage } from './production.page';
     NgxChartsModule,
     ProductionPageRoutingModule
   ],
-  declarations: [ProductionPage]
+  declarations: [
+    ProductionPage, 
+    BusinessPieGraphComponent,
+    LightbreederBarGraphComponent,
+    BarMonthlyLightbreederComponent
+  ]
 })
 export class ProductionPageModule {}

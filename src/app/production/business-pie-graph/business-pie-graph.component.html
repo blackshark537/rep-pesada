@@ -1,0 +1,23 @@
+<ion-toolbar>
+  <ion-buttons slot="end">
+    <ion-button (click)="explodeSlices = !explodeSlices">Explode Slices: {{explodeSlices? 'On' : 'Off'}}</ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<ngx-charts-pie-chart
+  *ngIf="showPie"
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="single"
+  [gradient]="gradient"
+  [legend]="showLegend"
+  [legendTitle]="legendTitle"
+  [legendPosition]="legendPosition"
+  [labels]="showLabels"
+  [trimLabels]="false"
+  [explodeSlices]="explodeSlices"
+  [doughnut]="isDoughnut"
+  >
+</ngx-charts-pie-chart>
+<!-- (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)" -->
