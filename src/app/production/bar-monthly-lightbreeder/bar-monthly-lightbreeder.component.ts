@@ -103,7 +103,7 @@ export class BarMonthlyLightbreederComponent implements OnInit {
         this.headers.forEach(h=>{
           this.multi1.push({ 
             name: h.header,
-            value: monthly.filter(m=> m.month === h.header).map(m=> m.numero_aves).reduce((p,c)=> p+=c)/31
+            value: Math.floor(monthly.filter(m=> m.month === h.header).map(m=> m.numero_aves).reduce((p,c)=> p+=c)/31)
           })
 
           this.multi2.push({ 
@@ -118,7 +118,7 @@ export class BarMonthlyLightbreederComponent implements OnInit {
 
           this.multi4.push({ 
             name: h.header,
-            value: monthly.filter(m=> m.month === h.header).map(m=> m.numero_Na).reduce((p,c)=> p+=c)/31
+            value: Math.floor(monthly.filter(m=> m.month === h.header).map(m=> m.numero_Na).reduce((p,c)=> p+=c)/31)
           })
         });
 

@@ -10,6 +10,7 @@ import { ProductionPage } from './production.page';
 import { BusinessPieGraphComponent } from './business-pie-graph/business-pie-graph.component';
 import { LightbreederBarGraphComponent } from './lightbreeder-bar-graph/lightbreeder-bar-graph.component';
 import { BarMonthlyLightbreederComponent } from './bar-monthly-lightbreeder/bar-monthly-lightbreeder.component';
+import { MonthBarEggsIndustryComponent } from './month-bar-eggs-industry/month-bar-eggs-industry.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { BarMonthlyLightbreederComponent } from './bar-monthly-lightbreeder/bar-
     ProductionPage, 
     BusinessPieGraphComponent,
     LightbreederBarGraphComponent,
-    BarMonthlyLightbreederComponent
+    BarMonthlyLightbreederComponent,
+    MonthBarEggsIndustryComponent
   ]
 })
 export class ProductionPageModule {}

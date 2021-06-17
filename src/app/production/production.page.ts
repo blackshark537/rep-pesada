@@ -16,6 +16,8 @@ export class ProductionPage implements OnInit, OnDestroy {
   pieGraph=false;
   lightBreederMonth=false;
   BarMonthlylightBreeder=false;
+  monthBarEggsIndustry=false;
+
   date  = new Date();
   current_year =  this.date.getFullYear();
   years = [this.current_year,this.current_year+1];
@@ -113,6 +115,10 @@ export class ProductionPage implements OnInit, OnDestroy {
     this.pieGraph = false;
 
     this.industry =  this.activatedRoute.snapshot.paramMap.get('industry');
+
+    if(this.industry  === Industry.monthBarEggsIndustry){
+      this.monthBarEggsIndustry=true;
+    }
 
     if(this.industry === Industry.monthLightBreeder){
       this.lightBreederMonth=true;
@@ -236,26 +242,23 @@ export class ProductionPage implements OnInit, OnDestroy {
   async eggsIndustryGraph(){
     const load = await this.loadCtrl.create({message: 'Por Favor Espere....'});
     await load.present();
-    this.store.select('eggLots').subscribe(response => {
-      let resp=[];
-      
-      response.forEach(lote=>{
-        resp.push(...lote.projections.filter(p=> p.year === this.current_year ));
-      });
-
-      setTimeout(()=>{
-        this.processData(resp);
-        load.dismiss();
-      }, 1000);
+    this.store.select('eggLots').pipe(
+      map(lots=>{
+        let res = lots.map(lot=> lot.projections);
+        return [].concat.apply([], res) as EggLotProjectionInterface[];
+      })
+    ).subscribe(response => {
+      this.processData(response);
+      load.dismiss();
     });
   }
 
   processData(projections: EggLotProjectionInterface[]) {
 
-    this.years.forEach(year => {
-      this.month.forEach((m, h) => {
+    this.years.map(year => {
+      this.month.map((m, h) => {
         let estados = ['recria', 'produccion']
-        estados.forEach(estado => {
+        estados.map(estado => {
           for (let i = 1; i < 32; i++) {
             let pro = projections.filter(p => p.estado === estado && p.month === m && p.day === i && p.year === year);
             let numero_aves = 0;
@@ -312,12 +315,12 @@ export class ProductionPage implements OnInit, OnDestroy {
             if (i >= daysInMonth?.getDate()) continue;
           }
         });
-        this.activateArea = true;
       })
-    })
+   })
+   this.activateArea = true;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     
   }
 }
@@ -330,5 +333,6 @@ enum Industry{
   businessGraph='pie-light-breeder',
   chicksLightBreeder='chicks-light-breeder',
   eggsIndustry='day-line-eggs-industry',
-  chicksEggsIndustry='chicks-line-eggs-industry'
+  chicksEggsIndustry='chicks-line-eggs-industry',
+  monthBarEggsIndustry='month-bar-eggs-industry'
 }
