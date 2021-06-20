@@ -6,7 +6,9 @@
     </ion-item>
   </ion-buttons>
 </ion-toolbar>
-
+  <div style="text-align: center;">
+    <h3>{{xAxisLabel}}</h3>
+  </div>
   <ngx-charts-bar-vertical
   *ngIf="show"
   [view]="view"
@@ -19,7 +21,7 @@
   [legendPosition]="'Below'"
   [showXAxisLabel]="showXAxisLabel"
   [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
+  [xAxisLabel]=""
   [yAxisLabel]="yAxisLabel"
   >
 </ngx-charts-bar-vertical>

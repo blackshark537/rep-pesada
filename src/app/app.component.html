@@ -63,7 +63,7 @@
               </ion-item>
               <ion-item [routerLink]="['/daily-projection']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>
-                  Resporte de Producción
+                  Reporte de Producción
                 </ion-label>
               </ion-item>
               <!-- <ion-item [routerLink]="['/birth-entry']" lines="none"  detail="false" routerLinkActive="selected">
@@ -192,21 +192,21 @@
           </ion-card>
 
           <ion-card>
-            <ion-item lines="none" button>
+            <ion-item lines="none" button >
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Historico Precios de Huevos</ion-label>
             </ion-item>
           </ion-card>
 
           <ion-card>
-            <ion-item lines="none" button>
+            <ion-item button [routerLink]="['/docview',  'Commodities']" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Precios de Commodities</ion-label>
             </ion-item>
           </ion-card>
 
           <ion-card>
-            <ion-item lines="none" button>
+            <ion-item button [routerLink]="['/docview',  'eggsPrices']" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Costos de Producción</ion-label>
             </ion-item>

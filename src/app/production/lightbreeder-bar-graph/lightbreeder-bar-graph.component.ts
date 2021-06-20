@@ -77,9 +77,9 @@ export class LightbreederBarGraphComponent implements OnInit {
   gradient = false;
   showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel = 'Meses';
+  xAxisLabel = 'Entrada Mensual De Reproductoras Livianas';
   showYAxisLabel = true;
-  yAxisLabel = 'Importacion';
+  yAxisLabel = 'Entradas De Rep. Livianas';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -127,21 +127,37 @@ export class LightbreederBarGraphComponent implements OnInit {
         console.log(rows)
         rows.forEach(r=>{
           this.multi[0].series[0].value += r.jan
+          this.multi[0].series[0].name = `Enero - ${this.transform(this.multi[0].series[0].value)}`
           this.multi[0].series[1].value += r.feb
+          this.multi[0].series[1].name = `Febrero - ${this.transform(this.multi[0].series[1].value)}`
           this.multi[0].series[2].value += r.mar
+          this.multi[0].series[2].name = `Marzo - ${this.transform(this.multi[0].series[2].value)}`
           this.multi[0].series[3].value += r.apr
+          this.multi[0].series[3].name = `Abril - ${this.transform(this.multi[0].series[3].value)}`
           this.multi[0].series[4].value += r.may
+          this.multi[0].series[4].name = `Mayo - ${this.transform(this.multi[0].series[4].value)}`
           this.multi[0].series[5].value += r.jun
+          this.multi[0].series[5].name = `Junio - ${this.transform(this.multi[0].series[5].value)}`
           this.multi[0].series[6].value += r.jul
+          this.multi[0].series[6].name = `Julio - ${this.transform(this.multi[0].series[6].value)}`
           this.multi[0].series[7].value += r.ago
+          this.multi[0].series[7].name = `Agosto - ${this.transform(this.multi[0].series[7].value)}`
           this.multi[0].series[8].value += r.sep
+          this.multi[0].series[8].name = `Septiembre - ${this.transform(this.multi[0].series[8].value)}`
           this.multi[0].series[9].value += r.oct
+          this.multi[0].series[9].name = `Octubre - ${this.transform(this.multi[0].series[9].value)}`
           this.multi[0].series[10].value += r.nov
+          this.multi[0].series[10].name = `Noviembre - ${this.transform(this.multi[0].series[10].value)}`
           this.multi[0].series[11].value += r.dec
+          this.multi[0].series[11].name = `Diciembre - ${this.transform(this.multi[0].series[11].value)}`
         })
         //this.xAxisLabel = r.empresa
         this.show=true;
     });
+  }
+
+  transform(value: string | number): string {
+    return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   setYear(value){

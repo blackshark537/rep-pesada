@@ -10,7 +10,6 @@ import { AuthService, BrowserService, ToastSatusClass } from '../services';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private authService: AuthService,
     private browserService: BrowserService
   ){}
   canActivate(

@@ -41,14 +41,14 @@ export class BarMonthlyLightbreederComponent implements OnInit {
   gradient = false;
   showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel1 = 'Meses Recria y Produccion';
-  xAxisLabel2 = 'Meses Huevos Totales';
-  xAxisLabel3 = 'Meses Huevos Incubables';
-  xAxisLabel4 = 'Meses Pollitas Nacidas';
+  xAxisLabel1 = 'Poblacion Promedio Mensual De Aves En Recria y Producción';
+  xAxisLabel2 = 'Producción Huevos Totales Por Mes';
+  xAxisLabel3 = 'Producción Huevos Incubables Por Mes';
+  xAxisLabel4 = 'Total Pollitas Nacidas Por Mes';
   showYAxisLabel = true;
-  yAxisLabel1 = 'Aves En Recria y Produccion';
-  yAxisLabel2 = 'Huevos Totales';
-  yAxisLabel3 = 'Huevos Incubables';
+  yAxisLabel1 = 'Aves Recria y Produccion';
+  yAxisLabel2 = 'Producción Huevos Totales';
+  yAxisLabel3 = 'Producción Huevos Incubables';
   yAxisLabel4 = 'Pollitas Nacidas';
 
   colorScheme = {
@@ -118,7 +118,7 @@ export class BarMonthlyLightbreederComponent implements OnInit {
 
           this.multi4.push({ 
             name: h.header,
-            value: Math.floor(monthly.filter(m=> m.month === h.header).map(m=> m.numero_Na).reduce((p,c)=> p+=c)/31)
+            value: Math.floor(monthly.filter(m=> m.month === h.header).map(m=> m.numero_Na).reduce((p,c)=> p+=c))
           })
         });
 

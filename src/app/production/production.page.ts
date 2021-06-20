@@ -31,11 +31,11 @@ export class ProductionPage implements OnInit, OnDestroy {
   viewCard: number[] = [900, 400];
   viewPie: number[] = [1000, 400];
   colorScheme = {
-    domain: ['#023859', '#038C8C', '#F2811D', '#F26716', '#BF1515', '#D98E04']//['#99D9F2', '#F2E205', '#F2B705', '#D93D04', '#D98E04', '#aae3f5']
+    domain: ['#023859', '#038C8C', '#D98E04','#F2811D', '#F26716', '#BF1515']//['#99D9F2', '#F2E205', '#F2B705', '#D93D04', '#D98E04', '#aae3f5']
   };
   cardColor: string = '#232837';
 
-  Colors: ['#023859', '#038C8C', '#F2811D', '#F26716', '#BF1515', '#D98E04']
+  Colors: ['#023859', '#038C8C', '#D98E04', '#F2811D', '#F26716', '#BF1515']
 
   activateCard: boolean = false;
   activateArea: boolean = false;
@@ -117,37 +117,44 @@ export class ProductionPage implements OnInit, OnDestroy {
     this.industry =  this.activatedRoute.snapshot.paramMap.get('industry');
 
     if(this.industry  === Industry.monthBarEggsIndustry){
+      this.title='Producción Nacional Mensual De G.Ponedoras y Huevos De Mesa';
       this.monthBarEggsIndustry=true;
     }
 
     if(this.industry === Industry.monthLightBreeder){
+      this.title='Entrada De Rep. Livianas Mensual';
       this.lightBreederMonth=true;
     }
 
     if(this.industry === Industry.BarMonthlylightBreeder){
+      this.title='Producción De Huevos Incubable & Pollitas Mensual';
       this.BarMonthlylightBreeder=true;
     }
 
     if(this.industry === Industry.businessGraph){
-      this.title='Participación Mercado - Empresa';
+      this.title='Participación Mercado - De Las Empresas con Rep. Livianas';
       this.pieGraph = true;
     }
 
     if( this.industry === Industry.lightBreeder){
       this.title='Producción Diaria Huevos Incubables/pollitas - Reproductora Liviana';
+      this.yAxisLabel='Huevos Incubables/pollitas'
       this.lightBreederGraph();
     }
     if( this.industry === Industry.chicksLightBreeder){  
       this.title='Inventario De Aves Diario - Reproductora Liviana';
+      this.yAxisLabel='Inventario De Aves'
       this.chicksLightBreeder=true;
       this.lightBreederGraph();
     }
     if( this.industry === Industry.eggsIndustry) {
       this.title='Producción Nacional Diaria De Huevos De Mesa';
+      this.yAxisLabel='Producción Nacional De Huevos';
       this.eggsIndustryGraph();
     }
     if( this.industry === Industry.chicksEggsIndustry){
-      this.title='Inventario De Aves Diario - De Huevos De Mesa';
+      this.title='Inventario De Aves Diario Recria y Prod. - G.Ponedoras';
+      this.yAxisLabel='Aves En Recria y Producción';
       this.eggsIndustryGraph();
     }
     

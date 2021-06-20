@@ -42,15 +42,13 @@ export class MonthBarEggsIndustryComponent implements OnInit {
   gradient = false;
   showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel1 = 'Meses Recria y Produccion';
-  xAxisLabel2 = 'Meses Huevos Totales';
-  xAxisLabel3 = 'Meses Huevos Incubables';
-  xAxisLabel4 = 'Meses Pollitas Nacidas';
+  xAxisLabel1 = 'Población Promedio De G.Ponedoras En Recria y Producción Mensual';
+  xAxisLabel2 = 'Producción Mensual De Huevos De Mesa';
+  
   showYAxisLabel = true;
-  yAxisLabel1 = 'Aves En Recria y Produccion';
-  yAxisLabel2 = 'Huevos Totales';
-  yAxisLabel3 = 'Huevos Incubables';
-  yAxisLabel4 = 'Pollitas Nacidas';
+  yAxisLabel1 = 'G.Ponedoras Recria y Producción';
+  yAxisLabel2 = 'Producción Huevos De Mesa';
+  
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -113,7 +111,7 @@ export class MonthBarEggsIndustryComponent implements OnInit {
 
       this.multi2.push({
         name: h.header,
-        value: Math.floor(monthly.filter(m => m.month === h.header).map(m => m.numero_Ht).reduce((p, c) => p += c)/31)
+        value: Math.floor(monthly.filter(m => m.month === h.header).map(m => m.numero_Ht).reduce((p, c) => p += c))
       })
 
     });
