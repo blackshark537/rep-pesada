@@ -99,8 +99,14 @@ export const routes: Routes = [
     loadChildren: () => import('./daily-prod-projection/daily-prod-projection.module').then( m => m.DailyProdProjectionPageModule)
   },
   {
+    canActivate:[AuthGuard],
     path: 'docview/:id',
     loadChildren: () => import('./docview/docview.module').then( m => m.DocviewPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'data-analyst',
+    loadChildren: () => import('./data-analyst/data-analyst.module').then( m => m.DataAnalystPageModule)
   },
   {
     path: '**',

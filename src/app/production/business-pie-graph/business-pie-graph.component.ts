@@ -23,7 +23,7 @@ export class BusinessPieGraphComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   legendTitle="Empresas - % part"
-  legendPosition: string = 'right';
+  legendPosition: string = 'below';
   explodeSlices=false;
 
   colorScheme = {

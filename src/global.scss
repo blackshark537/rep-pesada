@@ -77,8 +77,14 @@ ion-card{
     margin: 2px;
 }
 
+.cell{
+    text{
+        font-size: 16px;
+    }
+}
+
 .ng-star-inserted{
     text{
-        font-size: 16px !important;
+        font-size: 16px;
     }
 }

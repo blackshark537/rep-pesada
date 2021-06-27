@@ -192,6 +192,13 @@
           </ion-card>
 
           <ion-card>
+            <ion-item [routerLink]="['/data-analyst']" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon slot="start" color="danger" name="analytics-outline"></ion-icon>
+              <ion-label>Data Analyst</ion-label>
+            </ion-item>
+          </ion-card>
+
+          <ion-card>
             <ion-item lines="none" button >
               <ion-icon slot="start" name="cube-outline"></ion-icon>
               <ion-label>Historico Precios de Huevos</ion-label>
