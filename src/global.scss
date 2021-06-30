@@ -32,6 +32,9 @@
 @import '~@swimlane/ngx-datatable/themes/dark.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
+.total-label{
+    margin-bottom: 13% !important;
+}
 
 .datatable-header-cell,.datatable-body-cell, .datatable-footer-inner{
     span, .page-count{

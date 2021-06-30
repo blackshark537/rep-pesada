@@ -13,19 +13,19 @@ export class DataAnalystPage implements OnInit {
   current_year = new Date().getFullYear();
   ///////////////  CARD CHART /////////////////////////////////////////////////////////////////////////////
   showCards = false;
-
+  
   single: any[] = [{
     name: 'Número De Empresas',
-    value: 22
+    value: 0
   }, {
-    name: 'Productoras Asignadas',
-    value: 90000
+    name: 'Total Rep. Livianas Asignadas',
+    value: 0
   }, {
-    name: 'Total En Recría',
-    value: 3924
+    name: 'Total De Aves En Recría',
+    value: 0
   }, {
-    name: 'Total En Producción',
-    value: 139756
+    name: 'Total De Aves En Producción',
+    value: 0
   }];
 
   view: any[] = [window.innerWidth - 50, 200];
@@ -37,14 +37,14 @@ export class DataAnalystPage implements OnInit {
 
   ///////////////  PIE  CHART /////////////////////////////////////////////////////////////////////////////
   singlePie: any[] = [{
-    name: 'Total En Recría',
-    value: 3924
+    name: 'Aves En Recría',
+    value: 0
   }, {
-    name: 'Total En Producción',
-    value: 139756
+    name: 'Aves En Producción',
+    value: 0
   }];
 
-  viewPie: any[] = [window.innerWidth*0.45, 200];
+  viewPie: any[] = [window.innerWidth*0.5, window.innerHeight*0.5];
   gradient: boolean = false;
   showLegend: boolean = true;
   showLabels: boolean = true;
@@ -88,7 +88,28 @@ export class DataAnalystPage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => this.showCards = true, 500);
-    this.mothlyLightBreeder();
+    this.calBusiness();
+    
+  }
+
+  calBusiness(){
+    this.store.select('businesses').subscribe(businesses=> {
+      if(!businesses.length) return;
+      this.single[0].value = businesses.length
+      this.single[1].value = businesses.map(b=> parseInt(b.cant_gallinas_asignadas) ).reduce((p,c)=>  p+=c );
+      this.breedingAndProdLots();
+      this.mothlyLightBreeder();
+    });
+  }
+
+  breedingAndProdLots(){
+    this.store.select('lots').subscribe(lots=>{
+      if(!lots.length) return;
+      this.single[2].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c);
+      this.single[3].value = lots.filter(l => l.status === 'production' && l.days < 595).map(l=> l.total).reduce((p,c)=> p+=c);
+      this.singlePie[0].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c);
+      this.singlePie[1].value = lots.filter(l => l.status === 'production' && l.days < 595).map(l=> l.total).reduce((p,c)=> p+=c);
+    })
   }
 
   mothlyLightBreeder() {
@@ -98,6 +119,7 @@ export class DataAnalystPage implements OnInit {
         return result;
       })
     ).subscribe(resp => {
+      if(!resp.length) return;
       this.showBAR = false;
 
       let monthly = []
