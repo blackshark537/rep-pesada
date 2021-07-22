@@ -16,6 +16,9 @@ export interface  EggLotInterface{
     days_passed?: number;
     weeks_passed?: number;
     cant_gallinas_existentes?: number;
+    numero_huevos_incubables?: string,
+    numero_nacimientos?: string,
+    nacimientos_terminados?: number;
 }
 
 export interface  EggLotProjectionInterface{
@@ -23,11 +26,14 @@ export interface  EggLotProjectionInterface{
     dia: Date;
     estado: string;
     mortalidad: number;
-    estandar_produccion: number;
+    std_produccion: number;
     estandar_real: number;
     year: number;
     month: number;
     day: number;
     prod_huevos_totales: number;
     numero_de_aves: number;
+    huevos_incubables?: string;
+    nacimientos_totales?: string;
+    nacimientos_terminados?: number;
 }

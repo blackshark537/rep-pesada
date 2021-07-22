@@ -11,11 +11,33 @@ import { LotService } from '../services';
 })
 export class LotsEffects {
 
-    _PROD=[0,8,13.4,38.4,58.4,82.4,90.4,93.4,95.4,96.4,97.4,97.4,97.4,97.4,97.4,98.4,98.4,98.4,97.4,97.4,97.4,97.4,
-    97.4,97.4,97.4,97.4,97.4,97.4,97.4,96.4,96.4,96.4,96.4,96.4,96.4,95.4,95.4,95.4,94.4,93.4,92.4,92.4,91.4,
-    91.4,91.4,91.4,91.4,91.4,90.4,89.4,88.4,88.4,87.4,87.4,87.4,86.4,86.4,85.4,85.4,84.4,84.4,83.4,83.4,82.4,
-    82.4,82.4,81.4,81.4,81.4,81.4,80.4,80.4,80.4,79.4,79.4,78.4,78.4,77.4,77.4,76.4,76.4,75.4,74.4,74.4,73.4,73.4,73.4,
-    ,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4,73.4];
+    variable_mortalidad_recria = parseInt(localStorage.getItem('variable_mortalidad_recria_pesada')) || 6;
+    variable_mortalidad_produccion = parseInt(localStorage.getItem('variable_mortalidad_produccion_pesada')) || 14;
+    variable_produccion_huevos_totales = parseInt(localStorage.getItem('variable_produccion_huevos_totales_pesada')) || 0;
+    variable_aprovechamiento_huevos = parseInt(localStorage.getItem('variable_aprovechamiento_huevos_pesada')) || 12;
+    variable_nacimientos = parseInt(localStorage.getItem('variable_nacimientos_pesada')) || 10;
+    semanas_en_recria = 24;
+    semanas_en_produccion = 42;
+    semanas_de_retardo = 0;
+
+    _PROD = [
+        3,20,50,82,85,86,85.8,84.8,83.8,82.8,81.8,80.8,79.8,78.8,77.8,76.7,75.6,74.5,73.3,72.1,70.9,
+        69.7,68.5,67.3,66.1,64.9,63.6,62.3,61,59.6,58.2,56.8,55.4,54,52.5,51,49.5,47.9,46.3,44.7,43.1,
+        42,41,40,39.5,38.5,37.5,36.5,35.5,34.5,33.6
+    ];
+
+    _APROV = [
+        0,50,75,80,92,95,96,96.5,97.5,97.5,97.5,97.8,97.8,97.8,97.8,97.8,97.8,97,97,97,97,97,97,97,97,97,97,
+        97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,97,
+        97,97,97,97,97,97,97,97,97,97,97,97,96,96,96,96,96
+    ];
+
+    _Nac = [
+        0,72,77.2,80,82.1,83.8,85.2,86.4,87.5,88.5,89.4,90,90,89.9,89.7,89.5,89.3,89,88.7,88.4,88.1,87.7,87.3,
+        86.9,86.5,86.1,85.6,85.1,84.6,84.1,83.6,83.1,82.6,82,81.5,81,80.6,80.1,79.7,79.2,78.7,78.3,77.8,76.8,
+        75.8,74.8,73.8,72.8,71.8,70.8,69.8,68.8,67.8,66.8,65.8,64.8,63.8,62.8,61.8,60.8,59,58,57,56,55,54,53,52,
+        51,50,49,48,47,46,45,44
+    ];
 
     public months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     public date = new Date();
@@ -38,6 +60,12 @@ export class LotsEffects {
     ) { }
 
     getEggsLots() {
+        this.variable_mortalidad_recria = parseInt(localStorage.getItem('variable_mortalidad_recria_pesada')) || 6;
+        this.variable_mortalidad_produccion = parseInt(localStorage.getItem('variable_mortalidad_produccion_pesada')) || 14;
+        this.variable_produccion_huevos_totales = parseInt(localStorage.getItem('variable_produccion_huevos_totales_pesada')) || 5;
+        this.variable_aprovechamiento_huevos = parseInt(localStorage.getItem('variable_aprovechamiento_huevos_pesada')) || 12;
+        this.variable_nacimientos = parseInt(localStorage.getItem('variable_nacimientos_pesada')) || 10;
+        
         this.store.select('projections').pipe(
             map(pro => {
                 return pro.filter(p => p.year >= this.years[0])
@@ -67,7 +95,7 @@ export class LotsEffects {
                         let yr = d.getFullYear();
                         daysInMonth = new Date(yr, mt, 0);
 
-                        if (k < 595) {
+                        if (k < 476) {
                             numero_nac += parseInt(el.nacimientos_totales);
                             numero_nac_anual += parseInt(el.nacimientos_totales);
                         }
@@ -104,9 +132,9 @@ export class LotsEffects {
                         dia: el?.day,
                         day_name: 'viernes',
                         cant_gallinas_proyectadas: acc_v,
-                        variable_mortalidad_recria: 6,
-                        variable_mortalidad_produccion: 14,
-                        variable_produccion_huevos_totales: 3
+                        variable_mortalidad_recria: this.variable_mortalidad_recria,
+                        variable_mortalidad_produccion: this.variable_mortalidad_produccion,
+                        variable_produccion_huevos_totales: this.variable_produccion_huevos_totales,
                     }
 
                     let recria = this.getRecria(lot);
@@ -130,7 +158,10 @@ export class LotsEffects {
                         projections,
                         production: projections[lote.days]?.prod_huevos_totales,
                         cant_gallinas_existentes: projections[lote.days]?.numero_de_aves,
-                        estado: lote.days > 126 ? 'produccion' : 'recria',//projections[lote.days]?.estado
+                        numero_huevos_incubables: projections[lote.days]?.huevos_incubables,
+                        numero_nacimientos: projections[lote.days]?.nacimientos_totales,
+                        nacimientos_terminados: projections[lote.days]?.nacimientos_terminados,
+                        estado: lote.days > 168 ? 'produccion' : 'recria',//projections[lote.days]?.estado
                     } as EggLotInterface;
                     data_v.push(final);
                 }
@@ -149,8 +180,8 @@ export class LotsEffects {
                         day_name: 'lunes',
                         cant_gallinas_proyectadas: acc_l,
                         variable_mortalidad_recria: 6,
-                        variable_mortalidad_produccion: 14,
-                        variable_produccion_huevos_totales:3,
+                        variable_mortalidad_produccion: 13,
+                        variable_produccion_huevos_totales: 12,
                     }
                     let recria = this.getRecria(lot);
                     let production = this.getProd(recria[recria.length-1]);
@@ -173,7 +204,10 @@ export class LotsEffects {
                         projections,
                         production: projections[lote.days]?.prod_huevos_totales,
                         cant_gallinas_existentes: projections[lote.days]?.numero_de_aves,
-                        estado: lote.days > 126 ? 'produccion' : 'recria'
+                        numero_huevos_incubables: projections[lote.days]?.huevos_incubables,
+                        numero_nacimientos: projections[lote.days]?.nacimientos_totales,
+                        nacimientos_terminados: projections[lote.days]?.nacimientos_terminados,
+                        estado: lote.days > 168 ? 'produccion' : 'recria'
                     } as EggLotInterface;
                     data_l.push(final);
                 }
@@ -190,7 +224,7 @@ export class LotsEffects {
 private getRecria(lote: EggLotInterface) {
     let recria = [];
     let index = 0;
-    const total_weeks = 18;
+    const total_weeks = 24;
     for (let i = 0; i < total_weeks * 7; i++) {
   
         if (i % 7 === 0) index += 1;
@@ -229,8 +263,8 @@ private getRecria(lote: EggLotInterface) {
    private getProd(lote) {
     let prod = [];
     let index = 0;
-    const total_weeks = 67;
-    const conf_weeks = 0;
+    const total_weeks = 42;
+    
     for (let i = 0; i < total_weeks * 7; i++) {
   
         if (i % 7 === 0) index += 1;
@@ -240,10 +274,18 @@ private getRecria(lote: EggLotInterface) {
         const percent = prod[i - 1]?.mort || 100;
         const mortality = percent - (variable_mortalidad_produccion / (total_weeks * 7));
 
-        const production_real = (this._PROD[index]>0? this._PROD[index]- variable_produccion_huevos_totales : this._PROD[index])  / 100;
+        const std_produccion =  this._PROD[index] - (this._PROD[index] * variable_produccion_huevos_totales / 100);
+        const std_aprovechamiento = this._APROV[index] - (this._APROV[index] * this.variable_aprovechamiento_huevos /100);
+        const std_nacimientos = this._Nac[index] - (this._Nac[index] *  this.variable_nacimientos / 100 );
+
+        const total_chicks = Math.round(chicks - ((100 - mortality) * 10));
+        const produccion = total_chicks * (std_produccion*0.01);
+        const aprovechamiento = produccion * (std_aprovechamiento*0.01);
+        const nacimientos = aprovechamiento * (std_nacimientos*0.01);
+
         const date2 = new Date(entry?.getTime() + ((1 * 24 * 60 * 60 * 1000) * (i + 1)));
-  
-        if (i <= (conf_weeks * 7)) {
+
+        if (i < (this.semanas_de_retardo * 7)) {
             prod.push({
                 id: i,
                 weekAge: index,
@@ -254,7 +296,12 @@ private getRecria(lote: EggLotInterface) {
                 standar: this._PROD[index],
                 chicks: Math.round(chicks - ((100 - mortality) * 10)),
                 stdreal: 0,
+                std_aprovechamiento,
+                hincub: 0,
                 prodhtotal: 0, //total eggs
+                birth: 0,
+                birthtotal: 0,
+                birthFinish: 0
             });
         } else {
             prod.push({
@@ -264,15 +311,37 @@ private getRecria(lote: EggLotInterface) {
                 dayIndx: day,
                 mort: Math.round(mortality * 100) / 100,
                 entry: date2,
-                standar: this._PROD[index],
-                chicks: Math.round(chicks - ((100 - mortality) * 10)),
-                stdreal: production_real,
-                prodhtotal: parseInt(((Math.round(chicks - ((100 - mortality) * 10)) * production_real)).toFixed(0)), //total eggs
+                stdreal: this._PROD[index],
+                standar: std_produccion.toFixed(2),
+                std_aprovechamiento: std_aprovechamiento.toFixed(2),
+                birth: std_nacimientos.toFixed(2),
+                chicks: total_chicks,
+                prodhtotal: Math.round(produccion),
+                hincub: Math.round(aprovechamiento),
+                birthtotal: Math.round(nacimientos),
+                birthFinish: this.get_Nac_projection(nacimientos),
             });
         }
   
     }
     return prod;
+  }
+
+  private get_Nac_projection(nac_totales: number){
+    let prod=[];
+    let dias_totales=40;
+    //const variable_mortalidad=10;
+
+    for (let i = 0; i < dias_totales; i++) {
+        const percent = prod[i - 1]?.mort || 100;
+        const mortality = percent - (this.variable_nacimientos / dias_totales);
+        prod.push({
+            mort: Math.round(mortality * 100) / 100,
+            chicks: Math.round(nac_totales - ((100 - mortality) * this.variable_nacimientos)),
+        });
+    }
+    return prod[prod.length-1].chicks;
+    //return Math.floor(nac_totales - (nac_totales * 10 /100))
   }
 
   private genProjection(lot): EggLotProjectionInterface[] {
@@ -284,30 +353,40 @@ private getRecria(lote: EggLotInterface) {
             dia: recria.entry,
             estado: 'recria',
             mortalidad: recria.mort,
-            estandar_produccion: recria.standar,
-            estandar_real: recria.stdreal,
+            std_produccion: recria.standar,
+            estandar_real: recria.standar,
             year: recria.entry.getFullYear(),
             month: recria.entry.getMonth() + 1,
             day: recria.entry.getDate(),
             prod_huevos_totales: recria.prodhtotal,
             numero_de_aves: recria.chicks,
+            aprovechamiento_de_huevos_estandar: '0',
+            huevos_incubables: '0',
+            estandar_de_nacimientos: '0',
+            nacimientos_totales:  '0',
+            nacimientos_terminados: 0
         } as EggLotProjectionInterface;
         dt.push(projection)
     });
     lot.produccion.forEach(production => {
         let projection = {
             id: lot.id,
-            age: production.weekAge+18,
+            age: production.weekAge+24,
             dia: production.entry,
             estado: 'produccion',
             mortalidad: production.mort,
-            estandar_produccion: production.standar,
-            estandar_real: production.stdreal,
+            std_produccion: production.standar,
+            estandar_real: production.standar,
             year: production.entry.getFullYear(),
             month: production.entry.getMonth() + 1,
             day: production.entry.getDate(),
             prod_huevos_totales: production.prodhtotal,
             numero_de_aves: production.chicks,
+            aprovechamiento_de_huevos_estandar: production.std_aprovechamiento,
+            huevos_incubables: production.hincub,
+            estandar_de_nacimientos: production.birth,
+            nacimientos_totales:  production.birthtotal,
+            nacimientos_terminados: production.birthFinish
         } as EggLotProjectionInterface;
         dt.push(projection)
     });

@@ -32,11 +32,11 @@ export class DataDrivenPage implements OnInit {
   cols  = [
     {prop: 'empresa', header:'Empresa y/o Productor'},
     {prop: 'entrydate', header:'Fecha de<br>Entrada'},
-    {prop: 'asignacion', header:'Rep. Livianas<br>Asignadas'},
-    {prop: 'importadas', header:'Rep. Livianas<br>Importadas'},
+    {prop: 'asignacion', header:'Rep. Abuelas<br>Asignadas'},
+    {prop: 'importadas', header:'Rep. Abuelas<br>Importadas'},
     {prop: 'balance', header:'Balance'},
-    //{prop: 'cuota_asignacion', header:'Part. de<br>Asignación % '},
-    {prop: 'cuota_importacion', header:'% Part. de<br>Importación'},
+    {prop: 'cuota_asignacion', header:'% de<br>Asignación'},
+    {prop: 'cuota_importacion', header:'% de<br>Importación'},
   ]
 
   asignacionTotal=0;
@@ -66,7 +66,7 @@ export class DataDrivenPage implements OnInit {
         switchMap(year => {
           return this.apiService.getLotsByYear(year).pipe(
             map(lots => {
-
+              
               let importacionTotal = 0
               let row = [];
               this.status.importacion = 0,
@@ -75,16 +75,17 @@ export class DataDrivenPage implements OnInit {
               lots.forEach(lot => {
                 importacionTotal += parseInt(lot.cantidad.hembras)
                 this.status.importacion += parseInt(lot.cantidad.hembras)
-                this.status.balance = this.asignacionTotal - this.status.importacion
               });
+
+              this.status.balance = this.asignacionTotal - this.status.importacion;
 
               lots.forEach((lot, i) => {
                 let r = row.filter(r => r.empresa === lot.empresa.nombre_comercial)[0]
-                if (!!r) {
+                if (r) {
                   r.importadas += parseInt(lot.cantidad.hembras);
-                  r.balance = this.asignacionTotal - parseInt(r.importadas)
-                  r.cuota_importacion = ((parseInt(r.importadas) / importacionTotal) * 100).toFixed(2),
-                    console.log('af', r)
+                  r.balance = parseInt(lot.empresa.cant_gallinas_asignadas) - (r.importadas);
+                  r.cuota_importacion = ((r.importadas / importacionTotal) * 100).toFixed(2),
+                  console.log('af', r)
                 } else {
                   row.push({
                     id: i + 1,
@@ -99,6 +100,7 @@ export class DataDrivenPage implements OnInit {
                   });
                 }
               });
+              
               return row;
             })
           );

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -29,6 +30,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   colors=['secondary', 'success', 'danger','warning', 'primary','light', 'tertiary','medium','secondary', 'success', 'danger', 'primary','light']
   estado = 'produccion'
   typeFilter = TypeFilter.Aves;
+  customSearch=null;
   cols = [
     { prop: 'day', header: 'Día' },
     { prop: 'jan', header: 'Enero' },
@@ -47,10 +49,20 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   sub$: Subscription;
   constructor(
-    private store: Store<AppModel>
+    private store: Store<AppModel>,
+    private _ar: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.customSearch = this._ar.snapshot.paramMap.get('custom');
+    if(this.customSearch){ 
+      let state = this._ar.snapshot.paramMap.get('state');
+      this.filterBy(state)
+      this.actual_year = parseInt(this._ar.snapshot.paramMap.get('year'));
+      this.typeFilter = this._ar.snapshot.paramMap.get('filter') as TypeFilter;
+      this.search();
+    }
+
     this.configSlides();
     addEventListener('resize', ev=>{
       ev.preventDefault();
@@ -194,21 +206,21 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
       this.promedio=true;
     }
     if(this.typeFilter === TypeFilter.Hvo_Incb){
-      this.title=  `H. Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
-      this.subtitle= `H. Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.title=  `Huevos Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.subtitle= `Huevos Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Hvo_Prod){
-      this.title=  `H. Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
-      this.subtitle= `H. Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.title=  `Huevos Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.subtitle= `Huevos Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Nacimientos){
-      this.title= 'Pollitas Nacidas';
-      this.subtitle= `Pollitas Nacidas`;
+      this.title= 'Pollitas Reproductoras';
+      this.subtitle= `Pollitas Reproductoras`;
       this.promedio=false;
     }
-    this.ngOnInit();
+    if(!this.customSearch) this.ngOnInit();
   }
 
   selected(event) { }

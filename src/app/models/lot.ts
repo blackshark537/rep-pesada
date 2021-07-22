@@ -108,7 +108,7 @@ export interface  LotProjection{
     "age": number;
     "mortalidad": number;
     "mortalidad_estandar": number;
-    "estandar_real": number;
+    "std_produccion": number;
     "prod_huevos_totales": string;
     "aprovechamiento_de_huevos_estandar": number;
     "huevos_incubables": string;
@@ -118,9 +118,9 @@ export interface  LotProjection{
     "year": number;
     "month": number;
     "empresa": string;
-    "published_at": Date;
-    "created_at": Date;
-    "updated_at": Date;
+    "published_at"?: Date;
+    "created_at"?: Date;
+    "updated_at"?: Date;
     "lote": number;
     "day": number;
 }

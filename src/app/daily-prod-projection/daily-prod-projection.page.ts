@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -46,14 +47,24 @@ export class DailyProdProjectionPage implements OnInit {
     { prop: 'dec', header: 'Diciembre' },
   ];
   month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  customSearch=null;
   sub$: Subscription;
   sub1$: Subscription;
   constructor(
     private store: Store<AppModel>,
-    private loadCtrl: LoadingController
+    private loadCtrl: LoadingController,
+    private _ar: ActivatedRoute
   ) { }
 
   async ngOnInit() {
+    this.customSearch = this._ar.snapshot.paramMap.get('custom');
+    if(this.customSearch){ 
+      let state = this._ar.snapshot.paramMap.get('state');
+      this.filterBy(state)
+      this.actual_year = parseInt(this._ar.snapshot.paramMap.get('year'));
+      this.typeFilter = this._ar.snapshot.paramMap.get('filter') as TypeFilter;
+      this.search();
+    }
     this.configSlides();
     addEventListener('resize', ev=>{
       ev.preventDefault();
@@ -103,7 +114,7 @@ export class DailyProdProjectionPage implements OnInit {
           let mt = d.getMonth() + 1;
           let yr = d.getFullYear();
           daysInMonth = new Date(yr, mt, 0);
-          if (k < 595) {
+          if (k < 462) {
             switch (this.typeFilter) {
               case TypeFilter.Aves:
                 numero_aves += el.numero_de_aves;
@@ -112,6 +123,18 @@ export class DailyProdProjectionPage implements OnInit {
               case TypeFilter.Hvo_Prod:
                 numero_aves += el.prod_huevos_totales;
                 numero_aves_anual += el.prod_huevos_totales;
+                break;
+              case TypeFilter.Hvo_Incb:
+                numero_aves += parseInt(el.huevos_incubables);
+                numero_aves_anual += parseInt(el.huevos_incubables);
+                break;
+              case TypeFilter.Nacimientos:
+                numero_aves += parseInt(el?.nacimientos_totales);
+                numero_aves_anual += parseInt(el?.nacimientos_totales);
+                break;
+              case TypeFilter.Nacimientos_Term:
+                  numero_aves += el?.nacimientos_terminados;
+                  numero_aves_anual += el?.nacimientos_terminados;
                 break;
               default:
                 break;
@@ -204,13 +227,34 @@ export class DailyProdProjectionPage implements OnInit {
     }
     
     if(this.typeFilter === TypeFilter.Hvo_Prod){
-      this.title = 'Producción Nacional De Huevos';
-      this.subtitle = 'Producción Mensual De Huevos De Mesa';
-      this.subtitle2= `Producción Nacional Diaria De Huevos De Mesa`;
+      this.title = 'Producción Nacional De Rep. Pesadas';
+      this.subtitle = 'Producción Mensual De Huevos De Rep. Pesadas';
+      this.subtitle2= `Producción Nacional Diaria De Huevos De Rep. Pesadas`;
+      this.promedio = false;
+    }
+
+    if(this.typeFilter === TypeFilter.Hvo_Incb){
+      this.title = 'Producción Nacional De Rep. Pesadas';
+      this.subtitle = 'Producción Mensual De Huevos Inc. De Rep. Pesadas';
+      this.subtitle2= `Producción Nacional Diaria De Huevos Inc. De Rep. Pesadas`;
+      this.promedio = false;
+    }
+
+    if(this.typeFilter === TypeFilter.Nacimientos){
+      this.title = 'Producción Nacional De Rep. Pesadas';
+      this.subtitle = 'Producción Mensual De Pollitos De Rep. Pesadas';
+      this.subtitle2= `Producción Nacional Diaria De Pollitos De Rep. Pesadas`;
+      this.promedio = false;
+    }
+
+    if(this.typeFilter === TypeFilter.Nacimientos_Term){
+      this.title = 'Producción Nacional De Rep. Pesadas';
+      this.subtitle = 'Producción Mensual De Pollos Terminados';
+      this.subtitle2= `Producción Nacional Diaria De Pollos Terminados`;
       this.promedio = false;
     }
     
-    this.ngOnInit();
+    if(!this.customSearch)this.ngOnInit();
   }
 
   selected(event) { }
@@ -238,5 +282,6 @@ enum TypeFilter {
   Hvo_Prod = 'huevos_producidos',
   Hvo_Incb = 'huevos_incubables',
   Nacimientos = 'nacimientos',
+  Nacimientos_Term = 'nacimientos_terminados',
   Aves = 'aves'
 }

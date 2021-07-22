@@ -77,9 +77,9 @@ export class LightbreederBarGraphComponent implements OnInit {
   gradient = false;
   showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel = 'Entrada Mensual De Reproductoras Livianas';
+  xAxisLabel = 'Entrada Mensual De Progenitores Abuelos';
   showYAxisLabel = true;
-  yAxisLabel = 'Entradas De Rep. Livianas';
+  yAxisLabel = 'Entradas De Prog. Abuelas';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']

@@ -44,12 +44,12 @@ export class BarMonthlyLightbreederComponent implements OnInit {
   xAxisLabel1 = 'Poblacion Promedio Mensual De Aves En Recria y Producción';
   xAxisLabel2 = 'Producción Huevos Totales Por Mes';
   xAxisLabel3 = 'Producción Huevos Incubables Por Mes';
-  xAxisLabel4 = 'Total Pollitas Nacidas Por Mes';
+  xAxisLabel4 = 'Total Pollitas Reproductoras Por Mes';
   showYAxisLabel = true;
   yAxisLabel1 = 'Aves Recria y Produccion';
   yAxisLabel2 = 'Producción Huevos Totales';
   yAxisLabel3 = 'Producción Huevos Incubables';
-  yAxisLabel4 = 'Pollitas Nacidas';
+  yAxisLabel4 = 'Pollitas Reproductoras';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']

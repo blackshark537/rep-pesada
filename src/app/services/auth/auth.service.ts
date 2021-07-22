@@ -26,8 +26,11 @@ export class AuthService {
   }
 
   async signOut(){
-    this.native.clearStorage();
-    this.router.navigate(['/signin']);
+    const ask = await this.bService.Confirm('Quieres Salir?', 'Salir');
+    if(ask){
+      this.native.clearStorage();
+      this.router.navigate(['/signin']);
+    }
   }
 
   emailPswdSignin(email: string, password: string): Observable<StrapiAccess>{

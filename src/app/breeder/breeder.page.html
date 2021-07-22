@@ -1,10 +1,10 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="danger">
+  <ion-toolbar color="warning">
     <ion-buttons slot="start">
       <!-- <ion-menu-button></ion-menu-button> -->
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Proyección a {{  lots.length }} días</ion-title>
+    <ion-title>{{title}} a {{  lots.length }} días</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
     <ion-toolbar>
       <ion-title size="large">
         <ion-icon  name="home" ></ion-icon>
-        Proyección a {{  lots.length }} días
+        {{title}} a {{  lots.length }} días
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -44,7 +44,7 @@
   </ion-grid>
 
   <app-table 
-  name="Proyección"
+  name="{{title}} {{getType()}}"
   [cols]="cols$ | async" 
   [rows]="lots" 
   ></app-table>

@@ -6,6 +6,7 @@ const initial_state: LotModel[] = [];
 
 const _lotsReducer = createReducer(
     initial_state,
+    on(LotsActions.CLR_LOTS, (state)=> []),
     on(LotsActions.GET_LOTS_SUCCEEDED, (state, {lots})=> lots),
     on(LotsActions.GET_LOTS_ERROR, (state, {error})=> {
         return []

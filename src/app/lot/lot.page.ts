@@ -34,9 +34,9 @@ export class LotPage implements OnInit, OnDestroy {
   sub$: Subscription;
   tableActions: TableActions  = {
     open:   true,
-    new:    true,
+    new:    false,
     delete: false,
-    edit: true
+    edit: false
   }
   status={
     total:0,
@@ -75,7 +75,7 @@ export class LotPage implements OnInit, OnDestroy {
           incub_eggs:0,
           born_eggs:0
         }
-        return a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 595)
+        return a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 462)
       }),
       map(lots => {
         lots.forEach(lot=>{

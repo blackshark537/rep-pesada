@@ -1,10 +1,14 @@
 
 <ion-header [translucent]="true">
-  <ion-toolbar color="danger">
+  <ion-toolbar color="warning">
     <ion-buttons slot="start">
-      <ion-menu-button ></ion-menu-button>
+      <!-- <ion-menu-button ></ion-menu-button> -->
+      
+      <ion-button [routerLink]="['/menu']">
+        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>Resumen Productivo</ion-title>
+    <ion-title>Cierre De Mercado Productivo</ion-title>
     <ion-buttons slot="end">
       <ion-button [disabled]="speaking" fill="solid" color="success" (click)="speach()">
         Asistente Virtual D-P
@@ -16,7 +20,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Resumen Productivo</ion-title>
+      <ion-title size="large">Cierre De Mercado Productivo</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -27,12 +31,12 @@
       </ion-title>
     </ion-list-header>
 
-    <ion-grid>
+    <ion-grid *ngIf="abuelos; else elseBlock">
       <ion-row>
         <ion-col size="7" size-md="9" size-lg="9">
           <ion-item>
-            <ion-label>
-              <h1>Cierre Mercado Productivo Reproductoras Livianas</h1>      
+            <ion-label color="tertiary">
+              <h1>Progenitores Abuelos Cobb Ross</h1>
             </ion-label>
           </ion-item>
         </ion-col>
@@ -59,82 +63,86 @@
         <ion-col size="7" size-md="9" size-lg="9">
           <ion-item>
             <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
-            <ion-label>
+            <div>
               <h2>{{row['business']}}</h2>
-            </ion-label>
+            </div>
           </ion-item>
         </ion-col>
         <ion-col *ngIf="selected === 'day' " size="5"  size-md="3" size-lg="3">
           <ion-item button [color]="row['color']" style="border-radius: 20px;">
-            <ion-label style="text-align: center;">
+            <div style="margin-left:10em;">
               <h2>{{row['init'] | addCommas}}</h2>
-            </ion-label>
+            </div>
           </ion-item> 
         </ion-col>
         <ion-col *ngIf="selected === 'month' " size="5"  size-md="3" size-lg="3">
           <ion-item button [color]="row['color']" style="border-radius: 20px;">
-            <ion-label style="text-align: center;">
+            <div style="margin-left:10em;">
               <h2>{{row['month'] | addCommas}}</h2>
-            </ion-label>
+            </div>
           </ion-item>
         </ion-col>
       </ion-row>
 
     </ion-grid>
 
-    <ion-item-divider></ion-item-divider>
+    <!-- <ion-item-divider></ion-item-divider> -->
     
-    <ion-grid>
-      <ion-row>
-        <ion-col size="7" size-md="9" size-lg="9">
-          <ion-item>
-            <ion-label>
-              <h1>Cierre Productivo De La Industria De Huevos De Mesa</h1>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col *ngIf="selected === 'day' " size="5" size-md="3" size-lg="3">
-          <ion-item>
-            <ion-label>
-              <h1>Dia</h1>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col  *ngIf="selected === 'month' " size="5" size-md="3" size-lg="3">
-          <ion-item>
-            <ion-label>
-              <h1>Mes</h1>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      
-      <ion-row  *ngFor="let row of  rows2">
-        <ion-col size="7" size-md="9" size-lg="9">
-          <ion-item>
-            <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
-            <ion-label>
-              <h2>{{row['business']}}</h2>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col  *ngIf="selected === 'day' " size="5"  size-md="3" size-lg="3">
-          <ion-item button [color]="row['color']" style="border-radius: 20px;">
-            <ion-label style="text-align: center;">
-              <h2>{{row['init'] | addCommas}}</h2>
-            </ion-label>
-          </ion-item> 
-        </ion-col>
-        <ion-col  *ngIf="selected === 'month' " size="5"  size-md="3" size-lg="3">
-          <ion-item button [color]="row['color']" style="border-radius: 20px;">
-            <ion-label style="text-align: center;">
-              <h2>{{row['month'] | addCommas}}</h2>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-    </ion-grid>
+    <ng-template  #elseBlock>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="7" size-md="9" size-lg="9">
+            <ion-item>
+              <ion-label color="tertiary">
+                <h1>Cierre Productivo De Reproductoras Pesadas</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="selected === 'day' " size="5" size-md="3" size-lg="3">
+            <ion-item>
+              <ion-label>
+                <h1>Dia</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col  *ngIf="selected === 'month' " size="5" size-md="3" size-lg="3">
+            <ion-item>
+              <ion-label>
+                <h1>Mes</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row  *ngFor="let row of  rows2">
+          <ion-col size="7" size-md="9" size-lg="9">
+            <ion-item>
+              <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
+                <div>
+                  <h2>{{row['business']}}</h2>  
+                </div>
+                
+              
+            </ion-item>
+          </ion-col>
+          <ion-col  *ngIf="selected === 'day' " size="5"  size-md="3" size-lg="3">
+            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+              <div style="margin-left:10em;">
+                <h2>{{row['init'] | addCommas}}</h2>
+              </div>
+            </ion-item> 
+          </ion-col>
+          <ion-col  *ngIf="selected === 'month' " size="5"  size-md="3" size-lg="3">
+            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+              <div style="margin-left:10em;">
+                <h2>{{row['month'] | addCommas}}</h2>
+              </div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+  
+      </ion-grid>
+    </ng-template>
 
     
   </ion-list>

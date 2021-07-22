@@ -12,7 +12,24 @@
   --ion-color-tint: var(--ion-color-incub-tint);
 }
 
+.ion-color-background {
+  --ion-color-base: var(--ion-color-background);
+  --ion-color-base-rgb: var(--ion-color-background-rgb);
+  --ion-color-contrast: var(--ion-color-background-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-background-contrast-rgb);
+  --ion-color-shade: var(--ion-color-background-shade);
+  --ion-color-tint: var(--ion-color-background-tint);
+}
+
 :root {
+
+  /* Background */
+  --ion-color-background: #012840;
+  --ion-color-background-rgb: 1,40,64;
+  --ion-color-background-contrast: #ffffff;
+  --ion-color-background-contrast-rgb: 255,255,255;
+  --ion-color-background-shade: #012338;
+  --ion-color-background-tint: #1a3e53;
 
   /** incub */
   --ion-color-incub: #F2AD85;

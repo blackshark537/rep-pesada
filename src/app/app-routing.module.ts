@@ -7,7 +7,7 @@ import { PathResolveService } from './services/helpers/pathResolve.service';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'business',
+    redirectTo: 'menu',
     pathMatch: 'full'
   },
   {
@@ -16,13 +16,8 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'home',
+    path: 'home/:abuelos',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    canActivate:[AuthGuard],
-    path: 'producers',
-    loadChildren: () => import('./user/user.module').then( m => m.UserPageModule)
   },
   {
     canActivate:[AuthGuard],
@@ -33,16 +28,6 @@ export const routes: Routes = [
     canActivate:[AuthGuard],
     path: 'lot/:id',
     loadChildren: () => import('./lot/lot.module').then( m => m.LotPageModule)
-  },
-  {
-    canActivate:[AuthGuard],
-    path: 'capacity',
-    loadChildren: () => import('./capacity/capacity.module').then( m => m.CapacityPageModule)
-  },
-  {
-    canActivate:[AuthGuard],
-    path: 'inventory/:capId',
-    loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryPageModule)
   },
   {
     canActivate:[AuthGuard],
@@ -67,6 +52,11 @@ export const routes: Routes = [
   {
     canActivate:[AuthGuard],
     path: 'daily-projection',
+    loadChildren: () => import('./daily-projection/daily-projection.module').then( m => m.DailyProjectionPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'daily-projection/:custom/:filter/:state/:year',
     loadChildren: () => import('./daily-projection/daily-projection.module').then( m => m.DailyProjectionPageModule)
   },
   {
@@ -100,6 +90,11 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
+    path: 'daily-prod-projection/:custom/:filter/:state/:year',
+    loadChildren: () => import('./daily-prod-projection/daily-prod-projection.module').then( m => m.DailyProdProjectionPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
     path: 'docview/:id',
     loadChildren: () => import('./docview/docview.module').then( m => m.DocviewPageModule)
   },
@@ -107,6 +102,16 @@ export const routes: Routes = [
     canActivate:[AuthGuard],
     path: 'data-analyst',
     loadChildren: () => import('./data-analyst/data-analyst.module').then( m => m.DataAnalystPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'menu',
+    loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
   },
   {
     path: '**',

@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, switchMap } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models/AppModel';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { EggLotProjectionInterface, LotProjection } from '../models';
+import { EggLotProjectionInterface } from '../models';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -84,7 +83,7 @@ export class ProductionPage implements OnInit, OnDestroy {
     ]
   },
   {
-    "name": "Pollitas Nacidas",
+    "name": "Pollitos Nacidos",
     "series": [
       
     ]
@@ -122,33 +121,33 @@ export class ProductionPage implements OnInit, OnDestroy {
     }
 
     if(this.industry === Industry.monthLightBreeder){
-      this.title='Entrada De Rep. Livianas Mensual';
+      this.title='Entrada De Rep. Abuelas Mensual';
       this.lightBreederMonth=true;
     }
 
     if(this.industry === Industry.BarMonthlylightBreeder){
-      this.title='Producción De Huevos Incubable & Pollitas Mensual';
+      this.title='Producción De Huevos Incubable & Pollitos Mensual';
       this.BarMonthlylightBreeder=true;
     }
 
     if(this.industry === Industry.businessGraph){
-      this.title='Participación Mercado - De Las Empresas con Rep. Livianas';
+      this.title='Participación Mercado - De Las Empresas con Progenitores Abuelos';
       this.pieGraph = true;
     }
 
     if( this.industry === Industry.lightBreeder){
-      this.title='Producción Diaria Huevos Incubables/pollitas - Reproductora Liviana';
-      this.yAxisLabel='Huevos Incubables/pollitas'
+      this.title='Producción Diaria Huevos Incubables/pollitos - Progenitores Abuelos';
+      this.yAxisLabel='Huevos Incubables/pollitos'
       this.lightBreederGraph();
     }
     if( this.industry === Industry.chicksLightBreeder){  
-      this.title='Inventario De Aves Diario - Reproductora Liviana';
+      this.title='Inventario De Aves Diario - Progenitores Abuelos';
       this.yAxisLabel='Inventario De Aves'
       this.chicksLightBreeder=true;
       this.lightBreederGraph();
     }
     if( this.industry === Industry.eggsIndustry) {
-      this.title='Producción Nacional Diaria De Huevos De Mesa';
+      this.title='Producción Nacional Diaria De Huevos Rep. Pesada';
       this.yAxisLabel='Producción Nacional De Huevos';
       this.eggsIndustryGraph();
     }
@@ -227,7 +226,7 @@ export class ProductionPage implements OnInit, OnDestroy {
                     "value": numero_Hi,
                     "name":  `${d?.toLocaleDateString()}`
                   });
-                  this.resMulti1[3].name="Pollitas Nacidas",
+                  this.resMulti1[3].name="Pollitos Nacidos",
                   this.resMulti1[3].series.push({
                     "value": numero_Na,
                     "name":  `${d?.toLocaleDateString()}`

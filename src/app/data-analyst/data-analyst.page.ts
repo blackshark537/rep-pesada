@@ -106,9 +106,9 @@ export class DataAnalystPage implements OnInit {
     this.store.select('lots').subscribe(lots=>{
       if(!lots.length) return;
       this.single[2].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c);
-      this.single[3].value = lots.filter(l => l.status === 'production' && l.days < 595).map(l=> l.total).reduce((p,c)=> p+=c);
+      this.single[3].value = lots.filter(l => l.status === 'production' && l.days < 462).map(l=> l.total).reduce((p,c)=> p+=c);
       this.singlePie[0].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c);
-      this.singlePie[1].value = lots.filter(l => l.status === 'production' && l.days < 595).map(l=> l.total).reduce((p,c)=> p+=c);
+      this.singlePie[1].value = lots.filter(l => l.status === 'production' && l.days < 462).map(l=> l.total).reduce((p,c)=> p+=c);
     })
   }
 
@@ -139,7 +139,7 @@ export class DataAnalystPage implements OnInit {
             let mt = d.getMonth() + 1;
             yr = d.getFullYear();
             daysInMonth = new Date(yr, mt, 0);
-            if (k < 595) {
+            if (k < 462) {
               numero_aves += parseInt(el.numero_de_aves);
               numero_Ht += parseInt(el.prod_huevos_totales);
               numero_Hi += parseInt(el.huevos_incubables);

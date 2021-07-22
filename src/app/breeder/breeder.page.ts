@@ -14,7 +14,7 @@ import { LotService } from '../services';
 export class BreederPage implements OnInit, OnDestroy {
 
   sub$: Subscription;
-
+  title='Analisis Predictivo Rep. Abuelas'
   cols$;
   lots  = [];
   state = {
@@ -41,6 +41,9 @@ export class BreederPage implements OnInit, OnDestroy {
       status:  null
     }
     this.production = this.activatedRoute.snapshot.paramMap.get('production');
+    
+    if(this.production === 'true') this.title='Analisis Predictivo Rep. Pesadas';
+
     this.cols$ = this.production === 'true'? this.lotSerivce.colsProduction$ : this.lotSerivce.colsRecria$;
     this.sub$ = this.lotSerivce.lot$.pipe(take(1)).subscribe(lote=>{
       
@@ -93,6 +96,14 @@ export class BreederPage implements OnInit, OnDestroy {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   ngOnDestroy(){
     this.sub$.unsubscribe();                      //Unsubscribe from lots Observable
+  }
+
+  getType(){
+    if(!this.state.owner){
+      return '';
+    }else{
+      return this.state.owner.includes('Pollo Cibao (Corp. Avicola del Caribe)')? 'ROSS' : 'COBB'
+    }
   }
 
   filterBy(value){

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { InventoryPage } from './inventory.page';
+import { VarRepAbuelasComponent } from './var-rep-abuelas.component';
 
-describe('InventoryPage', () => {
-  let component: InventoryPage;
-  let fixture: ComponentFixture<InventoryPage>;
+describe('VarRepAbuelasComponent', () => {
+  let component: VarRepAbuelasComponent;
+  let fixture: ComponentFixture<VarRepAbuelasComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InventoryPage ],
+      declarations: [ VarRepAbuelasComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InventoryPage);
+    fixture = TestBed.createComponent(VarRepAbuelasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

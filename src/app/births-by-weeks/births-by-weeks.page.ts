@@ -28,6 +28,11 @@ export class BirthsByWeeksPage implements OnInit {
   ];
   
   sub$: Subscription;
+  state={
+    year0:null,
+    year1:null,
+    year2:null
+  }
 
   constructor(
     private store: Store<AppModel>,
@@ -74,7 +79,6 @@ export class BirthsByWeeksPage implements OnInit {
       obj_l[`year2`] = data_l.filter(x => x?.year === this.years[2])[i]?.cant_gallinas_proyectadas;
       obj_v[`entry2`] = data_v.filter(x => x?.year === this.years[2])[i]?.date;
       obj_v[`year2`] = data_v.filter(x => x?.year === this.years[2])[i]?.cant_gallinas_proyectadas;
-
       this.rows.push({...obj_v},{...obj_l});
       //this.rows.push(obj_l);
     }
@@ -82,8 +86,11 @@ export class BirthsByWeeksPage implements OnInit {
     this.rows.forEach((row, i) => {
       row.week_num = i + 1;
       row.id = i
+      this.state.year0  += row.year0
+      this.state.year1  += row.year1
+      this.state.year2  += row.year2? row.year2 : 0;
     });
-
+    console.log(this.state)
     await this.loading.dismiss();
   }
 

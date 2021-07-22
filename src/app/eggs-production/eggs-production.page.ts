@@ -35,7 +35,7 @@ export class EggsProductionPage implements OnInit, OnDestroy {
   total_production=0;
   total_chicks=0;
   estado='';
-  total_weeks=85;
+  total_weeks=66;
   time = new Date();
 
   constructor(

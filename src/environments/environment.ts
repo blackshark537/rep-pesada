@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://data-prod.ddns.net',//'http://localhost:1337',//
+  baseUrl: 'https://data-prod.ddns.net',
 };
 
 /*

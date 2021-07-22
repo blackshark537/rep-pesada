@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="danger">
+  <ion-toolbar color="warning">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+      <ion-button [routerLink]="['/menu']">
+        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title size="large">{{getTitle()}} Año {{actual_year }} </ion-title>
   </ion-toolbar>
@@ -14,7 +17,7 @@
     </ion-toolbar>
   </ion-header>
   
-    <ion-grid>
+    <ion-grid *ngIf="!customSearch">
       <ion-row>
         <ion-col size="12" size-md="3.5">
           <ion-item>
@@ -26,8 +29,11 @@
           <ion-item>
             <ion-label>Filtro</ion-label>
             <ion-select (ionChange)="filterByType($event.target.value)" value="aves" placeholder="Elige uno">
-              <ion-select-option value="aves">Gallinas Ponedoras</ion-select-option>
+              <ion-select-option value="aves">Gallinas Reproductoras</ion-select-option>
               <ion-select-option value="huevos_producidos">Huevos Totales</ion-select-option>
+              <ion-select-option value="huevos_incubables">Huevos Incubables</ion-select-option>
+              <ion-select-option value="nacimientos">Pollitos Nacidos</ion-select-option>
+              <ion-select-option value="nacimientos_terminados">Pollos Terminados</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>

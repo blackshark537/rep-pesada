@@ -32,6 +32,11 @@
 @import '~@swimlane/ngx-datatable/themes/dark.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 
+/* ion-content{
+    --ion-background-color: var(--ion-color-background);
+    color: #ffffff  !important;
+} */
+
 .total-label{
     margin-bottom: 13% !important;
 }

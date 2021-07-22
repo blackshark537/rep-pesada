@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://data-prod.ddns.net',
+  baseUrl: 'https://data-prod.ddns.net',
 };

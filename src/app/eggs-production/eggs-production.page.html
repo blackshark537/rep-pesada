@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="danger">
+  <ion-toolbar color="warning">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+      <ion-button [routerLink]="['/menu']">
+        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title size="large">Aves Existentes En {{estado==='recria'? 'Recría'  : 'Producción'}}</ion-title>
     <ion-buttons slot="end">
@@ -27,7 +30,7 @@
           <ion-card-content>
             <ion-item lines="none">
               <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-              <h1>Gallinas Ponedoras en {{estado==='recria'?  'Recría' : 'Producción'}}: <span style="color: green;">{{total_chicks | addCommas}}</span></h1>
+              <h1>Reproductoras en {{estado==='recria'?  'Recría' : 'Producción'}}: <span style="color: green;">{{total_chicks | addCommas}}</span></h1>
             </ion-item>
           </ion-card-content>
         </ion-card>

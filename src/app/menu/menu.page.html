@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="sub" (click)="closeSub()">
+        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title size="large">
+      {{sub? subIndex : 'Bienvenidos a Data-Prod'}}
+    </ion-title>
+
+    <ion-buttons slot="end" *ngIf="!sub">
+      <ion-button (click)="authService.signOut()">
+        <h4>Salir</h4>
+        <ion-icon size="large" slot="end" name="enter-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">
+        menu
+      </ion-title>      
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="logo">
+    <ion-item lines="none" >
+      <ion-title class="ion-text-center" size="large">
+        <h1>Industria Avicola - {{subtitle}}</h1>
+      </ion-title>
+    </ion-item>
+  </div>
+
+  <!--  -->
+  <ion-grid *ngIf="!sub" style="background-image: url('assets/logo.svg'); background-size: contain; background-repeat: repeat-y; background-position: center;">
+    <ion-row>
+      <ion-col size-md="1"></ion-col>
+      <ion-col size="12" size-md="10">
+        <ion-row>
+          
+          <ion-col size="6" size-md="6" size-lg="3" *ngFor="let p of appPages" >
+            <ion-card button lines="none" [color]="p.color" class="menu-button" (click)="openSub(p)">
+              <ion-card-content>
+                <ion-icon slot="center" size="large" [name]="p.icon"></ion-icon>
+                <ion-label>
+                  <h2 style="font-size: large;">{{p.title | titlecase}}</h2>
+                </ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+        </ion-row>
+      </ion-col>
+      <ion-col size-md="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="sub" style="background-image: url('assets/logo.svg'); background-size: contain; background-repeat: repeat-y; background-position: center;">
+    <ion-row>
+      <ion-col size-md="1"></ion-col>
+      <ion-col size="12" size-md="10">
+        <ion-row>
+          
+          <ion-col size="6" size-md="6" size-lg="3" *ngFor="let p of subPages[subIndex]" >
+            <ion-card button lines="none" [color]="p.color" class="menu-button" [routerLink]="[p.url]">
+              <ion-card-content>
+                <ion-icon slot="center" size="large" [name]="p.icon"></ion-icon>
+                <ion-label>
+                  <h2 style="font-size: larger;">{{p.title }}</h2>
+                </ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+        </ion-row>
+      </ion-col>
+      <ion-col size-md="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

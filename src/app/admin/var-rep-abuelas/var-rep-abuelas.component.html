@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar  color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Variables Rep. Abuelas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+    <ion-grid>
+      <ion-row>
+        <!-- <ion-col  size="6" size-md="1.5">
+          <ion-item>
+            <ion-label position="floating">Semanas en Recria</ion-label>
+            <ion-input [(ngModel)]="semanas_en_recria" type="number" min="0" max="100"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="6" size-md="1.5">
+          <ion-item>
+            <ion-label position="floating">Semanas en Prod.</ion-label>
+            <ion-input [(ngModel)]="semanas_en_produccion" type="number" min="0" max="100"></ion-input>
+          </ion-item>
+        </ion-col> -->
+        <ion-col  size="6" size-md="2">
+          <ion-item>
+            <ion-label position="floating">var mortalidad recria</ion-label>
+            <ion-input [(ngModel)]="variable_mortalidad_recria" type="number" min="0" max="100"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="6" size-md="2">
+          <ion-item>
+            <ion-label position="floating">var mortalidad prod.</ion-label>
+            <ion-input [(ngModel)]="variable_mortalidad_produccion" type="number" min="0" max="100"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="6" size-md="2">
+          <ion-item>
+            <ion-label position="floating">var prod. huevos totales</ion-label>
+            <ion-input [(ngModel)]="variable_produccion_huevos_totales" type="number" min="0" max="100"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="6" size-md="2">
+          <ion-item>
+            <ion-label position="floating">var aprov. huevos</ion-label>
+            <ion-input [(ngModel)]="variable_aprovechamiento_huevos" type="number" min="0" max="100"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="6" size-md="2">
+          <ion-item>
+            <ion-label position="floating">var nacimientos</ion-label>
+            <ion-input [(ngModel)]="variable_nacimientos" type="number" min="0" max="100"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col  size="6" size-md="2">
+          <ion-item button color="success" lines="none" (click)="ajustar()">
+            Ajustar
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="0" size-md="7"></ion-col>
+        <ion-col size="12" size-md="5">
+          <ion-segment value="table" (ionChange)="selectView($event.target.value)">
+            <ion-segment-button value="table">
+              <ion-label>Table</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="graph">
+              <ion-label>Graph</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <app-table 
+    *ngIf="segment==='table'; else graphBlock "
+    name="Variables Abuelas Progenitoras"
+    [cols]="cols" 
+    [rows]="row"
+    [isLimited]="false"
+    (selected)="selected($event)"></app-table>
+
+    <!-- [schemeType]=" 'linear' " -->
+    <ng-template #graphBlock>
+      <ngx-charts-line-chart
+      [view]="viewArea"
+      [scheme]="colorScheme"
+      
+      [legend]="legend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [timeline]="timeline"
+      [showGridLines]="true"
+      [results]="multi">
+    >
+    </ngx-charts-line-chart>
+  </ng-template>
+</ion-content>

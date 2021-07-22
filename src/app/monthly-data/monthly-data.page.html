@@ -1,7 +1,10 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="danger">
+  <ion-toolbar color="warning">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+      <ion-button [routerLink]="['/menu']">
+        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>Calendario de entrada año {{year | async}}</ion-title>
     <ion-buttons slot="end">
@@ -20,8 +23,22 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-slides [options]="slideOpts" >
+
+    <ion-slide  *ngFor="let m of  calendar; index as i;">
+      <ion-card  button lines="none" [color]="colors[i]" style="width: 400px;">
+        <ion-card-content>
+            <ion-label>
+              <h1>{{getMonth(i)}}</h1>
+              <h1>{{m | addCommas}}</h1>
+            </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+
   <app-table 
-  name="Entrada Mensual Reproductoras Livianas {{year | async}}"
+  name="Entrada Mensual De Abuelas Linea Hembra {{year | async}}"
   [cols]="cols" 
   [rows]="rows"
   (selected)="selected($event)"></app-table>
