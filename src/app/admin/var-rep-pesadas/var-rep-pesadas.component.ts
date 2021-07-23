@@ -76,6 +76,7 @@ export class VarRepPesadasComponent implements OnInit,OnDestroy {
       let aprov=this.effectService._APROV[i];
       let nac = this.effectService._Nac[i];
       this.row.push({
+        id:i,
         prod_real: el,
         prod: (el-(el*this.variable_produccion_huevos_totales/100)).toFixed(2),
         aprov_real: aprov,

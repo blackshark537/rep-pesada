@@ -16,6 +16,7 @@ export class MonthBarEggsIndustryComponent implements OnInit {
   multi2 = [];
   multi3 = [];
   multi4 = [];
+  multi5 = [];
   headers = [
     {prop: 'jan', header: 'Enero'},
     {prop: 'feb', header: 'Febrero'},
@@ -42,12 +43,18 @@ export class MonthBarEggsIndustryComponent implements OnInit {
   gradient = false;
   showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel1 = 'Población Promedio De G.Ponedoras En Recria y Producción Mensual';
-  xAxisLabel2 = 'Producción Mensual De Huevos De Mesa';
-  
+  xAxisLabel1 = 'Población Promedio Mensual De Rep. Pesada Recria y Producción';
+  xAxisLabel2 = 'Producción Mensual De Huevos Totales';
+  xAxisLabel3 = 'Producción Mensual De Huevos Incubables';
+  xAxisLabel4 = 'Producción Mensual De Pollitos Nacidos';
+  xAxisLabel5 = 'Producción Mensual De Pollitos Terminados';
+
   showYAxisLabel = true;
-  yAxisLabel1 = 'G.Ponedoras Recria y Producción';
-  yAxisLabel2 = 'Producción Huevos De Mesa';
+  yAxisLabel1 = 'Población Promedio Mensual De Rep. Pesada Recria y Producción';
+  yAxisLabel2 = 'Producción Mensual De Huevos Totales';
+  yAxisLabel3 = 'Producción Mensual De Huevos Incubables';
+  yAxisLabel4 = 'Producción Mensual De Pollitos Nacidos';
+  yAxisLabel5 = 'Producción Mensual De Pollitos Terminados';
   
 
   colorScheme = {
@@ -83,6 +90,7 @@ export class MonthBarEggsIndustryComponent implements OnInit {
         let numero_Ht = 0;
         let numero_Hi = 0;
         let numero_Na = 0;
+        let numero_Pt = 0;
         let d: Date = new Date();
         let daysInMonth: Date = null;
         let yr = null;
@@ -94,10 +102,13 @@ export class MonthBarEggsIndustryComponent implements OnInit {
           if (k < 595) {
             numero_aves += el.numero_de_aves;
             numero_Ht += el.prod_huevos_totales;
+            numero_Hi += parseInt(el.huevos_incubables);
+            numero_Na += parseInt(el.nacimientos_totales);
+            numero_Pt += el.nacimientos_terminados;
           }
         });
 
-        monthly.push({ numero_aves, numero_Ht, numero_Hi, numero_Na, month: this.headers[m - 1].header })
+        monthly.push({ numero_aves, numero_Ht, numero_Hi, numero_Na, numero_Pt, month: this.headers[m - 1].header })
         if (i >= daysInMonth?.getDate()) continue;
       }
 
@@ -106,12 +117,27 @@ export class MonthBarEggsIndustryComponent implements OnInit {
     this.headers.forEach(h => {
       this.multi1.push({
         name: h.header,
-        value: Math.floor(monthly.filter(m => m.month === h.header).map(m => m.numero_aves).reduce((p, c) => p += c) / 31)
+        value: Math.floor(monthly.filter(m => m.month === h.header).reduce((p, c) =>{ return p += c.numero_aves}, 0) / 31)
       })
 
       this.multi2.push({
         name: h.header,
-        value: Math.floor(monthly.filter(m => m.month === h.header).map(m => m.numero_Ht).reduce((p, c) => p += c))
+        value: Math.floor(monthly.filter(m => m.month === h.header).reduce((p, c) =>{ return p += c.numero_Ht}, 0))
+      })
+
+      this.multi3.push({
+        name: h.header,
+        value: Math.floor(monthly.filter(m => m.month === h.header).reduce((p, c) =>{ return p += c.numero_Hi}, 0))
+      })
+
+      this.multi4.push({
+        name: h.header,
+        value: Math.floor(monthly.filter(m => m.month === h.header).reduce((p, c) =>{ return p += c.numero_Na}, 0))
+      })
+
+      this.multi5.push({
+        name: h.header,
+        value: Math.floor(monthly.filter(m => m.month === h.header).reduce((p, c) =>{ return p += c.numero_Pt}, 0))
       })
 
     });

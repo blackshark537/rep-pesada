@@ -31,11 +31,11 @@
       </ion-title>
     </ion-list-header>
 
-    <ion-grid *ngIf="abuelos; else elseBlock">
+    <ion-grid>
       <ion-row>
         <ion-col size="7" size-md="9" size-lg="9">
           <ion-item>
-            <ion-label color="tertiary">
+            <ion-label *ngIf="abuelos;" color="tertiary">
               <h1>Progenitores Abuelos Cobb Ross</h1>
             </ion-label>
           </ion-item>
@@ -50,39 +50,34 @@
             </ion-segment-button>
           </ion-segment>
         </ion-col>
-        <!-- <ion-col  size="3"  size-md="2.5" size-lg="1.5">
-          <ion-item>
-            <ion-label>
-              <h1>Mes</h1>
-            </ion-label>
-          </ion-item>
-        </ion-col> -->
       </ion-row>
 
-      <ion-row *ngFor="let row of rows1; index as i">
-        <ion-col size="7" size-md="9" size-lg="9">
-          <ion-item>
-            <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
-            <div>
-              <h2>{{row['business']}}</h2>
-            </div>
-          </ion-item>
-        </ion-col>
-        <ion-col *ngIf="selected === 'day' " size="5"  size-md="3" size-lg="3">
-          <ion-item button [color]="row['color']" style="border-radius: 20px;">
-            <div style="margin-left:10em;">
-              <h2>{{row['init'] | addCommas}}</h2>
-            </div>
-          </ion-item> 
-        </ion-col>
-        <ion-col *ngIf="selected === 'month' " size="5"  size-md="3" size-lg="3">
-          <ion-item button [color]="row['color']" style="border-radius: 20px;">
-            <div style="margin-left:10em;">
-              <h2>{{row['month'] | addCommas}}</h2>
-            </div>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+      <div  *ngIf="abuelos; else elseBlock">
+        <ion-row *ngFor="let row of rows1; index as i">
+          <ion-col size="7" size-md="9" size-lg="9">
+            <ion-item>
+              <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
+              <div>
+                <h2>{{row['business']}}</h2>
+              </div>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="selected === 'day' " size="5"  size-md="3" size-lg="3">
+            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+              <div style="margin-left:10em;">
+                <h2>{{row['init'] | addCommas}}</h2>
+              </div>
+            </ion-item> 
+          </ion-col>
+          <ion-col *ngIf="selected === 'month' " size="5"  size-md="3" size-lg="3">
+            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+              <div style="margin-left:10em;">
+                <h2>{{row['month'] | addCommas}}</h2>
+              </div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
 
     </ion-grid>
 

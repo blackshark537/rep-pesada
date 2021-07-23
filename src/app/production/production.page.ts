@@ -87,6 +87,12 @@ export class ProductionPage implements OnInit, OnDestroy {
     "series": [
       
     ]
+  },
+  {
+    "name": "Pollitos Terminados",
+    "series": [
+      
+    ]
   }
   ];
 
@@ -116,7 +122,7 @@ export class ProductionPage implements OnInit, OnDestroy {
     this.industry =  this.activatedRoute.snapshot.paramMap.get('industry');
 
     if(this.industry  === Industry.monthBarEggsIndustry){
-      this.title='Producción Nacional Mensual De G.Ponedoras y Huevos De Mesa';
+      this.title='Producción Nacional Mensual De Rep. Pesada Recria y Producción';
       this.monthBarEggsIndustry=true;
     }
 
@@ -147,8 +153,8 @@ export class ProductionPage implements OnInit, OnDestroy {
       this.lightBreederGraph();
     }
     if( this.industry === Industry.eggsIndustry) {
-      this.title='Producción Nacional Diaria De Huevos Rep. Pesada';
-      this.yAxisLabel='Producción Nacional De Huevos';
+      this.title='Producción Nacional Diaria De Huevos/Pollitos Nacidos y Terminados Rep. Pesada';
+      this.yAxisLabel='Producción Nacional De Huevos/Pollitos Nacidos y Terminados';
       this.eggsIndustryGraph();
     }
     if( this.industry === Industry.chicksEggsIndustry){
@@ -269,6 +275,9 @@ export class ProductionPage implements OnInit, OnDestroy {
             let pro = projections.filter(p => p.estado === estado && p.month === m && p.day === i && p.year === year);
             let numero_aves = 0;
             let numero_Ht = 0;
+            let numero_Hi = 0;
+            let numero_Na = 0;
+            let numero_Pt = 0;
             let d: Date = null;
             let daysInMonth: Date = null;
             pro.forEach((el, k) => {
@@ -279,6 +288,9 @@ export class ProductionPage implements OnInit, OnDestroy {
               if (k < 595) {
                 numero_aves += el.numero_de_aves;
                 numero_Ht += el.prod_huevos_totales;
+                numero_Hi += parseInt(el.huevos_incubables);
+                numero_Na += parseInt(el.nacimientos_totales);
+                numero_Pt += el.nacimientos_terminados
               }
             });
 
@@ -292,6 +304,24 @@ export class ProductionPage implements OnInit, OnDestroy {
                     "value": numero_Ht,
                     "name": `${d?.toLocaleDateString()}`
                   });
+
+                  this.resMulti1[2].name = "Huevos Incubables";
+                  this.resMulti1[2].series.push({
+                    "value": numero_Hi,
+                    "name": `${d?.toLocaleDateString()}`
+                  });
+
+                  this.resMulti1[3].name = "Pollitos Nacidos";
+                  this.resMulti1[3].series.push({
+                    "value": numero_Na,
+                    "name": `${d?.toLocaleDateString()}`
+                  });
+
+                  this.resMulti1[4].name = "Pollos Terminados";
+                  this.resMulti1[4].series.push({
+                    "value": numero_Pt,
+                    "name": `${d?.toLocaleDateString()}`
+                  });
                 }
 
               } else {
@@ -303,7 +333,9 @@ export class ProductionPage implements OnInit, OnDestroy {
                     "value": numero_aves,
                     "name": `${d?.toLocaleDateString()}`
                   });
-
+                  this.resMulti1[2].name = "";
+                  this.resMulti1[3].name = "";
+                  this.resMulti1[4].name = "";
                 } else {
 
                   this.resMulti1[0].name = "Aves Ponedoras Produccion";
@@ -315,9 +347,6 @@ export class ProductionPage implements OnInit, OnDestroy {
                 }
               }
             }
-
-            this.resMulti1[2].name = "";
-            this.resMulti1[3].name = "";
             if (i >= daysInMonth?.getDate()) continue;
           }
         });

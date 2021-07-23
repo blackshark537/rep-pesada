@@ -31,39 +31,16 @@
       <ion-col size="12" *ngIf="monthBarEggsIndustry">
         <app-month-bar-eggs-industry></app-month-bar-eggs-industry>
       </ion-col>
-
-      <ion-col size="12" *ngIf="activateCard" class="container">
-
-        
-
-        <ion-item>
-
-        </ion-item>
-      <!--   <ngx-charts-number-card
-          [view]="viewCard"
-          [scheme]="colorScheme"
-          [results]="res"
-          [cardColor]="cardColor">
-        </ngx-charts-number-card> -->
-      </ion-col>
     </ion-row>
 
-    <!-- <ion-row>
-        <ngx-charts-pie-grid
-        [view]="viewPie"
-        [scheme]="colorScheme"
-        [results]="res2">
-        </ngx-charts-pie-grid>
-      
-    </ion-row> -->
-
     <ion-row class="container">
+      <!-- [schemeType]=" 'linear' " -->
       <ion-col size="12" >
         <ngx-charts-line-chart
           *ngIf="activateArea"
           [view]="viewArea"
           [scheme]="colorScheme"
-          [schemeType]=" 'linear' "
+          
           [legend]="legend"
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
@@ -76,32 +53,8 @@
           [results]="getResult()">
         >
         </ngx-charts-line-chart>
-        <!-- <ngx-charts-area-chart
-          *ngIf="activateArea"
-          [view]="viewArea"
-          [scheme]="colorScheme"
-          [legend]="legend"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [xAxis]="xAxis"
-          [yAxis]="yAxis"
-          [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yAxisLabel"
-          [timeline]="timeline"
-          [showGridLines]="true"
-          [results]="resMulti">
-        </ngx-charts-area-chart> -->
         
       </ion-col>
-      <!-- <ion-col size="12" #advancePieContainer>
-        <ngx-charts-advanced-pie-chart
-          *ngIf="activatePie"
-          [view]="[advancePieContainer.offsetWidth, advancePieContainer.offsetHeight]"
-          [scheme]="colorScheme"
-          [results]="res2"
-          [gradient]="gradient">
-        </ngx-charts-advanced-pie-chart>
-      </ion-col> -->
     </ion-row>
   </ion-grid>
 

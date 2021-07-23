@@ -370,12 +370,14 @@ export class HomePage implements OnInit, OnDestroy{
     await speech.setLanguage('es-US');
     await speech.setVolume(1);
     load.dismiss();
-    let texts = [{
-      business:  `Resumen del ${this.selected === 'day'? 'Día' : 'Mes'}, Cierre Productivo De Abuelas Reproductoras Ross-Cobb.`, init: '', month: ''
-    },  ...this.rows1,  {
-      business:  `Resumen del ${this.selected === 'day'? 'Día' : 'Mes'}, Cierre Productivo De Reproductoras Pesadas.`, init: '', month: ''
-      
-    }, ...this.rows2 ]
+    let texts = []
+    
+    if(this.abuelos){
+      texts.push({  business:  `Resumen del ${this.selected === 'day'? 'Día' : 'Mes'}, Cierre Productivo De Abuelas Reproductoras Ross-Cobb.`, init: '', month: ''},  ...this.rows1)
+    }else{
+      texts.push({ business:  `Resumen del ${this.selected === 'day'? 'Día' : 'Mes'}, Cierre Productivo De Reproductoras Pesadas.`, init: '', month: ''  }, ...this.rows2 )
+    }
+
     texts.forEach(async el=>{
       await speech.speak({
         text: `${el.business}   ${this.selected === 'day'? el.init : el.month}`,
