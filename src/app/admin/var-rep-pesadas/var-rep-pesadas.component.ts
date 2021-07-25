@@ -66,6 +66,7 @@ export class VarRepPesadasComponent implements OnInit,OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.segment='table';
     this.variable_mortalidad_recria = parseInt(localStorage.getItem('variable_mortalidad_recria_pesada')) || 0;
     this.variable_mortalidad_produccion = parseInt(localStorage.getItem('variable_mortalidad_produccion_pesada')) || 0;
     this.variable_produccion_huevos_totales = parseInt(localStorage.getItem('variable_produccion_huevos_totales_pesada')) || 0;

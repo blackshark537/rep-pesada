@@ -256,8 +256,8 @@ export class ProductionPage implements OnInit, OnDestroy {
     await load.present();
     this.store.select('eggLots').pipe(
       map(lots=>{
-        let res = lots.map(lot=> lot.projections);
-        return [].concat.apply([], res) as EggLotProjectionInterface[];
+        let res = lots.map(lot=> lot.projections);  // return [][] type
+        return [].concat.apply([], res) as EggLotProjectionInterface[]; // convert to [] type
       })
     ).subscribe(response => {
       this.processData(response);

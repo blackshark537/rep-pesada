@@ -41,7 +41,7 @@ export class LotsEffects {
 
     public months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     public date = new Date();
-    public years = [ this.date.getFullYear() - 2,this.date.getFullYear() - 1, this.date.getFullYear(), this.date.getFullYear() + 1]
+    public years = [ this.date.getFullYear() - 1, this.date.getFullYear(), this.date.getFullYear() + 1]
 
     getLot$ = createEffect(() => this.action$.pipe(
         ofType(LotsActions.GET_LOTS),
