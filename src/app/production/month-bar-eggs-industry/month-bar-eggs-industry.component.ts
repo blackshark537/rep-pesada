@@ -83,6 +83,7 @@ export class MonthBarEggsIndustryComponent implements OnInit {
 
   processData(projections: EggLotProjectionInterface[]){
     let monthly = []
+    console.time('bf')
     this.month.forEach((m, h) => {
       for (let i = 1; i < 32; i++) {
         let pro = projections.filter(p => p.month === m && p.day === i && p.year  === this.current_year);
@@ -141,7 +142,7 @@ export class MonthBarEggsIndustryComponent implements OnInit {
       })
 
     });
-
+    console.timeEnd('bf')
     this.show = true;
 
   }

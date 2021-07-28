@@ -11,12 +11,14 @@ import { BusinessPieGraphComponent } from './business-pie-graph/business-pie-gra
 import { LightbreederBarGraphComponent } from './lightbreeder-bar-graph/lightbreeder-bar-graph.component';
 import { BarMonthlyLightbreederComponent } from './bar-monthly-lightbreeder/bar-monthly-lightbreeder.component';
 import { MonthBarEggsIndustryComponent } from './month-bar-eggs-industry/month-bar-eggs-industry.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     NgxChartsModule,
     ProductionPageRoutingModule
   ],

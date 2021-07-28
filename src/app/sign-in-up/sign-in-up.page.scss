@@ -4,3 +4,17 @@ ion-input{
     padding-left: 1em !important;
     margin-top: 5px;
 }
+
+ion-card-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .logo{
+        width: 300px; 
+        height: 200px;
+    }
+}
+
+.green{
+    color: var(--ion-color-warning)
+}

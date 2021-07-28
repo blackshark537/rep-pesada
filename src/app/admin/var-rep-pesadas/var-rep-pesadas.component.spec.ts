@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { AdminPageModule } from '../admin.module';
 
 import { VarRepPesadasComponent } from './var-rep-pesadas.component';
 
@@ -10,7 +10,7 @@ describe('VarRepPesadasComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ VarRepPesadasComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [AdminPageModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(VarRepPesadasComponent);
@@ -18,7 +18,5 @@ describe('VarRepPesadasComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  
 });

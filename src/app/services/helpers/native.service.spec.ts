@@ -10,7 +10,4 @@ describe('NativeService', () => {
     service = TestBed.inject(NativeService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
 });

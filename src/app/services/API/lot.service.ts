@@ -149,7 +149,6 @@ export class LotService {
           };
 
           const projections = this.genProjection(lot, Lote);
-
           this.store.dispatch(projectionsActions.SET_PROJECTIONS({ projections: [...projections] }))
 
           return {
@@ -157,7 +156,6 @@ export class LotService {
             status: data.days > 168 ? 'production' : 'breeding',
             total: parseInt(projections[data.days]?.numero_de_aves),
             recibidas: data.females,
-            //projections,
             production: parseInt(projections[data.days]?.prod_huevos_totales),
             incubables: parseInt(projections[data.days]?.huevos_incubables),
             nacimientos: parseInt(projections[data.days]?.nacimientos_totales)
@@ -356,4 +354,6 @@ export class LotService {
     const Difference_In_Time = d2.getTime() - d1.getTime();
     return Math.floor(Difference_In_Time / (1000 * 3600 * 24)) + 1;
   }
+
 }
+

@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  open = true;
+/*   open = true;
   openCapacity = false;
   openBreeding = false;
   openBreed = false;
@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
   ];
   public labels = ['Automatico', 'Manual', 'Normal', 'Controlado'];
   public colors = ['warning', 'secondary', 'tertiary', 'success', 'primary', 'danger']
-  public canActive = false; //can navigate throw menu
+   */
+  public canActive = false; 
 
   constructor(
     public authService: AuthService,

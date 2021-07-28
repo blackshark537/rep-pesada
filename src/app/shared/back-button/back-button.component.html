@@ -1,0 +1,7 @@
+  <ion-back-button data-test-id="back-button" color="warning" [text]="text" *ngIf="back; else elseBlock" ></ion-back-button>
+  <ng-template  #elseBlock>
+    <ion-button data-test-id="menu-button" color="warning" (click)="goMenu()">
+      <ion-icon size="large" name="chevron-back-outline"></ion-icon>
+      <ion-label>Atrás</ion-label>
+    </ion-button>
+  </ng-template>

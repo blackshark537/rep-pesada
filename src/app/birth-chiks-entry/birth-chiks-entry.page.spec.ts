@@ -18,7 +18,4 @@ describe('BirthChiksEntryPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

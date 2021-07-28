@@ -1,10 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="warning">
     <ion-buttons slot="start">
-      <!-- <ion-menu-button></ion-menu-button> -->
-      <ion-button [routerLink]="['/menu']">
-        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
-      </ion-button>
+      <app-back-button ></app-back-button>
     </ion-buttons>
     <ion-title>Asignación vs Importación año {{year | async}}</ion-title>
     <ion-buttons slot="end">
@@ -31,10 +28,10 @@
             <ion-card color="warning" button style="height: 7em; width: 30em;">
               <ion-card-content>
                 <ion-item lines="none" color="warning">
-                  <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+                  <ion-icon slot="end" name="logo-twitter" color="light" size="large"></ion-icon>
                   <ion-label>
-                    <h1 style="color: black;">Total Rep. Abuelas</h1>
-                    <h1 style="color: black;">Asignadas: {{status?.asignacion | addCommas}}</h1>
+                    <h1 >Total Rep. Abuelas</h1>
+                    <h1 >Asignadas: {{status?.asignacion | addCommas}}</h1>
                   </ion-label>
                 </ion-item>
               </ion-card-content>
@@ -45,10 +42,10 @@
             <ion-card color="success" button style="height: 7em; width: 30em;">
               <ion-card-content>
                 <ion-item lines="none" color="success">
-                  <ion-icon class="egg" slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+                  <ion-icon class="egg" slot="end" name="logo-twitter" color="light" size="large"></ion-icon>
                   <ion-label>
-                    <h1 style="color: black;">Total Rep. Abuelas</h1>
-                    <h1 style="color: black;">Importadas: {{status?.importacion | addCommas}}</h1>
+                    <h1 >Total Rep. Abuelas</h1>
+                    <h1 >Importadas: {{status?.importacion | addCommas}}</h1>
                   </ion-label>
                 </ion-item>
               </ion-card-content>
@@ -56,13 +53,13 @@
           </ion-slide>
 
           <ion-slide>
-            <ion-card color="incub" button style="height: 7em; width: 30em;">
+            <ion-card color="spanish-orange" button style="height: 7em; width: 30em;">
               <ion-card-content >
-                <ion-item lines="none" color="incub">
+                <ion-item lines="none" color="spanish-orange">
                   <ion-icon class="egg" slot="end" name="alarm" color="light" size="large"></ion-icon>
                   <ion-label>
-                    <h1 style="color: black;">Balance</h1>
-                    <h1 style="color: black;">{{status?.balance | addCommas}}</h1>
+                    <h1 style="color: white;">Balance:</h1>
+                    <h1 style="color: white;">{{status?.balance | addCommas}}</h1>
                   </ion-label>
                 </ion-item>
               </ion-card-content>

@@ -24,7 +24,7 @@ export class SignInUpPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', Validators.email],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
     });
   }
 

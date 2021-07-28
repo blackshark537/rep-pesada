@@ -1,10 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="warning">
     <ion-buttons slot="start">
-      <!-- <ion-menu-button></ion-menu-button> -->
-      <ion-button [routerLink]="['/menu']">
-        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
-      </ion-button>
+      <app-back-button ></app-back-button>
     </ion-buttons>
     <ion-title>{{getTitle(typeFilter)}} Año {{actual_year}}</ion-title>
   </ion-toolbar>
@@ -66,7 +63,7 @@
           <ion-slide  *ngFor="let data of monthly; index as i">
             <ion-card button lines="none" [color]="colors[i]" style="width: 400px;">
               <ion-card-content>
-                <ion-label>
+                <ion-label >
                   <h1 >{{data?.month + ': '}}</h1>
                   <h1 >{{ data?.balance  | addCommas}}</h1>
                 </ion-label>

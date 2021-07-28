@@ -7,11 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { BirthChiksEntryPageRoutingModule } from './birth-chiks-entry-routing.module';
 
 import { BirthChiksEntryPage } from './birth-chiks-entry.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     IonicModule,
     BirthChiksEntryPageRoutingModule
   ],

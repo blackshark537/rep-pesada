@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { AppModule } from '../app.module';
 
 import { AdminPage } from './admin.page';
 
@@ -10,7 +11,7 @@ describe('AdminPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [AppModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdminPage);
@@ -18,7 +19,4 @@ describe('AdminPage', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

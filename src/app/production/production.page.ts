@@ -266,7 +266,6 @@ export class ProductionPage implements OnInit, OnDestroy {
   }
 
   processData(projections: EggLotProjectionInterface[]) {
-
     this.years.map(year => {
       this.month.map((m, h) => {
         let estados = ['recria', 'produccion']
@@ -346,13 +345,14 @@ export class ProductionPage implements OnInit, OnDestroy {
 
                 }
               }
+
             }
             if (i >= daysInMonth?.getDate()) continue;
           }
         });
       })
-   })
-   this.activateArea = true;
+    })
+    this.activateArea = true;
   }
 
   ngOnDestroy() {

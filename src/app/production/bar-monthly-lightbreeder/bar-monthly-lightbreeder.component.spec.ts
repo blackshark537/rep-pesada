@@ -18,7 +18,4 @@ describe('BarMonthlyLightbreederComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

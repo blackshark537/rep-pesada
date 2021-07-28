@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-split-pane contentId="main-content" when="(min-width: 2040px)" *ngIf="canActive; else logginPage">
+<!--   <ion-split-pane contentId="main-content" when="(min-width: 2040px)" *ngIf="canActive; else logginPage">
     <ion-menu contentId="main-content" type="overlay" >
       <ion-content  color="warning">
         <ion-list id="inbox-list">
@@ -8,19 +8,8 @@
             
               <img src="assets/logo.svg" alt="logo" width="300px" height="150px">
             
-            <!-- <ion-label>
-              <h1>Industria Avícola</h1>
-              <p>Sub Sector Huevos de Mesa</p>
-              <p>Reproductora liviana</p> 
-            </ion-label> -->
           </ion-item>
 
-          <!-- <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle> -->
           <ion-card>
             <ion-item lines="none" >
               <ion-label class="ion-text-center" color="tertiary">
@@ -33,7 +22,7 @@
             <ion-item  lines="none" detail="true" button (click)="open=!open">
               <ion-icon color="success" slot="start" name="business-outline"></ion-icon>
               <ion-label color="{{open? 'primary' : ''}}">Empresas Genéticas</ion-label>
-              <!-- <ion-icon color="medium" [name]="open?'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon> -->
+              
             </ion-item>
             <ion-card-content *ngIf="open">
               <ion-item [routerLink]="['#']" lines="none" detail="false">
@@ -43,7 +32,7 @@
                 <ion-label>Registro de las Empresas</ion-label>
               </ion-item>
               <ion-item [routerLink]="['/data-driven']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Participación de Mercado</ion-label><!-- Asignación vs Importación  -->
+                <ion-label>Participación de Mercado</ion-label>
               </ion-item>
               <ion-item [routerLink]="['/monthly-data']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Calendario de Entrada</ion-label>
@@ -73,9 +62,7 @@
                   Reporte de Producción
                 </ion-label>
               </ion-item>
-              <!-- <ion-item [routerLink]="['/birth-entry']" lines="none"  detail="false" routerLinkActive="selected">
-                <ion-label>Entrada de Pollitas Ponedoras</ion-label>
-              </ion-item> -->
+
             </ion-card-content>
           </ion-card>
 
@@ -109,9 +96,7 @@
               <ion-label color="{{openProd? 'primary' : ''}}"><h1>Rep. Pesadas</h1></ion-label>
             </ion-item>
             <ion-card-content *ngIf="openProd">
-              <!-- <ion-item [routerLink]="['/#']" lines="none">
-                <ion-label>Registro de Productores de Huevos</ion-label>
-              </ion-item> -->
+
               <ion-item [routerLink]="['#']" lines="none">
                 <ion-label>
                   Registro de Productores
@@ -140,12 +125,6 @@
                 </ion-label>
               </ion-item>
 
-              <!-- <ion-item [routerLink]="['#']" lines="none">
-                <ion-label>Consumo Per-capita</ion-label>
-              </ion-item>
-              <ion-item [routerLink]="['#']" lines="none">
-                <ion-label>Participación de Prod.</ion-label>
-              </ion-item> -->
             </ion-card-content>
           </ion-card>
 
@@ -163,9 +142,6 @@
               <ion-item [routerLink]="['/production', 'bar-month-lot-breeder']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Entrada Abuelas Mensual</ion-label>
               </ion-item>
-              <!-- <ion-item [routerLink]="['/production', 'bar-year-lot-breeder']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Entrada Rep. L. Anual</ion-label>
-              </ion-item> -->
 
               <ion-item [routerLink]="['/production', 'chicks-light-breeder']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Inv. Aves Recria/Prod.</ion-label>
@@ -177,10 +153,7 @@
               <ion-item [routerLink]="['/production', 'bar-month-light-breeder']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>P. H. Inc/Pollitas Mensual</ion-label>
               </ion-item>
-              <!-- <ion-item [routerLink]="['/production', 'bar-year-light-breeder']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>P. H. Inc/Pollitas Anual</ion-label>
-              </ion-item> -->
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
               <ion-item [routerLink]="['/production', 'chicks-line-eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Inv. Rep. Pesadas Recria/Prod.</ion-label>
               </ion-item>
@@ -192,10 +165,6 @@
               <ion-item [routerLink]="['/production', 'month-bar-eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
                 <ion-label>Prod/Huevos Mensual</ion-label>
               </ion-item>
-
-              <!-- <ion-item [routerLink]="['/production', 'year-bar-eggs-industry']" lines="none" detail="false" routerLinkActive="selected">
-                <ion-label>Prod/Huevos Anual</ion-label>
-              </ion-item> -->
 
             </ion-card-content>
           </ion-card>
@@ -288,20 +257,13 @@
           </ion-item>
         </ion-list>
 
-        <!-- <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          <ion-item *ngFor="let label of labels; index as i" lines="none">
-            <ion-icon slot="start" [color]="colors[i]" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
-          </ion-item>
-        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 
   <ng-template #logginPage>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ng-template>
+    
+  </ng-template> -->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

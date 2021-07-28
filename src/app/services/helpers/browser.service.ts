@@ -62,6 +62,7 @@ export class BrowserService {
 
   async handlError(error: HttpErrorResponse){
     console.log(error);
+    this.loadingCtrl.dismiss();
     if(error.status === 0){
       this.showToast('ERR_SERVER_CONNECTION_REFUSED', 'info', ToastSatusClass.error);
       return;

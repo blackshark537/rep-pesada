@@ -17,13 +17,13 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it('should create the app', waitForAsync(() => {
+  /* it('should create the app', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  }));
+  })); */
 
-  it('should have menu labels', waitForAsync(() => {
+/*   it('should have menu labels', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const app = fixture.nativeElement;
@@ -41,6 +41,6 @@ describe('AppComponent', () => {
     expect(menuItems.length).toEqual(12);
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/folder/Inbox');
     expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/folder/Outbox');
-  }));
+  })); */
 
 });

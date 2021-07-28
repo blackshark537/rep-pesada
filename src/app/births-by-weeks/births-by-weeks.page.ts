@@ -47,6 +47,7 @@ export class BirthsByWeeksPage implements OnInit {
     this.sub$ = this.store.select('eggLots').pipe(
       map(pro => pro.filter(p => p.year > this.years[0]-1))
     ).subscribe(resp => {
+      load.dismiss();
       if(!!resp.length) this.displayData(resp);
     });
 
