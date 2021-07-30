@@ -13,6 +13,30 @@
     width: 15em;   
     margin-left: auto; 
     margin-right: auto;
+    h2{
+        font-size: large;
+    }
+}
+
+@media screen and (max-width:450px){
+    .menu-button{
+        height: 13em; 
+        width: 10em;   
+        margin-left: auto; 
+        margin-right: auto;
+        h2{
+            font-size: medium;
+        }
+    }
+
+    #menu{
+        position: absolute;
+        float: right;
+        right: 0;
+        bottom: 0;
+        font-size: 32px;
+        color: var(--ion-color-spanish-orange);
+    }
 }
 
 ion-label{

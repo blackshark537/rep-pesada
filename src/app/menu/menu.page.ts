@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services';
 
@@ -10,7 +10,8 @@ import { AuthService } from '../services';
 export class MenuPage implements OnInit {
 
   currentYear = new Date().getFullYear();
-  subtitle='Sub-Sector Pollo'
+  exitButtonColor = 'warning';
+  subtitle='Sub-Sector Pollo';
   public appPages = [
     { title: 'Empresas Genéticas', url:null, icon: 'business-outline', color:"platinum" },
     { title: 'Progenitores Abuelos', url:null, icon: 'cube-outline', color:"platinum"  },
@@ -101,6 +102,7 @@ export class MenuPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
   }
 
   openSub(p){
@@ -123,5 +125,13 @@ export class MenuPage implements OnInit {
   closeSub(){
     this.sub=false;
     this.subtitle='Sub-Sector Pollo';
+  }
+
+  logScrolling(evt){
+    if(evt.detail.currentY > 20){
+      this.exitButtonColor='light';
+    }else{
+      this.exitButtonColor='warning';
+    }
   }
 }

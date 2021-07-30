@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="paolo-green">
     <ion-buttons slot="start">
-      <ion-button color="warning" *ngIf="sub" (click)="closeSub()">
+      <ion-button [color]="exitButtonColor" *ngIf="sub" (click)="closeSub()">
         <ion-icon size="large" name="chevron-back-outline"></ion-icon>
         <ion-label>Atrás</ion-label>
       </ion-button>
@@ -9,12 +9,12 @@
         <img src="assets/logo1.jpeg" alt="logo">
       </ion-avatar>
     </ion-buttons>
-    <ion-title size="large">
+    <ion-title >
       {{sub? subIndex : 'Bienvenidos a Data-Prod'}}
     </ion-title>
 
     <ion-buttons slot="end" *ngIf="!sub">
-      <ion-button color="warning" (click)="authService.signOut()">
+      <ion-button [color]="exitButtonColor" (click)="authService.signOut()">
         <h4>Salir</h4>
         <ion-icon size="large" slot="end" name="enter-outline"></ion-icon>
       </ion-button>
@@ -22,7 +22,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="logScrolling($event)">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">
@@ -50,7 +50,7 @@
             <ion-card button lines="none" [color]="p.color" class="menu-button" (click)="openSub(p)">
               <ion-card-content>
                 <ion-label>
-                  <h2 style="font-size: large;">{{p.title | titlecase}}</h2>
+                  <h2>{{p.title | titlecase}}</h2>
                 </ion-label>
               </ion-card-content>
               <ion-icon id="menu" [name]="p.icon"></ion-icon>
@@ -74,7 +74,7 @@
               <ion-card-content>
                 <ion-icon color="spanish-orange" size="large" [name]="p.icon"></ion-icon>
                 <ion-label>
-                  <h2 style="font-size: larger;">{{p.title }}</h2>
+                  <h2>{{p.title }}</h2>
                 </ion-label>
               </ion-card-content>
             </ion-card>
