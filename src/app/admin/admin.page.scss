@@ -3,4 +3,19 @@
     width: 15em;   
     margin-left: auto; 
     margin-right: auto;
+    h2{
+        font-size: large;
+    }
+}
+
+@media screen and (max-width:450px){
+    .menu-button{
+        height: 13em; 
+        width: 10em;   
+        margin-left: auto; 
+        margin-right: auto;
+        h2{
+            font-size: medium;
+        }
+    }
 }

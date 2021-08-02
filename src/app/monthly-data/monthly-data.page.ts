@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { ApiService } from '../services';
+import { ApiService, BrowserService } from '../services';
 
 @Component({
   selector: 'app-monthly-data',
@@ -35,16 +35,14 @@ export class MonthlyDataPage implements OnInit {
 
   colors=['secondary', 'success', 'danger','warning', 'primary','light', 'tertiary','medium','secondary', 'success', 'danger', 'primary','light']
 
-  slideOpts = {
-    initialSlide: 3,
-    speed: 600,
-    slidesPerView: 7,
-    autoplay: true,
-  };
+  slideOpts;
 
   constructor(
     private apiService: ApiService,
-  ) { }
+    public bS: BrowserService
+  ) { 
+    this.slideOpts = bS.configSlides(7);
+  }
 
   ngOnInit() {
     this.year.pipe(

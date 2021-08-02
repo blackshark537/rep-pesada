@@ -21,5 +21,9 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": false
+  },
+  "typedocOptions": {
+    "entryPoints": ["src/*"],
+    "out": "docs"
   }
 }

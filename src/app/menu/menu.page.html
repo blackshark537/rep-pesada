@@ -1,10 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="paolo-green">
     <ion-buttons slot="start">
-      <ion-button [color]="exitButtonColor" *ngIf="sub" (click)="closeSub()">
+      <!-- <ion-button [color]="exitButtonColor" *ngIf="sub" (click)="closeSub()">
         <ion-icon size="large" name="chevron-back-outline"></ion-icon>
         <ion-label>Atrás</ion-label>
-      </ion-button>
+      </ion-button> -->
+      <app-back-button *ngIf="sub" back="true"></app-back-button>
       <ion-avatar *ngIf="!sub">
         <img src="assets/logo1.jpeg" alt="logo">
       </ion-avatar>

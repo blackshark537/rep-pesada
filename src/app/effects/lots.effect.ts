@@ -100,24 +100,20 @@ export class LotsEffects {
                             numero_nac_anual += parseInt(el.nacimientos_totales);
                         }
                     });
-                    //console.log(`${m}: ${i}`, numero_aves)
                     month.push({ year: d?.getFullYear(), month: d?.getMonth() + 1, date: d?.getDate(), day: d?.getDay(), numero_nac, numero_nac_anual });
                     if (i >= daysInMonth?.getDate()) continue;
                 }
                 if (!!m) monthly.push(...month);
             });
-            /* console.log(`${val}: `,numero_nac_anual) */
         });
-        this.generateData(monthly);
+        this.generateIncubations(monthly);
     }
 
-    async generateData(monthly: any[]) {
+    async generateIncubations(monthly: any[]) {
         let data_l: EggLotInterface[] = [];
         let data_v: EggLotInterface[] = [];
         let acc_l = null;
         let acc_v = null;
-        
-        //console.log(monthly[23]);
 
         monthly.forEach((el, i)=> {
             if (el.day > 1 && el.day < 6) {

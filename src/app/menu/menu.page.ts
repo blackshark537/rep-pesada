@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services';
 
 @Component({
@@ -13,17 +13,18 @@ export class MenuPage implements OnInit {
   exitButtonColor = 'warning';
   subtitle='Sub-Sector Pollo';
   public appPages = [
-    { title: 'Empresas Genéticas', url:null, icon: 'business-outline', color:"platinum" },
-    { title: 'Progenitores Abuelos', url:null, icon: 'cube-outline', color:"platinum"  },
-    { title: 'Plantas Incubadoras Progenitores Abuelos', url:null, icon: 'egg-outline', color:"platinum"  },
-    { title: 'Proyectos Reprodutoras Pesadas', url:null, icon: 'cube-outline', color:"platinum"  },
-    { title: 'Industria Avicola Pollo De Engorde', url:null, icon: 'cube-outline', color:"platinum"  },
-    { title: 'Resumen Gráfico', url:null, icon: 'bar-chart-outline', color:"platinum"  },
+    { title: 'Empresas Genéticas', url:'/menu/select/0', icon: 'business-outline', color:"platinum" },
+    { title: 'Progenitores Abuelos', url:'/menu/select/1', icon: 'cube-outline', color:"platinum"  },
+    { title: 'Plantas Incubadoras Progenitores Abuelos', url:'/menu/select/2', icon: 'egg-outline', color:"platinum"  },
+    { title: 'Proyectos Reprodutoras Pesadas', url:'/menu/select/3', icon: 'cube-outline', color:"platinum"  },
+    { title: 'Planta De Incubacion Reprodutoras Pesadas', url:'/menu/select/4', icon: 'egg-outline', color:"platinum"  },
+    { title: 'Industria Avicola Pollo De Engorde', url:'/menu/select/5', icon: 'cube-outline', color:"platinum"  },
+    { title: 'Resumen Gráfico', url:'/menu/select/6', icon: 'bar-chart-outline', color:"platinum"  },
     { title: 'Historico Precios De Huevos', url:'/price-history', icon: 'pricetag-outline', color: "platinum"  },
     { title: 'Precios De Commodities', url: '/docview/Commodities', icon: 'cash-outline', color:"platinum"  },
     { title: 'Costos De Producción', url: '/docview/eggsPrices', icon: 'pricetags-outline', color:"platinum"  },
-    { title: 'Geoposición De La Industria', url: null, icon: 'location-outline', color:"platinum"  },
-    { title: 'Programa Sanitario De La Industria', url: null, icon: 'medkit-outline', color:"platinum"  },
+    { title: 'Geoposición De La Industria', url: '/menu/select/10', icon: 'location-outline', color:"platinum"  },
+    { title: 'Programa Sanitario De La Industria', url: '/menu/select/11', icon: 'medkit-outline', color:"platinum"  },
     { title: 'Administrador', url: '/admin', icon: 'settings-outline', color:"platinum"  },
   ];
 
@@ -51,7 +52,8 @@ export class MenuPage implements OnInit {
       { title: 'RESUMEN CIERRE PRODUCTIVO', url: '/home/true', icon: 'document-outline', color:"platinum"  },
     ],
     'Plantas Incubadoras Progenitores Abuelos':[
-      { title: 'NACIMIENTOS DE POLLITAS POR  PROYECCION ABUELOS', url: '/births-by-weeks', icon: 'egg-outline', color:"platinum"  },
+      { title: 'INCUBACIONES PROYECTADAS PROG. ABUELOS', url: '/births-by-weeks', icon: 'egg-outline', color:"platinum"  },
+      { title: 'INCUBACIONES REALES PROG. ABUELOS', url: '/births-by-weeks/real', icon: 'egg-outline', color:"platinum"  },
     ],
     'Proyectos Reprodutoras Pesadas':[
       { title: 'ENTRADA REPRODUCTORAS Y AVES EN RECRIA ', url: '/eggs-production/recria', icon: 'logo-twitter', color:"platinum"  },
@@ -67,11 +69,15 @@ export class MenuPage implements OnInit {
       { title: 'GRAFICA PRODUCCION/HUEVOS MENSUAL', url: '/production/month-bar-eggs-industry', icon: 'bar-chart-outline', color:"platinum"  },
       { title: 'RESUMEN CIERRE PRODUCTIVO', url: '/home/false', icon: 'document-outline', color:"platinum"  },
     ],
+    'Planta De Incubacion Reprodutoras Pesadas':[
+      { title: 'NACIMIENTOS DE POLLITAS POR PROYECCION POLLOS DE ENGORDE', url: '/births-by-weeks', icon: 'egg-outline', color:"platinum"  },
+      { title: 'NACIMIENTOS DE POLLITAS REAL POLLOS DE ENGORDE', url: '/births-by-weeks/real', icon: 'egg-outline', color:"platinum"  },
+    ],
     'Industria Avicola Pollo De Engorde':[
       { title: `Inventario Pollos Terminados en Pie ${this.currentYear}`, url: `/daily-prod-projection/true/nacimientos_terminados/produccion/${this.currentYear}`, icon: 'document-text-outline', color:"platinum"  },
-      { title: `Resumen De Produccion Mensual`, url: `/menu`, icon: 'document-text-outline', color:"platinum"  },
-      { title: 'Producción Diaria Pollos Terminados', url: '/menu', icon: 'trending-up-outline', color:"platinum"  },
-      { title: 'Producción Mensual Pollos Terminados', url: '/menu', icon: 'bar-chart-outline', color:"platinum"  },
+      { title: `Resumen De Produccion Mensual`, url: null, icon: 'document-text-outline', color:"platinum"  },
+      { title: 'Producción Diaria Pollos Terminados', url: null, icon: 'trending-up-outline', color:"platinum"  },
+      { title: 'Producción Mensual Pollos Terminados', url: null, icon: 'bar-chart-outline', color:"platinum"  },
       //{ title: `Proyección Lb. Disponibles Al Mercado`, url: `/daily-meet-projection/${this.currentYear}`, icon: 'document-text-outline', color:"danger"  },
     ],
     'Resumen Gráfico':[
@@ -90,6 +96,7 @@ export class MenuPage implements OnInit {
       { title: 'Geoposición De las Empresas Rep. Pesadas', url: '/business/new', icon: 'location-outline', color:"platinum"  },
       { title: 'Geoposición De las Plantas Incubadoras', url: '/business/new', icon: 'location-outline', color:"platinum"  },
       { title: 'Geoposición De las Granjas Avicolas', url: '/business/new', icon: 'location-outline', color:"platinum"  },
+      { title: 'Geoposición De las Plantas De Proceso', url: '/business/new', icon: 'location-outline', color:"platinum"  },
     ],
   };
 
@@ -98,11 +105,18 @@ export class MenuPage implements OnInit {
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     public authService: AuthService,
   ) { }
 
   ngOnInit() {
-    
+    const index = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
+    if(index>=0){
+      this.openSub(this.appPages[index]);
+      this.sub=true;
+    }else{
+      this.sub=false;
+    }
   }
 
   openSub(p){

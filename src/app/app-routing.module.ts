@@ -70,11 +70,6 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'birth-entry',
-    loadChildren: () => import('./birth-chiks-entry/birth-chiks-entry.module').then( m => m.BirthChiksEntryPageModule)
-  },
-  {
-    canActivate:[AuthGuard],
     path: 'births-by-weeks',
     loadChildren: () => import('./births-by-weeks/births-by-weeks.module').then( m => m.BirthsByWeeksPageModule)
   },
@@ -106,6 +101,11 @@ export const routes: Routes = [
   {
     canActivate:[AuthGuard],
     path: 'menu',
+    loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'menu/select/:id',
     loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule)
   },
   {

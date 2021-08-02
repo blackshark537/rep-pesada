@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="warning">
     <ion-buttons slot="start">
-      <app-back-button ></app-back-button>
+      <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title size="large">Aves Existentes En {{estado==='recria'? 'Recría'  : 'Producción'}}</ion-title>
+    <ion-title >Aves Existentes En {{estado==='recria'? 'Recría'  : 'Producción'}}</ion-title>
     <ion-buttons slot="end">
       <ion-title>{{time | date: 'medium'}}</ion-title>
       <!-- <ion-label>Sem. Max</ion-label>

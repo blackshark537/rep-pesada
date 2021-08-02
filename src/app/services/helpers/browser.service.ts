@@ -8,6 +8,21 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 })
 export class BrowserService {
 
+  slideOpts = {
+    initialSlide: 3,
+    speed: 600,
+    slidesPerView: 4,
+    autoplay: true,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    },
+  };
+  slides=true;
+
   constructor(
     private router: Router,
     private toastCtrl: ToastController,
@@ -84,6 +99,34 @@ export class BrowserService {
       this.showToast('ERROR ACCESO PROHIBIDO', 'lock-closed', ToastSatusClass.info);
       return;
     }
+  }
+
+  configSlides(size=4){
+    addEventListener('resize', ev=>{
+      ev.preventDefault();
+      this.configSlides();
+    });
+
+    if(window.innerWidth < 500){
+      this.slideOpts.slidesPerView = 1;
+      this.resetSlides();
+      return this.slideOpts;
+    }
+    if(window.innerWidth > 500 && window.innerWidth < 1000){
+      this.slideOpts.slidesPerView = 3;
+      this.resetSlides();
+      return this.slideOpts;
+    }
+    if(window.innerWidth > 1000){
+      this.slideOpts.slidesPerView = size;
+      this.resetSlides();
+      return this.slideOpts;
+    }
+  }
+
+  resetSlides(){
+    this.slides=false;
+    setTimeout(()=> this.slides=true, 1);
   }
 
 }
