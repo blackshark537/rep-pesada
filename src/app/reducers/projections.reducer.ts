@@ -6,9 +6,12 @@ import { EggLotProjectionInterface, LotProjection } from '../models';
 const initial_state: LotProjection[] = [];
 const Egg_state:    EggLotProjectionInterface[] = [];
 
+
 const _projectionsReducer = createReducer(
     initial_state,
-    on(projectionsActions.SET_PROJECTIONS, (state, {projections})=> ([...state, ...projections])),
+    on(projectionsActions.SET_PROJECTIONS, (state, {projections})=> {
+        return [...state, ...projections]
+    }),
     on(projectionsActions.GET_PROJECTIONS, (state)=> state),
 );
 

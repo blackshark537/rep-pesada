@@ -31,7 +31,7 @@ export class MenuPage implements OnInit {
   public subPages = {
     'Empresas Genéticas':[
       { title: 'HISTORIA DE LA INDUSTRIA AVICOLA DE LA R.DOM.', url: '/history', icon: 'time-outline', color:"platinum" },
-      { title: 'NOMBRES Y REGISTRO DE LAS EMPRESAS', url: '/business', icon: 'business-outline', color:"platinum"  },
+      { title: 'NOMBRES Y REGISTRO DE LAS EMPRESAS', url: '/business/abuelos', icon: 'business-outline', color:"platinum"  },
       { title: 'ASIGNACION VS IMPORTACION ABUELAS COBB-ROSS', url: '/data-driven', icon: 'share-social-outline', color:"platinum"  },
       { title: 'CALENDARIO DE ENTRADA LOTES', url: '/monthly-data', icon: 'calendar-number-outline', color:"platinum"  },
       { title: 'GRAFICA PARTICIPACION DEL MERCADO ', url: '/production/pie-light-breeder', icon: 'pie-chart-outline', color:"platinum"  },
@@ -56,6 +56,7 @@ export class MenuPage implements OnInit {
       { title: 'INCUBACIONES REALES PROG. ABUELOS', url: '/births-by-weeks/real', icon: 'egg-outline', color:"platinum"  },
     ],
     'Proyectos Reprodutoras Pesadas':[
+      { title: 'NOMBRES Y REGISTRO DE LOS PRODUCTORES', url: '/business/pesada', icon: 'business-outline', color:"platinum"  },
       { title: 'ENTRADA REPRODUCTORAS Y AVES EN RECRIA ', url: '/eggs-production/recria', icon: 'logo-twitter', color:"platinum"  },
       { title: 'POBLACION DE AVES EN PRODUCCION Y PARAMETROS', url: '/eggs-production/produccion', icon: 'logo-twitter', color:"platinum"  },
       { title: `POBLACION DIARIA/MES DE LAS AVES EN PRODUCCION ${this.currentYear}`, url: `/daily-prod-projection/true/aves/produccion/${this.currentYear}`, icon: 'document-text-outline', color:"platinum"  },

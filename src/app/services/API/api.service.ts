@@ -71,7 +71,7 @@ export class ApiService {
     return from(this.browserService.loadingCtrl.create({ message: 'Cargando Lotes, <br> por favor espere...<span id="progress"></span>' })).pipe(
       switchMap(load => {
         load.present();
-        return this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}`, this.http_options)
+        return this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes?_where[0][year_gte]=${year}&_where[0][lote_type]=abuelos`, this.http_options)
         .pipe(
             map(event=> {
               if(event.type === HttpEventType.DownloadProgress){
@@ -149,6 +149,16 @@ export class ApiService {
         )//
       })
     ) 
+  }
+
+  postBusiness(business: BusinessInterface): Observable<LotResponse>{
+    return this.http.post<LotResponse>(`${environment.baseUrl}/Empresas`, business)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  }
+
+  updateBusiness(id: number, business: BusinessInterface): Observable<LotResponse>{
+    return this.http.put<LotResponse>(`${environment.baseUrl}/Empresas/${id}`, business)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 
   postLot(lot: LotForm): Observable<LotResponse>{

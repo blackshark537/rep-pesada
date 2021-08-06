@@ -21,8 +21,13 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'business',
+    path: 'business/:filter',
     loadChildren: () => import('./business/business.module').then( m => m.BusinessPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'forms',
+    loadChildren: () => import('./forms-module/forms-module.module').then( m => m.FormsModuleModule)
   },
   {
     canActivate:[AuthGuard],
@@ -58,11 +63,6 @@ export const routes: Routes = [
     canActivate:[AuthGuard],
     path: 'daily-projection/:custom/:filter/:state/:year',
     loadChildren: () => import('./daily-projection/daily-projection.module').then( m => m.DailyProjectionPageModule)
-  },
-  {
-    canActivate:[AuthGuard],
-    path: 'lot-form',
-    loadChildren: () => import('./lot-form/lot-form.module').then( m => m.LotFormPageModule)
   },
   {
     path: '404',

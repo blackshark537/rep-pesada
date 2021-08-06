@@ -49,6 +49,7 @@ export class BreederPage implements OnInit, OnDestroy {
       
       if(lote==null){
         //console.log("The lot is undefined or null  : %s", lote);
+        window.history.back();
         return;
       }
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { last, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AppModel } from '../models';
 import { TableEvent } from '../shared';
 
@@ -11,7 +12,8 @@ import { TableEvent } from '../shared';
   styleUrls: ['./business.page.scss'],
 })
 export class BusinessPage implements OnInit {
-
+  title='';
+  subtitle='';
   cols = [
     /* { number: false, prop: 'index' , header: 'No.'},  */
     { number: false, prop: 'empresa' , header: 'Empresa y/o Productor'}, 
@@ -22,13 +24,22 @@ export class BusinessPage implements OnInit {
   businesses = []
   balanceTotal=0;
   constructor(
+    private activatedRoute: ActivatedRoute,
     private platform: Platform,
     private store: Store<AppModel>
   ) { }
 
   ngOnInit() {
+    const filtro = this.activatedRoute.snapshot.paramMap.get('filter');
+    if(filtro==='abuelos'){
+      this.title='Registro de Empresas Genéticas';
+      this.subtitle='Empresas Genéticas con Asignación de Rep. Abuelas';
+    } else {
+      this.title='Registro de los Productores';
+      this.subtitle='Productores con Asignación de Rep. Pesada';
+    }
     this.store.select('businesses').pipe(
-      map(Businesses => Businesses.map((b, i)=>{
+      map(Businesses => Businesses.filter(b=> b.empresa_type === filtro).map((b, i)=>{
         const {id, nombre_comercial, RNC, telefono, direccion, cant_gallinas_asignadas} = b;
         this.balanceTotal+= parseInt(cant_gallinas_asignadas);
         return {

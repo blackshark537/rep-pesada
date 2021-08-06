@@ -3,12 +3,11 @@ import { ModalController, Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LotService } from '../services';
-import { LotModel, LotResponse } from '../models';
+import { LotModel } from '../models';
 import { Store } from '@ngrx/store';
 import { AppModel } from '../models';
 import { interval, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LotFormPage } from '../lot-form/lot-form.page';
 
 @Component({
   selector: 'app-lot',
@@ -46,6 +45,7 @@ export class LotPage implements OnInit, OnDestroy {
   }
   col$;
   filter  =   "production";
+  lot_type=   "abuelos";
   time = new Date();
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   constructor(
@@ -66,6 +66,7 @@ export class LotPage implements OnInit, OnDestroy {
 
     this.sub$ = interval(1000).subscribe(()=> this.time = new Date());
     this.filter = this.activeRoute.snapshot.paramMap.get('id');
+
     this.col$ = this.filter === 'breeding'? this.lotService.colsBreading$ : this.lotService.cols$;
     this.lot$   = this.store.select('lots').pipe(
       map(a => {
@@ -124,11 +125,11 @@ export class LotPage implements OnInit, OnDestroy {
   selected(evt: TableEvent) {
       if(evt.action === 'new')    this.router.navigate(['/lot-form'])
       if(evt.action === 'open')   return this.open(evt.row);
-      if(evt.action === 'edit')   return this.edit(evt.row);
+      if(evt.action === 'edit')   return //this.edit(evt.row);
       if(evt.action === 'delete') return this.delete(evt.row);
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-  async edit(row){
+  /* async edit(row){
     const modal = await this.modalCtrl.create({
       component: LotFormPage,
       componentProps: {
@@ -138,7 +139,7 @@ export class LotPage implements OnInit, OnDestroy {
       }
     });
     await modal.present();
-  }
+  } */
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   open(row){
     this.lotService.lot$.next(row);

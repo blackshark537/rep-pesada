@@ -1,0 +1,112 @@
+<ion-header [translucent]="true">
+  <ion-toolbar  color="warning">
+    <ion-buttons slot="start">
+      <app-back-button back="true"></app-back-button>
+      <ion-button *ngIf="edit" (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Formulario para Empresas - {{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form [formGroup]="businessForm" >
+    <ion-list>
+      <ion-list-header>
+        <ion-label  color="warning">
+          <h1>Nueva Empresa - {{title}}</h1>
+          <h2>Todos los campos con <span class="invalid">*</span> son necesarios.</h2>
+        </ion-label>
+      </ion-list-header>
+
+      <ion-grid>
+        
+        <ion-row>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Nombre Comercial: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="nombre_comercial" type="text" placeholder="ejemplo: Pollo Cibao"></ion-input>
+              <small *ngIf="getControl('nombre_comercial').invalid && getControl('nombre_comercial').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Teléfono: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="telefono" type="tel" placeholder="ejemplo: 809xxxxxxx"></ion-input>
+              <small *ngIf="getControl('telefono').invalid && getControl('telefono').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Cant. De Gallinas Asignadas: <span class="invalid">*</span></h1></ion-label>
+              <ion-input formControlName="cant_gallinas_asignadas" type="number" placeholder="ejemplo: eMail@me.com"></ion-input>
+              <small *ngIf="getControl('cant_gallinas_asignadas').invalid && getControl('cant_gallinas_asignadas').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Dirección: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="direccion" type="text" placeholder="ejemplo: ave. #16 ..."></ion-input>
+              <small *ngIf="getControl('direccion').invalid && getControl('direccion').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Provincia: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="provincia" type="text" placeholder="ejemplo: La Vega"></ion-input>
+              <small *ngIf="getControl('provincia').invalid && getControl('provincia').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Inicio De Operaciones: </h1></ion-label>
+              <ion-input formControlName="inicio_de_operaciones" type="number" placeholder="ejemplo: 1980"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Correo De La Empresa: </h1></ion-label>
+              <ion-input formControlName="correo" type="email" placeholder="ejemplo: eMail@me.com"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>RNC: </h1></ion-label>
+              <ion-input formControlName="RNC" type="text" placeholder="ejemplo: numero de comprobante fiscal"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      
+      </ion-grid>
+
+    </ion-list>
+  </form>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    
+    <ion-button slot="end" *ngIf="!edit; else editButton" [disabled]="businessForm.invalid" fill="solid" color="warning" (click)="post()">
+      Guardar
+    </ion-button>
+    <ng-template #editButton>
+      <ion-button [disabled]="businessForm.invalid" expand="block" fill="solid" color="warning" (click)="put()">
+        Actualizar
+      </ion-button>
+    </ng-template>
+
+  </ion-toolbar>
+</ion-footer>

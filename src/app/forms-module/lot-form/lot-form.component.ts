@@ -3,16 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppModel, BusinessInterface, LotModel } from '../models';
-import { ApiService } from '../services';
-import { LotsActions } from '../actions';
-import { Router } from '@angular/router';
+import { AppModel, BusinessInterface, LotModel } from '../../models';
+import { ApiService } from '../../services';
+import { LotsActions } from '../../actions';
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-lot-form',
-  templateUrl: './lot-form.page.html',
-  styleUrls: ['./lot-form.page.scss'],
+  templateUrl: './lot-form.component.html',
+  styleUrls: ['./lot-form.component.scss'],
 })
-export class LotFormPage implements OnInit {
+export class LotFormComponent implements OnInit {
 
   @Input('edit') edit = false;
   @Input('id') id = null;
@@ -26,10 +27,11 @@ export class LotFormPage implements OnInit {
   }
 
   business$: Observable<BusinessInterface[]>
-
+  title='';
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private apiService: ApiService,
     private loadCtrl: LoadingController,
     private modalCtrl: ModalController,
@@ -37,6 +39,8 @@ export class LotFormPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    const lot_type = this.activatedRoute.snapshot.paramMap.get('lot_type');
+    this.title = lot_type==='abuelos'? 'Abuelos Progenitores' : 'Rep. Pesada';
     this.business$ = this.store.select('businesses');
     this.loteForm = this.fb.group({
       fecha_entrada: [new Date(), Validators.required],
@@ -49,7 +53,8 @@ export class LotFormPage implements OnInit {
       year: [null, Validators.required],
       cant_gallinas_asignadas: [null, Validators.required],
       empresa: [null, Validators.required],
-      cantidad: [null, Validators.required]
+      cantidad: [null, Validators.required],
+      lot_type: [lot_type]
     })
     if(this.edit){
       this.loteForm.patchValue({

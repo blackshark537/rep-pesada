@@ -1,21 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LotFormPage } from './lot-form.page';
+import { LotFormComponent } from './lot-form.component';
 
-describe('LotFormPage', () => {
-  let component: LotFormPage;
-  let fixture: ComponentFixture<LotFormPage>;
+describe('LotFormComponent', () => {
+  let component: LotFormComponent;
+  let fixture: ComponentFixture<LotFormComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LotFormPage ],
+      declarations: [ LotFormComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LotFormPage);
+    fixture = TestBed.createComponent(LotFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -14,4 +14,6 @@ export interface BusinessInterface {
     "perfil_usuario": any;
     "capacidad_instaladas"?: CapacityInterface[];
     "cant_gallinas_asignadas": string;
+    "empresa_type": string;
+    "Inicio_de_operaciones"?: any
 }

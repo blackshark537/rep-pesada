@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title>Registro de Empresas Genéticas</ion-title>
+    <ion-title>{{title | titlecase}}</ion-title>
     <ion-buttons slot="end">
         <ion-title style="margin-right: 1rem;">
           Asignación total: 
@@ -16,9 +16,9 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Registro de Empresas Genéticas</ion-title>
+      <ion-title size="large">{{title | titlecase}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-table name="Empresas Genéticas con Asignación de Rep. Abuelas" [cols]="cols" [rows]="businesses" (selected)="selected($event)"></app-table>
+  <app-table [name]="subtitle" [cols]="cols" [rows]="businesses" (selected)="selected($event)"></app-table>
 </ion-content>

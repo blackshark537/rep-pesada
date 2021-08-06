@@ -1,36 +1,26 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="danger">
+  <ion-toolbar  color="warning">
     <ion-buttons slot="start">
-      <ion-back-button back="true"></ion-back-button>
+      <app-back-button back="true"></app-back-button>
       <ion-button *ngIf="edit" (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Formulario para lotes</ion-title>
-    <ion-buttons slot="end">
-      <ion-button *ngIf="!edit; else editButton" [disabled]="loteForm.invalid" fill="solid" color="success" (click)="post()">
-        Guardar
-      </ion-button>
-      <ng-template #editButton>
-        <ion-button [disabled]="loteForm.invalid" fill="solid" color="success" (click)="put()">
-          Actualizar
-        </ion-button>
-      </ng-template>
-    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Formulario para lotes</ion-title>
+      <ion-title size="large">Formulario para lotes - {{title}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <form [formGroup]="loteForm" >
     <ion-list>
       <ion-list-header>
-        <ion-label>
+        <ion-label  color="warning">
           <h1>Nuevo lote</h1>
           <h2>Todos los campos con <span class="invalid">*</span> son necesarios.</h2>
         </ion-label>
@@ -117,3 +107,17 @@
 
 
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    
+      <ion-button slot="end" *ngIf="!edit; else editButton" [disabled]="loteForm.invalid" fill="solid" color="warning" (click)="post()">
+        Guardar
+      </ion-button>
+      <ng-template #editButton>
+        <ion-button [disabled]="loteForm.invalid" expand="block" fill="solid" color="warning" (click)="put()">
+          Actualizar
+        </ion-button>
+      </ng-template>
+    
+  </ion-toolbar>
+</ion-footer>
