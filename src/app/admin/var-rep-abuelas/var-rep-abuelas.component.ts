@@ -81,6 +81,7 @@ export class VarRepAbuelasComponent implements OnInit, OnDestroy {
     this.lotService._PROD.forEach((el,i)=>{
       let aprov = this.lotService._APROV[i];
       let nac = this.lotService._Nac[i];
+      i+=24;
       this.row.push({
         id:i,
         prod_real: el, 

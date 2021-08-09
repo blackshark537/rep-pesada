@@ -1,0 +1,211 @@
+<ion-header [translucent]="true">
+  <ion-toolbar  color="warning">
+    <ion-buttons slot="start">
+      <app-back-button back="true"></app-back-button>
+      <ion-button *ngIf="edit" (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2">
+        <ion-row class="container">
+          <ion-col size="12">
+            <h3>Lote</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row class="container">
+          <ion-col size="12">
+            <h1>#{{lotId}}</h1>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row class="container">
+          <ion-col size="12">
+            <h3>Dia</h3>
+          </ion-col>
+        </ion-row> -->
+      </ion-col>
+      <ion-col size="8">
+        <ion-row>
+          <ion-col size="2" class="container"><h3>Del Dia</h3></ion-col>
+          <ion-col size="10" class="container"><h3>Hembras</h3></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2" class="container"><p>10/4/2021</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Mort. STD</p></ion-col>
+          <ion-col size="1" class="container red"><p>0.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Peso STD</p></ion-col>
+          <ion-col size="1" class="container red"><p>8.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Gramos STD</p></ion-col>
+          <ion-col size="1" class="container red"><p>8.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>%Prod. STD</p></ion-col>
+          <ion-col size="1" class="container red"><p>82</p></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2" class="container"><p>Al Dia</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Mort. Real</p></ion-col>
+          <ion-col size="1" class="container"><p>0.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Peso Real</p></ion-col>
+          <ion-col size="1" class="container red"><p>8.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Gramos Real</p></ion-col>
+          <ion-col size="1" class="container"><p>8.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>%Prod. Real</p></ion-col>
+          <ion-col size="1" class="container"><p>82</p></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2" class="container"><p>10/4/2021</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Diferencia</p></ion-col>
+          <ion-col size="1" class="container"><p>0.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Diferencia</p></ion-col>
+          <ion-col size="1" class="container"><p>8.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Diferencia</p></ion-col>
+          <ion-col size="1" class="container"><p>8.2</p></ion-col>
+          <ion-col size="1.5" class="container"><p>Diferencia</p></ion-col>
+          <ion-col size="1" class="container"><p>82</p></ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="2" >
+        <ion-row class="container">
+          <ion-col size="12">
+            <h3>Semana</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row class="container">
+          <ion-col size="12">
+            <h1>35</h1>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="1" class="container">
+        
+      </ion-col>
+      <ion-col size="4" class="container">
+        <h3>EXISTENCIA Y MORTALIDAD HEMBRAS</h3>
+      </ion-col>
+      <ion-col size="1" class="container">
+        <h3>ALIMENTO</h3>
+      </ion-col>
+      <ion-col size="6" class="container">
+        <h3>PRODUCCION DE HUEVOS DIARIO</h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="1" class="container">
+        <h3>Dia</h3>
+      </ion-col>
+      <ion-col size="1" class="container">
+        <p>Inicio Semana</p>
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>Mort.</p>
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>Desc.</p>
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>Venta</p>
+      </ion-col>
+      <ion-col size="1" class="container">
+        <p>Final Semana</p>
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>% Mort.</p>
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>GRS Alim</p>
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>Total Alim</p>
+      </ion-col>
+      <ion-col size="4" class="container">
+        <p>CLASIFICACION POR TIPO DE HUEVOS</p>
+        <ion-row>
+          <ion-col size="2.4" class="container"><p>Incubar</p></ion-col>
+          <ion-col size="2.4" class="container"><p>Dobles</p></ion-col>
+          <ion-col size="2.4" class="container"><p>Sucios</p></ion-col>
+          <ion-col size="2.4" class="container"><p>Comercial</p></ion-col>
+          <ion-col size="2.4" class="container"><p>Rotos</p></ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="0.7" class="container">
+        <p>TOTAL</p>
+        <p>PROD. SEMANAL</p>
+      </ion-col>
+      <ion-col size="0.7" class="container">
+        <p>%</p>
+        <p>PROD.</p>
+      </ion-col>
+      <ion-col size="0.6" class="container">
+        <p>% </p>
+        <p>APROV.</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="1" class="container">
+        <p>12/2/2021</p><!-- Dia -->
+      </ion-col>
+      <ion-col size="1" class="container">
+        <p>8293</p><!-- inico Semana -->
+      </ion-col>
+      <ion-col size="0.5" class="container red">
+        <p>2</p><!-- Mort -->
+      </ion-col>
+      <ion-col size="0.5" class="container red">
+        <p>0</p><!-- Desc -->
+      </ion-col>
+      <ion-col size="0.5" class="container red">
+        <p>0</p><!-- Venta -->
+      </ion-col>
+      <ion-col size="1" class="container">
+        <p>8291</p><!-- fin Semana -->
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>0.02</p><!-- % Mort -->
+      </ion-col>
+      <ion-col size="0.5" class="container">
+        <p>150</p><!-- GRS Alim -->
+      </ion-col>
+      <ion-col size="0.5" class="container red">
+        <p>31.50</p><!-- Alim -->
+      </ion-col>
+
+      <ion-col size="4" style="padding: 0;">
+        <ion-row  style="padding: 0;">
+          <ion-col size="2.4" class="container red"><p>4451</p></ion-col>
+          <ion-col size="2.4" class="container red"><p>1</p></ion-col>
+          <ion-col size="2.4" class="container red"><p>33</p></ion-col>
+          <ion-col size="2.4" class="container red"><p>9</p></ion-col>
+          <ion-col size="2.4" class="container red"><p>45</p></ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="0.7" class="container">
+        <p>4539</p>
+      </ion-col>
+      <ion-col size="0.7" class="container">
+        <p>50.9 %</p>
+      </ion-col>
+      <ion-col size="0.6" class="container">
+        <p>97.5 %</p>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

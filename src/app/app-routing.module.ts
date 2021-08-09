@@ -36,6 +36,11 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
+    path: 'detail-lot/:lotId',
+    loadChildren: () => import('./detail-lot/detail-lot.module').then( m => m.DetailLotPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
     path: 'production/:industry',
     loadChildren: () => import('./production/production.module').then( m => m.ProductionPageModule)
   },
@@ -120,6 +125,7 @@ export const routes: Routes = [
     },
     component: NotFoundPage
   },
+
 ];
 
 @NgModule({

@@ -76,6 +76,7 @@ export class VarRepPesadasComponent implements OnInit,OnDestroy {
     this.effectService._PROD.forEach((el, i)=>{
       let aprov=this.effectService._APROV[i];
       let nac = this.effectService._Nac[i];
+      i+=24;
       this.row.push({
         id:i,
         prod_real: el,
