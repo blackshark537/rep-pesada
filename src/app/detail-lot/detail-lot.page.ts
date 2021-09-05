@@ -9,6 +9,7 @@ export class DetailLotPage implements OnInit {
 
   title='CONTROL DE PRODUCCION Y CONSUMO ALIMENTO SEMANAL';
   lotId=54;
+  edit=false;
   constructor() { }
 
   ngOnInit() {

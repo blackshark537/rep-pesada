@@ -1,13 +1,16 @@
 
 <ion-header [translucent]="true">
-  <ion-toolbar color="warning">
+  <ion-toolbar color="paolo-green">
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title>Cierre De Mercado Productivo</ion-title>
+    <ion-title>Resumen Ejecutivo De La Producción</ion-title>
     <ion-buttons slot="end">
-      <ion-button [disabled]="speaking" fill="solid" color="success" (click)="speach()">
+      <ion-button *ngIf="!speaking" fill="solid" color="success" (click)="speach()">
         Asistente Virtual D-P
+      </ion-button>
+      <ion-button *ngIf="speaking" fill="solid" color="danger" (click)="pause()">
+        Pausar Asistente Virtual D-P
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -16,7 +19,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Cierre De Mercado Productivo</ion-title>
+      <ion-title size="large">Resumen Ejecutivo De La Producción</ion-title>
     </ion-toolbar>
   </ion-header>
 

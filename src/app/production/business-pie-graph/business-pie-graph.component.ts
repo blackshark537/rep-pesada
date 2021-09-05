@@ -93,8 +93,8 @@ export class BusinessPieGraphComponent implements OnInit {
             rows.forEach(r=>{
               this.single.push(
                 {
-                  "name":  (` ${r.empresa} - ${parseInt(r.cuota_importacion)}%`).toLocaleUpperCase(),
-                  "value": r.asignacion,
+                  "name":  (` ${r.empresa} - ${parseInt(r.cuota_asignacion)}%`).toLocaleUpperCase(),
+                  "value": r.cuota_asignacion,
                   "extra": {
                     "code": "de"
                   }

@@ -113,3 +113,13 @@ main{
     background-repeat: no-repeat; 
     background-position: center;
 }
+
+#head{
+    ion-toolbar{
+        height: 3.5em;
+    }
+}
+
+ion-header{
+    margin-top: 3.5em;
+}

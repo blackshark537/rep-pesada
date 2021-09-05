@@ -268,9 +268,9 @@ private getRecria(lote: EggLotInterface) {
         const { day, entry, chicks, variable_mortalidad_produccion, variable_produccion_huevos_totales } = lote;
   
         const percent = prod[i - 1]?.mort || 100;
-        const mortality = percent - (variable_mortalidad_produccion / (total_weeks * 7));
+        const mortality = percent - (this.variable_mortalidad_produccion / (total_weeks * 7));
 
-        const std_produccion =  this._PROD[index] - (this._PROD[index] * variable_produccion_huevos_totales / 100);
+        const std_produccion =  this._PROD[index] - (this._PROD[index] * this.variable_produccion_huevos_totales / 100);
         const std_aprovechamiento = this._APROV[index] - (this._APROV[index] * this.variable_aprovechamiento_huevos /100);
         const std_nacimientos = this._Nac[index] - (this._Nac[index] *  this.variable_nacimientos / 100 );
 
@@ -308,7 +308,7 @@ private getRecria(lote: EggLotInterface) {
                 mort: Math.round(mortality * 100) / 100,
                 entry: date2,
                 stdreal: this._PROD[index],
-                standar: std_produccion.toFixed(2),
+                standar: (std_produccion/100).toFixed(2),
                 std_aprovechamiento: std_aprovechamiento.toFixed(2),
                 birth: std_nacimientos.toFixed(2),
                 chicks: total_chicks,

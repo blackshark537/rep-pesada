@@ -68,6 +68,7 @@ export class BreederPage implements OnInit, OnDestroy {
 
       if(this.production==='true'){
         /* this.store.select('eggsProjections').pipe(map(prj => prj.filter(p => p.id ===  lote.id))).subscribe(resp=>{
+          console.log('resp eggs proj ', resp);
           resp.filter(p=> p.estado===this.estado).forEach((p, i)=>{
             this.lots.push({
               ...p,
@@ -81,7 +82,9 @@ export class BreederPage implements OnInit, OnDestroy {
             id: i+1
           })
         });
+
       }else{
+        
         this.store.select('projections').pipe(map(prj => prj.filter(p => p.id ===  lote.id))).subscribe(resp=>{
           resp.filter(p=> p.estado===this.estado).forEach((p, i)=>{
             this.lots.push({
@@ -90,6 +93,7 @@ export class BreederPage implements OnInit, OnDestroy {
             })
           });
         });
+
       }
 
     });

@@ -6,20 +6,20 @@
         <ion-label>Atrás</ion-label>
       </ion-button> -->
       <app-back-button *ngIf="sub" back="true"></app-back-button>
-      <ion-avatar *ngIf="!sub">
+      <!-- <ion-avatar *ngIf="!sub">
         <img src="assets/logo1.jpeg" alt="logo">
-      </ion-avatar>
+      </ion-avatar> -->
     </ion-buttons>
     <ion-title >
-      {{sub? subIndex : 'Bienvenidos a Data-Prod'}}
+      {{sub? subIndex : 'Menu'}}
     </ion-title>
 
-    <ion-buttons slot="end" *ngIf="!sub">
+    <!-- <ion-buttons slot="end" *ngIf="!sub">
       <ion-button [color]="exitButtonColor" (click)="authService.signOut()">
         <h4>Salir</h4>
         <ion-icon size="large" slot="end" name="enter-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -33,11 +33,11 @@
   </ion-header>
 
   <div class="logo">
-    <ion-item lines="none" >
+    
       <ion-title class="ion-text-center" size="large">
         <h1>Industria Avicola - {{subtitle}}</h1>
       </ion-title>
-    </ion-item>
+    
   </div>
 
   <!--  -->
@@ -75,7 +75,7 @@
               <ion-card-content>
                 <ion-icon color="spanish-orange" size="large" [name]="p.icon"></ion-icon>
                 <ion-label>
-                  <h2>{{p.title }}</h2>
+                  <h2>{{p.title | titlecase}}</h2>
                 </ion-label>
               </ion-card-content>
             </ion-card>

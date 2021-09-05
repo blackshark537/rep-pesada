@@ -11,7 +11,7 @@ export class MenuPage implements OnInit {
 
   currentYear = new Date().getFullYear();
   exitButtonColor = 'warning';
-  subtitle='Sub-Sector Pollo';
+  subtitle='Rep. Dom.';
   public appPages = [
     { title: 'Empresas Genéticas', url:'/menu/select/0', icon: 'business-outline', color:"platinum" },
     { title: 'Progenitores Abuelos', url:'/menu/select/1', icon: 'cube-outline', color:"platinum"  },
@@ -49,7 +49,7 @@ export class MenuPage implements OnInit {
       { title: 'PRODUCCION HUEVOS T.INCUBABLES Y POLLITAS REPROD. POR MES', url: '/production/bar-month-light-breeder', icon: 'bar-chart-outline', color:"platinum"  },
       { title: 'DATA ANALYST', url: '/data-analyst', icon: 'analytics-outline', color:"platinum"  },
       { title: 'INVENTARIO GENERAL', url: '/daily-projection', icon: 'document-text-outline', color:"platinum"  },
-      { title: 'RESUMEN CIERRE PRODUCTIVO', url: '/home/true', icon: 'document-outline', color:"platinum"  },
+      { title: 'RESUMEN EJECUTIVO DE LA PRODUCCIÓN NACIONAL', url: '/home/true', icon: 'document-outline', color:"platinum"  },
     ],
     'Plantas Incubadoras Progenitores Abuelos':[
       { title: 'INCUBACIONES PROYECTADAS PROG. ABUELOS', url: '/births-by-weeks', icon: 'egg-outline', color:"platinum"  },
@@ -68,7 +68,7 @@ export class MenuPage implements OnInit {
       { title: 'GRAFICA COMPARATIVA DE AVES EN RECRIA VS PROD.', url: '/production/chicks-line-eggs-industry', icon: 'trending-up-outline', color:"platinum"  },
       { title: 'GRAFICA PRODUCCION/HUEVOS DIARIOS', url: '/production/day-line-eggs-industry', icon: 'trending-up-outline', color:"platinum"  },
       { title: 'GRAFICA PRODUCCION/HUEVOS MENSUAL', url: '/production/month-bar-eggs-industry', icon: 'bar-chart-outline', color:"platinum"  },
-      { title: 'RESUMEN CIERRE PRODUCTIVO', url: '/home/false', icon: 'document-outline', color:"platinum"  },
+      { title: 'RESUMEN EJECUTIVO DE LA PRODUCCIÓN NACIONAL', url: '/home/false', icon: 'document-outline', color:"platinum"  },
     ],
     'Planta De Incubacion Reprodutoras Pesadas':[
       { title: 'NACIMIENTOS DE POLLITAS POR PROYECCION POLLOS DE ENGORDE', url: '/births-by-weeks', icon: 'egg-outline', color:"platinum"  },
@@ -128,6 +128,8 @@ export class MenuPage implements OnInit {
        this.subtitle = 'Progenitores Abuelos Cobb Ross';
     } else if(p.title === 'Reprodutoras Pesadas'){ 
       this.subtitle = 'Reproductoras Pesadas';
+    } else if(p.title === 'Proyectos Reprodutoras Pesadas'){
+      this.subtitle = 'Proyectos Reprodutoras Pesadas'
     }
 
     if(p.url){
@@ -139,7 +141,7 @@ export class MenuPage implements OnInit {
 
   closeSub(){
     this.sub=false;
-    this.subtitle='Sub-Sector Pollo';
+    this.subtitle='Rep. Dom.';
   }
 
   logScrolling(evt){

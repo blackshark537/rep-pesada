@@ -6,6 +6,7 @@ import { catchError, map, shareReplay } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { projectionsActions } from '../../actions'
 import { Store } from '@ngrx/store';
+import { differenceInDays, differenceInWeeks, addDays } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -117,7 +118,7 @@ export class LotService {
           const date1 = this.formatDate(fecha_entrada);
           const date2 = new Date(Date.now());
           const data = {
-            id: i + 1,
+            id: id,
             lotId: id,
             cant_gallinas_asignadas,
             business: nombre_comercial,
@@ -335,24 +336,28 @@ export class LotService {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //add one day
-  formatDate(date) {
-    return new Date(new Date(date).getTime() + (24 * 60 * 60 * 1000))
+  formatDate(date: string) {
+    //return new Date(new Date(date).getTime() + (24 * 60 * 60 * 1000))
+    return addDays(new Date(date), 1);
   }
 
   //when the production start
-  private initProd(date) {
-    return new Date(date.getTime() + ((1000 * 3600 * 24) * 133))
+  private initProd(date: Date) {
+    //return new Date(date.getTime() + ((1000 * 3600 * 24) * 133))
+    return addDays(date, 133);
   }
 
   //weeks count since the entry date
   weeksBetween(d1: Date, d2: Date) {
-    return Math.round((d2.getTime() - d1.getTime()) / (7 * 24 * 60 * 60 * 1000));
+    //return Math.round((d2.getTime() - d1.getTime()) / (7 * 24 * 60 * 60 * 1000));
+    return differenceInWeeks(d2, d1);
   }
 
   //days count since the entry date
   daysBetween(d1, d2) {
-    const Difference_In_Time = d2.getTime() - d1.getTime();
-    return Math.floor(Difference_In_Time / (1000 * 3600 * 24)) + 1;
+    /* const Difference_In_Time = d2.getTime() - d1.getTime();
+    return Math.floor(Difference_In_Time / (1000 * 3600 * 24)) + 1; */
+    return differenceInDays(d2,d1);
   }
 
 }

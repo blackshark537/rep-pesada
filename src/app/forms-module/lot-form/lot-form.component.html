@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar  color="warning">
+  <ion-toolbar color="paolo-green">
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
       <ion-button *ngIf="edit" (click)="dismiss()">
@@ -20,7 +20,7 @@
   <form [formGroup]="loteForm" >
     <ion-list>
       <ion-list-header>
-        <ion-label  color="warning">
+        <ion-label  >
           <h1>Nuevo lote</h1>
           <h2>Todos los campos con <span class="invalid">*</span> son necesarios.</h2>
         </ion-label>
@@ -30,13 +30,13 @@
         
         <ion-row>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Fecha de entrada: <span class="invalid">*</span></h1></ion-label>
               <ion-datetime [disabled]="edit" (ionChange)="setDate($event.target.value)" displayFormat="DD MM YY" placeholder="Elegir Fecha"></ion-datetime>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Empresas: <span class="invalid">*</span></h1></ion-label>
               <ion-select [disabled]="edit" (ionChange)="setBusiness($event.target.value)" placeholder="Elige una empresa">
                 <ion-select-option *ngFor="let b of business$ | async" value="{{b | json}}">{{b.nombre_comercial}}</ion-select-option>
@@ -44,7 +44,7 @@
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Cant. de gallinas asignadas: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="cant_gallinas_asignadas" type="number" placeholder="ejemplo: 5000"></ion-input>
               <small *ngIf="get('cant_gallinas_asignadas').invalid && get('cant_gallinas_asignadas').touched" class="invalid">Campo requerido</small>
@@ -54,7 +54,7 @@
 
         <ion-row>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Cant. de gallinas importadas: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="cantidad" type="number" placeholder="ejemplo: 5000"></ion-input>
               <small *ngIf="get('cantidad').invalid && get('cantidad').touched" class="invalid">Campo requerido</small>
@@ -62,14 +62,14 @@
           </ion-col>
 
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Var. mortalidad en recria %: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="variable_mortalidad_recria" type="number" placeholder="ejemplo: 5"></ion-input>
               <small *ngIf="get('variable_mortalidad_recria').invalid && get('variable_mortalidad_recria').touched" class="invalid">Campo requerido</small>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Var. mortalidad en producción %: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="variable_mortalidad_produccion" type="number" placeholder="ejemplo: 5"></ion-input>
               <small *ngIf="get('variable_mortalidad_produccion').invalid && get('variable_mortalidad_produccion').touched" class="invalid">Campo requerido</small>
@@ -79,21 +79,21 @@
 
         <ion-row>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Var. produccion huevos totales %: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="variable_produccion_huevos_totales" type="number" placeholder="ejemplo: 5"></ion-input>
               <small *ngIf="get('variable_produccion_huevos_totales').invalid && get('variable_produccion_huevos_totales').touched" class="invalid">Campo requerido</small>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Var. aprovechamiento de huevos %: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="variable_aprovechamiento_huevos" type="number" placeholder="ejemplo: 5"></ion-input>
               <small *ngIf="get('variable_aprovechamiento_huevos').invalid && get('variable_aprovechamiento_huevos').touched" class="invalid">Campo requerido</small>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="4">
-            <ion-item lines="none">
+            <ion-item >
               <ion-label position="stacked"><h1>Var. de nacimientos %: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="variable_nacimiento" type="number" placeholder="ejemplo: 5"></ion-input>
               <small *ngIf="get('variable_nacimiento').invalid && get('variable_nacimiento').touched" class="invalid">Campo requerido</small>
@@ -110,11 +110,11 @@
 <ion-footer>
   <ion-toolbar>
     
-      <ion-button slot="end" *ngIf="!edit; else editButton" [disabled]="loteForm.invalid" fill="solid" color="warning" (click)="post()">
+      <ion-button slot="end" *ngIf="!edit; else editButton" [disabled]="loteForm.invalid" fill="solid" color="paolo-green" (click)="post()">
         Guardar
       </ion-button>
       <ng-template #editButton>
-        <ion-button [disabled]="loteForm.invalid" expand="block" fill="solid" color="warning" (click)="put()">
+        <ion-button [disabled]="loteForm.invalid" expand="block" fill="solid" color="paolo-green" (click)="put()">
           Actualizar
         </ion-button>
       </ng-template>

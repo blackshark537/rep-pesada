@@ -1,3 +1,4 @@
+
 <ion-app>
 <!--   <ion-split-pane contentId="main-content" when="(min-width: 2040px)" *ngIf="canActive; else logginPage">
     <ion-menu contentId="main-content" type="overlay" >
@@ -265,5 +266,22 @@
   <ng-template #logginPage>
     
   </ng-template> -->
+  <div id="head">
+    <ion-toolbar >
+      <ion-buttons slot="start">
+          <img src="assets/logo1.jpeg" alt="logo" width="50px" height="50px">
+      </ion-buttons>
+      <ion-title color="paolo-green">
+        Data-Prod
+      </ion-title>
+    
+      <ion-buttons slot="end" >
+        <ion-button (click)="authService.signOut()">
+          <h4>Salir</h4>
+          <ion-icon size="large" slot="end" name="enter-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

@@ -86,11 +86,16 @@ export class HomePage implements OnInit, OnDestroy{
   sub$3: Subscription;
   sub$4: Subscription;
   abuelos:boolean=true;
+  //Speach
+  speech: Speech = new Speech();
+
   constructor(
     private store: Store<AppModel>,
     private _ar: ActivatedRoute,
     private loadCtrl: LoadingController
-  ) { }
+  ) { 
+    if(!this.speech) this.speech = new Speech();
+  }
 
   ngOnInit() {
     //const time2=new Date(this.time.getTime() - (this.time.getHours()*60*60*1000));
@@ -357,18 +362,17 @@ export class HomePage implements OnInit, OnDestroy{
   }
 
   async speach() {
-    const speech = new Speech();
     const load = await this.loadCtrl.create({message:'Procesando....'});
     await load.present();
-    console.log('has browser support',speech.hasBrowserSupport())
-    if(!speech.hasBrowserSupport()){
+    console.log('has browser support',this.speech.hasBrowserSupport())
+    if(!this.speech.hasBrowserSupport()){
       load.dismiss();
       return;
     }
     
-    await speech.init();
-    await speech.setLanguage('es-US');
-    await speech.setVolume(1);
+    await this.speech.init();
+    await this.speech.setLanguage('es-US');
+    await this.speech.setVolume(1);
     load.dismiss();
     let texts = []
     
@@ -379,7 +383,7 @@ export class HomePage implements OnInit, OnDestroy{
     }
 
     texts.forEach(async el=>{
-      await speech.speak({
+      await this.speech.speak({
         text: `${el.business}   ${this.selected === 'day'? el.init : el.month}`,
         listeners: {
           onstart: () => {
@@ -397,6 +401,10 @@ export class HomePage implements OnInit, OnDestroy{
         }
       })
     });
-    
+  }
+
+  async pause(){
+    console.log('pause')
+    await this.speech.paused();
   }
 }
