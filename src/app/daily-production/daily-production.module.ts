@@ -4,21 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DetailLotPageRoutingModule } from './detail-lot-routing.module';
+import { DailyProductionPageRoutingModule } from './daily-production-routing.module';
 
-import { DetailLotPage } from './detail-lot.page';
+import { DailyProductionPage } from './daily-production.page';
 import { SharedModule } from '../shared/shared.module';
-import { FormsModuleModule } from '../forms-module/forms-module.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     SharedModule,
-    FormsModuleModule,
     IonicModule,
-    DetailLotPageRoutingModule
+    DailyProductionPageRoutingModule
   ],
-  declarations: [DetailLotPage]
+  declarations: [DailyProductionPage]
 })
-export class DetailLotPageModule {}
+export class DailyProductionPageModule {}

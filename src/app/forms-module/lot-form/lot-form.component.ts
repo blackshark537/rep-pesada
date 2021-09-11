@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppModel, BusinessInterface, LotModel } from '../../models';
+import { AppModel, BusinessInterface, LotModel, LotResponse } from '../../models';
 import { ApiService } from '../../services';
 import { LotsActions } from '../../actions';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,6 +28,7 @@ export class LotFormComponent implements OnInit {
 
   business$: Observable<BusinessInterface[]>
   title='';
+  lot_type=null;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -40,6 +41,7 @@ export class LotFormComponent implements OnInit {
 
   ngOnInit() {
     const lot_type = this.activatedRoute.snapshot.paramMap.get('lot_type');
+    this.lot_type = lot_type;
     this.title = lot_type==='abuelos'? 'Abuelos Progenitores' : 'Rep. Pesada';
     this.business$ = this.store.select('businesses');
     this.loteForm = this.fb.group({
@@ -52,9 +54,11 @@ export class LotFormComponent implements OnInit {
       month: [null, Validators.required],
       year: [null, Validators.required],
       cant_gallinas_asignadas: [null, Validators.required],
-      empresa: [null, Validators.required],
+      empresa: [null],
       cantidad: [null, Validators.required],
-      lot_type: [lot_type]
+      lote_type: [lot_type],
+      nave: [null],
+      seccion: [null]
     })
     if(this.edit){
       this.loteForm.patchValue({
@@ -109,12 +113,14 @@ export class LotFormComponent implements OnInit {
     this.loteForm.patchValue({
       cantidad: {...this.cantidad}
     });
+    let lote = this.loteForm.value as LotResponse;
+    lote.seccion = (lote.seccion as string).toUpperCase();
     let load = await this.loadCtrl.create();
     await load.present();
     this.apiService.postLot(this.loteForm.value).subscribe(resp =>{
       load.dismiss();
       this.store.dispatch(LotsActions.GET_LOTS());
-      this.router.navigate(['/lot/production']);
+      this.router.navigate(['../../']);
     }, error => load.dismiss())
   }
 

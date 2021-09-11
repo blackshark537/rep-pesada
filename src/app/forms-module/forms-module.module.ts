@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LotFormComponent } from './lot-form/lot-form.component';
 import { BusinessFormComponent } from './business-form/business-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { DailyProdFormComponent } from './daily-prod-form/daily-prod-form.component';
 
 
 
 @NgModule({
   declarations: [
     BusinessFormComponent,
-    LotFormComponent
+    LotFormComponent,
+    DailyProdFormComponent
   ],
   imports: [
     CommonModule,

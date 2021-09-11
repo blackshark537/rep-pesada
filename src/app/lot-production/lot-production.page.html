@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="paolo-green">
+    <ion-buttons slot="start">
+      <app-back-button back="true"></app-back-button>
+    </ion-buttons>
+    <ion-title >Lotes en Producción</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="selected({action: 'new'})">
+        Nuevo
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Lotes en Producción</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <app-table 
+  name="Lista de Lotes Disponibles" 
+  [cols]="cols" 
+  [rows]="lots" 
+  [tableActions]="tableActions"
+  (selected)="selected($event)"></app-table>
+</ion-content>

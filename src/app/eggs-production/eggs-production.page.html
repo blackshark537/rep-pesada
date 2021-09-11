@@ -37,7 +37,17 @@
           <ion-card-content>
             <ion-item lines="none">
               <ion-icon slot="end" name="egg" color="warning" size="large"></ion-icon>
-              <h1>Producción Total de Huevos: <span style="color: tomato;">{{total_production | addCommas}}</span></h1>
+              <h1>Huevos Totales: <span style="color: tomato;">{{total_production | addCommas}}</span></h1>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col *ngIf="estado != 'recria' " size="12" size-md="4">
+        <ion-card button style="max-width: 400pc;">
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-icon slot="end" name="egg" color="danger" size="large"></ion-icon>
+              <h1>Huevos Incubables: <span style="color: burlywood;">{{total_incubables | addCommas}}</span></h1>
             </ion-item>
           </ion-card-content>
         </ion-card>

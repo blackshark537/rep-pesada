@@ -36,7 +36,12 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'detail-lot/:lotId',
+    path: 'lot-production',
+    loadChildren: () => import('./lot-production/lot-production.module').then( m => m.LotProductionPageModule)
+  },
+  {
+    canActivate:[AuthGuard],
+    path: 'fecha/:fecha/detail-lot/:lotId/week/:week',
     loadChildren: () => import('./detail-lot/detail-lot.module').then( m => m.DetailLotPageModule)
   },
   {
@@ -94,6 +99,10 @@ export const routes: Routes = [
     loadChildren: () => import('./daily-prod-projection/daily-prod-projection.module').then( m => m.DailyProdProjectionPageModule)
   },
   {
+    path: 'daily-production/:lot',
+    loadChildren: () => import('./daily-production/daily-production.module').then( m => m.DailyProductionPageModule)
+  },
+  {
     canActivate:[AuthGuard],
     path: 'docview/:id',
     loadChildren: () => import('./docview/docview.module').then( m => m.DocviewPageModule)
@@ -125,12 +134,11 @@ export const routes: Routes = [
     },
     component: NotFoundPage
   },
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: false })
   ],
   exports: [RouterModule]
 })

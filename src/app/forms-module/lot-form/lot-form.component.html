@@ -35,7 +35,7 @@
               <ion-datetime [disabled]="edit" (ionChange)="setDate($event.target.value)" displayFormat="DD MM YY" placeholder="Elegir Fecha"></ion-datetime>
             </ion-item>
           </ion-col>
-          <ion-col size="12" size-md="4">
+          <ion-col size="12" size-md="4" *ngIf="lot_type === 'abuelos';">
             <ion-item >
               <ion-label position="stacked"><h1>Empresas: <span class="invalid">*</span></h1></ion-label>
               <ion-select [disabled]="edit" (ionChange)="setBusiness($event.target.value)" placeholder="Elige una empresa">
@@ -60,6 +60,23 @@
               <small *ngIf="get('cantidad').invalid && get('cantidad').touched" class="invalid">Campo requerido</small>
             </ion-item>
           </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Nave: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="nave" type="number" placeholder="ejemplo: 5"></ion-input>
+              <small *ngIf="get('nave').invalid && get('nave').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Seccion: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="seccion" type="text" placeholder="ejemplo: A"></ion-input>
+              <small *ngIf="get('seccion').invalid && get('seccion').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
 
           <ion-col size="12" size-md="4">
             <ion-item >

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { AppModel } from '../models';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { AppModel, LotType } from '../models';
 import { ApiService } from '../services';
 
 @Component({
@@ -65,8 +65,8 @@ export class DataDrivenPage implements OnInit {
       this.year.pipe(
         switchMap(year => {
           return this.apiService.getLotsByYear(year).pipe(
+            map(actions => actions.filter(lot => lot.lote_type === LotType.ABUELOS)),
             map(lots => {
-              
               let importacionTotal = 0
               let row = [];
               this.status.importacion = 0,

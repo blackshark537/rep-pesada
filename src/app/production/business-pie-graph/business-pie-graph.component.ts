@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { AppModel } from 'src/app/models';
+import { AppModel, LotType } from 'src/app/models';
 import { ApiService } from 'src/app/services';
 
 @Component({
@@ -51,6 +51,7 @@ export class BusinessPieGraphComponent implements OnInit {
         this.year.pipe(
           switchMap(year => {
             return this.apiService.getLotsByYear(year).pipe(
+              map(actions => actions.filter(l=> l.lote_type === LotType.ABUELOS)),
               map(lots => {
 
                 let importacionTotal = 0

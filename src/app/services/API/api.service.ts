@@ -10,7 +10,9 @@ import {
   LotInterface,
   LotProjection,
   LotResponse,
-  LotForm
+  LotForm,
+  ProductionInterface,
+  DailyProdMetaInterface
 } from 'src/app/models';
 import { environment } from 'src/environments/environment';
 import { BrowserService } from '../helpers';
@@ -112,6 +114,25 @@ export class ApiService {
     )
   }
 
+  getLots_Pesada(year: number): Observable<LotResponse[]>{
+    return from(this.browserService.loadingCtrl.create()).pipe(
+      switchMap(load =>{
+        load.present();
+        return this.http.get<LotResponse[]>(`${environment.baseUrl}/lotes?_year=${year}&_where[0][lote_type]=pesada`)
+        .pipe(
+          tap(a => {
+            load.dismiss();
+            return a
+          }),
+          catchError(error => {
+            load.dismiss();
+            return throwError(this.browserService.handlError(error))
+          })
+        )
+      })
+    )
+  }
+
   getProyectionsByMonth(conf:{month: number, year: number}) : Observable<LotProjection[]>{
     return from(this.browserService.loadingCtrl.create({ message: `Cargando proyeccion año ${conf.year} <br> por favor espere...<span id="progress1"></span>`, duration: 30000 })).pipe(
       switchMap(load =>{
@@ -171,4 +192,62 @@ export class ApiService {
     .pipe(catchError(error => throwError(this.browserService.handlError(error))))
   }
 
+  get_daily_productions(lotId: number, week: number): Observable<ProductionInterface[]>{
+    return this.http.get<ProductionInterface[]>(`${environment.baseUrl}/daily-productions?_where[lote]=${lotId}&_where[semana]=${week}`)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  }
+
+  post_daily_production(produccion: ProductionInterface): Observable<ProductionInterface>{
+    return this.http.post<ProductionInterface>(`${environment.baseUrl}/daily-productions`, produccion)
+    .pipe(catchError(error => throwError(this.browserService.handlError(error))))
+  }
+
+  get_daily_prod_meta(lote: number): Observable<DailyProdMetaInterface[]>{
+    return from(this.browserService.loadingCtrl.create()).pipe(
+      switchMap(load =>{
+        load.present();
+        return this.http.get<DailyProdMetaInterface[]>(`${environment.baseUrl}/daily-prod-metas?_q=${lote}`)
+        .pipe(
+          map(a => {
+            load.dismiss();
+            return a
+          }),
+          catchError(error => {
+            load.dismiss();
+            return throwError(this.browserService.handlError(error))
+          })
+        )
+      })
+    )
+  }
+
+  post_daily_prd_meta(meta: DailyProdMetaInterface): Observable<DailyProdMetaInterface>{
+    return from(this.browserService.loadingCtrl.create()).pipe(
+      switchMap(load => {
+        load.present();
+        return this.http.post<DailyProdMetaInterface>(`${environment.baseUrl}/daily-prod-metas`, meta)
+        .pipe(
+          map(a => {
+            load.dismiss();
+            return a
+          }),
+          catchError(error => {
+            load.dismiss();
+            return throwError(this.browserService.handlError(error))
+          })
+        )
+      })
+    )
+  }
+
+  delete_daily_prod_meta(id: number): Observable<DailyProdMetaInterface>{
+    return from(this.browserService.Confirm('delete')).pipe(
+      switchMap(resp =>{
+        if(resp){
+          return this.http.delete<DailyProdMetaInterface>(`${environment.baseUrl}/daily-prod-metas/${id}`)
+        }
+        return null;
+      })
+    )
+  }
 }

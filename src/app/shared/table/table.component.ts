@@ -67,10 +67,10 @@ export class TableComponent implements OnInit {
     });
   }
 
-  newRow(){
+  newRow(row){
     this.selected.emit({
       action: SelectedActions.new,
-      row: {}
+      row
     }); 
   }
 

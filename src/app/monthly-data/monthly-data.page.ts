@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { LotType } from '../models';
 import { ApiService, BrowserService } from '../services';
 
 @Component({
@@ -50,7 +51,7 @@ export class MonthlyDataPage implements OnInit {
       return this.apiService.getLotsByYear(year).pipe(
         map(lots=>{
           let row = [];
-          lots.forEach( (lot,i) => {  
+          lots.filter(l => l.lote_type === LotType.ABUELOS).forEach( (lot,i) => {  
             row.push({
               id: i+1,
               empresa: lot.empresa?.nombre_comercial,

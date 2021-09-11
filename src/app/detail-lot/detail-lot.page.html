@@ -7,6 +7,14 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="newOne()">
+        Agregar
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+      
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,8 +26,47 @@
   </ion-header>
 
   <ion-grid>
+
     <ion-row>
-      <ion-col size="2">
+      <ion-col size="2"></ion-col>
+      <ion-col size="8">
+        <h2>CONTROL DE MORTALIDAD Y CONSUMO DE ALIMENTO DIARIO</h2>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+    <ion-row class="container">
+      <ion-col class="container" size="2"><p>FECHA DE NAC.</p></ion-col>
+      <ion-col class="container" size="2"><p>{{fecha_inicio | date: 'shortDate'}}</p></ion-col>
+      <ion-col class="container" size="2"><p>FECHA DEL DIA</p></ion-col>
+      <ion-col class="container" size="2"><p>{{today_date | date: 'shortDate'}}</p></ion-col>
+      <ion-col class="container" size="2"><p>DIAS DE VIDA	</p></ion-col>
+      <ion-col class="container" size="2"><p>{{life_time}}</p></ion-col>
+    </ion-row>
+    <ion-row class="container">
+      <ion-col class="container" size="2"><p>NUMERO DE LOTE	</p></ion-col>
+      <ion-col class="container" size="2"><p>{{lotId}}</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: blue;">PESO STD (Lbs)</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: blue;">81</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: red;">PESO REAL (Lbs)</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: red;">71</p></ion-col>
+    </ion-row>
+    <ion-row class="container">
+      <ion-col class="container" size="2"><p>LOTE DE PROCEDENCIA</p></ion-col>
+      <ion-col class="container" size="2"><p>32</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: blue;">UNIFORMIDAD STD</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: blue;">80</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: red;">UNIFORMIDAD REAL</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: red;">85</p></ion-col>
+    </ion-row>
+    <ion-row class="container">
+      <ion-col class="container" size="2"><p></p></ion-col>
+      <ion-col class="container" size="2"><p></p></ion-col>
+      <ion-col class="container" size="2"><p style="color: blue;">CONSUMO STD</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: blue;">20</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: red;">CONSUMO REAL</p></ion-col>
+      <ion-col class="container" size="2"><p style="color: red;">38</p></ion-col>
+    </ion-row>
+<!--       <ion-col size="2">
         <ion-row class="container">
           <ion-col size="12">
             <h3>Lote</h3>
@@ -30,11 +77,6 @@
             <h1>#{{lotId}}</h1>
           </ion-col>
         </ion-row>
-        <!-- <ion-row class="container">
-          <ion-col size="12">
-            <h3>Dia</h3>
-          </ion-col>
-        </ion-row> -->
       </ion-col>
       <ion-col size="8">
         <ion-row>
@@ -42,7 +84,7 @@
           <ion-col size="10" class="container"><h3>Hembras</h3></ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="2" class="container"><p>10/4/2021</p></ion-col>
+          <ion-col size="2" class="container"><p>{{fecha_inicio | date: 'shortDate'}}</p></ion-col>
           <ion-col size="1.5" class="container"><p>Mort. STD</p></ion-col>
           <ion-col size="1" class="container red"><p>0.2</p></ion-col>
           <ion-col size="1.5" class="container"><p>Peso STD</p></ion-col>
@@ -64,7 +106,7 @@
           <ion-col size="1" class="container"><p>82</p></ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="2" class="container"><p>10/4/2021</p></ion-col>
+          <ion-col size="2" class="container"><p>{{fecha_final | date: 'shortDate'}}</p></ion-col>
           <ion-col size="1.5" class="container"><p>Diferencia</p></ion-col>
           <ion-col size="1" class="container"><p>0.2</p></ion-col>
           <ion-col size="1.5" class="container"><p>Diferencia</p></ion-col>
@@ -83,129 +125,127 @@
         </ion-row>
         <ion-row class="container">
           <ion-col size="12">
-            <h1>35</h1>
+            <h1>{{week}}</h1>
           </ion-col>
         </ion-row>
-      </ion-col>
-    </ion-row>
+      </ion-col> -->
+    
 
     <ion-row>
-      <ion-col size="1" class="container">
+      <ion-col size="0.7" class="container">
         
       </ion-col>
-      <ion-col size="4" class="container">
+      <ion-col size="4.2" class="container">
         <h3>EXISTENCIA Y MORTALIDAD HEMBRAS</h3>
       </ion-col>
-      <ion-col size="1" class="container">
+      <ion-col size="1.4" class="container">
         <h3>ALIMENTO</h3>
       </ion-col>
-      <ion-col size="6" class="container">
+      <ion-col size="5.7" class="container">
         <h3>PRODUCCION DE HUEVOS DIARIO</h3>
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col size="1" class="container">
-        <h3>Dia</h3>
+      <ion-col size="0.7" class="container">
+        <p>Nave</p>
       </ion-col>
-      <ion-col size="1" class="container">
-        <p>Inicio Semana</p>
+      <!-- <ion-col size="0.7" class="container">
+        <p>Seccion</p>
+      </ion-col> -->
+      <ion-col size="0.7" class="container">
+        <p>Aves Inicio Del Día</p>
       </ion-col>
-      <ion-col size="0.5" class="container">
+      <ion-col size="0.7" class="container">
         <p>Mort.</p>
       </ion-col>
-      <ion-col size="0.5" class="container">
+      <ion-col size="0.7" class="container">
         <p>Desc.</p>
       </ion-col>
-      <ion-col size="0.5" class="container">
+      <ion-col size="0.7" class="container">
         <p>Venta</p>
       </ion-col>
-      <ion-col size="1" class="container">
-        <p>Final Semana</p>
+      <ion-col size="0.7" class="container">
+        <p>Aves Final Del Día</p>
       </ion-col>
-      <ion-col size="0.5" class="container">
+      <ion-col size="0.7" class="container">
         <p>% Mort.</p>
       </ion-col>
-      <ion-col size="0.5" class="container">
-        <p>GRS Alim</p>
+      <ion-col size="0.7" class="container">
+        <p>Alim (grs)</p>
       </ion-col>
-      <ion-col size="0.5" class="container">
+      <ion-col size="0.7" class="container">
         <p>Total Alim</p>
       </ion-col>
-      <ion-col size="4" class="container">
-        <p>CLASIFICACION POR TIPO DE HUEVOS</p>
-        <ion-row>
-          <ion-col size="2.4" class="container"><p>Incubar</p></ion-col>
-          <ion-col size="2.4" class="container"><p>Dobles</p></ion-col>
-          <ion-col size="2.4" class="container"><p>Sucios</p></ion-col>
-          <ion-col size="2.4" class="container"><p>Comercial</p></ion-col>
-          <ion-col size="2.4" class="container"><p>Rotos</p></ion-col>
-        </ion-row>
+      
+      <ion-col size="0.7" class="container"><p>Incubar</p></ion-col>
+      <ion-col size="0.7" class="container"><p>Dobles</p></ion-col>
+      <ion-col size="0.7" class="container"><p>Sucios</p></ion-col>
+      <ion-col size="0.7" class="container"><p>Rotos</p></ion-col>
+      <ion-col size="0.7" class="container"><p>Comercial</p></ion-col>
+      
+      <ion-col size="0.7" class="container">
+        <p>Total Prod.</p>
       </ion-col>
       <ion-col size="0.7" class="container">
-        <p>TOTAL</p>
-        <p>PROD. SEMANAL</p>
+        <p>% Prod.</p>
       </ion-col>
       <ion-col size="0.7" class="container">
-        <p>%</p>
-        <p>PROD.</p>
-      </ion-col>
-      <ion-col size="0.6" class="container">
-        <p>% </p>
-        <p>APROV.</p>
+        <p>% Aprov.</p>
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col size="1" class="container">
-        <p>12/2/2021</p><!-- Dia -->
-      </ion-col>
-      <ion-col size="1" class="container">
-        <p>8293</p><!-- inico Semana -->
-      </ion-col>
-      <ion-col size="0.5" class="container red">
-        <p>2</p><!-- Mort -->
-      </ion-col>
-      <ion-col size="0.5" class="container red">
-        <p>0</p><!-- Desc -->
-      </ion-col>
-      <ion-col size="0.5" class="container red">
-        <p>0</p><!-- Venta -->
-      </ion-col>
-      <ion-col size="1" class="container">
-        <p>8291</p><!-- fin Semana -->
-      </ion-col>
-      <ion-col size="0.5" class="container">
-        <p>0.02</p><!-- % Mort -->
-      </ion-col>
-      <ion-col size="0.5" class="container">
-        <p>150</p><!-- GRS Alim -->
-      </ion-col>
-      <ion-col size="0.5" class="container red">
-        <p>31.50</p><!-- Alim -->
-      </ion-col>
-
-      <ion-col size="4" style="padding: 0;">
-        <ion-row  style="padding: 0;">
-          <ion-col size="2.4" class="container red"><p>4451</p></ion-col>
-          <ion-col size="2.4" class="container red"><p>1</p></ion-col>
-          <ion-col size="2.4" class="container red"><p>33</p></ion-col>
-          <ion-col size="2.4" class="container red"><p>9</p></ion-col>
-          <ion-col size="2.4" class="container red"><p>45</p></ion-col>
-        </ion-row>
-      </ion-col>
-
+    <ion-row *ngFor="let d of data$ | async">
       <ion-col size="0.7" class="container">
-        <p>4539</p>
+        <p>{{d.nave}}</p><!-- Dia -->
+      </ion-col>
+      <!-- <ion-col size="0.7" class="container">
+        <p>{{d.seccion}}</p>
+      </ion-col> -->
+      <ion-col size="0.7" class="container">
+        <p>{{d.inicio_dia}}</p><!-- inico Semana -->
+      </ion-col>
+      <ion-col size="0.7" class="container red">
+        <p>{{d.mortalidad}}</p><!-- Mort -->
+      </ion-col>
+      <ion-col size="0.7" class="container red">
+        <p>{{d.descarte}}</p><!-- Desc -->
+      </ion-col>
+      <ion-col size="0.7" class="container red">
+        <p>{{d.venta}}</p><!-- Venta -->
       </ion-col>
       <ion-col size="0.7" class="container">
-        <p>50.9 %</p>
+        <p>{{ d.inicio_dia - (d.descarte + d.mortalidad + d.venta)}}</p><!-- fin Semana -->
       </ion-col>
-      <ion-col size="0.6" class="container">
-        <p>97.5 %</p>
+      <ion-col size="0.7" class="container">
+        <p>{{((d.mortalidad + d.descarte) * 100 / d.inicio_dia).toFixed(2)}}</p><!-- % Mort -->
+      </ion-col>
+      <ion-col size="0.7" class="container">
+        <p>{{d.grs_alimento}}</p><!-- GRS Alim -->
+      </ion-col>
+      <ion-col size="0.7" class="container red">
+        <p>{{(((d.inicio_dia * d.grs_alimento)/454)/100).toFixed(2)}}</p><!-- Alim -->
+      </ion-col>
+  
+      <ion-col size="0.7" class="container red"><p>{{d.huevos_incubables}}</p></ion-col>
+      <ion-col size="0.7" class="container red"><p>{{d.huevos_dobles}}</p></ion-col>
+      <ion-col size="0.7" class="container red"><p>{{d.huevos_sucios}}</p></ion-col>
+      <ion-col size="0.7" class="container red"><p>{{d.huevos_rotos}}</p></ion-col>
+      <ion-col size="0.7" class="container red"><p>{{d.huevos_comerciables}}</p></ion-col>
+    
+      <ion-col size="0.7" class="container">
+        <p>{{getTotalEggs(d) }}</p>
+      </ion-col>
+      <ion-col size="0.7" class="container">
+        <p>{{ ((getTotalEggs(d)/d.inicio_dia)*100).toFixed(2) }} %</p>
+      </ion-col>
+      <ion-col size="0.7" class="container">
+        <p>{{ (d.huevos_incubables / getTotalEggs(d) * 100).toFixed(2)}} %</p>
       </ion-col>
       
     </ion-row>
+        
   </ion-grid>
 
+  
 </ion-content>

@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AppModel } from '../models';
 import { LotService } from '../services';
+import { TableActions, TableEvent } from '../shared';
+import { subDays } from 'date-fns';
 
 @Component({
   selector: 'app-breeder',
@@ -17,7 +19,17 @@ export class BreederPage implements OnInit, OnDestroy {
   title='Analisis Predictivo Rep. Abuelas'
   cols$;
   lots  = [];
+  
+  tableActions: TableActions = {
+    open:   true,
+    new:    true,
+    delete: false,
+    edit: false
+  };
+
   state = {
+    id:      null,
+    fecha:   null,
     owner:   null,
     phone:   null,
     address: null,
@@ -27,6 +39,7 @@ export class BreederPage implements OnInit, OnDestroy {
   estado='recria';
 
   constructor(
+    private router: Router,
     public lotSerivce: LotService,   //Inject the lot service class
     private activatedRoute: ActivatedRoute,
     private store: Store<AppModel>
@@ -35,6 +48,8 @@ export class BreederPage implements OnInit, OnDestroy {
   async ngOnInit() {
     this.lots=[];
     this.state = {
+      id:      null,
+      fecha:   null,
       owner:   null,
       phone:   null,
       address: null,
@@ -57,8 +72,9 @@ export class BreederPage implements OnInit, OnDestroy {
       if (element) {
         element.focus();
       }
-      console.log(lote)
       this.state = {
+        id:      lote.id,
+        fecha:   lote.date,
         owner:   lote.business,
         phone:   lote.phone,
         address: lote.address,
@@ -114,5 +130,11 @@ export class BreederPage implements OnInit, OnDestroy {
   filterBy(value){
     this.estado=value;
     this.ngOnInit();
+  }
+
+  selected(evt: TableEvent) {
+    console.log(evt)
+    if(evt.action === 'open')    this.router.navigate([`/fecha/${this.state.fecha}/detail-lot/${this.state.id}/week/${evt.row.age}`])
+    if(evt.action === 'new')    this.router.navigate([`/forms/daily-prod/fecha/undefined/lot/${this.state.id}/week/${evt.row.age}`])
   }
 }

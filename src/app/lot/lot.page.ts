@@ -123,7 +123,7 @@ export class LotPage implements OnInit, OnDestroy {
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
   selected(evt: TableEvent) {
-      if(evt.action === 'new')    this.router.navigate(['/lot-form'])
+      if(evt.action === 'new')    this.router.navigate([`/forms/lots/new/${this.filter}`])
       if(evt.action === 'open')   return this.open(evt.row);
       if(evt.action === 'edit')   return //this.edit(evt.row);
       if(evt.action === 'delete') return this.delete(evt.row);

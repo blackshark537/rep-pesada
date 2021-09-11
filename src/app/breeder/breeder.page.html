@@ -46,5 +46,7 @@
   name="{{title}} {{getType()}}"
   [cols]="cols$ | async" 
   [rows]="lots" 
+  [tableActions]="tableActions"
+  (selected)="selected($event)"
   ></app-table>
 </ion-content>

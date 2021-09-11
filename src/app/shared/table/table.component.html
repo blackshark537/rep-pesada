@@ -7,12 +7,12 @@
 
 
     <ion-searchbar style="max-width: 25em;" (ionChange)="updateFilter($event)" debounce="500" animated></ion-searchbar>
-    <ion-buttons>
+    <!-- <ion-buttons>
       <ion-button *ngIf="tableActions.new" color="primary" size="large" (click)="newRow()">
         Nuevo
         <ion-icon name="add"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-list-header>
   
   <!-- <ion-toolbar>
@@ -54,6 +54,12 @@
             {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
           <p *ngSwitchCase=" 'date' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
+          <p *ngSwitchCase=" 'fecha_entrada' ">
+            {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
+          </p>
+          <p *ngSwitchCase=" 'fecha' ">
             {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
           <p *ngSwitchCase=" 'entrydate' ">
@@ -99,6 +105,9 @@
 
     <ngx-datatable-column *ngIf="hasActions" [flexGrow]="1" [minWidth]="120" name="Acciones" sortable="false">
       <ng-template  let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ion-button *ngIf="tableActions.new" color="primary" size="small" (click)="newRow(row)">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
         <ion-button *ngIf="tableActions.open" (click)="openRow(row)" size="small" color="tertiary">
           <ion-icon name="open"></ion-icon>
         </ion-button>

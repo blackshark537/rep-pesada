@@ -336,7 +336,7 @@ export class LotService {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //add one day
-  formatDate(date: string) {
+  formatDate(date) {
     //return new Date(new Date(date).getTime() + (24 * 60 * 60 * 1000))
     return addDays(new Date(date), 1);
   }

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LotFormComponent } from './lot-form/lot-form.component';
 import { BusinessFormComponent } from './business-form/business-form.component';
+import { DailyProdFormComponent } from './daily-prod-form/daily-prod-form.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,22 @@ const routes: Routes = [
   {
     path: 'business/:business_type/new',
     component: BusinessFormComponent
+  },
+  {
+    path: 'daily-prod/lot/:lote',
+    component: DailyProdFormComponent
+  },
+  {
+    path: 'daily-prod/lot/:lote/week/:semana',
+    component: DailyProdFormComponent
+  },
+  {
+    path: 'daily-prod/fecha/:fecha/lot/:lote/week/:semana',
+    component: DailyProdFormComponent
+  },
+  {
+    path: 'daily-prod/lot/:lote/week/:semana/day-init/:day-init',
+    component: DailyProdFormComponent
   }
 ];
 

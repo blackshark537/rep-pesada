@@ -33,6 +33,7 @@ export class EggsProductionPage implements OnInit, OnDestroy {
   }
 
   total_production=0;
+  total_incubables=0;
   total_chicks=0;
   estado='';
   total_weeks=66;
@@ -53,9 +54,11 @@ export class EggsProductionPage implements OnInit, OnDestroy {
     this.lot$ = this.store.select('eggLots').pipe(
       map(lots => {
         this.total_production = 0;
+        this.total_incubables= 0
         this.total_chicks = 0;
         return lots.filter(x => x.estado === this.estado  && x.days_passed  > 0  && x.weeks_passed  < this.total_weeks ).map(val => {
           this.total_production += val.production;
+          this.total_incubables += parseInt(val.numero_huevos_incubables);
           this.total_chicks += val.cant_gallinas_existentes;
           return val;
         })

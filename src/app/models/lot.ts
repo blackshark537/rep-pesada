@@ -21,6 +21,9 @@ export interface LotInterface {
     "variable_nacimiento": number;
     "empresa": BusinessInterface;
     "cant_gallinas_asignadas"?: string;
+    "nave"?: number;
+    "seeccion"?: string;
+    "lote_type"?: LotType;
 }
 
 interface CantidadInterface{
@@ -63,7 +66,7 @@ export interface LotResponse {
     "id": string | number;
     "codigo_empresa": number;
     "codigo_aduanero": number;
-    "fecha_entrada": string;
+    "fecha_entrada": string | Date;
     "cantidad": CantidadInterface;
     "lote": number;
     "published_at": Date;
@@ -79,7 +82,14 @@ export interface LotResponse {
     "month": Number;
     "year": number;
     "cant_gallinas_asignadas": string;
-    "proyeccions": LotProjection[]
+    "nave"?: number;
+    "seccion"?: string;
+    "lote_type"?: LotType;
+}
+
+export enum LotType{
+    ABUELOS = 'abuelos',
+    PESADA = 'pesada',
 }
 
 export interface LotRecria{
