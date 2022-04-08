@@ -1,5 +1,3 @@
-export * from './API/lot.service';
-export * from './API/api.service';
-export * from './API/api-interceptor.service';
+export * from './API';
 export * from './helpers';
-export * from './auth/auth.service';
+export * from './auth';

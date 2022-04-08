@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Variables Rep. Abuelas</ion-title>
+    <ion-title>Variables Progenitores Abuelos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   
     <ion-grid>
-      <ion-row>
+      <ion-row *ngIf="displayVariables">
         <!-- <ion-col  size="6" size-md="1.5">
           <ion-item>
             <ion-label position="floating">Semanas en Recria</ion-label>
@@ -26,13 +26,13 @@
         <ion-col  size="6" size-md="2">
           <ion-item>
             <ion-label position="floating">var mortalidad recria</ion-label>
-            <ion-input [(ngModel)]="variable_mortalidad_recria" type="number" min="0" max="100"></ion-input>
+            <ion-input [(ngModel)]="variable_mortalidad_recria_ajustado" type="number" min="0" max="100"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col  size="6" size-md="2">
           <ion-item>
             <ion-label position="floating">var mortalidad prod.</ion-label>
-            <ion-input [(ngModel)]="variable_mortalidad_produccion" type="number" min="0" max="100"></ion-input>
+            <ion-input [(ngModel)]="variable_mortalidad_produccion_ajustado" type="number" min="0" max="100"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col  size="6" size-md="2">
@@ -53,11 +53,11 @@
             <ion-input [(ngModel)]="variable_nacimientos" type="number" min="0" max="100"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col  size="6" size-md="2">
+        <!-- <ion-col  size="6" size-md="2">
           <ion-item button color="success" lines="none" (click)="ajustar()">
             Ajustar
           </ion-item>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
       <ion-row>
         <ion-col size="0" size-md="7"></ion-col>

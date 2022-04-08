@@ -17,3 +17,17 @@ export interface BusinessInterface {
     "empresa_type": string;
     "Inicio_de_operaciones"?: any
 }
+
+export interface positions{
+    latitude: number;
+    longitude: number;
+    accuracy: number;
+    empresa?: string;
+    asignacion?: number | string;
+    importadas?: number | string;
+    recria?: number | string;
+    poblacion?: number | string;
+    h_totales?: number | string;
+    h_incubables?: number | string;
+    nacimientos?: number | string;
+  }

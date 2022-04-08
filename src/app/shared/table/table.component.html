@@ -77,11 +77,11 @@
           <p *ngSwitchCase=" 'entry2' ">
             {{row[col.prop.toLowerCase()] | date: 'd/M/yy'}}
           </p>
-          <p *ngSwitchCase=" 'mortalidad' ">
+          <p *ngSwitchCase=" 'mortalidad_real' ">
             {{row[col.prop.toLowerCase()] + ' %'}}
           </p>
           <p *ngSwitchCase=" 'std_produccion' ">
-            {{ (row[col.prop.toLowerCase()]*100) + ' %'}}
+            {{ row[col.prop.toLowerCase()] + ' %'}}
           </p>
           <p *ngSwitchCase=" 'aprovechamiento_de_huevos_estandar' ">
             {{ row[col.prop.toLowerCase()] + ' %'}}
@@ -121,5 +121,5 @@
     </ngx-datatable-column>
 
   </ngx-datatable>
-
+  
 </ion-list>

@@ -104,7 +104,19 @@ export class DataDrivenPage implements OnInit {
               return row;
             })
           );
-        })).subscribe(rows => this.rows = [...rows]);
+        })).subscribe(rows => {
+          this.rows = [...rows]
+          this.rows.push({
+            id: this.rows.length+1,
+            empresa: ' - ',
+            entrydate: 'Total: ',
+            asignacion: parseFloat(this.rows[0].asignacion) + parseFloat(this.rows[1].asignacion),
+            importadas: this.rows[0].importadas + this.rows[1].importadas,
+            cuota_asignacion: (parseFloat(this.rows[0].cuota_asignacion) + parseFloat(this.rows[1].cuota_asignacion)).toFixed(2),
+            cuota_importacion: (parseFloat(this.rows[0].cuota_importacion) + parseFloat(this.rows[1].cuota_importacion)).toFixed(2),
+            balance: this.rows[0].balance + this.rows[1].balance,
+          })
+        });
 
     })
   }

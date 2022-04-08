@@ -1,0 +1,20 @@
+<!-- <ion-grid>
+  <ion-row>
+    <ion-col size="{{view? '9': '12'}}"> -->
+      <div *ngIf="_map" (leafletMapReady)="onMapReady($event)" style="height: 99vh;" leaflet [(leafletCenter)]="center"
+        [leafletOptions]="options" [leafletLayersControl]="layersControl">
+        <div *ngFor="let l of layers" [leafletLayer]="l"></div>
+      </div>
+<!--     </ion-col>
+    <ion-col *ngIf="view" size="3">
+      <ion-item>
+        <ion-label>{{data?.empresa}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asignación: {{data?.asignacion}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid> -->
+
+<!-- (leafletClick)="onMapClick($event)" -->

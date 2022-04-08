@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppModel, EggLotProjectionInterface } from 'src/app/models';
 
@@ -60,6 +61,8 @@ export class MonthBarEggsIndustryComponent implements OnInit {
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
+
+  sub$: Subscription;
 
   constructor(
     private loadCtrl: LoadingController,

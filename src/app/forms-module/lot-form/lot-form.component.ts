@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppModel, BusinessInterface, LotModel, LotResponse } from '../../models';
 import { ApiService } from '../../services';
 import { LotsActions } from '../../actions';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TableActions, TableEvent } from 'src/app/shared';
 
 @Component({
   selector: 'app-lot-form',
@@ -26,6 +27,22 @@ export class LotFormComponent implements OnInit {
     machos: 100
   }
 
+  cols=[
+    { prop: 'lote', header: 'Lote' },
+    { prop: 'edad', header: 'Edad' },
+    { prop: 'cantidad', header: 'Cantidad' },
+    { prop: 'part', header: '% part' },
+  ]
+
+  tableActions: TableActions  = {
+    open:   false,
+    new:    false,
+    delete: true,
+    edit: false
+  }
+
+  lots=[];
+
   business$: Observable<BusinessInterface[]>
   title='';
   lot_type=null;
@@ -36,6 +53,7 @@ export class LotFormComponent implements OnInit {
     private apiService: ApiService,
     private loadCtrl: LoadingController,
     private modalCtrl: ModalController,
+    private prompCtrl: AlertController,
     private store: Store<AppModel>
   ) { }
 
@@ -139,6 +157,73 @@ export class LotFormComponent implements OnInit {
       this.store.dispatch(LotsActions.GET_LOTS());
       this.dismiss();
     }, error => load.dismiss());
+  }
+
+  async newProcedentLote(){
+    const prompt = await this.prompCtrl.create({
+      header:'Lotes de Procedencia',
+      inputs: [
+        {
+          id: 'lote',
+          name: 'lote',
+          placeholder: 'Lote',
+          label: 'lote',
+          type: 'number',
+        },
+        {
+          id: 'edad',
+          name: 'edad',
+          placeholder: 'Edad',
+          label: 'Edad',
+          type: 'number',
+        },
+        {
+          id: 'cantidad',
+          name: 'cantidad',
+          placeholder: 'Cantidad',
+          label: 'cantidad',
+          type: 'number',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Ok',
+          role: 'acept'
+        }
+      ]
+    });
+
+    await prompt.present();
+    const resp = await prompt.onWillDismiss();
+    console.log(resp.data)
+    if(!!resp.data.values.cantidad){
+      this.lots.push(resp.data.values);
+      this.calcPart()
+    }
+  }
+
+  calcPart(){
+    let total=0;
+    this.lots.map(el =>{
+      total += parseInt(el.cantidad);
+      return el;
+    }).forEach(el=>{
+      el.part = (parseInt(el.cantidad) * 100 / total).toFixed(2);
+    });
+    this.loteForm.patchValue({
+      cantidad: total
+    })
+  }
+
+  selected(evt: TableEvent){
+    if(evt.action === 'delete') {
+      let idx = this.lots.indexOf(evt.row);
+      this.lots.splice(idx, 1);
+    }
   }
 
   async dismiss(){

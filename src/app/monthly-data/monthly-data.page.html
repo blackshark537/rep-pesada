@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title>Calendario de entrada año {{year | async}}</ion-title>
+    <ion-title>Programación de entrada año {{year | async}}</ion-title>
     <ion-buttons slot="end">
       <ion-item>
         <ion-label>Año</ion-label>
@@ -16,7 +16,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Calendario de entrada año {{year | async}} </ion-title>
+      <ion-title size="large">Programación de entrada año {{year | async}} </ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -35,7 +35,7 @@
   </ion-slides>
 
   <app-table 
-  name="Entrada Mensual De Abuelas Linea Hembra {{year | async}}"
+  name="Entrada De Progenitores Abuelos Linea Hembra {{year | async}}"
   [cols]="cols" 
   [rows]="rows"
   (selected)="selected($event)"></app-table>

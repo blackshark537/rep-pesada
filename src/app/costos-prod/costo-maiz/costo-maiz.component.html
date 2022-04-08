@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="paolo-green">
+    <app-back-button slot="start" back="true"></app-back-button>
+    <ion-title>{{pTitle | titlecase}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-title>Fecha Actual: {{dateNow | date: 'dd-MM-yyyy'}}</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+  
+    <ion-list-header>
+      <ion-title>
+        Variables Para Determinar Costos Del Maíz Marzo {{dateNow | date: 'YYYY'}}
+        <br>
+        En Las Plantas De Alimentos De República Dominicana
+      </ion-title>
+    </ion-list-header>
+    
+      <ion-grid>
+        <ion-row *ngFor="let item of data_precio_maiz; index as i">
+          <ion-col size="10">
+            <ion-item>
+              <ion-label><h1> {{i+1}} - {{item.title | titlecase}}</h1></ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+            <ion-item>
+              <ion-label>
+                <h1>{{item.value | addCommas}}</h1>
+              </ion-label>
+              <!-- <ion-input (ionChange)="applyMortality()" [type]="item.type" readonly [(ngModel)]="item.value"></ion-input> -->
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+  </ion-list>
+</ion-content>

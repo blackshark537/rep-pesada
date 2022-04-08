@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="paolo-green">
+    <app-back-button slot="start" back="true"></app-back-button>
+    <ion-title>{{pTitle | titlecase}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-title>Fecha Actual: {{dateNow | date: 'dd-MM-yyyy'}}</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+  
+    <ion-list-header>
+      <ion-title>
+        {{'COSTO DE PRODUCCION DEL POLLO EN GRANJA' | titlecase}} 
+        <br>
+        {{'CON LOS PRECIOS DE MATERIA PRIMA AL ' | titlecase}} {{dateNow | date: 'dd-MM-yyyy'}}
+      </ion-title>
+    </ion-list-header>
+  
+    
+    </ion-list>
+
+</ion-content>

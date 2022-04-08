@@ -1,0 +1,601 @@
+<ion-header>
+  <ion-toolbar color="paolo-green">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Variables De {{abuelos_reproductoras? 'Progenitores Abuelos' : 'Reproductoras Pesadas' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>
+      <h3>Fenómenos y Variables Que Afectan La Moratalidad Y La Producción.</h3>
+    </ion-list-header>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2" size-md="0.6">Más</ion-col>
+        <ion-col size="3.3" size-md="3.8">Nombre De La Variable</ion-col>
+        <ion-col size="3.3" size-md="3.8"><span style="color: blue;">Estandar</span></ion-col>
+        <ion-col size="3.3" size-md="3.8"><span style="color: red;">Real</span></ion-col>
+      </ion-row>
+
+      <ion-card lines="none">
+        <form [formGroup]="formVariables">
+        <ion-card-header>
+          <ion-row>
+            <ion-col size="2" size-md="0.6"></ion-col>
+            <ion-col size="3.3" size-md="3.8">
+              <ion-card-title>Edad En Semanas</ion-card-title>
+            </ion-col>
+            <ion-col size="3.3" size-md="3.8">
+              <input value="65" readonly max="75" min="0" type="number" />
+            </ion-col>
+            <ion-col size="3.3" size-md="3.8">
+              <input formControlName="edad_semanas" max="75" min="0" type="number" />
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+      </form>
+      </ion-card>
+      
+        <ion-card lines="none">
+          <form [formGroup]="formVariables">
+          <ion-card-header>
+            <ion-row>
+              <ion-col size="2" size-md="0.6">
+                <ion-buttons>
+                  <ion-button (click)="recriaSub = !recriaSub" color="dark">
+                    <ion-icon name="{{recriaSub? 'chevron-up':'chevron-down'}}"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <ion-card-title>
+                  % Mortalidad En Recría
+                </ion-card-title>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input formControlName="mortalidad_recria" type="number" />
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input readonly [value]="mortalidad_recria_real" type="number" />
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          </form>
+
+          <form [formGroup]="mortalidad_recria_details">
+          <ion-card-content *ngIf="recriaSub">
+            <ion-item>
+              <ion-label>
+                1 - Gumboro
+              </ion-label>
+              <input formControlName="gumboro" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                2 - Newcastle
+              </ion-label>
+              <input formControlName="newcastle" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                3 - Enteritis ó clostridium
+              </ion-label>
+              <input formControlName="clostridium" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                4 - Influenza Aviar
+              </ion-label>
+              <input formControlName="influenza" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                5 - Anemia Infecciosa
+              </ion-label>
+              <input formControlName="anemia" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                6 - Viruela
+              </ion-label>
+              <input formControlName="viruela" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                7 - Deficiencia Nutricional
+              </ion-label>
+              <input formControlName="defi_nutricional" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                8 - Fenómeno Natural ó Climatológico
+              </ion-label>
+              <input formControlName="clima" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                9 - Otros Virus ú Enfermedades
+              </ion-label>
+              <input formControlName="otros" type="number" />
+            </ion-item>
+          </ion-card-content>
+          </form>
+        </ion-card>
+
+        
+        <ion-card lines="none">
+          <form [formGroup]="formVariables">
+          <ion-card-header>
+            <ion-row>
+              <ion-col size="2" size-md="0.6">
+                <ion-buttons>
+                  <ion-button (click)="produccionSub = !produccionSub" color="dark">
+                    <ion-icon name="{{produccionSub? 'chevron-up':'chevron-down'}}"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <ion-card-title>
+                  % Mortalidad En Producción
+                </ion-card-title>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input formControlName="mortalidad_produccion" type="number" />
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input readonly [value]="mortalidad_prod_real" type="number" />
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          </form>
+
+          <form [formGroup]="mortalidad_produccion_details">
+          <ion-card-content *ngIf="produccionSub">
+            <ion-item>
+              <ion-label>
+                1 - Sindrome De Baja Postura
+              </ion-label>
+              <input formControlName="baja_postura" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                2 - Newcastle Velogénico Viscerotrópico
+              </ion-label>
+              <input formControlName="newcastle" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                3 - Coriza Infecciosa Aviar
+              </ion-label>
+              <input formControlName="coriza" type="number" />
+            </ion-item>
+
+            <ion-item>
+              <ion-label>
+                4 - Cólera
+              </ion-label>
+              <input formControlName="colera" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                5 - Influenza Aviar
+              </ion-label>
+              <input formControlName="influenza" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                6 - Pneumovirus
+              </ion-label>
+              <input formControlName="pneumovirus" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                7 - Mycoplasma Gallisepticum
+              </ion-label>
+              <input formControlName="gallisepticum" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                8 - Mycoplasma Synoviae
+              </ion-label>
+              <input formControlName="synoviae" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                9 - Anemia Infecciosa
+              </ion-label>
+              <input formControlName="anemia" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                10 - Viruela
+              </ion-label>
+              <input formControlName="viruela" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                11 - Deficiencia Nutricional
+              </ion-label>
+              <input formControlName="defi_nutricional" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                12 - Fenómeno Natural ó Climatológico
+              </ion-label>
+              <input formControlName="clima" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                13 - Otros Virus ú Enfermedades
+              </ion-label>
+              <input formControlName="otros" type="number" />
+            </ion-item>
+          </ion-card-content>
+          </form>
+        </ion-card>
+
+        
+        <ion-card lines="none">
+          <form [formGroup]="formVariables">
+          <ion-card-header>
+            <ion-row>
+              <ion-col size="2" size-md="0.6">
+                <ion-buttons>
+                  <ion-button (click)="produccionHuevosSub = !produccionHuevosSub" color="dark">
+                    <ion-icon name="{{produccionHuevosSub? 'chevron-up':'chevron-down'}}"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <ion-card-title>
+                  Produccion Huevos Totales
+                </ion-card-title>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input formControlName="produccion_huevos_totales" type="number" />
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input readonly [value]="produccion_huevos_totales_real" type="number" />
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          </form>
+
+          <form [formGroup]="produccion_huevos_totales_details">
+          <ion-card-content *ngIf="produccionHuevosSub">
+            <ion-item>
+              <ion-label>
+                1 - Sindrome De Baja Postura
+              </ion-label>
+              <input formControlName="baja_postura" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                2 - Newcastle Velogénico Viscerotrópico
+              </ion-label>
+              <input formControlName="newcastle" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                3 - Coriza Infecciosa Aviar
+              </ion-label>
+              <input formControlName="coriza" type="number" />
+            </ion-item>
+
+            <ion-item>
+              <ion-label>
+                4 - Cólera
+              </ion-label>
+              <input formControlName="colera" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                5 - Influenza Aviar
+              </ion-label>
+              <input formControlName="influenza" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                6 - Pneumovirus
+              </ion-label>
+              <input formControlName="pneumovirus" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                7 - Mycoplasma Gallisepticum
+              </ion-label>
+              <input formControlName="gallisepticum" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                8 - Mycoplasma Synoviae
+              </ion-label>
+              <input formControlName="synoviae" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                9 - Anemia Infecciosa
+              </ion-label>
+              <input formControlName="anemia" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                10 - Viruela
+              </ion-label>
+              <input formControlName="viruela" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                11 - Deficiencia Nutricional
+              </ion-label>
+              <input formControlName="defi_nutricional" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                12 - Fenómeno Natural ó Climatológico
+              </ion-label>
+              <input formControlName="clima" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                13 - Otros Virus ú Enfermedades
+              </ion-label>
+              <input formControlName="otros" type="number" />
+            </ion-item>
+          </ion-card-content>
+          </form>
+        </ion-card>
+
+        <ion-card lines="none">
+          <form [formGroup]="formVariables">
+          <ion-card-header>
+            <ion-row>
+              <ion-col size="2" size-md="0.6">
+                <ion-buttons>
+                  <ion-button (click)="aprovechamientoSub = !aprovechamientoSub" color="dark">
+                    <ion-icon name="{{aprovechamientoSub? 'chevron-up':'chevron-down'}}"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <ion-card-title>
+                  Aprovechamiento De Huevos
+                </ion-card-title>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input formControlName="aprovechamiento_huevos" type="number" />
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input readonly [value]="aprovechamiento_huevos_real" type="number" />
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          </form>
+
+          <form [formGroup]="aprovechamiento_huevos_details">
+          <ion-card-content *ngIf="aprovechamientoSub">
+            <ion-item>
+              <ion-label>
+                1 - Huevos De Piso
+              </ion-label>
+              <input formControlName="huevos_piso" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                2 - Condiciones De La Cama
+              </ion-label>
+              <input formControlName="cama" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                3 - Manejo Del Nidal
+              </ion-label>
+              <input formControlName="nidal" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                4 - Sindrome De Baja Postura
+              </ion-label>
+              <input formControlName="baja_postura" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                5 - Programa De Recolección De Huevos
+              </ion-label>
+              <input formControlName="recoleccion" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                7 - Deficiencia Nutricional
+              </ion-label>
+              <input formControlName="defi_nutricional" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                8 - Fenómeno Natural ó Climatológico
+              </ion-label>
+              <input formControlName="clima" type="number" />
+            </ion-item>
+          </ion-card-content>
+          </form>
+        </ion-card>
+
+        <ion-card lines="none">
+          <form [formGroup]="formVariables">
+          <ion-card-header>
+            <ion-row>
+              <ion-col size="2" size-md="0.6">
+                <ion-buttons>
+                  <ion-button (click)="nacimientosSub = !nacimientosSub" color="dark">
+                    <ion-icon name="{{nacimientosSub? 'chevron-up':'chevron-down'}}"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <ion-card-title>
+                  Nacimientos
+                </ion-card-title>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input formControlName="nacimientos" type="number" />
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input readonly [value]="nacimientos_real" type="number" />
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          </form>
+
+          <form [formGroup]="nacimientos_details">
+          <ion-card-content *ngIf="nacimientosSub">
+            <ion-item>
+              <ion-label>
+                1 - Falta De Gallos
+              </ion-label>
+              <input formControlName="gallos" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                2 - Sobrepeso
+              </ion-label>
+              <input formControlName="sobrepeso" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                3 - Postura De Huevo y Suelo (Huevos Sucios)
+              </ion-label>
+              <input formControlName="huevos_sucios" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                4 - Contaminación
+              </ion-label>
+              <input formControlName="contaminacion" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                5 - Encefalomielitis Aviar
+              </ion-label>
+              <input formControlName="encefalomielitis" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                6 - Fenómeno Natural ó Climatológico
+              </ion-label>
+              <input formControlName="clima" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                7 - Deficiencia Nutricional
+              </ion-label>
+              <input formControlName="defi_nutricional" type="number" />
+            </ion-item>
+          </ion-card-content>
+          </form>
+        </ion-card>
+
+        <ion-card *ngIf="!abuelos_reproductoras" lines="none">
+          <form [formGroup]="formVariables">
+          <ion-card-header>
+            <ion-row>
+              <ion-col size="2" size-md="0.6">
+                <ion-buttons>
+                  <ion-button (click)="pollitosSub = !pollitosSub" color="dark">
+                    <ion-icon name="{{pollitosSub? 'chevron-up':'chevron-down'}}"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <ion-card-title>
+                  Mortalidad Pollos De Engorde
+                </ion-card-title>
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input formControlName="mortalidad_pollitos" type="number" />
+              </ion-col>
+              <ion-col size="3.3" size-md="3.8">
+                <input readonly [value]="pollitos_real" type="number" />
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+          </form>
+
+          <form [formGroup]="mortalidad_pollitos_details">
+            <ion-card-content *ngIf="pollitosSub">
+            <ion-item>
+              <ion-label>
+                1 - Newcastle
+              </ion-label>
+              <input formControlName="newcastle" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                2 - Gumboro
+              </ion-label>
+              <input formControlName="gumboro" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                3 - Hepatitis
+              </ion-label>
+              <input formControlName="hepatitis" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                4 - Influenza Aviar
+              </ion-label>
+              <input formControlName="influenza" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                5 - Anemia
+              </ion-label>
+              <input formControlName="anemia" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                6 - Coccidiosis Aviar
+              </ion-label>
+              <input formControlName="coccidiosis" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                7 - Micoplasma
+              </ion-label>
+              <input formControlName="micoplasma" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                8 - Calefacción
+              </ion-label>
+              <input formControlName="calefaccion" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                9 - Fenómeno Natural ó Climatológico
+              </ion-label>
+              <input formControlName="clima" type="number" />
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                10 - Deficiencia Nutricional
+              </ion-label>
+              <input formControlName="defi_nutricional" type="number" />
+            </ion-item>
+          </ion-card-content>
+          </form>
+        </ion-card>
+
+    </ion-grid>
+
+  </ion-list>
+
+</ion-content>

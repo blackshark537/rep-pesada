@@ -14,6 +14,7 @@ import { TableEvent } from '../shared';
 export class BusinessPage implements OnInit {
   title='';
   subtitle='';
+  filtro = '';
   cols = [
     /* { number: false, prop: 'index' , header: 'No.'},  */
     { number: false, prop: 'empresa' , header: 'Empresa y/o Productor'}, 
@@ -30,16 +31,16 @@ export class BusinessPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const filtro = this.activatedRoute.snapshot.paramMap.get('filter');
-    if(filtro==='abuelos'){
-      this.title='Registro de Empresas Genéticas';
-      this.subtitle='Empresas Genéticas con Asignación de Rep. Abuelas';
+    this.filtro = this.activatedRoute.snapshot.paramMap.get('filter');
+    if(this.filtro==='abuelos'){
+      this.title='Registro de Empresas Genéticas Con Progenitores Abuelos';
+      this.subtitle='Empresas Genéticas Acreditadas';
     } else {
       this.title='Registro de los Productores';
       this.subtitle='Productores con Asignación de Rep. Pesada';
     }
     this.store.select('businesses').pipe(
-      map(Businesses => Businesses.filter(b=> b.empresa_type === filtro).map((b, i)=>{
+      map(Businesses => Businesses.filter(b=> b.empresa_type === this.filtro).map((b, i)=>{
         const {id, nombre_comercial, RNC, telefono, direccion, cant_gallinas_asignadas} = b;
         this.balanceTotal+= parseInt(cant_gallinas_asignadas);
         return {

@@ -1,9 +1,13 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="paolo-green">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
     <ion-title >{{getTitle()}} Año {{actual_year }} </ion-title>
+    <ion-buttons slot="end">
+      <ion-label>{{real? 'Prod. STD' : 'Prod. Real'}}</ion-label>
+      <ion-toggle (ionChange)="switch()" [(ngModel)]="real" color="light"></ion-toggle>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

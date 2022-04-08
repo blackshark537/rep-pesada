@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ModalController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { TableActions, TableEvent } from '../shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LotService } from '../services';
@@ -53,7 +53,6 @@ export class LotPage implements OnInit, OnDestroy {
     private router:       Router,
     private activeRoute:  ActivatedRoute,
     private lotService:   LotService,
-    private modalCtrl: ModalController,
     private store:        Store<AppModel>
   ) { }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +75,8 @@ export class LotPage implements OnInit, OnDestroy {
           incub_eggs:0,
           born_eggs:0
         }
-        return a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < 462)
+        const { semanas_en_produccion, semanas_en_recria } = this.lotService;
+        return a.filter(x => x.status ===  this.filter && this.lotService.daysBetween(x.entry, new Date()) < (semanas_en_produccion + semanas_en_recria)*7)
       }),
       map(lots => {
         lots.forEach(lot=>{

@@ -1,25 +1,12 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="paolo-green">
+  <ion-toolbar color="{{isPesadas? 'primary' : 'paolo-green' }}">
     <ion-buttons slot="start">
-      <!-- <ion-button [color]="exitButtonColor" *ngIf="sub" (click)="closeSub()">
-        <ion-icon size="large" name="chevron-back-outline"></ion-icon>
-        <ion-label>Atrás</ion-label>
-      </ion-button> -->
       <app-back-button *ngIf="sub" back="true"></app-back-button>
-      <!-- <ion-avatar *ngIf="!sub">
-        <img src="assets/logo1.jpeg" alt="logo">
-      </ion-avatar> -->
     </ion-buttons>
     <ion-title >
       {{sub? subIndex : 'Menu'}}
     </ion-title>
 
-    <!-- <ion-buttons slot="end" *ngIf="!sub">
-      <ion-button [color]="exitButtonColor" (click)="authService.signOut()">
-        <h4>Salir</h4>
-        <ion-icon size="large" slot="end" name="enter-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -40,7 +27,6 @@
     
   </div>
 
-  <!--  -->
   <ion-grid *ngIf="!sub" >
     <ion-row>
       <ion-col size-md="1"></ion-col>
@@ -48,13 +34,13 @@
         <ion-row>
           
           <ion-col size="6" size-md="6" size-lg="3" *ngFor="let p of appPages" >
-            <ion-card button lines="none" [color]="p.color" class="menu-button" (click)="openSub(p)">
+            <ion-card button lines="none" color="light" class="menu-button" (click)="openSub(p)">
               <ion-card-content>
-                <ion-label>
-                  <h2>{{p.title | titlecase}}</h2>
+                <ion-label color="dark">
+                  <p style="font-size: large">{{p.title | titlecase}}</p>
                 </ion-label>
               </ion-card-content>
-              <ion-icon id="menu" [name]="p.icon"></ion-icon>
+              <img [src]="p.icon" alt="icon" width="70px" id="menu">
             </ion-card>
           </ion-col>
 
@@ -71,11 +57,11 @@
         <ion-row>
           
           <ion-col size="6" size-md="6" size-lg="3" *ngFor="let p of subPages[subIndex]" >
-            <ion-card button lines="none" [color]="p.color" class="menu-button" [routerLink]="[p.url]">
+            <ion-card button lines="none" color="light" class="menu-button" [routerLink]="[p.url]">
               <ion-card-content>
                 <ion-icon color="spanish-orange" size="large" [name]="p.icon"></ion-icon>
-                <ion-label>
-                  <h2>{{p.title | titlecase}}</h2>
+                <ion-label color="dark">
+                  <p style="font-size: large">{{p.title | titlecase}}</p>
                 </ion-label>
               </ion-card-content>
             </ion-card>
@@ -87,4 +73,6 @@
     </ion-row>
   </ion-grid>
 
+  <br>
+  <a *ngIf="!sub" href="https://www.flaticon.com/free-icons/corn" title="corn icons" style="color: grey;">Corn icons created by Freepik - Flaticon</a>
 </ion-content>

@@ -36,6 +36,14 @@
     --ion-background-color: var(--ion-color-background);
     color: #ffffff  !important;
 } */
+/* Leaflet  */
+@import 'leaflet/dist/leaflet.css';
+
+.leaflet-verticalcenter {
+    z-index: 1000;
+    pointer-events: none;
+    
+}
 
 .total-label{
     margin-bottom: 13% !important;
@@ -122,4 +130,59 @@ main{
 
 ion-header{
     margin-top: 3.5em;
+}
+
+.logo{
+    width: auto;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    h1{
+        color: var(--ion-color-dark);
+    }
+}
+
+.menu-button{
+    height: 10em; 
+    width: 15em;   
+    margin-left: auto; 
+    margin-right: auto;
+    h2{
+        font-size: large;
+    }
+}
+
+@media screen and (max-width:450px){
+    .menu-button{
+        height: 13em; 
+        width: 10em;   
+        margin-left: auto; 
+        margin-right: auto;
+        h2{
+            font-size: medium;
+        }
+    }
+
+    #menu{
+        position: absolute;
+        float: right;
+        right: 0;
+        bottom: 0;
+        font-size: 32px;
+        color: var(--ion-color-spanish-orange);
+    }
+}
+
+ion-label{
+    h2{
+        color: black
+    }
+}
+#menu{
+    position: absolute;
+    float: right;
+    right: 0;
+    bottom: 0;
+    font-size: 64px;
+    color: var(--ion-color-spanish-orange);
 }

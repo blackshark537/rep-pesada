@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title>Nacimiento Sem. De Pollitas Rep. Pesadas</ion-title>
+    <ion-title>Reporte De Incubaciones De Huevos Semanal - Progenitores Abuelos</ion-title>
     <ion-buttons  slot="end">
       <ion-button (click)="ngOnInit()">reload</ion-button>
     </ion-buttons>
@@ -13,13 +13,13 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Nacimiento Sem. De Pollitas Rep. Pesadas</ion-title>
+      <ion-title size="large">Reporte De Incubaciones De Huevos Semanal</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <app-table 
   *ngIf="table"
-  name="Nacimiento Sem. De Pollitas Rep. Pesadas"
+  name="Reporte De Incubaciones De Huevos Semanal"
   [cols]="cols" 
   [rows]="rows"
   [isLimited]="false"

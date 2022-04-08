@@ -4,6 +4,10 @@
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
     <ion-title>{{getTitle(typeFilter)}} Año {{actual_year}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-label>{{std? 'Prod. STD' : 'Prod. Real'}}</ion-label>
+      <ion-toggle (ionChange)="switch()" [(ngModel)]="std" color="light"></ion-toggle>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

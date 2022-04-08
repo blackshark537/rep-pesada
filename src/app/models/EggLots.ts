@@ -31,9 +31,19 @@ export interface  EggLotProjectionInterface{
     year: number;
     month: number;
     day: number;
-    prod_huevos_totales: number;
+    
     numero_de_aves: number;
-    huevos_incubables?: string;
-    nacimientos_totales?: string;
-    nacimientos_terminados?: number;
+    numero_de_aves_real: number;
+
+    prod_huevos_totales: number;
+    prod_huevos_totales_real: number;
+
+    huevos_incubables: string;
+    huevos_incubables_real: string;
+
+    nacimientos_totales: string;
+    nacimientos_totales_real: string;
+
+    nacimientos_terminados: number;
+    nacimientos_terminados_real: number;
 }

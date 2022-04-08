@@ -15,7 +15,7 @@ export class BusinessPieGraphComponent implements OnInit {
   showPie = false;
   asignacionTotal=0;
   single: any[]=[];
-  view: any[] = [window.innerWidth-100, window.innerHeight-200];
+  view: any[] = [window.innerWidth-50, window.innerHeight-200];
 
   // options
   gradient: boolean = false;
@@ -94,7 +94,7 @@ export class BusinessPieGraphComponent implements OnInit {
             rows.forEach(r=>{
               this.single.push(
                 {
-                  "name":  (` ${r.empresa} - ${parseInt(r.cuota_asignacion)}%`).toLocaleUpperCase(),
+                  "name":  (` ${r.empresa} - ${parseFloat(r.cuota_asignacion).toFixed(2)}%`).toLocaleUpperCase(),
                   "value": r.cuota_asignacion,
                   "extra": {
                     "code": "de"

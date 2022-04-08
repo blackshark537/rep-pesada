@@ -16,7 +16,7 @@ export const routes: Routes = [
   },
   {
     canActivate:[AuthGuard],
-    path: 'home/:abuelos',
+    path: 'home/:id',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
@@ -128,6 +128,14 @@ export const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
   },
   {
+    path: 'geoposition/:businessType',
+    loadChildren: () => import('./geoposition/geoposition.module').then( m => m.GeopositionPageModule)
+  },
+  {
+    path: 'costos-produccion',
+    loadChildren: () => import('./costos-prod/costos-prod.module').then( m => m.CostosProdPageModule)
+  },
+  {
     path: '**',
     resolve: {
       path: PathResolveService
@@ -138,7 +146,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: false })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true })
   ],
   exports: [RouterModule]
 })

@@ -4,13 +4,17 @@
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title>Resumen Ejecutivo De La Producción</ion-title>
+    <ion-title><span style="font-size: xx-large;">🇩🇴</span> Industria Avicola De La República Dominicana</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="!speaking" fill="solid" color="success" (click)="speach()">
-        Asistente Virtual D-P
+       Iniciar Asistente Virtual D-P
       </ion-button>
-      <ion-button *ngIf="speaking" fill="solid" color="danger" (click)="pause()">
+      <ion-button *ngIf="speaking && !onPause" fill="solid" color="danger" (click)="pause()">
         Pausar Asistente Virtual D-P
+      </ion-button>
+
+      <ion-button *ngIf="onPause" fill="solid" color="primary" (click)="resume()">
+        Continuar Asistente Virtual D-P
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -32,28 +36,107 @@
 
     <ion-grid>
       <ion-row>
-        <ion-col size="7" size-md="9" size-lg="9">
-          <ion-item>
-            <ion-label *ngIf="abuelos;" color="tertiary">
-              <h1>Progenitores Abuelos Cobb Ross</h1>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col  size="5"  size-md="3" size-lg="3">
+        <ion-col size="7" size-md="9" ></ion-col>
+        <ion-col  size="5"  size-md="3">
           <ion-segment [value]="selected" (ionChange)="segmentSelect($event.target.value)">
             <ion-segment-button value="day">
-              <ion-label>Dia</ion-label>
+              <ion-label><p>Dia</p></ion-label>
             </ion-segment-button>
             <ion-segment-button value="month">
-              <ion-label>Mes</ion-label>
+              <ion-label><p>Mes</p></ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="year">
+              <ion-label><p>Año</p></ion-label>
             </ion-segment-button>
           </ion-segment>
         </ion-col>
       </ion-row>
+    </ion-grid>
 
-      <div  *ngIf="abuelos; else elseBlock">
+    <ion-grid *ngIf="view === 'abuelos' || view === 'general';">
+      <ion-row>
+        <ion-col size="7" size-md="9" size-lg="9">
+          <ion-item>
+            <ion-label color="tertiary">
+              <h1>Progenitores Abuelos Cobb 500 & Ross 308</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div >
+        <ion-row>
+          <ion-col size="2.4" size-md="6">
+          </ion-col>
+          <ion-col size="2.4" size-md="1.5">
+            <ion-label class="ion-text-center" style="color: blue">
+              <h1>Estandar</h1>
+            </ion-label>
+          </ion-col>
+          <ion-col size="2.4" size-md="1.5">
+            <ion-label class="ion-text-center" style="color: red;">
+              <h1>Real</h1>
+            </ion-label>
+          </ion-col>
+          <ion-col size="2.4" size-md="1.5">
+            <ion-label class="ion-text-center">
+              <h1>Diferencia</h1>
+            </ion-label>
+          </ion-col>
+          <ion-col size="2.4" size-md="1.5">
+            <ion-label class="ion-text-center">
+              <h1>Porcentaje</h1>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
         <ion-row *ngFor="let row of rows1; index as i">
-          <ion-col size="7" size-md="9" size-lg="9">
+
+          <ion-col *ngIf="i === 2" size="2.4" size-md="6">
+            <ion-item>
+              <ion-icon slot="start" color="danger" name="calendar-number"></ion-icon>
+              <h2>Edad en Semanas que Finalizan Producción</h2>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2 " size="2.4" size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <div>
+                  <h1>65</h1>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2" size="2.4" size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <div>
+                  <h1>{{semanasAbuelas}}</h1>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2" size="2.4" size-md="1.5">
+            <ion-item button color="success" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <div>
+                  <h1>{{semanasAbuelas - 65}}</h1>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2" size="2.4" size-md="1.5">
+            <ion-item button color="danger" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <div>
+                  <h1> {{ ((semanasAbuelas * 100/65)-100 ).toFixed(2) + ' %' }} </h1>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="2.4" size-md="6">
             <ion-item>
               <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
               <div>
@@ -61,34 +144,102 @@
               </div>
             </ion-item>
           </ion-col>
-          <ion-col *ngIf="selected === 'day' " size="5"  size-md="3" size-lg="3">
-            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+          <ion-col *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
               <ion-label  class="ion-text-center">
                 <h1>{{row['init'] | addCommas}}</h1>
               </ion-label>
             </ion-item> 
           </ion-col>
-          <ion-col *ngIf="selected === 'month' " size="5"  size-md="3" size-lg="3">
-            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+          <ion-col *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
+              <ion-label  class="ion-text-center">
+                <h1>{{row['init_real'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
+          <ion-col *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="{{getDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label  class="ion-text-center">
+                <h1>{{ getDifference(row) + row['init_diff']| addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
+          <ion-col *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="{{getDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label  class="ion-text-center">
+                <h1>{{ getPercentaje(row, 'init_real', 'init', i)| addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+          <ion-col *ngIf="selected === 'month' " size="2.4"  size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
               <ion-label class="ion-text-center">
                 <h1>{{row['month'] | addCommas}}</h1>
               </ion-label>
             </ion-item>
           </ion-col>
+          <ion-col *ngIf="selected === 'month' " size="2.4"  size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{row['month_real'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="selected === 'month' " size="3"  size-md="1.5">
+            <ion-item button color="{{getDifference(row)=== '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getMonthDifference(row) + row['month_diff'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="selected === 'month' " size="3"  size-md="1.5">
+            <ion-item button color="{{getDifference(row)=== '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getPercentaje(row, 'month_real', 'month', i)| addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+          <ion-col *ngIf="selected === 'year' " size="3"  size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{row['year'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="selected === 'year' " size="3"  size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{row['year_real'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="selected === 'year' " size="3"  size-md="1.5">
+            <ion-item button color="{{getDifference(row)=== '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getMonthDifference(row) + row['year_diff'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="selected === 'year' " size="3"  size-md="1.5">
+            <ion-item button color="{{getDifference(row)=== '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getPercentaje(row, 'year_real', 'year', i)| addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
         </ion-row>
       </div>
-
     </ion-grid>
-
-    <!-- <ion-item-divider></ion-item-divider> -->
-    
-    <ng-template  #elseBlock>
-      <ion-grid>
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+      <ion-grid *ngIf="view === 'pesadas' || view === 'general';">
         <ion-row>
-          <ion-col size="7" size-md="9" size-lg="9">
+          <ion-col size="3" size-md="6" size-lg="6">
             <ion-item>
               <ion-label color="tertiary">
-                <h1>Cierre Productivo De Reproductoras Pesadas</h1>
+                <h1>Cierre Productivo de Reproductoras y Pollos de Engorde</h1>
               </ion-label>
             </ion-item>
           </ion-col>
@@ -106,39 +257,178 @@
               </ion-label>
             </ion-item>
           </ion-col>
+          <ion-col  *ngIf="selected === 'year' " size="5" size-md="3" size-lg="3">
+            <ion-item>
+              <ion-label>
+                <h1>Año</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
         </ion-row>
-        
-        <ion-row  *ngFor="let row of  rows2">
-          <ion-col size="7" size-md="9" size-lg="9">
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <ion-row>
+        <ion-col size="2.4" size-md="6">
+        </ion-col>
+        <ion-col size="2.4" size-md="1.5">
+          <ion-label class="ion-text-center" style="color: blue">
+            <h1>Estandar</h1>
+          </ion-label>
+        </ion-col>
+        <ion-col size="2.4" size-md="1.5">
+          <ion-label class="ion-text-center" style="color: red;">
+            <h1>Real</h1>
+          </ion-label>
+        </ion-col>
+        <ion-col size="2.4" size-md="1.5">
+          <ion-label class="ion-text-center">
+            <h1>Diferencia</h1>
+          </ion-label>
+        </ion-col>
+        <ion-col size="2.4" size-md="1.5">
+          <ion-label class="ion-text-center">
+            <h1>Porcentaje</h1>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->      
+        <ion-row  *ngFor="let row of  rows2; index as i">
+          <ion-col *ngIf="i === 2" size="2.4" size-md="6">
+            <ion-item>
+              <ion-icon slot="start" color="danger" name="calendar-number"></ion-icon>
+              <h2>Edad en Semanas que Finalizan Producción</h2>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2 " size="2.4" size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>65</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2" size="2.4" size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ semanasReproductoras }}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2" size="2.4" size-md="1.5">
+            <ion-item button color="success" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <div>
+                  <h1>{{semanasReproductoras - 65}}</h1>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="i === 2" size="2.4" size-md="1.5">
+            <ion-item button color="danger" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <div>
+                  <h1> {{ ( (semanasReproductoras * 100/65) - 100 ).toFixed(2) + ' %' }} </h1>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="2.4" size-md="6">
             <ion-item>
               <ion-icon [name]="row['icon']" [color]="row['color']" slot="start"></ion-icon>
                 <div>
                   <h2>{{row['business']}}</h2>  
-                </div>
-                
-              
+                </div>          
             </ion-item>
           </ion-col>
-          <ion-col  *ngIf="selected === 'day' " size="5"  size-md="3" size-lg="3">
-            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+          <ion-col  *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
               <ion-label class="ion-text-center">
                 <h1>{{row['init'] | addCommas}}</h1>
               </ion-label>
             </ion-item> 
           </ion-col>
-          <ion-col  *ngIf="selected === 'month' " size="5"  size-md="3" size-lg="3">
-            <ion-item button [color]="row['color']" style="border-radius: 20px;">
+          <ion-col  *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
               <ion-label class="ion-text-center">
-                <h1>{{row['month'] | addCommas}}</h1>
+                <h1>{{row['init_real'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
+          <ion-col  *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="{{getDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getDifference(row) + row['init_diff'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
+          <ion-col  *ngIf="selected === 'day' " size="2.4"  size-md="1.5">
+            <ion-item button color="{{getDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getPercentaje(row, 'init_real', 'init', i)| addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+          <ion-col  *ngIf="selected === 'month' " size="2.4"  size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ row['month'] | addCommas}}</h1>
               </ion-label>
             </ion-item>
           </ion-col>
+          <ion-col  *ngIf="selected === 'month' " size="2.4"  size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{row['month_real'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col  *ngIf="selected === 'month' " size="2.4" size-md="1.5">
+            <ion-item button color="{{ getMonthDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getMonthDifference(row) + row['month_diff'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col  *ngIf="selected === 'month' " size="2.4"  size-md="1.5">
+            <ion-item button color="{{getDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getPercentaje(row, 'month_real', 'month', i)| addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->     
+          <ion-col  *ngIf="selected === 'year' " size="2.4" size-md="1.5">
+            <ion-item button color="primary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ row['year'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col  *ngIf="selected === 'year' " size="2.4" size-md="1.5">
+            <ion-item button color="secondary" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{row['year_real'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col  *ngIf="selected === 'year' " size="2.4"  size-md="1.5">
+            <ion-item button color="{{ getMonthDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getMonthDifference(row) + row['year_diff'] | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col  *ngIf="selected === 'year' " size="2.4"  size-md="1.5">
+            <ion-item button color="{{getDifference(row) === '+'? 'success' : 'danger' }}" style="border-radius: 20px;">
+              <ion-label class="ion-text-center">
+                <h1>{{ getPercentaje(row, 'year_real', 'year', i)| addCommas}}</h1>
+              </ion-label>
+            </ion-item> 
+          </ion-col>
         </ion-row>
   
-      </ion-grid>
-    </ng-template>
-
-    
+      </ion-grid>  
   </ion-list>
 </ion-content>
 

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="paolo-green">
+    <app-back-button slot="start" back="true"></app-back-button>
+    <ion-title>{{pTitle | titlecase}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-title>Fecha Actual: {{dateNow | date: 'dd-MM-yyyy'}}</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-list-header>
+      <ion-title>
+        Resumen De Costos De Alimentos
+      </ion-title>
+    </ion-list-header>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label><h1>Tipo De Alimento:</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item style="text-align: right;">
+            <ion-label><h1>Costo En Dolares (USD):</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item style="text-align: right;">
+            <ion-label><h1>Costo En Pesos (DOP):</h1></ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let food of foods">
+        <ion-col size="4">
+          <ion-item>
+            <ion-label><h1>{{food.type | titlecase}}</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item  style="text-align: right;">
+            <ion-label><h1>{{food.usd | addCommas}}</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item style="text-align: right;">
+            <ion-label><h1>{{food.dop | addCommas}}</h1></ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>

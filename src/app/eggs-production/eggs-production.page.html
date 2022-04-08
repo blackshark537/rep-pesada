@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="paolo-green">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title >Aves Existentes En {{estado==='recria'? 'Recría'  : 'Producción'}}</ion-title>
+    <ion-title >Reproductoras Pesadas - Aves Existentes En {{estado==='recria'? 'Recría'  : 'Producción'}}</ion-title>
     <ion-buttons slot="end">
       <ion-title>{{time | date: 'medium'}}</ion-title>
       <!-- <ion-label>Sem. Max</ion-label>
@@ -22,18 +22,18 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="4">
-        <ion-card button style="max-width: 400pc;">
+      <ion-col size="12" size-md="2.4">
+        <ion-card button style="max-width: 400px; height: 120px;">
           <ion-card-content>
             <ion-item lines="none">
-              <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
-              <h1>Reproductoras en {{estado==='recria'?  'Recría' : 'Producción'}}: <span style="color: green;">{{total_chicks | addCommas}}</span></h1>
+              <ion-icon slot="end" name="female" color="tertiary" size="large"></ion-icon>
+              <h1>Reproductoras en {{estado==='recria'?  'Recría' : 'Prod'}}: <span style="color: green;">{{total_chicks | addCommas}}</span></h1>
             </ion-item>
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col *ngIf="estado != 'recria' " size="12" size-md="4">
-        <ion-card button style="max-width: 400pc;">
+      <ion-col *ngIf="estado != 'recria' " size="12" size-md="2.4">
+        <ion-card button style="max-width: 400px; height: 120px;">
           <ion-card-content>
             <ion-item lines="none">
               <ion-icon slot="end" name="egg" color="warning" size="large"></ion-icon>
@@ -42,12 +42,32 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col *ngIf="estado != 'recria' " size="12" size-md="4">
-        <ion-card button style="max-width: 400pc;">
+      <ion-col *ngIf="estado != 'recria' " size="12" size-md="2.4">
+        <ion-card button style="max-width: 400px; height: 120px;">
           <ion-card-content>
             <ion-item lines="none">
               <ion-icon slot="end" name="egg" color="danger" size="large"></ion-icon>
               <h1>Huevos Incubables: <span style="color: burlywood;">{{total_incubables | addCommas}}</span></h1>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col *ngIf="estado != 'recria' " size="12" size-md="2.4">
+        <ion-card button style="max-width: 400px; height: 120px;">
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-icon slot="end" name="egg" color="warning" size="large"></ion-icon>
+              <h1>Nacimientos: <span style="color: grey;">{{total_nacimientos | addCommas}}</span></h1>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col *ngIf="estado != 'recria' " size="12" size-md="2.4">
+        <ion-card button style="max-width: 400px; height: 120px;">
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-icon slot="end" name="egg" color="spanish-orange" size="large"></ion-icon>
+              <h1>Pollos Terminados: <span style="color: black;">{{total_pollos_terminados | addCommas}}</span></h1>
             </ion-item>
           </ion-card-content>
         </ion-card>

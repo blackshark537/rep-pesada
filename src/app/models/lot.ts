@@ -38,6 +38,7 @@ export interface LotModel {
     variable_nacimiento: number;
     cant_gallinas_asignadas:string;
     business: string;
+    RNC?: string;
     phone: string;
     address: string;
     date: Date;
@@ -46,7 +47,8 @@ export interface LotModel {
     variable_mortalidad_produccion: number;
     variable_produccion_huevos_totales: number;
     variable_aprovechamiento_huevos: number;
-    race?: string
+    race?: string;
+    year: number;
     entry: Date;
     week: number;
     days: number;
@@ -95,6 +97,7 @@ export enum LotType{
 export interface LotRecria{
     id: number | string;
     business: string;
+    RNC?: string;
     day: number;
     weekIndx: number;
     mort: number;
@@ -114,16 +117,26 @@ export interface LotRecria{
 export interface  LotProjection{
     "id": string | number;
     "dia": Date;
-    "numero_de_aves": string;
+
     "age": number;
     "mortalidad": number;
     "mortalidad_estandar": number;
-    "std_produccion": number;
-    "prod_huevos_totales": string;
-    "aprovechamiento_de_huevos_estandar": number;
-    "huevos_incubables": string;
     "estandar_de_nacimientos": number;
+    "aprovechamiento_de_huevos_estandar": number;
+    "std_produccion": number;
+
+    "numero_de_aves": string;
+    "numero_de_aves_real": number;
+
+    "prod_huevos_totales": string;
+    "prod_huevos_totales_real": number;
+
+    "huevos_incubables": string;
+    "huevos_incubables_real": number;
+
     "nacimientos_totales": string;
+    "nacimientos_totales_real": number;
+
     "estado": string;
     "year": number;
     "month": number;

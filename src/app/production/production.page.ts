@@ -30,11 +30,11 @@ export class ProductionPage implements OnInit, OnDestroy {
   viewCard: number[] = [900, 400];
   viewPie: number[] = [1000, 400];
   colorScheme = {
-    domain: ['#023859', '#038C8C', '#D98E04','#F2811D', '#F26716', '#BF1515']//['#99D9F2', '#F2E205', '#F2B705', '#D93D04', '#D98E04', '#aae3f5']
+    domain: ['#023859', '#1222FF', '#D98E04','#F2D64B', '#FF2200', '#FF2200']//['#99D9F2', '#F2E205', '#F2B705', '#D93D04', '#D98E04', '#aae3f5']
   };
   cardColor: string = '#232837';
 
-  Colors: ['#023859', '#038C8C', '#D98E04', '#F2811D', '#F26716', '#BF1515']
+  Colors: ['#023859', '#1222FF', '#D98E04', '#F2D64B', '#FF2200', '#FF2200']
 
   activateCard: boolean = false;
   activateArea: boolean = false;
@@ -83,13 +83,13 @@ export class ProductionPage implements OnInit, OnDestroy {
     ]
   },
   {
-    "name": "Pollitos Nacidos",
+    "name": "Pollitas Nacidas",
     "series": [
       
     ]
   },
   {
-    "name": "Pollitos Terminados",
+    "name": "Pollitas Terminadas",
     "series": [
       
     ]
@@ -127,23 +127,23 @@ export class ProductionPage implements OnInit, OnDestroy {
     }
 
     if(this.industry === Industry.monthLightBreeder){
-      this.title='Entrada De Rep. Abuelas Mensual';
+      this.title='Entrada De Progenitores Abuelos';
       this.lightBreederMonth=true;
     }
 
     if(this.industry === Industry.BarMonthlylightBreeder){
-      this.title='Producción De Huevos Incubable & Pollitos Mensual';
+      this.title='Producción De Huevos Incubable y Pollitas Mensual - Progénitores Abuelos';
       this.BarMonthlylightBreeder=true;
     }
 
     if(this.industry === Industry.businessGraph){
-      this.title='Participación Mercado - De Las Empresas con Progenitores Abuelos';
+      this.title='Participación Mercado De Las Empresas - Progenitores Abuelos';
       this.pieGraph = true;
     }
 
     if( this.industry === Industry.lightBreeder){
-      this.title='Producción Diaria Huevos Incubables/pollitos - Progenitores Abuelos';
-      this.yAxisLabel='Huevos Incubables/pollitos'
+      this.title='Producción Diaria Huevos Totales, Incubables y pollitas - Progenitores Abuelos';
+      this.yAxisLabel='Huevos Incubables/pollitas'
       this.lightBreederGraph();
     }
     if( this.industry === Industry.chicksLightBreeder){  
@@ -153,8 +153,8 @@ export class ProductionPage implements OnInit, OnDestroy {
       this.lightBreederGraph();
     }
     if( this.industry === Industry.eggsIndustry) {
-      this.title='Producción Nacional Diaria De Huevos/Pollitos Nacidos y Terminados Rep. Pesada';
-      this.yAxisLabel='Producción Nacional De Huevos/Pollitos Nacidos y Terminados';
+      this.title='Producción Nacional Diaria De Huevos Totales/Pollitos Nacidos y Pollos Terminados Rep. Pesada';
+      this.yAxisLabel='Huevos Totales/Pollitos Nacidos y Pollos Terminados';
       this.eggsIndustryGraph();
     }
     if( this.industry === Industry.chicksEggsIndustry){
@@ -180,7 +180,7 @@ export class ProductionPage implements OnInit, OnDestroy {
         let estados  = ['recria',  'produccion']
         estados.forEach(estado =>{
           this.month.forEach((m, h) => {
-            for (let i = 1; i < 32; i++) {
+            for (let i = 1; i < 32; i+=12) {
               let pro = resp.filter(p => p.month === m && p.day === i && p.estado === estado);
               let numero_aves = 0;
               let numero_Ht = 0;
@@ -232,7 +232,7 @@ export class ProductionPage implements OnInit, OnDestroy {
                     "value": numero_Hi,
                     "name":  `${d?.toLocaleDateString()}`
                   });
-                  this.resMulti1[3].name="Pollitos Nacidos",
+                  this.resMulti1[3].name="Pollitas Nacidas",
                   this.resMulti1[3].series.push({
                     "value": numero_Na,
                     "name":  `${d?.toLocaleDateString()}`
@@ -270,7 +270,7 @@ export class ProductionPage implements OnInit, OnDestroy {
       this.month.map((m, h) => {
         let estados = ['recria', 'produccion']
         estados.map(estado => {
-          for (let i = 1; i < 32; i++) {
+          for (let i = 1; i < 32; i+=12) {
             let pro = projections.filter(p => p.estado === estado && p.month === m && p.day === i && p.year === year);
             let numero_aves = 0;
             let numero_Ht = 0;
@@ -310,7 +310,7 @@ export class ProductionPage implements OnInit, OnDestroy {
                     "name": `${d?.toLocaleDateString()}`
                   });
 
-                  this.resMulti1[3].name = "Pollitos Nacidos";
+                  this.resMulti1[3].name = "Pollitas Nacidas";
                   this.resMulti1[3].series.push({
                     "value": numero_Na,
                     "name": `${d?.toLocaleDateString()}`

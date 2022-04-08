@@ -1,0 +1,6 @@
+{
+    "/api": {
+    "target": "https://cdn.jsdelivr.net",
+    "secure": true
+    }
+}

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <app-back-button back="true"></app-back-button>
     </ion-buttons>
-    <ion-title>Aves Existentes {{filter==='breeding'? 'En Recría' : 'y Producción De Huevos'}}</ion-title>
+    <ion-title>Progenitores Abuelos - Aves Existentes {{filter==='breeding'? 'En Recría' : 'y Producción De Huevos'}}</ion-title>
     <ion-buttons slot="end">
       <ion-title>{{time | date: 'medium'}}</ion-title>
     </ion-buttons>
@@ -25,7 +25,7 @@
             <ion-card button >
               <ion-card-content>
                 <ion-item lines="none">
-                  <ion-icon slot="end" name="logo-twitter" color="tertiary" size="large"></ion-icon>
+                  <ion-icon slot="end" name="female" color="tertiary" size="large"></ion-icon>
                   <h1>Aves en {{filter==='breeding'? 'Recria' : 'Producción'}}: <br><span style="color: green">{{status?.total | addCommas}}</span> </h1>
                 </ion-item>
               </ion-card-content>
@@ -58,7 +58,7 @@
             <ion-card button >
               <ion-card-content>
                 <ion-item lines="none">
-                  <ion-icon slot="end" name="logo-twitter" color="primary" size="large"></ion-icon>
+                  <ion-icon slot="end" name="female" color="primary" size="large"></ion-icon>
                   <h1>Pollitas Nacidas: <br><span style="color: black;">{{status?.born_eggs | addCommas}}</span> </h1>
                 </ion-item>
               </ion-card-content>

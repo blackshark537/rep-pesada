@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar color="{{businessType==='abuelas'? 'paolo-green' : 'primary'}}">
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <app-map *ngIf="maps" [positions]="positions"></app-map>
+</ion-content>

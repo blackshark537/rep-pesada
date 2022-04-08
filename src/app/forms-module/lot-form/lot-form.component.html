@@ -32,9 +32,25 @@
           <ion-col size="12" size-md="4">
             <ion-item >
               <ion-label position="stacked"><h1>Fecha de entrada: <span class="invalid">*</span></h1></ion-label>
-              <ion-datetime [disabled]="edit" (ionChange)="setDate($event.target.value)" displayFormat="DD MM YY" placeholder="Elegir Fecha"></ion-datetime>
+              <!-- <ion-datetime [disabled]="edit" (ionChange)="setDate($event.target.value)" displayFormat="DD MM YY" placeholder="Elegir Fecha"></ion-datetime> -->
+              <ion-input type="datetime-local"></ion-input>
             </ion-item>
           </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Número de lote: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required type="number" placeholder="ejemplo: 5"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Cant. de Hembras recibidas: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="cantidad" type="number" placeholder="ejemplo: 5000"></ion-input>
+              <small *ngIf="get('cantidad').invalid && get('cantidad').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+
           <ion-col size="12" size-md="4" *ngIf="lot_type === 'abuelos';">
             <ion-item >
               <ion-label position="stacked"><h1>Empresas: <span class="invalid">*</span></h1></ion-label>
@@ -43,40 +59,16 @@
               </ion-select>
             </ion-item>
           </ion-col>
-          <ion-col size="12" size-md="4">
+          <!-- <ion-col size="12" size-md="4">
             <ion-item >
-              <ion-label position="stacked"><h1>Cant. de gallinas asignadas: <span class="invalid">*</span></h1></ion-label>
+              <ion-label position="stacked"><h1>Gallinas asignadas por año: <span class="invalid">*</span></h1></ion-label>
               <ion-input required formControlName="cant_gallinas_asignadas" type="number" placeholder="ejemplo: 5000"></ion-input>
               <small *ngIf="get('cant_gallinas_asignadas').invalid && get('cant_gallinas_asignadas').touched" class="invalid">Campo requerido</small>
             </ion-item>
-          </ion-col>
+          </ion-col> -->
         </ion-row>
 
-        <ion-row>
-          <ion-col size="12" size-md="4">
-            <ion-item >
-              <ion-label position="stacked"><h1>Cant. de gallinas importadas: <span class="invalid">*</span></h1></ion-label>
-              <ion-input required formControlName="cantidad" type="number" placeholder="ejemplo: 5000"></ion-input>
-              <small *ngIf="get('cantidad').invalid && get('cantidad').touched" class="invalid">Campo requerido</small>
-            </ion-item>
-          </ion-col>
-          <ion-col size="12" size-md="4">
-            <ion-item >
-              <ion-label position="stacked"><h1>Nave: <span class="invalid">*</span></h1></ion-label>
-              <ion-input required formControlName="nave" type="number" placeholder="ejemplo: 5"></ion-input>
-              <small *ngIf="get('nave').invalid && get('nave').touched" class="invalid">Campo requerido</small>
-            </ion-item>
-          </ion-col>
-          <ion-col size="12" size-md="4">
-            <ion-item >
-              <ion-label position="stacked"><h1>Seccion: <span class="invalid">*</span></h1></ion-label>
-              <ion-input required formControlName="seccion" type="text" placeholder="ejemplo: A"></ion-input>
-              <small *ngIf="get('seccion').invalid && get('seccion').touched" class="invalid">Campo requerido</small>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
+        <ion-row *ngIf="lot_type === 'abuelos';">
 
           <ion-col size="12" size-md="4">
             <ion-item >
@@ -94,7 +86,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
+        <ion-row *ngIf="lot_type === 'abuelos';">
           <ion-col size="12" size-md="4">
             <ion-item >
               <ion-label position="stacked"><h1>Var. produccion huevos totales %: <span class="invalid">*</span></h1></ion-label>
@@ -115,6 +107,54 @@
               <ion-input required formControlName="variable_nacimiento" type="number" placeholder="ejemplo: 5"></ion-input>
               <small *ngIf="get('variable_nacimiento').invalid && get('variable_nacimiento').touched" class="invalid">Campo requerido</small>
             </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Cant. de Machos recibidos: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required type="number" placeholder="ejemplo: 5000"></ion-input>
+              <small *ngIf="get('cantidad').invalid && get('cantidad').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Nave: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="nave" type="number" placeholder="ejemplo: 5"></ion-input>
+              <small *ngIf="get('nave').invalid && get('nave').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item >
+              <ion-label position="stacked"><h1>Sección: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="seccion" type="text" placeholder="ejemplo: A"></ion-input>
+              <small *ngIf="get('seccion').invalid && get('seccion').touched" class="invalid">Campo requerido</small>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="lot_type === 'pesada';">
+          <ion-col size="12" size-md="4" >
+            <ion-item >
+              <ion-label position="stacked"><h1>Empresa Suplidora: <span class="invalid">*</span></h1></ion-label>
+              <ion-input required formControlName="empresa" type="text" placeholder="Nombre de la empresa"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-md="11" style="border: 1px solid grey;">
+            <app-table 
+            name="Lotes de Procedencia" 
+            [cols]="cols" 
+            [rows]="lots" 
+            [tableActions]="tableActions"
+            (selected)="selected($event)"
+            ></app-table>
+          </ion-col>
+          <ion-col size="12" size-md="1">
+            <ion-button (click)="newProcedentLote()">Agregar</ion-button>
           </ion-col>
         </ion-row>
 

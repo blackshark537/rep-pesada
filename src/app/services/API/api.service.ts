@@ -12,7 +12,8 @@ import {
   LotResponse,
   LotForm,
   ProductionInterface,
-  DailyProdMetaInterface
+  DailyProdMetaInterface,
+  iFormVariables
 } from 'src/app/models';
 import { environment } from 'src/environments/environment';
 import { BrowserService } from '../helpers';
@@ -250,4 +251,22 @@ export class ApiService {
       })
     )
   }
+
+  get_variables(abuelas_reproductoras: boolean): Observable<iFormVariables>{
+    if(abuelas_reproductoras){
+      return this.http.get<iFormVariables>(`${environment.baseUrl}/variables`);
+    } else {
+      return this.http.get<iFormVariables>(`${environment.baseUrl}/variables-reproductoras`);
+    }
+  }
+
+  update_variables(variables: iFormVariables, abuelas_reproductoras: boolean): Observable<iFormVariables>{
+    if(abuelas_reproductoras){
+      return this.http.put<iFormVariables>(`${environment.baseUrl}/variables`, variables);
+    }else{
+      return this.http.put<iFormVariables>(`${environment.baseUrl}/variables-reproductoras`, variables);
+    }
+  }
+
+  
 }

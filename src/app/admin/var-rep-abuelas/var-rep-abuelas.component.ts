@@ -11,16 +11,28 @@ import { LotService } from 'src/app/services';
 })
 export class VarRepAbuelasComponent implements OnInit, OnDestroy {
 
-  variable_mortalidad_recria = parseInt(localStorage.getItem('variable_mortalidad_recria')) || 6;
-  variable_mortalidad_produccion = parseInt(localStorage.getItem('variable_mortalidad_produccion')) || 14;
-  variable_produccion_huevos_totales = parseInt(localStorage.getItem('variable_produccion_huevos_totales')) || 2;
-  variable_aprovechamiento_huevos = parseInt(localStorage.getItem('variable_aprovechamiento_huevos')) || 2;
-  variable_nacimientos = parseInt(localStorage.getItem('variable_nacimientos')) || 2;
-  semanas_en_recria = 24;
-  semanas_en_produccion = 42;
-  segment='table'
+  variable_mortalidad_recria = 0;
+  variable_mortalidad_recria_ajustado = 0;
+  variable_mortalidad_produccion = 0;
+  variable_mortalidad_produccion_ajustado = 0;
 
+  variable_produccion_huevos_totales = 0;
+  variable_aprovechamiento_huevos = 0;
+  variable_nacimientos = 0;
+  
+  semanas_en_recria = 24;
+  semanas_en_recria_real = 24;
+
+  semanas_en_produccion = 41;
+  semanas_en_produccion_real = 41;
+
+  segment='table'
+  displayVariables= true;
+  
   cols = [
+    
+    { prop: 'mortalidad_std', header: 'Estandar de<br>Mortalidad Prod.' },
+    { prop: 'mortalidad_real', header: 'Ajuste de<br>Mortalidad Prod.' },
     { prop: 'prod_real', header: 'Estandar de<br>Prod. Real' },
     { prop: 'prod', header: 'Estandar de<br>Prod. Ajustado' },
     { prop: 'aprov_real', header: 'Estandar de<br>Aprov. Real' },
@@ -45,19 +57,19 @@ export class VarRepAbuelasComponent implements OnInit, OnDestroy {
   yAxisLabel: string = 'Estandares De Producción';
   timeline: boolean = true;
   multi = [{
-    name: 'Producción Real',
+    name: 'Producción STD',
     series: []
   }, {
     name: 'Producción Ajust.',
     series: []
   }, {
-    name: 'Aprovechamiento Real',
+    name: 'Aprovechamiento STD',
     series: []
   }, {
     name: 'Aprovechamiento Ajust.',
     series: []
   }, {
-    name: 'Nacimientos Real',
+    name: 'Nacimientos STD',
     series: []
   }, {
     name: 'Nacimientos Ajust.',
@@ -68,29 +80,61 @@ export class VarRepAbuelasComponent implements OnInit, OnDestroy {
   constructor(
     private lotService: LotService,
     //private store: Store<AppModel>
-  ) { }
+  ) { 
+    this.variable_mortalidad_recria = this.lotService.variable_mortalidad_recria;
+    this.variable_mortalidad_recria_ajustado = this.lotService.variable_mortalidad_recria_ajustado;
+    this.variable_mortalidad_produccion = this.lotService.variable_mortalidad_produccion
+    this.variable_mortalidad_produccion_ajustado = this.lotService.variable_mortalidad_produccion_ajustado;
+    this.variable_produccion_huevos_totales = this.lotService.variable_produccion_huevos_totales;
+    this.variable_aprovechamiento_huevos = this.lotService.variable_aprovechamiento_huevos
+    this.variable_nacimientos = this.lotService.variable_nacimientos;
 
-  ngOnInit() {
+    this.semanas_en_produccion_real = lotService.semanas_en_produccion;
+  }
+
+  async sleep(): Promise<boolean>{
+    return new Promise((res)=>{
+      setTimeout(()=>{res(true)},500);
+    });
+  }
+
+  async ngOnInit() {
     this.segment='table';
-    this.variable_mortalidad_recria = parseInt(localStorage.getItem('variable_mortalidad_recria')) || 0;
-    this.variable_mortalidad_produccion = parseInt(localStorage.getItem('variable_mortalidad_produccion')) || 0;
-    this.variable_produccion_huevos_totales = parseInt(localStorage.getItem('variable_produccion_huevos_totales')) || 0;
-    this.variable_aprovechamiento_huevos = parseInt(localStorage.getItem('variable_aprovechamiento_huevos')) || 0;
-    this.variable_nacimientos = parseInt(localStorage.getItem('variable_nacimientos')) || 0;
+    
+    await this.sleep();
     this.row=[];
-    this.lotService._PROD.forEach((el,i)=>{
-      let aprov = this.lotService._APROV[i];
-      let nac = this.lotService._Nac[i];
-      i+=24;
+    let recria = [];
+    for(let i=0; i< this.lotService._PROD.length; i++){
+      const el = this.lotService._PROD[i];
+      const aprov = this.lotService._APROV[i];
+      const nac = this.lotService._Nac[i];
+      
+      const media = this.semanas_en_produccion_real>this.semanas_en_produccion? this.semanas_en_produccion_real : this.semanas_en_produccion;
+      if(i >= media){
+        break;
+      }
+
+      const id = i + 25;
+
+      const percent_real = recria[i - 1]?.mortality_real || 100;
+      const percent_std = recria[i - 1]?.mortality_std || 100;
+      
+      const mortality_real = i>0? (percent_real - (this.variable_mortalidad_produccion_ajustado/this.semanas_en_produccion)):100;
+      const mortality_std = i>0? (percent_std - (this.variable_mortalidad_produccion/this.semanas_en_produccion)): 100;
+
       this.row.push({
-        id:i,
-        prod_real: el, 
-        prod: (el - (el * this.variable_produccion_huevos_totales / 100)).toFixed(2),
-        aprov_real: aprov,
-        aprov: (aprov - (aprov * this.variable_aprovechamiento_huevos / 100)).toFixed(2),
-        nac_real: nac,
-        nac: (nac - (nac * this.variable_nacimientos / 100)).toFixed(2)
+        id,
+        mortalidad_std: i<this.semanas_en_produccion? mortality_std.toFixed(1) : "",
+        mortalidad_real: i<this.semanas_en_produccion_real? mortality_real.toFixed(1) : "",
+        prod_real: el.toFixed(1), 
+        prod: (el - this.variable_produccion_huevos_totales).toFixed(1),
+        aprov_real: aprov.toFixed(1),
+        aprov: (aprov - this.variable_aprovechamiento_huevos).toFixed(1),
+        nac_real: nac.toFixed(1),
+        nac: (nac - this.variable_nacimientos).toFixed(1)
       });
+
+      recria.push({mortality_real, mortality_std});
 
       this.multi[0].series.push({
         name: 'semana-'+i,
@@ -98,7 +142,7 @@ export class VarRepAbuelasComponent implements OnInit, OnDestroy {
       });
       this.multi[1].series.push({
         name: 'semana-'+i,
-        value:el-(el*this.variable_produccion_huevos_totales/100)
+        value:el- this.variable_produccion_huevos_totales
       });
       this.multi[2].series.push({
         name: 'semana-'+i,
@@ -106,7 +150,7 @@ export class VarRepAbuelasComponent implements OnInit, OnDestroy {
       });
       this.multi[3].series.push({
         name: 'semana-'+i,
-        value:aprov - (aprov*this.variable_aprovechamiento_huevos/100)
+        value:aprov - this.variable_aprovechamiento_huevos
       });
       this.multi[4].series.push({
         name: 'semana-'+i,
@@ -114,10 +158,10 @@ export class VarRepAbuelasComponent implements OnInit, OnDestroy {
       });
       this.multi[5].series.push({
         name: 'semana-'+i,
-        value:nac - (nac*this.variable_nacimientos/100)
+        value:nac - this.variable_nacimientos
       });
 
-    });
+    }
   }
 
   ngOnDestroy(){
@@ -130,13 +174,4 @@ export class VarRepAbuelasComponent implements OnInit, OnDestroy {
 
   selected($event) {}
 
-  ajustar(){
-    localStorage.setItem('variable_mortalidad_recria', this.variable_mortalidad_recria.toString())
-    localStorage.setItem('variable_mortalidad_produccion', this.variable_mortalidad_produccion.toString())
-    localStorage.setItem('variable_produccion_huevos_totales', this.variable_produccion_huevos_totales.toString())
-    localStorage.setItem('variable_aprovechamiento_huevos', this.variable_aprovechamiento_huevos.toString())
-    localStorage.setItem('variable_nacimientos', this.variable_nacimientos.toString())
-    this.hasChange=true;
-    this.ngOnInit();
-  }
 }

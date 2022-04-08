@@ -13,13 +13,17 @@ import { differenceInDays, differenceInWeeks, addDays } from 'date-fns';
 })
 export class LotService {
 
-  variable_mortalidad_recria = parseInt(localStorage.getItem('variable_mortalidad_recria')) || 5;
-  variable_mortalidad_produccion = parseInt(localStorage.getItem('variable_mortalidad_produccion')) || 10;
-  variable_produccion_huevos_totales = parseInt(localStorage.getItem('variable_produccion_huevos_totales')) || 0;
-  variable_aprovechamiento_huevos = parseInt(localStorage.getItem('variable_aprovechamiento_huevos')) || 10;
-  variable_nacimientos = parseInt(localStorage.getItem('variable_nacimientos')) || 0;
+  variable_mortalidad_recria =  0;
+  variable_mortalidad_recria_ajustado =  0;
+
+  variable_mortalidad_produccion = 0;
+  variable_mortalidad_produccion_ajustado = 0;
+
+  variable_produccion_huevos_totales =  0;
+  variable_aprovechamiento_huevos = 0;
+  variable_nacimientos = 0;
   semanas_en_recria = 24;
-  semanas_en_produccion = 42;
+  semanas_en_produccion = 41;
   semanas_de_retardo = 0;
 
   lot$ = new BehaviorSubject<LotModel>(null);
@@ -67,7 +71,7 @@ export class LotService {
     { prop: 'dia', header: 'Fecha' },
     { prop: 'age', header: 'Edad en<br>Semanas' },
     { prop: 'numero_de_aves', header: 'Aves<br>Existentes' },
-    { prop: 'mortalidad', header: 'Mortalidad<br>Aproximada' },
+    { prop: 'mortalidad_real', header: 'Mortalidad' },
     //{prop: 'mortalidad_estandar', header: 'Estandar de<br>Mortalidad'},
     { prop: 'std_produccion', header: 'Estandar de<br>Producción' },
     { prop: 'prod_huevos_totales', header: 'Huevos<br>Producidos' },
@@ -80,7 +84,7 @@ export class LotService {
     { prop: 'age', header: 'Edad en<br>Semanas' },
     { prop: 'dia', header: 'Fecha' },
     { prop: 'numero_de_aves', header: 'Aves<br>Existentes' },
-    { prop: 'mortalidad', header: 'Mortalidad<br>Aproximada' },
+    { prop: 'mortalidad_real', header: 'Mortalidad' },
     //{prop: 'mortalidad_estandar', header: 'Estandar de<br>Mortalidad'},
     { prop: 'std_produccion', header: 'Estandar de<br>Producción' },
     { prop: 'prod_huevos_totales', header: 'Huevos<br>Producidos' },
@@ -96,11 +100,37 @@ export class LotService {
     private api: ApiService,
     private store: Store<AppModel>
   ) {
+    
+    this.api.get_variables(true).subscribe(resp=>{
 
+      this.semanas_en_produccion = resp.edad_semanas - this.semanas_en_recria;
+
+      delete resp.mortalidad_recria_details.id;
+      const mortalidad_acc = Object.values(resp.mortalidad_recria_details).reduce((pv,nx)=> pv+=nx, 0);
+      this.variable_mortalidad_recria = resp.mortalidad_recria;
+      this.variable_mortalidad_recria_ajustado = resp.mortalidad_recria + mortalidad_acc;
+
+      delete resp.mortalidad_produccion_details.id;
+      const mortalidad_prod_acc = Object.values(resp.mortalidad_produccion_details).reduce((pv,nx)=> pv+=nx, 0);
+      this.variable_mortalidad_produccion = resp.mortalidad_produccion;
+      this.variable_mortalidad_produccion_ajustado = resp.mortalidad_produccion + mortalidad_prod_acc;
+
+      delete resp.produccion_huevos_totales_details.id;
+      const prod_huevos_acc = Object.values(resp.produccion_huevos_totales_details).reduce((pv,nx)=> pv+=nx, 0);
+      this.variable_produccion_huevos_totales = resp.produccion_huevos_totales + prod_huevos_acc;
+
+      delete resp.aprovechamiento_huevos_details.id;
+      const aprovechamiento_acc = Object.values(resp.aprovechamiento_huevos_details).reduce((pv,nx)=> pv+=nx, 0);
+      this.variable_aprovechamiento_huevos = resp.aprovechamiento_huevos + aprovechamiento_acc;
+
+      delete resp.nacimientos_details.id;
+      const nacimientos_acc = Object.values(resp.nacimientos_details).reduce((pv,nx)=> pv+=nx, 0);
+      this.variable_nacimientos = resp.nacimientos + nacimientos_acc;
+      
+    });
   }
 
   getLots(): Observable<LotModel[]> {
-    console.log('Estandar nacimientos:  ', this._Nac.length);
     return this.api.getLots(new Date().getFullYear() - 5).pipe(
       shareReplay(1),
       map(Lots => {
@@ -112,7 +142,7 @@ export class LotService {
           } = Lote;
 
           const { hembras, machos } = Lote?.cantidad;
-          const { nombre_comercial, telefono, direccion } = Lote?.empresa;
+          const { nombre_comercial, telefono, direccion, RNC } = Lote?.empresa;
 
           //has to  add one day
           const date1 = this.formatDate(fecha_entrada);
@@ -122,12 +152,14 @@ export class LotService {
             lotId: id,
             cant_gallinas_asignadas,
             business: nombre_comercial,
+            RNC,
             phone: telefono,
             address: direccion,
             date: date1,
+            year: date1.getFullYear(),
             code: codigo_aduanero,
             variable_mortalidad_recria: this.variable_mortalidad_recria,
-            variable_mortalidad_produccion: this.variable_mortalidad_produccion,
+            variable_mortalidad_produccion: this.variable_mortalidad_produccion_ajustado,
             variable_produccion_huevos_totales: this.variable_produccion_huevos_totales,
             variable_aprovechamiento_huevos: this.variable_aprovechamiento_huevos,
             variable_nacimiento: this.variable_nacimientos,
@@ -186,6 +218,7 @@ export class LotService {
         empresa: recria.business,
         aprovechamiento_de_huevos_estandar: recria.aprov,
         mortalidad: recria.mort,
+        mortalidad_real: recria.mort_real,
         mortalidad_estandar: recria.standar,
         std_produccion: recria.standar,
         estandar_de_nacimientos: recria.birth,
@@ -193,9 +226,13 @@ export class LotService {
         month: recria.entry.getMonth() + 1,
         day: recria.entry.getDate(),
         huevos_incubables: recria.hincub,
+        huevos_incubables_real: recria.hincub_real,
         prod_huevos_totales: recria.prodhtotal,
+        prod_huevos_totales_real: recria.prodhTotal_real,
         nacimientos_totales: recria.birthtotal,
+        nacimientos_totales_real: recria.birthtotal_real,
         numero_de_aves: recria.chicks,
+        numero_de_aves_real: recria.chicks_real,
         lote: entity.id
       }
       dt.push(projection)
@@ -209,37 +246,41 @@ export class LotService {
         empresa: production.business,
         aprovechamiento_de_huevos_estandar: production.aprov,
         mortalidad: production.mort,
+        mortalidad_real: production.mort_real,
         mortalidad_estandar: production.standar,
         std_produccion: production.standar,
         estandar_de_nacimientos: production.birth,
         year: production.entry.getFullYear(),
         month: production.entry.getMonth() + 1,
         day: production.entry.getDate(),
-        huevos_incubables: production.hincub,
-        prod_huevos_totales: production.prodhtotal,
-        nacimientos_totales: production.birthtotal,
-        numero_de_aves: production.chicks,
+        huevos_incubables: isNaN(production.hincub)? 0 : production.hincub,
+        huevos_incubables_real: isNaN(production.hincub_real)? 0 : production.hincub_real,
+        prod_huevos_totales: isNaN(production.prodhtotal)? 0 : production.prodhtotal,
+        prod_huevos_totales_real: isNaN(production.prodhTotal_real)? 0 : production.prodhTotal_real,
+        nacimientos_totales: isNaN(production.birthtotal)? 0 : production.birthtotal,
+        nacimientos_totales_real: isNaN(production.birthtotal_real)? 0 : production.birthtotal_real,
+        numero_de_aves: isNaN(production.chicks)? 0 : production.chicks,
+        numero_de_aves_real: isNaN(production.chicks_real)? 0 : production.chicks_real,
         lote: entity.id
       }
       dt.push(projection)
     });
-    return dt;
+    return dt as LotProjection[];
   }
 
   private getRecria(lote: LotModel) {
     let recria = [];
     let index = 0;
-
+    const { business, week, date, females } = lote;
     for (let i = 0; i < this.semanas_en_recria * 7; i++) {
 
       if (i % 7 === 0) index += 1;
 
-      const {
-        business, week, date, females } = lote;
-
       const percent = recria[i - 1]?.mort || 100;
-      const mortality = percent - (this.variable_mortalidad_recria / (this.semanas_en_recria * 7));
-      //const date2 = new Date(date.getTime()+(( 1 * 24 * 60 * 60 * 1000) * i));
+      const percent_real = recria[i - 1]?.mort_real || 100;
+      const mortality = percent - (this.variable_mortalidad_recria /(this.semanas_en_recria * 7))// / (this.semanas_en_recria * 7));
+      const mortality_real = percent_real - (this.variable_mortalidad_recria_ajustado /(this.semanas_en_recria*7))
+      
       const date1 = new Date(date.getTime() + (1 * 24 * 60 * 60 * 1000))
       const date2 = new Date(date.getTime() + ((i * 24 * 60 * 60 * 1000)));
 
@@ -249,16 +290,21 @@ export class LotService {
         day: this.daysBetween(date1, date2) + i,//day:i+1,
         weekIndx: week,
         weekAge: index,
-        mort: Math.round(mortality * 100) / 100,
+        mort: parseFloat(mortality.toFixed(2)),
+        mort_real: parseFloat(mortality_real.toFixed(2)),
         standar: 0,
         aprov: 0,
         stdreal: 0,
         hincub: 0,
+        hincub_real: 0,
         prodhtotal: 0, //total eggs
+        prodhTotal_real: 0,
         birth: 0,
         birthtotal: 0,
+        birthtotal_real: 0,
         entry: date2,
-        chicks: Math.round(females - ((100 - mortality) * 10)),
+        chicks: Math.round(females - (females * (100 - mortality_real) / 100)),
+        chicks_real: Math.round(females - (females * (100 - mortality) /100)),
       });
 
     }
@@ -268,26 +314,39 @@ export class LotService {
   private getProd(lote) {
     let prod = [];
     let index = 0;
-
-    for (let i = 0; i < this.semanas_en_produccion * 7; i++) {
+    const { business, day, entry, chicks } = lote;
+    let test=true;
+    for (let i = 0; i <= this.semanas_en_produccion * 7; i++) {
 
       if (i % 7 === 0) index += 1;
 
-      const { business, day, entry, chicks } = lote;
-
       const percent = prod[i - 1]?.mort || 100;
-      const mortality = percent - (this.variable_mortalidad_produccion / (this.semanas_en_produccion * 7));
+      const percent_real = prod[i - 1]?.mort_real || 100;
 
-      const std_produccion = this._PROD[index] - this._PROD[index] * this.variable_produccion_huevos_totales/100;
+      const mortality = percent - (this.variable_mortalidad_produccion/(this.semanas_en_produccion * 7));
+      const mortality_real = percent_real - (this.variable_mortalidad_produccion_ajustado/(this.semanas_en_produccion * 7));
+
+      const std_produccion = this._PROD[index] - (this._PROD[index] * this.variable_produccion_huevos_totales/100);
       const std_aprovechamiento = this._APROV[index] - (this._APROV[index] * this.variable_aprovechamiento_huevos/100);
       const std_nacimientos = this._Nac[index] - (this._Nac[index] * this.variable_nacimientos/100);
 
       const date2 = new Date(entry.getTime() + ((1 * 24 * 60 * 60 * 1000) * (i + 1)));
 
-      const total_chicks = Math.round(chicks - ((100 - mortality) * 10));
+      const total_chicks = Math.round(chicks - (chicks * (100 - mortality_real)  / 100));
+      const total_chicks_real = Math.round(chicks - (chicks * (100 - mortality) / 100));
+
+      /* if(test){
+        console.log({std_produccion, std_aprovechamiento, std_nacimientos});
+        test=false;
+      } */
       const produccion = total_chicks * (std_produccion*0.01);
+      const produccion_real = (total_chicks_real * this._PROD[index]) * 0.01;
+      
       const aprovechamiento = produccion * (std_aprovechamiento*0.01);
+      const aprovechamiento_real = produccion_real * (this._APROV[index]*0.01);
+
       const nacimientos = aprovechamiento * (std_nacimientos*0.01);
+      const nacimientos_real = aprovechamiento_real * (this._Nac[index]*0.01);
 
       if (i < (this.semanas_de_retardo * 7)) {
         prod.push({
@@ -297,15 +356,21 @@ export class LotService {
           day: lote.day + i + 1,//add 1 day
           dayIndx: day,
           entry: date2,
-          mort: Math.round(mortality * 100) / 100,
-          stdreal: this._PROD[index],
+          mort: parseFloat(mortality.toFixed(2)),
+          mort_real: parseFloat(mortality_real.toFixed(2)),
           standar: std_produccion.toFixed(2),
+          aprov_real: this._APROV[index],
           aprov: std_aprovechamiento.toFixed(2),
+          birth_real: this._Nac[index],
           birth: std_nacimientos.toFixed(2),
           chicks: total_chicks,
-          prodhtotal: Math.round(produccion),
-          hincub: Math.round(aprovechamiento),
-          birthtotal: Math.round(nacimientos/2)
+          chicks_real: total_chicks_real,
+          prodhtotal: Math.floor(produccion),
+          prodhTotal_real: Math.floor(produccion_real),
+          hincub: Math.floor(aprovechamiento),
+          hincub_real: Math.floor(aprovechamiento_real),
+          birthtotal: Math.floor(nacimientos/2),
+          birthtotal_real: Math.floor(nacimientos_real/2)
         });
       } else {
         prod.push({
@@ -315,15 +380,22 @@ export class LotService {
           day: lote.day + i + 1,//add 1 day
           dayIndx: day,
           entry: date2,
-          mort: Math.round(mortality * 100) / 100,
-          stdreal: this._PROD[index],
+          mort: parseFloat(mortality.toFixed(2)),
+          mort_real: parseFloat(mortality_real.toFixed(2)),
+          standar_real: this._PROD[index],
           standar: std_produccion.toFixed(2),
+          aprov_real: this._APROV[index],
           aprov: std_aprovechamiento.toFixed(2),
+          birth_real: this._Nac[index],
           birth: std_nacimientos.toFixed(2),
           chicks: total_chicks,
-          prodhtotal: Math.round(produccion),
-          hincub: Math.round(aprovechamiento),
-          birthtotal: Math.round(nacimientos/2)
+          chicks_real: total_chicks_real,
+          prodhtotal: Math.floor(produccion),
+          prodhTotal_real: Math.floor(produccion_real),
+          hincub: Math.floor(aprovechamiento),
+          hincub_real: Math.floor(aprovechamiento_real),
+          birthtotal: Math.floor(nacimientos/2),
+          birthtotal_real: Math.floor(nacimientos_real/2)
         });
       }
 
@@ -337,26 +409,21 @@ export class LotService {
 
   //add one day
   formatDate(date) {
-    //return new Date(new Date(date).getTime() + (24 * 60 * 60 * 1000))
     return addDays(new Date(date), 1);
   }
 
   //when the production start
   private initProd(date: Date) {
-    //return new Date(date.getTime() + ((1000 * 3600 * 24) * 133))
     return addDays(date, 133);
   }
 
   //weeks count since the entry date
   weeksBetween(d1: Date, d2: Date) {
-    //return Math.round((d2.getTime() - d1.getTime()) / (7 * 24 * 60 * 60 * 1000));
     return differenceInWeeks(d2, d1);
   }
 
   //days count since the entry date
   daysBetween(d1, d2) {
-    /* const Difference_In_Time = d2.getTime() - d1.getTime();
-    return Math.floor(Difference_In_Time / (1000 * 3600 * 24)) + 1; */
     return differenceInDays(d2,d1);
   }
 

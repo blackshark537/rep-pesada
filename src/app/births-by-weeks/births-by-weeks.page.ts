@@ -58,7 +58,7 @@ export class BirthsByWeeksPage implements OnInit {
   }
 
   async displayData(monthly: EggLotInterface[]) {
-    console.log(monthly[0]);
+    
     let data_l: EggLotInterface[] = monthly.filter(x => x.day_name==='lunes');
     let data_v: EggLotInterface[] = monthly.filter(x => x.day_name==='viernes');
 
@@ -91,7 +91,7 @@ export class BirthsByWeeksPage implements OnInit {
       this.state.year1  += row.year1
       this.state.year2  += row.year2? row.year2 : 0;
     });
-    console.log(this.state)
+    
     await this.loading.dismiss();
   }
 

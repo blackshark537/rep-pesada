@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { projectionsActions } from '../actions';
 import { AppModel } from '../models';
+import { DatatableService } from '../services';
 
 @Component({
   selector: 'app-daily-projection',
@@ -16,6 +17,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
   title= 'Inventario De Aves En Producción';
   subtitle= 'Aves En Producción';
   promedio=true;
+  std = false;
   actual_year = new Date().getFullYear();
   rows = [];
   monthly = [];
@@ -46,10 +48,10 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
     { prop: 'nov', header: 'Noviembre' },
     { prop: 'dec', header: 'Diciembre' },
   ];
-  month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  
   sub$: Subscription;
   constructor(
-    private store: Store<AppModel>,
+    private datatableService: DatatableService,
     private _ar: ActivatedRoute
   ) { }
 
@@ -69,97 +71,11 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
       this.configSlides();
     });
 
-    let headers = this.cols.filter(x => x.prop != 'day').map(val => val.header);
-    let monthly = [];
-    this.sub$ = this.store.select('projections').pipe(
-      map(pro => {
-        let result = pro.filter(p => p.year === this.actual_year)
-        return result;
-      })
-    ).subscribe(resp => {
-      this.month.forEach((m, h) => {
-        let numero_aves_anual = 0;
-        let month = [];
-        for (let i = 1; i < 32; i++) {
-          let pro = resp.filter(p => p.month === m && p.day === i && p.estado === this.estado);
-          let numero_aves = null;
-          let d: Date = null;
-          let daysInMonth: Date = null;
-          pro.forEach((el, k) => {
-            d = new Date(el.dia);
-            let mt = d.getMonth() + 1;
-            let yr = d.getFullYear();
-            daysInMonth = new Date(yr, mt, 0);
-            if (k < 595) {
-              switch (this.typeFilter) {
-                case TypeFilter.Aves:
-                  numero_aves += parseInt(el.numero_de_aves);
-                  numero_aves_anual += parseInt(el.numero_de_aves);
-                  break;
-                case TypeFilter.Hvo_Prod:
-                  numero_aves += parseInt(el.prod_huevos_totales);
-                  numero_aves_anual += parseInt(el.prod_huevos_totales);
-                  break;
-                case TypeFilter.Hvo_Incb:
-                  numero_aves += parseInt(el.huevos_incubables);
-                  numero_aves_anual += parseInt(el.huevos_incubables);
-                  break;
-                case TypeFilter.Nacimientos:
-                  numero_aves += parseInt(el?.nacimientos_totales);
-                  numero_aves_anual += parseInt(el?.nacimientos_totales);
-                  break;
-                default:
-                  break;
-              }
-            }
-          });
-          //console.log(`${headers[m-1]}: ${i}`, numero_aves)
-          month.push(numero_aves);
-          if (i >= daysInMonth?.getDate())  continue;
-        }
-        //console.log(`${headers[m-1]}: `,numero_aves_anual)
-        monthly.push({ month: headers[m - 1], data: month, balance: this.typeFilter === TypeFilter.Aves? Math.floor(numero_aves_anual/31) : numero_aves_anual })
-        this.rows = [];
-        for (let i = 0; i < 31; i++) {
-          let obj = {};
-          obj['id'] = i;
-          obj['day'] = i + 1;
-          obj['jan'] = monthly.filter(x => x.month == 'Enero')[0]?.data[i];
-          obj['feb'] = monthly.filter(x => x.month == 'Febrero')[0]?.data[i];
-          obj['mar'] = monthly.filter(x => x.month == 'Marzo')[0]?.data[i];
-          obj['apr'] = monthly.filter(x => x.month == 'Abril')[0]?.data[i];
-          obj['may'] = monthly.filter(x => x.month == 'Mayo')[0]?.data[i];
-          obj['jun'] = monthly.filter(x => x.month == 'Junio')[0]?.data[i];
-          obj['jul'] = monthly.filter(x => x.month == 'Julio')[0]?.data[i];
-          obj['ago'] = monthly.filter(x => x.month == 'Agosto')[0]?.data[i];
-          obj['sep'] = monthly.filter(x => x.month == 'Septiembre')[0]?.data[i];
-          obj['oct'] = monthly.filter(x => x.month == 'Octubre')[0]?.data[i];
-          obj['nov'] = monthly.filter(x => x.month == 'Noviembre')[0]?.data[i];
-          obj['dec'] = monthly.filter(x => x.month == 'Diciembre')[0]?.data[i];
-          this.rows.push(obj);
-        }
-        this.monthly = [
-          { month: 'Enero', balance: monthly.filter(x => x.month == 'Enero')[0]?.balance },
-          { month: 'Febrero', balance: monthly.filter(x => x.month == 'Febrero')[0]?.balance },
-          { month: 'Marzo', balance: monthly.filter(x => x.month == 'Marzo')[0]?.balance },
-          { month: 'Abril', balance: monthly.filter(x => x.month == 'Abril')[0]?.balance },
-          { month: 'Mayo', balance: monthly.filter(x => x.month == 'Mayo')[0]?.balance },
-          { month: 'Junio', balance: monthly.filter(x => x.month == 'Junio')[0]?.balance },
-          { month: 'Julio', balance: monthly.filter(x => x.month == 'Julio')[0]?.balance },
-          { month: 'Agosto', balance: monthly.filter(x => x.month == 'Agosto')[0]?.balance },
-          { month: 'Septiembre', balance: monthly.filter(x => x.month == 'Septiembre')[0]?.balance },
-          { month: 'Octubre', balance: monthly.filter(x => x.month == 'Octubre')[0]?.balance },
-          { month: 'Noviembre', balance: monthly.filter(x => x.month == 'Noviembre')[0]?.balance },
-          { month: 'Diciembre', balance: monthly.filter(x => x.month == 'Diciembre')[0]?.balance },
-        ]
-      })
-
-      let balanceAnual=0;
-        this.monthly.forEach(el=>{
-          balanceAnual += el.balance
-        });
-        this.monthly.push({ month: 'Total Del Año', balance: balanceAnual});
-    });
+    this.sub$ = this.datatableService.getAbuelosData(this.actual_year, this.estado, this.typeFilter, this.std)
+    .subscribe(resp =>{
+      this.rows = resp.datatable;
+      this.monthly = resp.monthlyBalance;
+    })
   }
 
   ngOnDestroy() {
@@ -187,7 +103,7 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
       return;
     }
     if(window.innerWidth > 1100){
-      this.slideOpts.slidesPerView = 7;
+      this.slideOpts.slidesPerView = 6;
       this.resetSlides();
       return;
     }
@@ -198,25 +114,30 @@ export class DailyProjectionPage implements OnInit, OnDestroy {
     setTimeout(()=> this.slides=true, 1);
   }
 
+  switch(){
+    //this.store.dispatch(projectionsActions.GET_PROJECTIONS());
+    this.ngOnInit();
+  }
+
   search() {
-    this.store.dispatch(projectionsActions.GET_PROJECTIONS());
+    //this.store.dispatch(projectionsActions.GET_PROJECTIONS());
     if(this.typeFilter === TypeFilter.Aves){
-      this.title= `Inventario De Aves En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.title= `Progenitores Abuelos - Inventario De Aves En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.subtitle= `Aves En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=true;
     }
     if(this.typeFilter === TypeFilter.Hvo_Incb){
-      this.title=  `Huevos Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.title=  `Progenitores Abuelos - Huevos Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.subtitle= `Huevos Incubables En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Hvo_Prod){
-      this.title=  `Huevos Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
+      this.title=  `Progenitores Abuelos - Huevos Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.subtitle= `Huevos Totales En ${this.estado==='produccion'?  'Producción' :  'Recría' }`;
       this.promedio=false;
     }
     if(this.typeFilter === TypeFilter.Nacimientos){
-      this.title= 'Pollitas Reproductoras';
+      this.title= 'Progenitores Abuelos - Pollitas Reproductoras';
       this.subtitle= `Pollitas Reproductoras`;
       this.promedio=false;
     }

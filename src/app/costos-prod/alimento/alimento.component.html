@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar color="paolo-green">
+    <app-back-button slot="start" back="true"></app-back-button>
+    <ion-title>{{pTitle | titlecase}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-title>Fecha Actual: {{dateNow | date: 'dd-MM-yyyy'}}</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" >
+        <!-- TABLE HERE -->
+        <app-table [name]="subtitle1" [cols]="cols" [rows]="rows" ></app-table>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md="12">
+        <ion-item-divider></ion-item-divider>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <!-- TABLE HERE -->
+        <app-table [name]="subtitle2" [cols]="cols" [rows]="nucleo" ></app-table>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-list>
+          <ion-list-header>
+            <h1>Resumen De Costos Del Nucleo Para {{pTitle | titlecase}}</h1>
+          </ion-list-header>
+
+          <ion-row >
+            <ion-col size="12" size-md="8">
+              <ion-item>
+                <ion-label><h1>Descripción:</h1></ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>Total En Dolares:</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>Total En Pesos:</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngFor="let item of total_nucleos; index as i">
+            <ion-col size="12" size-md="8">
+              <ion-item>
+                <ion-label><h1> {{i+1}} - {{item.name | titlecase}}</h1></ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>{{item.usd | addCommas}}</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>{{item.dop | addCommas}}</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-list-header>
+            <h1>Resumen De Costos {{pTitle | titlecase}}</h1>
+          </ion-list-header>
+
+          <ion-row >
+            <ion-col size="12" size-md="8">
+              <ion-item>
+                <ion-label><h1>Descripción:</h1></ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>Total En Dolares:</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>Total En Pesos:</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngFor="let item of total_alimentos; index as i">
+            <ion-col size="12" size-md="8">
+              <ion-item>
+                <ion-label><h1> {{i+1}} - {{item.name | titlecase}}</h1></ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>{{item.usd | addCommas}}</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="2">
+              <ion-item>
+                <ion-label>
+                  <h1>{{item.dop | addCommas}}</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

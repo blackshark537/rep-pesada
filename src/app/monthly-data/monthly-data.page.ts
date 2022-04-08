@@ -50,6 +50,7 @@ export class MonthlyDataPage implements OnInit {
       switchMap(year =>{
       return this.apiService.getLotsByYear(year).pipe(
         map(lots=>{
+          console.log({lots});
           let row = [];
           lots.filter(l => l.lote_type === LotType.ABUELOS).forEach( (lot,i) => {  
             row.push({
@@ -77,23 +78,23 @@ export class MonthlyDataPage implements OnInit {
             this.importacion += el.importacion;
           });
           this.calendar = [
-            row.map(el=> el.jan).reduce((p,c)=>  p+c ),
-            row.map(el=> el.feb).reduce((p,c)=>  p+c ),
-            row.map(el=> el.mar).reduce((p,c)=>  p+c ),
-            row.map(el=> el.apr).reduce((p,c)=>  p+c ),
-            row.map(el=> el.may).reduce((p,c)=>  p+c ),
-            row.map(el=> el.jun).reduce((p,c)=>  p+c ),
-            row.map(el=> el.jul).reduce((p,c)=>  p+c ),
-            row.map(el=> el.ago).reduce((p,c)=>  p+c ),
-            row.map(el=> el.sep).reduce((p,c)=>  p+c ),
-            row.map(el=> el.oct).reduce((p,c)=>  p+c ),
-            row.map(el=> el.nov).reduce((p,c)=>  p+c ),
-            row.map(el=> el.dic).reduce((p,c)=>  p+c ),
+            row.map(el=> el.jan).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.feb).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.mar).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.apr).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.may).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.jun).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.jul).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.ago).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.sep).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.oct).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.nov).reduce((p,c)=>  p+c , 0),
+            row.map(el=> el.dic).reduce((p,c)=>  p+c , 0),
           ];
           return row;
       }))
     })).subscribe(rows =>{ 
-      this.rows = [...rows]
+      this.rows = [...rows];
     });
   }
 

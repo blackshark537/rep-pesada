@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, interval, Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LotsEffects } from '../effects';
+//import { LotsEffects } from '../effects';
 import { AppModel, EggLotInterface } from '../models';
 import { LotService } from '../services';
 import { TableActions, TableEvent } from '../shared';
@@ -34,17 +36,23 @@ export class EggsProductionPage implements OnInit, OnDestroy {
 
   total_production=0;
   total_incubables=0;
+  total_nacimientos=0;
+  total_pollos_terminados=0;
   total_chicks=0;
   estado='';
-  total_weeks=66;
+  total_weeks=60;
   time = new Date();
 
   constructor(
     private store: Store<AppModel>,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private lotService: LotService
-  ) { }
+    private lotService: LotService,
+    lotEffectSerice: LotsEffects
+  ) { 
+    const { semanas_en_recria, semanas_en_produccion } = lotEffectSerice;
+    this.total_weeks = semanas_en_produccion;
+  }
 
   ngOnInit() {
     
@@ -54,14 +62,27 @@ export class EggsProductionPage implements OnInit, OnDestroy {
     this.lot$ = this.store.select('eggLots').pipe(
       map(lots => {
         this.total_production = 0;
-        this.total_incubables= 0
+        this.total_incubables= 0;
+        this.total_nacimientos=0;
+        this.total_pollos_terminados=0;
         this.total_chicks = 0;
-        return lots.filter(x => x.estado === this.estado  && x.days_passed  > 0  && x.weeks_passed  < this.total_weeks ).map(val => {
-          this.total_production += val.production;
-          this.total_incubables += parseInt(val.numero_huevos_incubables);
-          this.total_chicks += val.cant_gallinas_existentes;
-          return val;
-        })
+
+        if(this.estado.match('recria')){
+          return lots.filter(x => x.estado === this.estado && x.weeks_passed  >= 0  && x.weeks_passed  < this.total_weeks).map(val => {
+              this.total_chicks += val.cant_gallinas_existentes;
+            return val;
+          })
+        } else {
+          return lots.filter(x => x.estado === this.estado && x.weeks_passed  >= 24  && x.weeks_passed  < this.total_weeks).map(val => {
+            
+              this.total_chicks += val.cant_gallinas_existentes;
+              this.total_production += val.production;
+              this.total_incubables += parseInt(val.numero_huevos_incubables);
+              this.total_nacimientos += parseInt(val.numero_nacimientos);
+              this.total_pollos_terminados += val.nacimientos_terminados;
+            return val;
+          })
+        }
       })
     );
   }

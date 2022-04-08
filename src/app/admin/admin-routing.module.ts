@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminPage } from './admin.page';
 import { VarRepAbuelasComponent } from './var-rep-abuelas/var-rep-abuelas.component';
 import { VarRepPesadasComponent } from './var-rep-pesadas/var-rep-pesadas.component';
+import { VariablesComponent } from './variables/variables.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'rep-pesadas/variables',
     component: VarRepPesadasComponent
+  },
+  {
+    path: 'general/variables/:abuelos',
+    component: VariablesComponent
   },
 ];
 

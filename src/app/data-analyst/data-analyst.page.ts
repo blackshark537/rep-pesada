@@ -18,7 +18,7 @@ export class DataAnalystPage implements OnInit {
     name: 'Número De Empresas',
     value: 0
   }, {
-    name: 'Total Rep. Livianas Asignadas',
+    name: 'Total Prog. Abuelos Asignadas',
     value: 0
   }, {
     name: 'Total De Aves En Recría',
@@ -96,7 +96,7 @@ export class DataAnalystPage implements OnInit {
     this.store.select('businesses').subscribe(businesses=> {
       if(!businesses.length) return;
       this.single[0].value = businesses.length
-      this.single[1].value = businesses.map(b=> parseInt(b.cant_gallinas_asignadas) ).reduce((p,c)=>  p+=c );
+      this.single[1].value = businesses.map(b=> parseInt(b.cant_gallinas_asignadas) ).reduce((p,c)=>  p+=c , 0);
       this.breedingAndProdLots();
       this.mothlyLightBreeder();
     });
@@ -105,10 +105,10 @@ export class DataAnalystPage implements OnInit {
   breedingAndProdLots(){
     this.store.select('lots').subscribe(lots=>{
       if(!lots.length) return;
-      this.single[2].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c);
-      this.single[3].value = lots.filter(l => l.status === 'production' && l.days < 462).map(l=> l.total).reduce((p,c)=> p+=c);
-      this.singlePie[0].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c);
-      this.singlePie[1].value = lots.filter(l => l.status === 'production' && l.days < 462).map(l=> l.total).reduce((p,c)=> p+=c);
+      this.single[2].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c, 0);
+      this.single[3].value = lots.filter(l => l.status === 'production' && l.days < 462).map(l=> l.total).reduce((p,c)=> p+=c, 0);
+      this.singlePie[0].value = lots.filter(l => l.status === 'breeding' && l.week < 18).map(l=> l.total).reduce((p,c)=> p+=c, 0);
+      this.singlePie[1].value = lots.filter(l => l.status === 'production' && l.days < 462).map(l=> l.total).reduce((p,c)=> p+=c, 0);
     })
   }
 
@@ -161,17 +161,17 @@ export class DataAnalystPage implements OnInit {
 
         this.multi2.push({
           name: h.header,
-          value: monthly.filter(m => m.month === h.header).map(m => m.numero_Ht).reduce((p, c) => p += c)
+          value: monthly.filter(m => m.month === h.header).map(m => m.numero_Ht).reduce((p, c) => p += c, 0)
         })
 
         this.multi3.push({
           name: h.header,
-          value: monthly.filter(m => m.month === h.header).map(m => m.numero_Hi).reduce((p, c) => p += c)
+          value: monthly.filter(m => m.month === h.header).map(m => m.numero_Hi).reduce((p, c) => p += c, 0)
         })
 
         this.multi4.push({
           name: h.header,
-          value: Math.floor(monthly.filter(m => m.month === h.header).map(m => m.numero_Na).reduce((p, c) => p += c))
+          value: Math.floor(monthly.filter(m => m.month === h.header).map(m => m.numero_Na).reduce((p, c) => p += c, 0))
         })
       });
 
@@ -184,7 +184,7 @@ export class DataAnalystPage implements OnInit {
               value: this.multi2.filter(x => x.name === head.header).map(val=>  val.value).reduce((p,c)=> p += c)
             }, */ {
               name: 'Huevos Inc.',
-              value: this.multi3.filter(x => x.name === head.header).map(val=>  val.value).reduce((p,c)=> p += c)
+              value: this.multi3.filter(x => x.name === head.header).map(val=>  val.value).reduce((p,c)=> p += c, 0)
             },/*  {
               name: 'Pollitas Nac.',
               value: this.multi4.filter(x => x.name === head.header).map(val=>  val.value).reduce((p,c)=> p += c)
