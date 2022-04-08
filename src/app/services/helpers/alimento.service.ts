@@ -8,7 +8,7 @@ export class AlimentoService {
 
   private cols =[
     { prop: 'name', header: 'Ingredientes' },
-    { prop: 'qty', header: 'Cantidad' },
+    { prop: 'qty', header: 'Cantidad (lbs)' },
     { prop: 'percent', header: '%' },
     { prop: 'amount', header: 'Contenido (lbs)' },
     { prop: 'price', header: 'Costo (funda)' },
@@ -278,7 +278,7 @@ export class AlimentoService {
     this[alimentoType][last].percent = this.toFixed(this[nucleoType].map(el=> el.percent).reduce((p,c)=> p+=c, 0));
     this[alimentoType][last].amount = this.toFixed(this[nucleoType].map(el=> el.qty).reduce((p,c)=> p+=c, 0));
     this[alimentoType][last].price = this.toFixed(this.total_nucleo[nucleoType].costo_final.usd);
-    this[alimentoType][last].price_lb = this.toFixed(this[alimentoType][last].price/this[alimentoType][last].amount)
+    this[alimentoType][last].price_lb = this.toFixed(this[alimentoType][last].price/this[alimentoType][last].amount, 3)
     this[alimentoType][last].price_ton_usd = this.toFixed(this.total_nucleo[nucleoType].costo_final.usd);
     this[alimentoType][last].price_ton_dop = this.toFixed(this.total_nucleo[nucleoType].costo_final.usd * dolar);
     
@@ -336,12 +336,14 @@ export class AlimentoService {
   }
 
   private compQty(num: number): number{
-      return parseFloat((num*20).toFixed(2))
+      return this.toFixed(num*20);
   }
 
   private toFixed(num: number, dec=2): number{
     if(!num) return 0;
-    return parseFloat((num).toFixed(dec));
+    const factor = dec <=2? 100 : 1000;
+    const x = parseInt(Math.round(num*factor).toFixed(0));
+    return parseFloat((x/factor).toFixed(dec));
   }
 }
 
@@ -351,6 +353,14 @@ export enum AlimentoTypeId{
   CRE='crecimiento',
   ENG='engorde',
   FIN='finalizador'
+}
+
+export enum AlimentoNucleoTypeId{
+  nucleo_pre='nucleo pre-iniciador',
+  nucleo_ini='nucleo iniciador',
+  nucleo_cre='nucleo crecimiento',
+  nucleo_eng='nucleo engorde',
+  nucleo_fin='nucleo finalizador'
 }
 
 export enum AlimentoType{

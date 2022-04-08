@@ -92,7 +92,10 @@ export class TablaAlimentoService {
     this.sub$.map(sub=> sub.unsubscribe());
   }
 
-  private toFixed(value: number, decimals = 2){
-    return parseFloat(value.toFixed(decimals));
+  private toFixed(num: number, dec=2): number{
+    if(!num) return 0;
+    const factor = dec <=2? 100 : 1000;
+    const x = parseInt(Math.round(num*factor).toFixed(0));
+    return parseFloat((x/factor).toFixed(dec));
   }
 }

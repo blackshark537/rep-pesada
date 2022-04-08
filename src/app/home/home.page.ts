@@ -278,23 +278,23 @@ export class HomePage implements OnInit, OnDestroy{
 //========================================================================================================================
       this.rows1[2].init_diff = this.rows1[2].init_real - this.rows1[2].init;
       this.rows1[2].month_diff = this.rows1[2].month_real - this.rows1[2].month;
-      this.rows1[2].year_diff = (this.rows1[2].year_real - this.rows1[2].year) //* 100 / this.rows1[2].year_real).toFixed(2);
+      this.rows1[2].year_diff = (this.rows1[2].year_real - this.rows1[2].year);
 
       this.rows1[3].init_diff = this.rows1[3].init_real - this.rows1[3].init;
       this.rows1[3].month_diff = this.rows1[3].month_real - this.rows1[3].month;
-      this.rows1[3].year_diff = (this.rows1[3].year_real - this.rows1[3].year) //* 100 / this.rows1[3].year_real).toFixed(2);
+      this.rows1[3].year_diff = (this.rows1[3].year_real - this.rows1[3].year);
 
       this.rows1[5].init_diff = this.rows1[5].init_real - this.rows1[5].init;
       this.rows1[5].month_diff = this.rows1[5].month_real - this.rows1[5].month;
-      this.rows1[5].year_diff = (this.rows1[5].year_real - this.rows1[5].year)// * 100 / this.rows1[5].year_real).toFixed(2);
+      this.rows1[5].year_diff = (this.rows1[5].year_real - this.rows1[5].year);
 
       this.rows1[6].init_diff = this.rows1[6].init_real - this.rows1[6].init;
       this.rows1[6].month_diff = this.rows1[6].month_real - this.rows1[6].month;
-      this.rows1[6].year_diff = (this.rows1[6].year_real - this.rows1[6].year) //* 100 / this.rows1[6].year_real).toFixed(2);
+      this.rows1[6].year_diff = (this.rows1[6].year_real - this.rows1[6].year);
 
       this.rows1[7].init_diff = this.rows1[7].init_real - this.rows1[7].init;
       this.rows1[7].month_diff = this.rows1[7].month_real - this.rows1[7].month;
-      this.rows1[7].year_diff = (this.rows1[7].year_real - this.rows1[7].year) //* 100 / this.rows1[7].year_real).toFixed(2);
+      this.rows1[7].year_diff = (this.rows1[7].year_real - this.rows1[7].year);
 //========================================================================================================================
       setTimeout(_=>{
         this.rows1[4].init = this.rows1[3].init + this.rows1[2].init;
@@ -307,7 +307,7 @@ export class HomePage implements OnInit, OnDestroy{
 
         this.rows1[4].year = this.rows1[3].year + this.rows1[2].year;
         this.rows1[4].year_real = this.rows1[3].year_real + this.rows1[2].year_real;
-        this.rows1[4].year_diff = (this.rows1[4].year_real - this.rows1[4].year) //* 100 / this.rows1[4].year_real).toFixed(2);
+        this.rows1[4].year_diff = (this.rows1[4].year_real - this.rows1[4].year);
       }, 600);
     });
     }
@@ -404,27 +404,27 @@ export class HomePage implements OnInit, OnDestroy{
 //========================================================================================================================
         this.rows2[1].init_diff = this.rows2[1].init_real - this.rows2[1].init;
         this.rows2[1].month_diff = this.rows2[1].month_real - this.rows2[1].month;
-        this.rows2[1].year_diff = (this.rows2[1].year_real - this.rows2[1].year) //* 100 / this.rows1[2].year_real).toFixed(2);
+        this.rows2[1].year_diff = (this.rows2[1].year_real - this.rows2[1].year);
 
         this.rows2[2].init_diff = this.rows2[2].init_real - this.rows2[2].init;
         this.rows2[2].month_diff = this.rows2[2].month_real - this.rows2[2].month;
-        this.rows2[2].year_diff = (this.rows2[2].year_real - this.rows2[2].year) //* 100 / this.rows1[3].year_real).toFixed(2);
+        this.rows2[2].year_diff = (this.rows2[2].year_real - this.rows2[2].year);
 
         this.rows2[4].init_diff = this.rows2[4].init_real - this.rows2[4].init;
         this.rows2[4].month_diff = this.rows2[4].month_real - this.rows2[4].month;
-        this.rows2[4].year_diff = (this.rows2[4].year_real - this.rows2[4].year) //* 100 / this.rows1[3].year_real).toFixed(2);
+        this.rows2[4].year_diff = (this.rows2[4].year_real - this.rows2[4].year);
 
         this.rows2[5].init_diff = this.rows2[5].init_real - this.rows2[5].init;
         this.rows2[5].month_diff = this.rows2[5].month_real - this.rows2[5].month;
-        this.rows2[5].year_diff = (this.rows2[5].year_real - this.rows2[5].year)// * 100 / this.rows1[5].year_real).toFixed(2);
+        this.rows2[5].year_diff = (this.rows2[5].year_real - this.rows2[5].year);
 
         this.rows2[6].init_diff = this.rows2[6].init_real - this.rows2[6].init;
         this.rows2[6].month_diff = this.rows2[6].month_real - this.rows2[6].month;
-        this.rows2[6].year_diff = (this.rows2[6].year_real - this.rows2[6].year) //* 100 / this.rows1[6].year_real).toFixed(2);
+        this.rows2[6].year_diff = (this.rows2[6].year_real - this.rows2[6].year);
 
         this.rows2[7].init_diff = this.rows2[7].init_real - this.rows2[7].init;
         this.rows2[7].month_diff = this.rows2[7].month_real - this.rows2[7].month;
-        this.rows2[7].year_diff = (this.rows2[7].year_real - this.rows2[7].year) //* 100 / this.rows1[7].year_real).toFixed(2);
+        this.rows2[7].year_diff = (this.rows2[7].year_real - this.rows2[7].year);
 //========================================================================================================================
         setTimeout(_=>{
           this.rows2[3].init = this.rows2[1].init + this.rows2[2].init;
@@ -437,7 +437,7 @@ export class HomePage implements OnInit, OnDestroy{
 
           this.rows2[3].year = this.rows2[1].year + this.rows2[2].year;
           this.rows2[3].year_real = this.rows2[1].year_real + this.rows2[2].year_real;
-          this.rows2[3].year_diff = (this.rows2[3].year_real - this.rows2[3].year) //* 100 / this.rows1[4].year_real).toFixed(2);
+          this.rows2[3].year_diff = (this.rows2[3].year_real - this.rows2[3].year);
         }, 600);
       });
     }

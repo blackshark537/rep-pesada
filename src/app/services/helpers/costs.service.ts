@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -14,7 +15,7 @@ export class CostsService {
   pollos_recibidos= null;
   mortalidad = 10.00;
   private readonly tonelada= 22.046;
-  private readonly precio_dolar = 55.61;
+  private readonly precio_dolar = 55.58;
 
   private data_tecnica = {
     
@@ -80,13 +81,16 @@ export class CostsService {
   constructor(
     private loadCtrl: LoadingController,
     private datatable: DatatableService,
+    //private http: HttpClient
   ) {
     //this.getDollar();
     this.getPollitosNacidos();
   }
 
   getDollar(){
-    /* const sub1 = this.http.get("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd.min.json").subscribe(resp=>{
+    /* const sub1 = this.http.get(
+      "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd.json"
+    ).subscribe(resp=>{
         console.log(resp);
     });
     this.sub$.push(sub1); */
@@ -114,26 +118,33 @@ export class CostsService {
 
   private calcPreciosMaiz(){
     this.data_precio_maiz.precio_tonelada_muelle.value = this.data_precio_maiz.precio_muelle.value + this.data_precio_maiz.precio_base_transporte.value;
-    this.data_precio_maiz.precio_quintal.value = parseFloat(((this.data_precio_maiz.precio_tonelada_muelle.value/this.tonelada) * this.precio_dolar).toFixed(2))
+    this.data_precio_maiz.precio_quintal.value = this.toFixed((this.data_precio_maiz.precio_tonelada_muelle.value/this.tonelada) * this.precio_dolar);
     this.data_precio_maiz.precio_planta_alimento.value = this.data_precio_maiz.precio_quintal.value + this.data_precio_maiz.precio_aduanas.value + this.data_precio_maiz.transporte_muelle.value;
-    this.data_precio_maiz.precio_quintal_planta.value = parseFloat((this.data_precio_maiz.precio_planta_alimento.value / this.precio_dolar).toFixed(2));
-    this.data_precio_maiz.coste_final_maiz.value = parseFloat((this.addPercentage(this.data_precio_maiz.precio_quintal_planta.value, 18)).toFixed(2));
-    this.data_precio_maiz.coste_quintal_maiz.value = parseFloat((this.data_precio_maiz.coste_final_maiz.value * this.precio_dolar).toFixed(2))
-    this.data_precio_maiz.coste_tonelada_maiz.value = parseFloat((this.data_precio_maiz.coste_final_maiz.value * this.tonelada).toFixed(2));
-    this.data_precio_maiz.conste_tonelada_maiz_planta.value = parseFloat((this.data_precio_maiz.coste_quintal_maiz.value * this.tonelada).toFixed(2));
+    this.data_precio_maiz.precio_quintal_planta.value = this.toFixed(this.data_precio_maiz.precio_planta_alimento.value / this.precio_dolar);
+    this.data_precio_maiz.coste_final_maiz.value = this.toFixed(this.addPercentage(this.data_precio_maiz.precio_quintal_planta.value, 18));
+    this.data_precio_maiz.coste_quintal_maiz.value = this.toFixed(this.data_precio_maiz.coste_final_maiz.value * this.precio_dolar);
+    this.data_precio_maiz.coste_tonelada_maiz.value = this.toFixed(this.data_precio_maiz.coste_final_maiz.value * this.tonelada);
+    this.data_precio_maiz.conste_tonelada_maiz_planta.value = this.toFixed(this.data_precio_maiz.coste_quintal_maiz.value * this.tonelada);
   }
 
   private calcPreciosSoya(){
-    this.data_precio_soya.precion_muelle.value = parseFloat((this.data_precio_soya.precio_bushel_soya.value * this.data_precio_soya.variable_calculo.value).toFixed(2));
-    this.data_precio_soya.precio_tonelada_muelle.value = parseFloat((this.data_precio_soya.precion_muelle.value + this.data_precio_soya.precio_base_transporte.value).toFixed(2));
-    this.data_precio_soya.precio_quintal_muelle.value = parseFloat(((this.data_precio_soya.precio_tonelada_muelle.value/this.tonelada)*this.precio_dolar).toFixed(2));
+    this.data_precio_soya.precion_muelle.value = this.toFixed(this.data_precio_soya.precio_bushel_soya.value * this.data_precio_soya.variable_calculo.value);
+    this.data_precio_soya.precio_tonelada_muelle.value = this.toFixed(this.data_precio_soya.precion_muelle.value + this.data_precio_soya.precio_base_transporte.value);
+    this.data_precio_soya.precio_quintal_muelle.value = this.toFixed((this.data_precio_soya.precio_tonelada_muelle.value/this.tonelada)*this.precio_dolar);
     const { precio_aduanas, transporte_muelle_planta} = this.data_precio_soya;
     this.data_precio_soya.precio_quintal_no_merma_rd.value = this.data_precio_soya.precio_quintal_muelle.value + precio_aduanas.value + transporte_muelle_planta.value;
-    this.data_precio_soya.precio_quintal_no_merma_usd.value = parseFloat((this.data_precio_soya.precio_quintal_no_merma_rd.value / this.precio_dolar).toFixed(2));
+    this.data_precio_soya.precio_quintal_no_merma_usd.value = this.toFixed(this.data_precio_soya.precio_quintal_no_merma_rd.value / this.precio_dolar);
     this.data_precio_soya.precio_quintal_planta_usd.value = this.addPercentage(this.data_precio_soya.precio_quintal_no_merma_usd.value, 18);
-    this.data_precio_soya.precio_quintal_planta_rd.value = parseInt((this.data_precio_soya.precio_quintal_planta_usd.value * this.precio_dolar).toFixed(2));
-    this.data_precio_soya.precio_ton_soya_usd.value = parseFloat((this.data_precio_soya.precio_quintal_planta_usd.value * this.tonelada).toFixed(2));
+    this.data_precio_soya.precio_quintal_planta_rd.value = this.toFixed(this.data_precio_soya.precio_quintal_planta_usd.value * this.precio_dolar);
+    this.data_precio_soya.precio_ton_soya_usd.value = this.toFixed(this.data_precio_soya.precio_quintal_planta_usd.value * this.tonelada);
     this.data_precio_soya.precio_ton_soya_rd.value = this.data_precio_soya.precio_quintal_planta_rd.value * this.tonelada;
+  }
+
+  private toFixed(num: number, dec=2): number{
+    if(!num) return 0;
+    const factor = dec <=2? 100 : 1000;
+    const x = parseInt(Math.round(num*factor).toFixed(0));
+    return parseFloat((x/factor).toFixed(dec));
   }
 
   private delay(time=500): Promise<void>{

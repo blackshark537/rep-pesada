@@ -286,8 +286,8 @@ private getRecria(lote: EggLotInterface) {
             id: i,
             day: this.lotService.daysBetween(date1, date2) + i,//day:i+1,
             weekAge: index,
-            mort: parseFloat(mortality.toFixed(2)),
-            mort_real: parseFloat(mortality_real.toFixed(2)),
+            mort: this.toFixed(mortality),
+            mort_real: this.toFixed(mortality_real),
             standar: 0,
             stdreal: 0,
             hincub: 0,
@@ -341,8 +341,8 @@ private getRecria(lote: EggLotInterface) {
                 weekAge: index,
                 day: lote.day + i + 1,//add 1 day
                 dayIndx: day,
-                mort: parseFloat(mortality.toFixed(2)),
-                mort_real: parseFloat(mortality_real.toFixed(2)),//mortality,
+                mort: this.toFixed(mortality),
+                mort_real: this.toFixed(mortality_real),//mortality,
                 entry: date2,
                 standar: this._PROD[index],
                 stdreal: 0,
@@ -372,8 +372,8 @@ private getRecria(lote: EggLotInterface) {
                 weekAge: index,
                 day: lote.day + i + 1,//add 1 day
                 dayIndx: day,
-                mort: parseFloat(mortality.toFixed(2)),
-                mort_real: parseFloat(mortality_real.toFixed(2)),
+                mort: this.toFixed(mortality),
+                mort_real: this.toFixed(mortality_real),
                 entry: date2,
                 stdreal: this._PROD[index],
                 standar: std_produccion.toFixed(2),
@@ -502,12 +502,19 @@ private getRecria(lote: EggLotInterface) {
   }
 
 
-  genId(): string{
+  private genId(): string{
     const qwerty='ABCDEFGHIJKLMNOPQRSTUVYWZ0123456789abcdefghijklmnopqrstuvyz_'
     let id='';
     for (let i = 0; i < 10; i++) {
         id += qwerty[Math.floor(Math.random()*qwerty.length-1)];
     }
     return id;
+  }
+
+  private toFixed(num: number, dec=2): number{
+    if(!num) return 0;
+    const factor = dec <=2? 100 : 1000;
+    const x = parseInt(Math.round(num*factor).toFixed(0));
+    return parseFloat((x/factor).toFixed(dec));
   }
 }

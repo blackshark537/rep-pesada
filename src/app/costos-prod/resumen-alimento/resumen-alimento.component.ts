@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AlimentoNucleoType, AlimentoService, AlimentoType, AlimentoTypeId } from 'src/app/services';
+import { AlimentoNucleoType, AlimentoNucleoTypeId, AlimentoService, AlimentoType, AlimentoTypeId } from 'src/app/services';
 
 @Component({
   selector: 'app-resumen-alimento',
@@ -18,25 +18,25 @@ export class ResumenAlimentoComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     await this.alimentoService.compileResume();
+    this.getResume();
   }
 
   ngAfterViewInit(): void {
-    this.getResume();
   }
 
   getResume(){
     this.foods = [];
-    Object.values(AlimentoType).forEach(alim=>{
-      this.foods.push({type: AlimentoTypeId[alim.toUpperCase()],...this.alimentoService.getResumenTotal(alim).find(el=> el.name.toLowerCase().includes("costo total"))})
+    Object.values(AlimentoType).forEach(async alim=>{
+      const alimento = this.alimentoService.getResumenTotal(alim).find(el=> el.name.toLowerCase().includes("costo total"));
+      this.foods.push({type: AlimentoTypeId[alim.toUpperCase()], ...alimento})
     });
     this.getResumenNucleos();
   }
 
   getResumenNucleos(){
     Object.values(AlimentoNucleoType).forEach(alim=>{
-      this.foods.push({type: AlimentoTypeId[alim.toUpperCase()],...this.alimentoService.getResumenTotalNucleo(alim).find(el=> el.name.toLowerCase().includes("costo total"))})
+      this.foods.push({type: AlimentoNucleoTypeId[alim],...this.alimentoService.getResumenTotalNucleo(alim).find(el=> el.name.toLowerCase().includes("costo total"))})
     });
-    this.getResume();
   }
 
   get dateNow(){

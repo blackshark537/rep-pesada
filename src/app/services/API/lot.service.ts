@@ -290,8 +290,8 @@ export class LotService {
         day: this.daysBetween(date1, date2) + i,//day:i+1,
         weekIndx: week,
         weekAge: index,
-        mort: parseFloat(mortality.toFixed(2)),
-        mort_real: parseFloat(mortality_real.toFixed(2)),
+        mort: this.toFixed(mortality),
+        mort_real: this.toFixed(mortality_real),
         standar: 0,
         aprov: 0,
         stdreal: 0,
@@ -356,8 +356,8 @@ export class LotService {
           day: lote.day + i + 1,//add 1 day
           dayIndx: day,
           entry: date2,
-          mort: parseFloat(mortality.toFixed(2)),
-          mort_real: parseFloat(mortality_real.toFixed(2)),
+          mort: this.toFixed(mortality),
+          mort_real: this.toFixed(mortality_real),
           standar: std_produccion.toFixed(2),
           aprov_real: this._APROV[index],
           aprov: std_aprovechamiento.toFixed(2),
@@ -380,8 +380,8 @@ export class LotService {
           day: lote.day + i + 1,//add 1 day
           dayIndx: day,
           entry: date2,
-          mort: parseFloat(mortality.toFixed(2)),
-          mort_real: parseFloat(mortality_real.toFixed(2)),
+          mort: this.toFixed(mortality),
+          mort_real: this.toFixed(mortality_real),
           standar_real: this._PROD[index],
           standar: std_produccion.toFixed(2),
           aprov_real: this._APROV[index],
@@ -401,6 +401,13 @@ export class LotService {
 
     }
     return prod;
+  }
+
+  private toFixed(num: number, dec=2): number{
+    if(!num) return 0;
+    const factor = dec <=2? 100 : 1000;
+    const x = parseInt(Math.round(num*factor).toFixed(0));
+    return parseFloat((x/factor).toFixed(dec));
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

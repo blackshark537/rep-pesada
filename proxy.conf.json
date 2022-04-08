@@ -1,0 +1,7 @@
+{
+    "/gh/*": {
+    "target": "https://cdn.jsdelivr.net",
+    "secure": true,
+    "logLevel": "debug"
+    }
+}
