@@ -17,7 +17,7 @@ export class CostsService {
   private readonly tonelada= 22.046;
   private readonly precio_dolar = 55.58;
 
-  private data_tecnica = {
+  data_tecnica = {
     
     aves_totales: { title: `CANTIDAD DE POLLITOS A RECIBIR EN GRANJA`, value: 0, readonly: true, type: 'text',},
     mortalidad: { title: `PORCIENTO DE MORTALIDAD `, value: this.mortalidad, readonly: false, type: 'number', },
@@ -89,7 +89,7 @@ export class CostsService {
 
   getDollar(){
     /* const sub1 = this.http.get(
-      "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd.json"
+      "/gh/fawazahmed0/currency-api@1/latest/currencies/usd.json"
     ).subscribe(resp=>{
         console.log(resp);
     });
@@ -117,9 +117,9 @@ export class CostsService {
   }
 
   private calcPreciosMaiz(){
-    this.data_precio_maiz.precio_tonelada_muelle.value = this.data_precio_maiz.precio_muelle.value + this.data_precio_maiz.precio_base_transporte.value;
+    this.data_precio_maiz.precio_tonelada_muelle.value = this.toFixed(this.data_precio_maiz.precio_muelle.value + this.data_precio_maiz.precio_base_transporte.value);
     this.data_precio_maiz.precio_quintal.value = this.toFixed((this.data_precio_maiz.precio_tonelada_muelle.value/this.tonelada) * this.precio_dolar);
-    this.data_precio_maiz.precio_planta_alimento.value = this.data_precio_maiz.precio_quintal.value + this.data_precio_maiz.precio_aduanas.value + this.data_precio_maiz.transporte_muelle.value;
+    this.data_precio_maiz.precio_planta_alimento.value = this.toFixed(this.data_precio_maiz.precio_quintal.value + this.data_precio_maiz.precio_aduanas.value + this.data_precio_maiz.transporte_muelle.value);
     this.data_precio_maiz.precio_quintal_planta.value = this.toFixed(this.data_precio_maiz.precio_planta_alimento.value / this.precio_dolar);
     this.data_precio_maiz.coste_final_maiz.value = this.toFixed(this.addPercentage(this.data_precio_maiz.precio_quintal_planta.value, 18));
     this.data_precio_maiz.coste_quintal_maiz.value = this.toFixed(this.data_precio_maiz.coste_final_maiz.value * this.precio_dolar);
@@ -132,12 +132,12 @@ export class CostsService {
     this.data_precio_soya.precio_tonelada_muelle.value = this.toFixed(this.data_precio_soya.precion_muelle.value + this.data_precio_soya.precio_base_transporte.value);
     this.data_precio_soya.precio_quintal_muelle.value = this.toFixed((this.data_precio_soya.precio_tonelada_muelle.value/this.tonelada)*this.precio_dolar);
     const { precio_aduanas, transporte_muelle_planta} = this.data_precio_soya;
-    this.data_precio_soya.precio_quintal_no_merma_rd.value = this.data_precio_soya.precio_quintal_muelle.value + precio_aduanas.value + transporte_muelle_planta.value;
+    this.data_precio_soya.precio_quintal_no_merma_rd.value = this.toFixed(this.data_precio_soya.precio_quintal_muelle.value + precio_aduanas.value + transporte_muelle_planta.value);
     this.data_precio_soya.precio_quintal_no_merma_usd.value = this.toFixed(this.data_precio_soya.precio_quintal_no_merma_rd.value / this.precio_dolar);
     this.data_precio_soya.precio_quintal_planta_usd.value = this.addPercentage(this.data_precio_soya.precio_quintal_no_merma_usd.value, 18);
     this.data_precio_soya.precio_quintal_planta_rd.value = this.toFixed(this.data_precio_soya.precio_quintal_planta_usd.value * this.precio_dolar);
     this.data_precio_soya.precio_ton_soya_usd.value = this.toFixed(this.data_precio_soya.precio_quintal_planta_usd.value * this.tonelada);
-    this.data_precio_soya.precio_ton_soya_rd.value = this.data_precio_soya.precio_quintal_planta_rd.value * this.tonelada;
+    this.data_precio_soya.precio_ton_soya_rd.value = this.toFixed(this.data_precio_soya.precio_quintal_planta_rd.value * this.tonelada);
   }
 
   private toFixed(num: number, dec=2): number{

@@ -10,6 +10,7 @@ export class ResumenAlimentoComponent implements OnInit, AfterViewInit {
 
   pTitle: string = 'Resumen total de alimentos';
   foods: {type: string; usd: number; dop: number}[];
+  nucleos: {type: string; usd: number; dop: number}[];
   constructor(
     private alimentoService: AlimentoService
   ) { 
@@ -34,8 +35,9 @@ export class ResumenAlimentoComponent implements OnInit, AfterViewInit {
   }
 
   getResumenNucleos(){
+    this.nucleos = [];
     Object.values(AlimentoNucleoType).forEach(alim=>{
-      this.foods.push({type: AlimentoNucleoTypeId[alim],...this.alimentoService.getResumenTotalNucleo(alim).find(el=> el.name.toLowerCase().includes("costo total"))})
+      this.nucleos.push({type: AlimentoNucleoTypeId[alim],...this.alimentoService.getResumenTotalNucleo(alim).find(el=> el.name.toLowerCase().includes("costo total"))})
     });
   }
 

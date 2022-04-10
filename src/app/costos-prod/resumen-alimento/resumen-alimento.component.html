@@ -15,7 +15,7 @@
 
     <ion-list-header>
       <ion-title>
-        Resumen De Costos De Alimentos
+        Costos Por Qq De Alimento
       </ion-title>
     </ion-list-header>
 
@@ -39,6 +39,52 @@
       </ion-row>
 
       <ion-row *ngFor="let food of foods">
+        <ion-col size="4">
+          <ion-item>
+            <ion-label><h1>{{food.type | titlecase}}</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item  style="text-align: right;">
+            <ion-label><h1>{{food.usd | addCommas}}</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item style="text-align: right;">
+            <ion-label><h1>{{food.dop | addCommas}}</h1></ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item-divider></ion-item-divider>
+
+    <ion-list-header>
+      <ion-title>
+        Costos Promedio De La Pre-mezcla Por T.M
+      </ion-title>
+    </ion-list-header>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label><h1>Tipo De Alimento:</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item style="text-align: right;">
+            <ion-label><h1>Costo En Dolares (USD):</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item style="text-align: right;">
+            <ion-label><h1>Costo En Pesos (DOP):</h1></ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let food of nucleos">
         <ion-col size="4">
           <ion-item>
             <ion-label><h1>{{food.type | titlecase}}</h1></ion-label>

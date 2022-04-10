@@ -15,12 +15,18 @@
   
     <ion-list-header>
       <ion-title>
-        {{'COSTO DE PRODUCCION DEL POLLO EN GRANJA' | titlecase}} 
-        <br>
-        {{'CON LOS PRECIOS DE MATERIA PRIMA AL ' | titlecase}} {{dateNow | date: 'dd-MM-yyyy'}}
+        {{'COSTES DE PRODUCCION CON LOS PRECIOS DE MATERIA PRIMA AL ' | titlecase}} {{dateNow | date: 'dd-MM-yyyy'}}
       </ion-title>
     </ion-list-header>
-  
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" >
+          <!-- TABLE HERE -->
+          <app-table [name]="subtitle" [cols]="cols" [rows]="rows" ></app-table>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     
     </ion-list>
 
