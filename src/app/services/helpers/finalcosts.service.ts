@@ -52,7 +52,25 @@ export class FinalcostsService {
   };
 
   private table: iTable = {};
-  private resume ={};
+
+  private resume_titles = [
+    this.final_title,
+    "TOTAL DE LIBRAS PRODUCIDAS",
+    "COSTO PRODUCCION POR LIBRA PRODUCIDA EN GRANJA",
+    "PRECIO DE VENTA POR LIBRA EN GRANJA",
+    "VALOR PROYECTADO POR EL PRECIO ACTUAL EN GRANJA",
+    "RESULTADO ECONOMICO CON LOS PRECIOS ACTUALES",
+    `% DE PROYECCION DE BENEFICIOS PARA ${new Date().getFullYear()}`,
+    "MARGEN DE BENEFICIO POR UNIDAD DE POLLO PRODUCIDO",
+    "MARGEN DE BENEFICIO POR LIBRA POLLO EN GRANJA",
+    //"PORCIENTO DEL COSTO QUE REPRESENTAN LOS ALIMENTOS",
+  ];
+  private resume_ini_state = {
+    //desc: "",
+    usd: 0,
+    dop: 0
+  };
+  private resume: iResume ={};
   //private params={};
 
   constructor(
@@ -70,10 +88,22 @@ export class FinalcostsService {
     return Object.values(this.table).map((el, i)=> ({id: i+1, ...el }));
   }
 
+  async getResume(): Promise<any[]>{
+    const values = Object.values(this.resume)
+    if(values.length === 0) await this.compileTable();
+    return values;
+  }
+
   async compileTable(){
     this.table = {};
+    this.resume = {};
+
     this.titles.forEach((t, i)=>{
       this.table[t] = {desc: t, ...this.init_state};
+    });
+
+    this.resume_titles.forEach((desc)=>{
+      this.resume[desc] = {desc, ...this.resume_ini_state};
     });
 
     this.table["POLLITOS BB"].qty = this.costsService.data_tecnica.aves_totales.value;
@@ -123,7 +153,9 @@ export class FinalcostsService {
     this.compilePercent();
     const total_percent = this.toFixed(this.sumPercent(),0);
 
+    const dollar = this.costsService.getDollar();
     const pollos_en_venta = this.costsService.data_tecnica.aves_terminadas.value;
+    const precio_venta_granja = this.costsService.data_tecnica.precio_real_sto_dom.value;
     const peso_promedio = this.costsService.data_tecnica.peso_promedio.value;
     const lbs_producidas = this.toFixed(pollos_en_venta*peso_promedio);
     const costo_prod_lbs = this.toFixed(total_value/lbs_producidas);
@@ -139,9 +171,25 @@ export class FinalcostsService {
     const chick_price = this.toFixed(this.sumChickPrice());
     this.table[this.final_title].chick_price = chick_price;
 
-    
+    this.resume[this.final_title].dop = total_value;
+    this.resume["TOTAL DE LIBRAS PRODUCIDAS"].dop = lbs_producidas;
+    this.resume["COSTO PRODUCCION POR LIBRA PRODUCIDA EN GRANJA"].dop = costo_prod_lbs;
+    this.resume["PRECIO DE VENTA POR LIBRA EN GRANJA"].dop = precio_venta_granja;
+    this.resume["VALOR PROYECTADO POR EL PRECIO ACTUAL EN GRANJA"].dop = this.toFixed(lbs_producidas * precio_venta_granja);
+    const economics_result = this.toFixed((lbs_producidas * precio_venta_granja) - total_value);
+    this.resume["RESULTADO ECONOMICO CON LOS PRECIOS ACTUALES"].dop = economics_result
+    this.resume[`% DE PROYECCION DE BENEFICIOS PARA ${new Date().getFullYear()}`].dop = this.toFixed((economics_result/total_value)*100);
+    this.resume["MARGEN DE BENEFICIO POR UNIDAD DE POLLO PRODUCIDO"].dop = this.toFixed(economics_result/pollos_en_venta);
+    this.resume["MARGEN DE BENEFICIO POR LIBRA POLLO EN GRANJA"].dop = this.toFixed(economics_result/lbs_producidas);
+    this.compileDollarPricesInResume(dollar);
+    console.log({pollos_en_venta});
   }
 
+  private compileDollarPricesInResume(dollar: number){
+    Object.values(this.resume).forEach(el=>{
+      el.usd = this.toFixed(el.dop /dollar);
+    });
+  }
 
   private compileCostoLbs(costo_lbs: number){
     Object.values(this.table).forEach(el=> el.pound_price = this.toFixed((el.percent*costo_lbs)/100));
@@ -180,6 +228,10 @@ interface iTable{
   [name: string]: iParams
 }
 
+interface iResume{
+  [name: string]: iResumeParams
+}
+
 interface iParams{
   desc: string;
   qty:number;
@@ -188,4 +240,10 @@ interface iParams{
   percent:number;
   chick_price:number;
   pound_price:number;
+}
+
+interface iResumeParams{
+  desc?: string;
+  dop: number;
+  usd: number;
 }

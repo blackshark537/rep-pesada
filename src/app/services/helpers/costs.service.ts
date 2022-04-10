@@ -23,7 +23,7 @@ export class CostsService {
     mortalidad: { title: `PORCIENTO DE MORTALIDAD `, value: this.mortalidad, readonly: false, type: 'number', },
     aves_terminadas: { title: `CANTIDAD DE POLLOS TERMINADOS EN GRANJA`, value: this.afterMortality, readonly: false, type: 'number', },
     alimento: { title: `VARIABLE DE CONSUMO ALIMENTO PARA AJUSTE CONVERSION`, value: 16.50, readonly: false, type: 'number', },
-    peso_promedio: { title: `PESO PROMEDIO DEL POLLO A 42 DIAS`, value: 4.40, readonly: false, type: 'number', },
+    peso_promedio: { title: `PESO PROMEDIO DEL POLLO A 42 DIAS`, value: 4.60, readonly: false, type: 'number', },
     precio_sto_dom:{ title: `PRECIO DEL POLLO EN GRANJA EN SANTO DOMINGO`, value: 45.00,readonly: false, type: 'number', },
     total_cibao:{ title: `PRECIO DEL POLLO EN GRANJA EN EL CIBAO`, value: 45.00, readonly: false, type: 'number', },
     precio_real_sto_dom: { title: `PRECIO PROMEDIO REAL SANTO DOMINGO/CIBAO`, value: 45.00, readonly: false, type: 'number', },
@@ -61,7 +61,7 @@ export class CostsService {
   data_precio_soya = {
     precio_dolar: {...this.data_tecnica.precio_dollar},
     precio_bushel_soya: {...this.data_tecnica.precio_bushel_soya},
-    variable_calculo: { title: 'VARIABLE DE CALCULO ', value: 1.1023, readonly: true, type: 'number' },
+    variable_calculo: { title: 'VARIABLE DE CALCULO ', value: 1.1, readonly: true, type: 'number' },
     precion_muelle: { title: 'PRECIO EN MUELLE POR  TONELADA USA', value: 0, readonly: true, type: 'number'},
     precio_base_transporte: { ...this.data_tecnica.precio_base_transporte },
     precio_tonelada_muelle: { title: 'PRECIO TONELADA EN MUELLE REP.DOM. US$', value: 0, readonly: true, type: 'number' },

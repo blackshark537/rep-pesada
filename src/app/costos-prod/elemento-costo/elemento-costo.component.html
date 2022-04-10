@@ -28,6 +28,19 @@
       </ion-row>
     </ion-grid>
     
+    <ion-item-divider></ion-item-divider>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6"><h1>Descripción</h1></ion-col>
+        <ion-col size="3" style="text-align: right;"><h1>Monto En Dolares:</h1></ion-col>
+        <ion-col size="3" style="text-align: right;"><h1>Monto En Pesos:</h1></ion-col>
+      </ion-row>
+      <ion-row *ngFor="let d of resume; index as i">
+        <ion-col size="6"><h1>{{i+1}} - {{d.desc | titlecase}}</h1></ion-col>
+        <ion-col size="3" style="text-align: right;"><h1>{{d.usd | addCommas}}</h1></ion-col>
+        <ion-col size="3" style="text-align: right;"><h1>{{d.dop | addCommas}}</h1></ion-col>
+      </ion-row>
+    </ion-grid>
     </ion-list>
 
 </ion-content>

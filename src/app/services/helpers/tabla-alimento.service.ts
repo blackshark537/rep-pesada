@@ -19,7 +19,7 @@ export class TablaAlimentoService {
     { prop: 'mortality', header: 'Mortalidad' },
     { prop: 'chicks', header: 'Aves' },
     { prop: 'daily_consumption', header: 'Consumo Diario' },
-    { prop: 'pre', header: 'Pre-Iniciador\nDe 0-10 Días' },
+    { prop: 'pre', header: 'Pre-Iniciador\nDe 0-07 Días' },
     { prop: 'ini', header: 'Iniciador\nDe 10-21 Días' },
     { prop: 'cre', header: 'Crecimiento\nDe 22-34 Días' },
     { prop: 'eng', header: 'Engorde\nDe 35-42 Días' },
@@ -66,11 +66,11 @@ export class TablaAlimentoService {
 
       const dt = differenceInDays( obj['date'], this.dateNow);
 
-      obj['pre'] = dt >= 0 && dt <= 7? consumption : 0;
-      obj['ini'] = dt >= 8 && dt <= 21? consumption : 0;
-      obj['cre'] = dt >=22 && dt <= 34? consumption : 0;
-      obj['eng'] = dt >=35 && dt <= 42? consumption : 0;
-      obj['fin'] = dt >=43 && dt <= 45? consumption : 0;
+      obj['pre'] = dt > 0 && dt <= 7? consumption : 0;
+      obj['ini'] = dt > 7 && dt <= 21? consumption : 0;
+      obj['cre'] = dt > 21 && dt <= 34? consumption : 0;
+      obj['eng'] = dt > 34 && dt <= 42? consumption : 0;
+      obj['fin'] = dt > 42 && dt <= 45? consumption : 0;
 
       mortalities.push(mortality);
       this.datatable.push(obj);

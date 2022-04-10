@@ -13,6 +13,8 @@ export class ElementoCostoComponent implements OnInit {
   cols=[];
   rows=[];
 
+  resume = [];
+
   constructor(
     private finalCosts: FinalcostsService
   ) { }
@@ -20,6 +22,7 @@ export class ElementoCostoComponent implements OnInit {
   async ngOnInit() {
     this.cols = this.finalCosts.getCols();
     this.rows = await this.finalCosts.getRows();
+    this.resume = await this.finalCosts.getResume();
   }
 
   get dateNow(): Date{
