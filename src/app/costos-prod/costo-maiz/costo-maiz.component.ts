@@ -8,7 +8,7 @@ import { CostsService } from 'src/app/services';
 })
 export class CostoMaizComponent implements OnInit, OnDestroy {
 
-  pTitle: string = "Precio Int. Maíz";
+  pTitle: string = "Comportamiento del Precio del maíz";
   data_precio_maiz = [];
 
   constructor(

@@ -23,13 +23,13 @@
       <ion-row >
         <ion-col size="10">
           <ion-item>
-            <ion-label><h1> Ingredientes </h1></ion-label>
+            <ion-label><h1> Ingredientes: </h1></ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
           <ion-item>
             <ion-label>
-              <h1>Precio</h1>
+              <h1>Precio: (usd)</h1>
             </ion-label>
           </ion-item>
         </ion-col>
@@ -41,7 +41,7 @@
           </ion-item>
         </ion-col>
         <ion-col size="2">
-          <ion-item>
+          <ion-item button color="warning" class="tx-r">
             <ion-label>
               <h1>{{item.price}}</h1>
             </ion-label>
@@ -62,20 +62,20 @@
       <ion-row >
         <ion-col size="8">
           <ion-item>
-            <ion-label><h1> Ingredientes </h1></ion-label>
+            <ion-label><h1> Ingredientes: </h1></ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
           <ion-item>
             <ion-label>
-              <h1>Precio</h1>
+              <h1>Precio: (usd)</h1>
             </ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
           <ion-item>
             <ion-label>
-              <h1>Cantidad</h1>
+              <h1>Cantidad:</h1>
             </ion-label>
           </ion-item>
         </ion-col>
@@ -87,14 +87,14 @@
           </ion-item>
         </ion-col>
         <ion-col size="2">
-          <ion-item>
+          <ion-item button color="success" class="tx-r">
             <ion-label>
               <h1>{{item.price }}</h1>
             </ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
-          <ion-item>
+          <ion-item button color="danger" class="tx-r">
             <ion-label>
               <h1>{{item.qty | addCommas}} Fundas</h1>
             </ion-label>

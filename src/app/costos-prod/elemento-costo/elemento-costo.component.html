@@ -31,14 +31,32 @@
     <ion-item-divider></ion-item-divider>
     <ion-grid>
       <ion-row>
-        <ion-col size="6"><h1>Descripción</h1></ion-col>
-        <ion-col size="3" style="text-align: right;"><h1>Monto En Dolares:</h1></ion-col>
-        <ion-col size="3" style="text-align: right;"><h1>Monto En Pesos:</h1></ion-col>
+        <ion-col size="8"><h1>Descripción:</h1></ion-col>
+        <ion-col size="2" style="text-align: center;"><h1>Monto En Dolares:</h1></ion-col>
+        <ion-col size="2" style="text-align: center;"><h1>Monto En Pesos:</h1></ion-col>
       </ion-row>
       <ion-row *ngFor="let d of resume; index as i">
-        <ion-col size="6"><h1>{{i+1}} - {{d.desc | titlecase}}</h1></ion-col>
-        <ion-col size="3" style="text-align: right;"><h1>{{d.usd | addCommas}}</h1></ion-col>
-        <ion-col size="3" style="text-align: right;"><h1>{{d.dop | addCommas}}</h1></ion-col>
+        <ion-col size="8">
+          <ion-item>
+            <ion-label>
+              <h1>{{i+1}} - {{d.desc | titlecase}}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item button color="success" class="tx-r">
+            <ion-label>
+              <h1>{{d.usd | addCommas}}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item button color="danger" class="tx-r">
+            <ion-label>
+              <h1>{{d.dop | addCommas}}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
       </ion-row>
     </ion-grid>
     </ion-list>

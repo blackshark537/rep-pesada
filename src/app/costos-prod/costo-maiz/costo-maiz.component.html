@@ -15,9 +15,9 @@
   
     <ion-list-header>
       <ion-title>
-        Variables Para Determinar Costos Del Maíz Marzo {{dateNow | date: 'YYYY'}}
+        Variables del Mercado Bursatil
         <br>
-        En Las Plantas De Alimentos De República Dominicana
+        {{pTitle | titlecase}}
       </ion-title>
     </ion-list-header>
     
@@ -29,7 +29,7 @@
             </ion-item>
           </ion-col>
           <ion-col size="2">
-            <ion-item>
+            <ion-item button color="success" class="tx-r">
               <ion-label>
                 <h1>{{item.value | addCommas}}</h1>
               </ion-label>

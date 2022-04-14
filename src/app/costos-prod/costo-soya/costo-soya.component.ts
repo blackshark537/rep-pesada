@@ -8,7 +8,7 @@ import { CostsService } from 'src/app/services';
 })
 export class CostoSoyaComponent implements OnInit, OnDestroy {
 
-  pTitle: string = "Precio Int. soya";
+  pTitle: string = "Comportamiento del Precio de la Soya";
   data_precio_soya = []
 
   constructor(
