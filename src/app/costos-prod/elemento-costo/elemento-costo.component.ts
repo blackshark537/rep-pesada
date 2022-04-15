@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FinalcostsService } from 'src/app/services/helpers/finalcosts.service';
 
 @Component({
@@ -12,17 +13,20 @@ export class ElementoCostoComponent implements OnInit {
   subtitle = `COSTO DE PRODUCCION DEL POLLO EN GRANJA`;
   cols=[];
   rows=[];
-
+  showTable = false;
   resume = [];
 
   constructor(
-    private finalCosts: FinalcostsService
+    private finalCosts: FinalcostsService,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   async ngOnInit() {
     this.cols = this.finalCosts.getCols();
     this.rows = await this.finalCosts.getRows();
     this.resume = await this.finalCosts.getResume();
+    let table = this.activatedRoute.snapshot.paramMap.get('table');
+    if(table === '1') this.showTable = true;
   }
 
   get dateNow(): Date{

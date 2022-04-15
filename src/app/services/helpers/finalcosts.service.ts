@@ -39,7 +39,7 @@ export class FinalcostsService {
     "SEGUROS EXTRUTURA,EQUIPOS, INVENTARIOS",
   ];
 
-  private final_title = `VALOR PROYECTADO AL COSTO DE LA INDUSTRIA PARA EL ${new Date().getFullYear()}`;
+  private final_title = `MONTO TOTAL DE INVERSION DE LA INDUSTRIA PARA EL ${new Date().getFullYear()}`;
 
   private init_state: {
     desc: "", 

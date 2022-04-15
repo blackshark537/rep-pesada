@@ -16,6 +16,7 @@ import { CostoInsumosComponent } from './costo-insumos/costo-insumos.component';
 import { AlimentoComponent } from './alimento/alimento.component';
 import { TablaAlimentoComponent } from './tabla-alimento/tabla-alimento.component';
 import { ResumenAlimentoComponent } from './resumen-alimento/resumen-alimento.component';
+import { ResumenCostoComponent } from './resumen-costo/resumen-costo.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { ResumenAlimentoComponent } from './resumen-alimento/resumen-alimento.co
     AlimentoComponent,
     TablaAlimentoComponent,
     ResumenAlimentoComponent,
+    ResumenCostoComponent
   ]
 })
 export class CostosProdPageModule {}

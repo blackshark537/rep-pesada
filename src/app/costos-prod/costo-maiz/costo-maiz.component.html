@@ -22,6 +22,27 @@
     </ion-list-header>
     
       <ion-grid>
+        <ion-row>
+        <ion-col size="10">
+          <ion-item>
+            <ion-label><h1>Descripción:</h1></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label>
+              <h1>🇺🇸 Precio: (usd)</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <!-- <ion-col size="2">
+          <ion-item>
+            <ion-label>
+              <h1>🇩🇴 Precio: (dop)</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col> -->
+        </ion-row>
         <ion-row *ngFor="let item of data_precio_maiz; index as i">
           <ion-col size="10">
             <ion-item>
@@ -29,13 +50,19 @@
             </ion-item>
           </ion-col>
           <ion-col size="2">
-            <ion-item button color="success" class="tx-r">
+            <ion-item button color="success" class="tx-c">
               <ion-label>
                 <h1>{{item.value | addCommas}}</h1>
               </ion-label>
-              <!-- <ion-input (ionChange)="applyMortality()" [type]="item.type" readonly [(ngModel)]="item.value"></ion-input> -->
             </ion-item>
           </ion-col>
+          <!-- <ion-col size="2">
+            <ion-item button color="warning" class="tx-c">
+              <ion-label>
+                <h1>{{ getDop(item) | addCommas}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col> -->
         </ion-row>
       </ion-grid>
 

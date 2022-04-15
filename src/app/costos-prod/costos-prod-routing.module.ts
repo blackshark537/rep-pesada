@@ -10,6 +10,7 @@ import { CostoInsumosComponent } from './costo-insumos/costo-insumos.component';
 import { AlimentoComponent } from './alimento/alimento.component';
 import { TablaAlimentoComponent } from './tabla-alimento/tabla-alimento.component';
 import { ResumenAlimentoComponent } from './resumen-alimento/resumen-alimento.component';
+import { ResumenCostoComponent } from './resumen-costo/resumen-costo.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,14 @@ const routes: Routes = [
   {
     path: 'elemento-costo',
     component: ElementoCostoComponent
+  },
+  {
+    path: 'elemento-costo/:table',
+    component: ElementoCostoComponent
+  },
+  {
+    path: 'resumen-costos',
+    component: ResumenCostoComponent
   },
   {
     path: 'alimento/:id',

@@ -15,35 +15,49 @@
   
     <ion-list-header>
       <ion-title>
-        Resumen De Precios Macros e Ingredientes Marzo {{dateNow | date: 'YYYY'}}
+        <h1>Resumen De Precios de los Diferentes Macros Ingredientes Marzo {{dateNow | date: 'YYYY'}}</h1>
       </ion-title>
     </ion-list-header>
   
     <ion-grid>
       <ion-row >
-        <ion-col size="10">
+        <ion-col size="8">
           <ion-item>
-            <ion-label><h1> Ingredientes: </h1></ion-label>
+            <ion-label><h1> Ingredientes 100 Lbs: </h1></ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
           <ion-item>
             <ion-label>
-              <h1>Precio: (usd)</h1>
+              <h1>🇺🇸 Precio: (usd)</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label>
+              <h1>🇩🇴 Precio: (dop)</h1>
             </ion-label>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row *ngFor="let item of macros; index as i">
-        <ion-col size="10">
+        <ion-col size="8">
           <ion-item>
             <ion-label><h1> {{i+1}} - {{item.name | titlecase}}</h1></ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
-          <ion-item button color="warning" class="tx-r">
+          <ion-item button shape="rouded" color="success" class="tx-c">
             <ion-label>
               <h1>{{item.price}}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item button shape="rouded" color="warning" class="tx-c">
+            <ion-label>
+              <h1>{{ getDop(item) | addCommas}}</h1>
             </ion-label>
           </ion-item>
         </ion-col>
@@ -54,13 +68,13 @@
       
     <ion-list-header>
       <ion-title>
-        Resumen De Precios Micros e Ingredientes Marzo {{dateNow | date: 'YYYY'}}
+        <h1>Resumen De Precios de los Diferentes Micros ingredientes Marzo {{dateNow | date: 'YYYY'}}</h1>
       </ion-title>
     </ion-list-header>
 
     <ion-grid>
       <ion-row >
-        <ion-col size="8">
+        <ion-col size="6">
           <ion-item>
             <ion-label><h1> Ingredientes: </h1></ion-label>
           </ion-item>
@@ -68,35 +82,49 @@
         <ion-col size="2">
           <ion-item>
             <ion-label>
-              <h1>Precio: (usd)</h1>
+              <h1>🇺🇸 Precio: (usd)</h1>
             </ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
           <ion-item>
             <ion-label>
-              <h1>Cantidad:</h1>
+              <h1>🇩🇴 Precio: (dop)</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label>
+              <h1>Cantidad: (lbs)</h1>
             </ion-label>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row *ngFor="let item of micros; index as i">
-        <ion-col size="8">
+        <ion-col size="6">
           <ion-item>
             <ion-label><h1> {{i+1}} - {{item.name | titlecase}}</h1></ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
-          <ion-item button color="success" class="tx-r">
+          <ion-item button color="success" class="tx-c">
             <ion-label>
               <h1>{{item.price }}</h1>
             </ion-label>
           </ion-item>
         </ion-col>
         <ion-col size="2">
-          <ion-item button color="danger" class="tx-r">
+          <ion-item button color="warning" class="tx-c">
             <ion-label>
-              <h1>{{item.qty | addCommas}} Fundas</h1>
+              <h1>{{ getDop(item) | addCommas }}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item button color="danger" class="tx-c">
+            <ion-label>
+              <h1>{{item.qty | addCommas}} </h1>
             </ion-label>
           </ion-item>
         </ion-col>

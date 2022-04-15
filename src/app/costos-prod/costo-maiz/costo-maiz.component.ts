@@ -23,6 +23,11 @@ export class CostoMaizComponent implements OnInit, OnDestroy {
     this.costsService.unsubscribe();  
   }
 
+  getDop(item): number{
+    if(!this.data_precio_maiz.length) return 0;
+    return parseFloat((item.value * this.data_precio_maiz[0].value).toFixed(2))
+  }
+
   get afterMortality(){
     return this.costsService.pollos_recibidos - (this.costsService.pollos_recibidos * (this.costsService.mortalidad *100)/100)/100;
   }

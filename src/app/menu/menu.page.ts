@@ -21,11 +21,12 @@ export class MenuPage implements OnInit {
     { title: 'Industria Avicola Pollo De Engorde', url:'/menu/select/5', icon: '/assets/icon/chicken (1).png', color:"platinum"  },
     { title: 'Resumen Gráfico', url:'/menu/select/6', icon: '/assets/icon/bar-graph.png', color:"platinum"  },
     { title: 'Historico Precios De Huevos', url:'/price-history', icon: 'assets/icon/price-tag.png', color: "platinum"  },
-    { title: 'Precios De Commodities', url: '/docview/Commodities', icon: 'assets/icon/silo.png', color:"platinum"  },
+    { title: 'Precios De Commodities', url: '/menu/select/8', icon: 'assets/icon/silo.png', color:"platinum"  },
     { title: 'Costos De Producción', url: '/costos-produccion', icon: 'assets/icon/production.png', color:"platinum"  },
     { title: 'Geoposición De La Industria', url: '/menu/select/10', icon: 'assets/icon/placeholder.png', color:"platinum"  },
     { title: 'Programa Sanitario De La Industria', url: '/menu/select/11', icon: 'assets/icon/vaccine.png', color:"platinum"  },
     { title: 'RESUMEN EJECUTIVO DE LA PRODUCCIÓN NACIONAL', url: '/home/general', icon: 'assets/icon/cv.png', color:"platinum"  },
+    { title: 'Resumen Ejecutivo De Los Costos De Producción', url: '/menu/select/13', icon: 'assets/icon/invoice (1).png', color:"platinum"  },
     { title: 'Administrador', url: '/admin', icon: 'assets/icon/filtrar.png', color:"platinum"  },
   ];
 
@@ -100,6 +101,17 @@ export class MenuPage implements OnInit {
       { title: 'Geoposición De las Granjas Avicolas', url: '/business/new', icon: 'location-outline', color:"platinum"  },
       { title: 'Geoposición De las Plantas De Proceso', url: '/business/new', icon: 'location-outline', color:"platinum"  },
     ],
+    'Precios De Commodities':[
+      { title: 'Comportamiento del Precio del maíz', url: '/costos-produccion/costos-maiz', icon: 'document-outline', color:"platinum"  },
+      { title: 'Comportamiento del Precio de la soya', url: '/costos-produccion/costos-soya', icon: 'document-outline', color:"platinum"  },
+      { title: 'Costos de los insumos', url: '/costos-produccion/costos-insumos', icon: 'document-outline', color:"platinum"  },
+    ],
+    'Resumen Ejecutivo De Los Costos De Producción':[
+      { title: 'Resumen Coste De Alimentos', url: '/costos-produccion/resumen/alimento', icon: 'document-outline', color:"platinum"  },
+      { title: 'Tabla De Los Costos De Producción', url: '/costos-produccion/elemento-costo/1', icon: 'document-outline', color:"platinum"  },
+      { title: 'Resumen Final \nCostos De Producción', url: '/costos-produccion/resumen-costos', icon: 'document-outline', color:"platinum"  },
+      { title: 'Resumen Costos De Producción', url: '/costos-produccion/elemento-costo/0', icon: 'document-outline', color:"platinum"  },
+    ]
   };
 
   sub=false;

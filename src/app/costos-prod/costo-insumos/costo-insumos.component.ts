@@ -24,6 +24,11 @@ export class CostoInsumosComponent implements OnInit {
     this.alimentoService.unsubscribe();
   }
 
+  getDop(item: any): number{
+    if(!this.macros.length) return 0;
+    return parseFloat((item.price * this.macros[0].price).toFixed(2));
+  }
+
   get dateNow(){
     return this.alimentoService.dateNow;
   }

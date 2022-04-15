@@ -28,9 +28,9 @@ export class CostsService {
     total_cibao:{ title: `PRECIO DEL POLLO EN GRANJA EN EL CIBAO`, value: 45.00, readonly: false, type: 'number', },
     precio_real_sto_dom: { title: `PRECIO PROMEDIO REAL SANTO DOMINGO/CIBAO`, value: 45.00, readonly: false, type: 'number', },
     precio_dollar: { title: `DÓLAR VALOR ACTUAL`, value: this.precio_dolar, readonly: false, type: 'number', },
-    precio_bushel_maiz: { title: `PRECIO DEL BUSHEL MAIZ MERCADO BURSATIL (39.37 LBS)`, value: 7.46, readonly: false, type: 'number', },
+    precio_bushel_maiz: { title: `PRECIO DEL BUSHEL MAIZ MERCADO BURSATIL (39.37 LBS)`, value: 7.91, readonly: false, type: 'number', },
     precio_transporte: { title: `PRECIO DE BASE Y TRANSPORTE USD$`, value: 110.00, readonly: false, type: 'number', },
-    precio_bushel_soya: { title: `PRECIO DEL BUSHEL DE LA SOYA EN EL MERCADO BURSATIL`, value: 489.00, readonly: false, type: 'number', },
+    precio_bushel_soya: { title: `PRECIO DEL BUSHEL DE LA SOYA EN EL MERCADO BURSATIL`, value: 460.50, readonly: false, type: 'number', },
     precio_base_transporte: { title: `PRECIO DE BASE Y TRANSPORTE USD$`, value: 125.00, readonly: false, type: 'number',}
 
   };
@@ -41,7 +41,7 @@ export class CostsService {
     bushel_lbs: { title: 'UNIDAD DE MEDIDA BUSHEL LBS', value: 39.37, readonly: false, type: 'number'},
     precio_muelle: { 
       title: 'PRECIO EN MUELLE POR  TONELADA USA', 
-      value: this.data_tecnica.precio_bushel_maiz.value * 39.37, 
+      value: this.toFixed(this.data_tecnica.precio_bushel_maiz.value * 39.37), 
       readonly: false, type: 'number'
     },
     precio_base_transporte:{...this.getParametros().find(el=> el.title.includes('PRECIO DE BASE Y TRANSPORTE USD$'))},
